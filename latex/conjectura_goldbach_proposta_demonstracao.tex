@@ -215,7 +215,7 @@
 		
 	\end{proof}
 	
-	\begin{corollary}
+	\begin{corollary} \label{coro:par_simetrico}
 		Sejam $a \in \mathbb{N}$, com $a > 2$ e $a$ par, e
 		\[
 		S = \{1, 3, 5, \dotsc, a - 1\}
@@ -236,8 +236,8 @@
 	
 	
 	
-	\begin{theorem}[Teorema de Dirichlet sobre Progressões Aritméticas]
-		Sejam $a$ e $d$ inteiros positivos tais que $\gcd(a, d) = 1$. Então, a progressão aritmética da forma
+	\begin{theorem}[Teorema de Dirichlet para Progressões Aritméticas] \label{teo:dirichlet}
+		Sejam $a$ e $d$ inteiros positivos tais que $mdc(a, d) = 1$. Então, a progressão aritmética da forma
 		
 		\[
 		a,\, a + d,\, a + 2d,\, a + 3d,\, \dots
@@ -246,7 +246,51 @@
 		contém infinitos números primos.
 	\end{theorem}
 	
-	O Teorema de Dirichlet sobre progressões aritméticas garante que toda progressão da forma $a + nd$, com $\gcd(a, d) = 1$, contém infinitos números primos~\cite{apostol}.
+	O Teorema de Dirichlet sobre progressões aritméticas garante que toda progressão da forma $a + nd$, com $mdc(a, d) = 1$, contém infinitos números primos.~Por ser complexa e envolver ferramentas matemáticas além do escopo deste trabalho a prova do Teorema de Dirichlet não será demonstrada aqui. Porém é possível encontrá-la em ~\cite{apostol}.  
+	
+	\begin{definition}[Sequência \(S_n(p)\)]\label{def:snp}
+		Seja \(p > 2\) um número primo fixado. Definimos a sequência \(S_n(p)\), com \(n \in \mathbb{N}\), como o conjunto dos números da forma
+		\[
+		S_n(p) = 
+		\begin{cases}
+			p + 4n \\
+			p + 4n + 2
+		\end{cases}
+		\]
+		para todo \(n \in \mathbb{N}\).
+	\end{definition}
+	
+	\vspace{0.5cm}
+	
+	\begin{proposition}
+		A sequência \(S_n(p)\) contém infinitos números primos.
+	\end{proposition}
+	
+	\begin{proof}
+		Observamos que, nos dois casos,
+		\begin{itemize}
+			\item Para \(p + 4n\), temos
+			\[
+			p + 4n = p + 2(2n) = p + 2k_1,
+			\]
+			para algum \(k_1 \in \mathbb{N}\).
+			
+			\item Para \(p + 4n + 2\), temos
+			\[
+			p + 4n + 2 = p + 2(2n + 1) = p + 2k_2,
+			\]
+			para algum \(k_2 \in \mathbb{N}\).
+		\end{itemize}
+		
+		Como \(mdc(p, 2) = 1\), ambos os casos satisfazem as condições do  \textbf{Teorema de Dirichlet para progressões aritméticas}~\ref{teo:dirichlet}, que garante que toda progressão da forma \(a + kn\), com \(mdc(a, k) = 1\), contém infinitos números primos.
+		
+		Portanto, a sequência \(S_n(p)\) contém infinitos números primos.
+	\end{proof}
+	
+	\begin{remark}
+		Note que a definição ~\ref{def:snp} está relacionada diretamente ao Corolário ~\ref{coro:par_simetrico}.
+	\end{remark}
+	
 	
 	
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
