@@ -199,7 +199,7 @@
 			
 			\item Se $N$ é par, existem dois termos centrais nas posições $m_1 = \frac{N}{2}$ e $m_2 = \frac{N}{2} + 1$. Para $b$ à esquerda do centro,
 			\[
-			i = m_1 - n,
+			i = m_1 - n \implies 2i = |N - 2n|,
 			\]
 			e
 			\[
@@ -249,7 +249,7 @@
 	O Teorema de Dirichlet sobre progressões aritméticas garante que toda progressão da forma $a + nd$, com $mdc(a, d) = 1$, contém infinitos números primos.~Por ser complexa e envolver ferramentas matemáticas além do escopo deste trabalho a prova do Teorema de Dirichlet não será demonstrada aqui. Porém é possível encontrá-la em ~\cite{apostol}.  
 	
 	\begin{definition}[Sequência \(S_n(p)\)]\label{def:snp}
-		Seja \(p > 2\) um número primo fixado. Definimos a sequência \(S_n(p)\), com \(n \in \mathbb{N}\), como o conjunto dos números da forma
+		Seja \(p > 2\) um número primo fixado. Definimos a sequência \(S_n(p)\), com \(n \in \mathbb{N}\), como o conjunto dos números ímpares da forma
 		\[
 		S_n(p) = 
 		\begin{cases}
@@ -291,12 +291,165 @@
 		Note que a definição ~\ref{def:snp} está relacionada diretamente ao Corolário ~\ref{coro:par_simetrico}.
 	\end{remark}
 	
+	\begin{remark}
+		Para um q = \(S_n(p)\): ou q é um primo ímpar ou q é um composto ímpar.
+	\end{remark}
+	
+	\begin{proposition}
+		Seja \( p > 2 \) um número primo e \( n \in \mathbb{N} \). Então, a soma \( S_n(p) + p \) é um número par.
+	\end{proposition}
+	
+	
+	\begin{proof}
+		Por definição, \( S_n(p) \) é ímpar. De fato, como \( p > 2 \) é um número primo, ele também é ímpar. Assim, a soma de dois números ímpares é sempre um número par. Portanto, \( S_n(p) + p \) é par. 
+	\end{proof}
+	
+	
 	
 	
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	\section{Resultados Principais}
+	\begin{lemma}\label{lema:multip}
+		Seja \(p > 2\) um número primo e \(q > p\) um número ímpar pertencente à sequência \(S_n(p)\). Se \(q\) é primo ou \(q\) não é múltiplo de \(p\), então
+		
+		\[
+		2p \nmid (p + q)
+		\]
+	\end{lemma}
+	\begin{proof}
+		Dividimos a demonstração em dois casos:
+		
+		\textbf{Caso I:} \(q\) é múltiplo de \(p\).
+		
+		Se \(q\) é múltiplo de \(p\), então existe um inteiro \(k\) tal que
+		
+		\[
+		q = pk
+		\]
+		
+		Logo,
+		
+		\[
+		p + q = p + pk = p(1 + k)
+		\]
+		
+		Portanto,
+		
+		\[
+		2p \mid p(1 + k) \implies 2p \mid (p + q)
+		\]
+		
+		Isso mostra que se \(q\) \textit{é múltiplo de} \(p\), então \(2p\) divide \(p + q\). O contrapositivo também é verdadeiro: se \(q\) \textit{não é múltiplo de} \(p\), então
+		
+		\[
+		2p \nmid (p + q)
+		\]
+		
+		\textbf{Caso II:} \(q\) é primo.
+		
+		Suponha, por absurdo, que \(2p \mid (p + q)\). Então, existe um inteiro \(k > 0\) tal que
+		
+		\[
+		p + q = 2p k
+		\]
+		
+		Isolando \(q\), obtemos
+		
+		\[
+		q = 2p k - p = p(2k - 1)
+		\]
+		
+		Ou seja, \(q\) é múltiplo de \(p\). Como \(p\) é um primo estritamente menor que \(q\) (pois \(q > p\)), isso implica que \(q\) é um número composto, o que contradiz a hipótese de que \(q\) é primo.
+		
+		Portanto, se \(q\) é primo,
+		
+		\[
+		2p \nmid (p + q)
+		\]
+		
+		o que conclui a demonstração.
+	\end{proof}
 	
-	\subsection{Teoremas e Demonstrações}
+	\begin{corollary}
+		Seja \(p > 2\) um número primo e \(n \in \mathbb{N}\). Então, todo número par da forma \(p + S_n(p)\), tal que \(S_n(p) > p\), não é múltiplo de \(p\). Ou seja,
+		
+		\[
+		p \nmid (p + S_n(p)) \quad \text{sempre que} \quad S_n(p) > p
+		\]
+		
+	\end{corollary}
+	
+	\begin{proof}
+		Segue imediatamente do Lema ~\ref{lema:multip}, observando que a única possibilidade de múltiplo de \(p\) ocorre quando \(S_n(p) = p\), o que é excluído pela condição \(S_n(p) > p\).
+	\end{proof}
+	\subsection{Teoremas}
+	\begin{theorem}[Cobertura dos Números Pares]
+		Seja 
+		\[
+		B = \left\{ (a_n)_{n \in \mathbb{N}} \mid a_n = p + q, \, p \in P, \, q \in Q_p \right\}
+		\]
+		onde \(P\) é o conjunto dos números primos maiores que três, e \(Q_p\) é um subconjunto dos primos pertencentes à sequência \(S_n(p)\). 
+		
+		Então,
+		\[
+		\bigcup_{n \in \mathbb{N}} a_n = A
+		\]
+		onde \(A\) é o conjunto dos números naturais pares maiores que dois.
+		
+		Em outras palavras, todo número par maior que dois pode ser expresso como a soma de um primo \(p \in P\) e um primo \(q \in Q_p\).
+	\end{theorem}
+	
+	\begin{proof}
+		Seja \(p \in P\) com \(p > 2\), e seja \(Q_p\) o subconjunto dos números primos pertencentes à sequência \(S_n(p)\), conforme definido na Definição 2.5. Pelo Lema 3.1 e pelo Corolário 3.2, sabemos que a sequência \(S_n(p)\) com \(p > 2\) gera todos os números pares que não são múltiplos de \(p\), com exceção do termo específico \(2p\), que é o único múltiplo de \(p\) presente.
+		
+		Definimos, então, para cada \(i \in \mathbb{N}\) associado a um primo \(p_i \in P\), o conjunto:
+		
+		\[
+		A_i = \{p_i + q_j \mid q_j \in Q_{p_i}\}
+		\]
+		
+		onde cada termo \(p_i + q_j\) é a soma do primo fixo \(p_i\) com um primo \(q_j\) pertencente à sequência \(S_n(p_i)\).
+		
+		Observamos que, com exceção de \(2p_i\), todos os elementos de \(A_i\) não são múltiplos de \(p_i\), dado que os termos da sequência \(S_n(p_i)\) são construídos justamente para evitar os múltiplos de \(p_i\), salvo o termo inicial \(2p_i\) quando presente. Além disso, aqueles que não são múltiplos de \(p_i\) podem ser múltiplos de primos menores (se houver) ou maiores, mas não de \(p_i\) especificamente.
+		
+		Dessa forma, os conjuntos \(A_i\) preenchem, de forma distribuída, os pares não múltiplos dos respectivos primos \(p_i\), e a sobreposição entre esses conjuntos é evitada, salvo nos casos em que um número é múltiplo de outros primos diferentes de \(p_i\).
+		
+		Assim, a união dos conjuntos \(A_i\), ou seja,
+		
+		\[
+		\bigcup_{i \in \mathbb{N}} A_i
+		\]
+		
+		cobre integralmente o conjunto dos números pares maiores que dois, sem omitir elementos e sem redundância sistemática de termos, exceto por eventuais múltiplos comuns a diferentes primos.
+		
+		Nota-se, adicionalmente, que estamos considerando apenas \(p > 2\). O caso \(p = 2\) é especial, pois a sequência \(S_n(2)\) se reduz a duas progressões específicas:
+		
+		\[
+		S_n(2) =
+		\begin{cases}
+			4n + 2 \\
+			4n + 4
+		\end{cases}
+		\]
+		
+		que não satisfazem as condições do Teorema de Dirichlet, pois \(mdc(4,2) \neq 1\) e \(mdc(4,4) \neq 1\). Portanto, \(p = 2\) não é incluído na definição geral do teorema.
+		
+		Se estendermos a definição formalmente para \(p = 2\), o único termo válido seria quando \(n = 0\), ou seja,
+		
+		\[
+		a_1 = \{4\}
+		\]
+		
+		Por fim, considerando qualquer \(a_n \in B\), temos que todos os números pares da união das sequências \(A_i\) pertencem a \(A\), isto é,
+		
+		\[
+		\bigcup_{n \in \mathbb{N}} a_n = A
+		\]
+		
+		Encerrando, portanto, a demonstração do teorema.
+	\end{proof}
+	
+	
 	
 	\begin{theorem}[Nome do Teorema]
 		Seja $x \in \mathbb{R}$. Então vale que
