@@ -2,3 +2,6 @@
 *.log
 *.out
 *.synctex.gz
+*.bib
+*.bbl
+*.blg
