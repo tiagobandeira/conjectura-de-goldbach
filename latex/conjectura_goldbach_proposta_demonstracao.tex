@@ -47,13 +47,13 @@
 	\maketitle
 	\begin{otherlanguage}{brazil}
 	\begin{abstract}
-		Este trabalho apresenta uma proposta de abordagem para a Conjectura de Goldbach, utilizando conceitos da Teoria dos Números relacionados a progressões aritméticas e simetrias entre números ímpares. Através da definição de uma sequência \(S_n(p)\), associada a cada número primo \(p > 2\), e da aplicação do Teorema de Dirichlet, demonstra-se que todo número par maior que dois pode ser representado como a soma de um primo fixo e um outro primo pertencente a essa sequência. O desenvolvimento teórico inclui definições formais, proposições, corolários e um teorema central que estabelece que a união dos subconjuntos formados por somas do tipo \(p + S_n(p)\) cobre integralmente o conjunto dos números pares maiores que dois. Embora não se configure como uma demonstração definitiva da conjectura, a abordagem proposta oferece uma nova perspectiva estrutural sobre o problema e abre possibilidades para pesquisas futuras baseadas em decomposições algébricas e simétricas dos números pares.
+		Este trabalho apresenta uma abordagem para a Conjectura de Goldbach, utilizando conceitos da Teoria dos Números relacionados a progressões aritméticas e simetrias entre números ímpares. Por meio da definição de uma sequência \(S_n(p)\), associada a cada número primo \(p > 2\), e da aplicação do Teorema de Dirichlet, mostra-se que todo número par maior que dois pode ser representado como a soma de um primo fixo e outro primo pertencente a essa sequência. O desenvolvimento teórico inclui definições formais, proposições, corolários e um teorema central que estabelece que a união dos subconjuntos formados por somas do tipo \(p + S_n(p)\) cobre integralmente o conjunto dos números pares maiores que dois. Embora este trabalho não afirme se tal resultado configura ou não uma demonstração definitiva da conjectura, a abordagem proposta oferece uma nova perspectiva estrutural sobre o problema e abre possibilidades para pesquisas futuras baseadas em decomposições algébricas e simétricas dos números pares.
 	\end{abstract}
 	\end{otherlanguage}
 	
 
 	\begin{abstract}
-		This paper presents an alternative approach to the Goldbach Conjecture, based on concepts from Number Theory related to arithmetic progressions and symmetries among odd numbers. Through the definition of a sequence \(S_n(p)\), associated with each prime number \(p > 2\), and the application of Dirichlet's theorem, it is shown that every even number greater than two can be expressed as the sum of a fixed prime and another prime belonging to this sequence. The theoretical development includes formal definitions, propositions, corollaries, and a central theorem which states that the union of the subsets formed by sums of the type \(p + S_n(p)\) fully covers the set of even numbers greater than two. Although it does not constitute a definitive proof of the conjecture, the proposed approach offers a new structural perspective on the problem and opens paths for future research based on algebraic and symmetric decompositions of even numbers.
+		This paper presents an approach to the Goldbach Conjecture based on concepts from Number Theory related to arithmetic progressions and symmetries among odd numbers. Through the definition of a sequence \(S_n(p)\), associated with each prime number \(p > 2\), and the application of Dirichlet's theorem, it is shown that every even number greater than two can be expressed as the sum of a fixed prime and another prime belonging to this sequence. The theoretical development includes formal definitions, propositions, corollaries, and a central theorem that establishes that the union of the subsets formed by sums of the type \(p + S_n(p)\) fully covers the set of even numbers greater than two. While it is not claimed here whether this result constitutes a definitive proof of the conjecture, the proposed approach offers a new structural perspective on the problem and opens possibilities for future research based on algebraic and symmetric decompositions of even numbers.	
 	\end{abstract}
 	
 	\textbf{Palavras-chave:} conjectura de goldbach; números primos; teoria dos números.
@@ -428,7 +428,7 @@
 	\end{theorem}
 	
 	\begin{proof}
-		Seja \(p \in P\) com \(p > 2\), e seja \(Q_p\) o subconjunto dos números primos pertencentes à sequência \(S_n(p)\), conforme definido na Definição 2.5. Pelo Lema 3.1 e pelo Corolário 3.2, sabemos que a sequência \(p + S_n(p)\) com \(p > 2\) gera todos os números pares que não são múltiplos de \(p\), com exceção do termo específico \(2p\), que é o único múltiplo de \(p\) presente.
+		Seja \(p \in P\) com \(p > 2\), e seja \(Q_p\) o subconjunto dos números primos pertencentes à sequência \(S_n(p)\), conforme definido na Definição 2.5. Pelo Lema 3.1 e pelo Corolário 3.2, sabemos que a sequência \(p + S_n(p)\) com \(p > 2\) gera todos os números pares que não são múltiplos de \(p\), com exceção do termo específico \(2p\), que é o único múltiplo de \(p\) presente. Ou seja, \(p + S_n(p)\) gera todos o pares maiores que \(2p\) que não são múltiplos de \(p\).
 		
 		Definimos, então, para cada \(i \in \mathbb{N}\) associado a um primo \(p_i \in P\), o conjunto:
 		
@@ -525,10 +525,35 @@
 	\end{proof}
 	
 	
+	\begin{theorem}[Formulação Simétrica da Conjectura de Goldbach]\label{teo:goldbach_por_simetria_de_primos}
+		Todo número par \(a > 2\) pode ser expresso como a soma de dois números primos \(p\) e \(q\), tais que:
+		
+		\[
+		a = p + q
+		\]
+		
+		onde \(p\) é um número primo pertencente ao conjunto \(P\) (primos maiores que dois) e \(q\) é um número primo pertencente à sequência \(S_n(p)\) associada a \(p\), conforme definida neste trabalho.
+		
+		Em outras palavras, para todo número par \(a > 2\), existe um par simétrico de primos \((p, q)\), sendo \(q \in S_n(p)\), tal que:
+		
+		\[
+		a = p + S_n(p)
+		\]
+	\end{theorem}
+	\begin{proof}
+	O resultado segue diretamente do Teorema~\ref{teo:principal} (Cobertura dos Números Pares) e do Corolário~\ref{coro:par_simetrico_primos}, os quais estabelecem que todo número par maior que dois pertence à união dos subconjuntos formados por somas da forma \(p + q\), com \(p\) pertencente ao conjunto dos primos \(P\) e \(q\) pertencente à sequência \(S_n(p)\). Como demonstrado, a sequência \(S_n(p)\) contém infinitos primos e possui relação de simétrica com \(p\), garantindo que todo número par pode ser expresso como a soma de um primo \(p\) e de um primo \(q \in S_n(p)\).
 	
-	\section{Discussão do Corolário~\ref{coro:par_simetrico_primos} e Implicações na Conjectura de Goldbach}
+	Ressalta-se que o caso \(a = 4\) é gerado diretamente como \(4 = 2 + 2\), através da sequência \(S_n(2)\), que constitui um caso particular dentro da construção. Para todos os outros primos \(p > 2\), as propriedades estruturais da sequência \(S_n(p)\) são plenamente aplicáveis conforme as definições apresentadas.
 	
-	O Corolário~\ref{coro:par_simetrico_primos} estabelecido no contexto deste trabalho demonstra que todo número par \(a > 2\) possui um \textbf{par simétrico de primos}, especificamente da forma \(a = p + q\), onde \(p\) é um primo fixado pertencente ao conjunto \(P\) (primos maiores que três) e \(q\) é um primo pertencente à sequência \(S_n(p)\).
+	Isso conclui a demonstração.
+	\end{proof}
+	
+	
+	
+	
+	\section{Discussão do Corolário~\ref{coro:par_simetrico_primos} e do Teorema~\ref{teo:goldbach_por_simetria_de_primos} e Implicações na Conjectura de Goldbach}
+	
+	O Corolário~\ref{coro:par_simetrico_primos} estabelecido no contexto deste trabalho demonstra que todo número par \(a > 2\) possui um \textbf{par simétrico de primos}, especificamente da forma \(a = p + q\), onde \(p\) é um primo fixado pertencente ao conjunto \(P\) (primos maiores que três) e \(q\) é um primo pertencente à sequência \(S_n(p)\). O Teorema~\ref{teo:goldbach_por_simetria_de_primos} estende esse resultado a Conjectura de Goldbach a fim de demonstrá-lo. 
 	
 	\subsection{Interpretação Estrutural}
 	A sequência \(S_n(p)\) possui uma construção baseada na simetria dos números ímpares menores que um determinado valor, conforme definido anteriormente na Proposição~\ref{prop:distancia_simetrica}, no Corolário~\ref{coro:par_simetrico} e na Definiçãp~\ref{def:snp}. Dessa forma, para cada primo \(p\), a sequência \(S_n(p)\) fornece um subconjunto de primos que, somados a \(p\), geram números pares que não são múltiplos de  \(p\), exceto pelo termo  \(2p\), mas, coletivamente, a união desses pares cobre \textbf{todo o conjunto dos pares maiores que dois}, como garantido pelo Teorema~\ref{teo:principal}.
@@ -539,7 +564,7 @@
 	A simetria observada na construção da sequência \(S_n(p)\) não apenas sugere, mas também estrutura formalmente a geração dos pares como combinações específicas de primos e seus simétricos dentro das sequências.
 	
 	\subsection{Observação de Relevância}
-	Ainda que este trabalho possa não constituir uma demonstração completa da Conjectura de Goldbach no sentido clássico, ele fornece uma estrutura formal elaborada e uma decomposição do conjunto dos pares em subconjuntos que, isoladamente, são gerados pela soma de primos específicos com seus simétricos nas sequências \(S_n(p)\).
+	Ainda que o Teorema~\ref{teo:goldbach_por_simetria_de_primos} possa não constituir uma demonstração completa da Conjectura de Goldbach no sentido clássico, este trabalho fornece uma estrutura formal elaborada e uma decomposição do conjunto dos pares em subconjuntos que, isoladamente, são gerados pela soma de primos específicos com seus simétricos nas sequências \(S_n(p)\).
 	
 	Essa abordagem pode, portanto, representar uma estratégia alternativa na busca de uma demonstração completa, ao invés de se focar exclusivamente na busca de por um par de primos qualquer, opta-se pela decomposição sistemática do conjunto dos pares, distribuindo-os segundo as progressões e simetrias associadas a cada primo \(p\).
 	
@@ -549,7 +574,7 @@
 	Além disso, a abordagem sugere a possibilidade de análise algorítmica, uma vez que cada subconjunto \(A_i\) pode ser gerado computacionalmente a partir de um primo \(p_i\) e dos elementos da sequência \(S_n(p_i)\).
 	
 	\subsection{Conclusão da Discussão}
-	Este corolário, portanto, não apenas reforça a validade da construção proposta, como também fornece uma formulação que conecta diretamente a Conjectura de Goldbach com o Teorema de Dirichlet aplicado às progressões associadas às sequências \(S_n(p)\), e com as propriedades de simetria dos números ímpares menores que um determinado limite.
+	O Corolário~\ref{coro:par_simetrico_primos}, portanto, não apenas reforça a validade da construção proposta, como também fornece uma formulação que conecta diretamente a Conjectura de Goldbach com o Teorema de Dirichlet aplicado às progressões associadas às sequências \(S_n(p)\), e com as propriedades de simetria dos números ímpares menores que um determinado limite. Além disso, esse resultado é a principal para demonstrar o Teorema~\ref{teo:goldbach_por_simetria_de_primos} deste trabalho.
 	
 	
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -557,7 +582,7 @@
 	
 	Este trabalho apresentou uma abordagem alternativa para a Conjectura de Goldbach, fundamentada na decomposição dos números pares maiores que dois em somas da forma \(p + q\), onde \(p\) é um primo fixo e \(q\) pertence a uma sequência específica \(S_n(p)\) associada a esse primo. A partir da aplicação do Teorema de Dirichlet e das propriedades de simetria dos números ímpares, foi possível demonstrar que a união dos subconjuntos formados por essas somas gera integralmente o conjunto dos números pares maiores que dois.
 	
-	Embora o resultado obtido não configure uma prova definitiva da Conjectura de Goldbach, ele oferece uma contribuição significativa no sentido de estruturar o problema sob uma nova ótica, organizando os números pares segundo padrões algébricos e simétricos. Além disso, essa abordagem abre espaço para a formulação de novos lemas, conjecturas auxiliares e estratégias de demonstração que podem ser exploradas em pesquisas futuras.
+	Embora haja a possibilidade do resultado obtido não configurar uma prova definitiva da Conjectura de Goldbach através do Teorema~\ref{teo:goldbach_por_simetria_de_primos}, ele oferece uma contribuição significativa no sentido de estruturar o problema sob uma nova ótica, organizando os números pares segundo padrões algébricos e simétricos. Além disso, essa abordagem abre espaço para a formulação de novos lemas, conjecturas auxiliares e estratégias de demonstração que podem ser exploradas em pesquisas futuras.
 	
 	Como trabalhos futuros, sugere-se aprofundar a análise das interseções entre os subconjuntos gerados, investigar a distribuição dos primos dentro das sequências \(S_n(p)\) e explorar a possibilidade de estender essa abordagem para outros problemas clássicos da Teoria dos Números. A proposta aqui apresentada também pode ser adaptada para análises computacionais, permitindo a geração e a verificação automatizada das estruturas formadas, contribuindo assim tanto para a pesquisa teórica quanto para o desenvolvimento de algoritmos relacionados à distribuição dos números primos.
 	
