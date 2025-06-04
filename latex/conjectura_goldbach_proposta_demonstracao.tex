@@ -335,6 +335,30 @@
 	
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	\section{Resultados Principais}
+	\begin{proposition}[Simetria dos Múltiplos]
+		Seja \(a > 2\) um número par natural e seja \(p\) um número primo tal que \(p \mid a\). Então, o simétrico \(S_n(p)\) de \(p\) também é múltiplo de \(p\).
+	\end{proposition}
+	
+	\begin{proof}
+		Suponha, por absurdo, que o simétrico \(S_n(p) = q\) não seja múltiplo de \(p\). 
+		
+		Sendo \(a = q + p\) e assumindo que \(p \mid a\), segue que:
+		
+		\[
+		p \mid (q + p)
+		\]
+		
+		O que implica que:
+		
+		\[
+		p \mid q
+		\]
+		
+		O que é um absurdo, pois assumimos que \(q\) não é múltiplo de \(p\).
+		
+		Portanto, a suposição é falsa e conclui-se que \(S_n(p)\) é múltiplo de \(p\) sempre que \(p \mid a\).
+	\end{proof}
+	
 	\begin{lemma}\label{lema:multip}
 		Seja \(p > 2\) um número primo e \(q > p\) um número ímpar pertencente à sequência \(S_n(p)\). Se \(q\) é primo ou \(q\) não é múltiplo de \(p\), então
 		
@@ -347,24 +371,12 @@
 		
 		\textbf{Caso I:} \(q\) é múltiplo de \(p\).
 		
-		Se \(q\) é múltiplo de \(p\), então existe um inteiro \(k\) tal que
+		Se \(q\) é múltiplo de \(p\), então pela ProposiçãoX, \(S_n(p)\) também é multiplo de \(p\). Portanto,
 		
 		\[
-		q = pk
+		p \mid q \implies 2p \mid (p + q)
 		\]
-		
-		Logo,
-		
-		\[
-		p + q = p + pk = p(1 + k)
-		\]
-		
-		Portanto,
-		
-		\[
-		2p \mid p(1 + k) \implies 2p \mid (p + q)
-		\]
-		
+		Uma vez que \(p + q\) é par.
 		Isso mostra que se \(q\) \textit{é múltiplo de} \(p\), então \(2p\) divide \(p + q\). O contrapositivo também é verdadeiro: se \(q\) \textit{não é múltiplo de} \(p\), então
 		
 		\[
