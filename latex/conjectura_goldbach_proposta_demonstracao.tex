@@ -333,8 +333,6 @@
 	\end{proof}
 	
 	
-	
-	
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	\section{Resultados Principais}
 	\begin{lemma}\label{lema:multip}
@@ -410,7 +408,108 @@
 	\begin{proof}
 		Segue imediatamente do Lema ~\ref{lema:multip}, observando que a única possibilidade de múltiplo de \(p\) ocorre quando \(S_n(p) = p\), o que é excluído pela condição \(S_n(p) > p\).
 	\end{proof}
+	
+	
+	\begin{proposition}
+		Seja \(a \in \mathbb{N}\) um número par tal que \(a > 6\). Então, não existe nenhum conjunto de primos \(P = \{p \in \mathbb{P} : p < \frac{a}{2}\}\) tal que
+		
+		\[
+		a = \prod_{p < \frac{a}{2}} p
+		\]
+		
+		Em outras palavras, nenhum número par \(a > 6\) pode ser expresso como o produto de todos os primos estritamente menores que \(\frac{a}{2}\).
+	\end{proposition}
+	
+	\begin{proof}
+		Seja \(a\) um número par tal que \(a > 6\). Seja
+		
+		\[
+		P(a) = \prod_{p < \frac{a}{2}} p
+		\]
+		
+		o produto de todos os primos estritamente menores que \(\frac{a}{2}\).
+		
+		Observamos que para \(a > 6\) vale \(\frac{a}{2} > 3\), portanto o conjunto de primos menores que \(\frac{a}{2}\) contém pelo menos os primos 2 e 3, e frequentemente mais.
+		
+		O produto \(P(a)\) cresce de forma supermultiplicativa, já que cada primo adicionado ao produto faz com que seu valor cresça pelo menos multiplicando pelo menor primo seguinte.
+		
+		Basta verificar que para qualquer \(a > 6\), o produto \(P(a)\) é estritamente maior que \(a\):
+		
+		- Se \(\frac{a}{2} \geq 5\), então \(P(a) \geq 2 \cdot 3 \cdot 5 = 30\), e como \(\frac{a}{2} \geq 5\), então \(a \geq 10\), mas \(30 > 10\), logo a igualdade é impossível.
+		
+		- Para valores maiores de \(a\), o número de primos no produto só aumenta, e consequentemente \(P(a)\) cresce rapidamente.
+		
+		Logo, não existe \(a > 6\) par tal que
+		
+		\[
+		a = \prod_{p < \frac{a}{2}} p
+		\]
+		
+	\end{proof}
+	
+	\begin{proposition}[Existência de Primos Não Divisores]
+		Seja \(a \in \mathbb{N}\) um número par tal que \(a > 6\). Então, existe pelo menos um primo \(p \in \mathbb{P}\), com \(p < \frac{a}{2}\), tal que \(p\) não divide \(a\).
+	\end{proposition}
+	
+	\begin{proof}
+		Por contradição, suponha que todo primo \(p < \frac{a}{2}\) divide \(a\). Isso implicaria que \(a\) é múltiplo do produto de todos os primos estritamente menores que \(\frac{a}{2}\), ou seja,
+		
+		\[
+		a = k \cdot \prod_{p < \frac{a}{2}} p
+		\]
+		
+		para algum \(k \in \mathbb{N}\). No entanto, isso contradiz diretamente a Proposição~\ref{lema_produto_primos}, que estabelece que nenhum número par \(a > 6\) pode ser expresso como o produto de todos os primos menores que \(\frac{a}{2}\).
+		
+		Portanto, nossa suposição leva a um absurdo. Assim, necessariamente, existe pelo menos um primo \(p < \frac{a}{2}\) tal que \(p\) não divide \(a\).
+		
+		Isso conclui a demonstração.
+	\end{proof}
+	
 	\subsection{Proposta de Demonstração para a conjectura de Goldbach}
+	\begin{definition}[Conjunto \(Q_p\)]
+		Seja \(p \in P\) um número primo fixo com \(p > 2\). Definimos \(Q_p\) como o subconjunto dos números primos pertencentes à sequência \(S_n(p)\), ou seja:
+		
+		\[
+		Q_p = \left\{ q \in S_n(p) \mid q \text{ é primo} \right\}
+		\]
+		
+		onde \(S_n(p)\) é a sequência dos números ímpares construídos com base na simetria dos números não múltiplos de \(p\), conforme definido anteriormente. O conjunto \(Q_p\) representa, portanto, todos os primos que pertencem à sequência \(S_n(p)\) associada a cada primo \(p\).
+	\end{definition}
+	
+	\begin{definition}[Conjunto \(A_p\)]
+		Para um primo \(p \in P\) com \(p > 2\), definimos:
+		
+		\[
+		A_p = \{p + q \mid q \in Q_p\}
+		\]
+		
+		onde \(Q_p\) é o subconjunto dos números primos pertencentes à sequência \(S_n(p)\). O conjunto \(A_p\) contém todos os pares gerados pela soma do primo \(p\) com os primos de sua sequência associada.
+	\end{definition}
+	
+	\begin{lemma}[Cobertura dos Números Pares pelos Subconjuntos \(A_i\)]
+		Seja \(m\) um número par tal que \(m > 2\). Então, existe pelo menos um primo \(p \in P\) tal que \(p\) não divide \(m\), e, portanto, \(m\) pertence ao subconjunto \(A_p\), onde:
+		
+		\[
+		A_p = \{p + q \mid q \in Q_p\}
+		\]
+		
+		com \(Q_p\) sendo o conjunto dos primos pertencentes à sequência \(S_n(p)\) associada a \(p\).
+	\end{lemma}
+	
+	\begin{proof}
+		Suponha, por absurdo, que existe um número par \(m > 2\) tal que \(m\) não pertence a nenhum subconjunto \(A_p\) para todo \(p \in P\). Isso implica que, para todo primo \(p\), o número \(m\) é múltiplo de \(p\).
+		
+		Contudo, não existe número natural finito que seja múltiplo de todos os primos, pois o produto de infinitos primos diverge para o infinito. Portanto, é impossível que \(m\) seja múltiplo de todos os primos do conjunto \(P\).[Proposicao 3.3 e 3.4]
+		
+		Logo, necessariamente, existe pelo menos um primo \(p\) tal que \(p\) não divide \(m\). Consequentemente, como as sequências \(S_n(p)\) são construídas excluindo os múltiplos de \(p\), o número \(m\) pertence ao subconjunto \(A_p = \{p + q \mid q \in Q_p\}\), onde \(q\) percorre os primos da sequência \(S_n(p)\).
+		
+		Isso conclui a demonstração.
+	\end{proof}
+	\begin{remark}
+		Este lema reforça que, embora cada subconjunto \(A_p\) exclua especificamente os múltiplos de \(p\), a união dos subconjuntos cobre integralmente o conjunto dos números pares maiores que dois. Isso decorre do fato de que não existe número par finito que seja múltiplo de todos os primos.
+	\end{remark}
+	
+	
 	\begin{theorem}[Cobertura dos Números Pares]\label{teo:principal}
 		Seja 
 		\[
