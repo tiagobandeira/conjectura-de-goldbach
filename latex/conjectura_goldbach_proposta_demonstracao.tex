@@ -67,7 +67,7 @@
 	\begin{otherlanguage}{brazil}
 	\section{Introdução}
 
-	A Conjectura de Goldbach, proposta em 1742 por Christian Goldbach em uma correspondência com Leonhard Euler, é um dos problemas mais antigos e famosos ainda não resolvidos da Teoria dos Números. Seu enunciado é simples e elegante: \textbf{todo número inteiro par maior que dois pode ser expresso como a soma de dois números primos}. Apesar de resistir a séculos de tentativas de demonstração, a conjectura já foi verificada computacionalmente para números muito grandes, mas uma prova geral e formal permanece desconhecida.
+	A Conjectura de Goldbach, proposta em 1742 por Christian Goldbach em uma correspondência com Leonhard Euler, é um dos problemas mais antigos e famosos ainda não resolvidos da Teoria dos Números. Seu enunciado é simples e elegante: \textbf{todo número inteiro par maior que dois pode ser expresso como a soma de dois números primos}. Apesar de resistir a séculos de tentativas de demonstração, a conjectura já foi verificada computacionalmente para números muito grandes ( \(4 \cdot 10^{18} \) )\cite{oliveira}, mas uma prova geral e formal permanece desconhecida.
 	
 	Diversas abordagens foram desenvolvidas ao longo do tempo para tentar compreender a estrutura que envolve a distribuição dos números primos e sua relação com os números pares. Dentre os trabalhos mais relevantes, destacam-se os estudos baseados em análise matemática, combinatória aditiva, estatística dos primos e o uso de progressões aritméticas associadas ao Teorema de Dirichlet, que garante a existência de infinitos primos em certas classes aritméticas.
 	
@@ -75,7 +75,7 @@
 	
 	A motivação para essa abordagem surge da observação das simetrias existentes entre os números ímpares menores que um dado número par, e da possibilidade de decompor o conjunto dos pares em subconjuntos construídos por somas do tipo \(p + q\), onde \(q\) percorre a sequência \(S_n(p)\). Essa decomposição revela uma estrutura interna que organiza os pares segundo progressões aritméticas, oferecendo uma nova perspectiva sobre o problema.
 	
-	O presente artigo está organizado da seguinte forma: na seção de \textbf{Fundamentação Teórica} são apresentadas as definições formais, proposições, corolários e os teoremas clássicos que sustentam a construção da proposta, com destaque para o Teorema de Dirichlet e as propriedades das sequências \(S_n(p)\). Na seção de \textbf{Resultados Principais} é enunciado e demonstrado o teorema central do trabalho, que mostra como a união dos subconjuntos gerados pelas somas \(p + S_n(p)\) cobre o conjunto dos números pares maiores que dois. Na sequência, apresenta-se uma \textbf{Discussão dos Resultados}, na qual são analisadas as implicações dessa estrutura sobre a Conjectura de Goldbach, bem como as limitações e potenciais desdobramentos futuros da abordagem proposta. Por fim, a seção de \textbf{Conclusão} resume os principais achados e sugere caminhos para investigações posteriores.
+	O presente artigo está organizado da seguinte forma: na seção de \textbf{Fundamentação Teórica} são apresentadas as definições formais, proposições, corolários e os teoremas clássicos que sustentam a construção da proposta, com destaque para o Teorema de Dirichlet e as propriedades das sequências \(S_n(p)\). Na seção de \textbf{Proposta de Demonstração para a Conjectura de Goldbach} é enunciado e demonstrado o teorema central do trabalho, que mostra como a união dos subconjuntos gerados pelas somas \(p + S_n(p)\) cobre o conjunto dos números pares maiores que dois. Na sequência, apresenta-se uma \textbf{Discussão do Corolários\ref{coro:par_simetrico_primos} e do Teorema\ref{teo:goldbach_por_simetria_de_primos} e Implicações na Conjectura de Goldbach}, na qual são analisadas as implicações dessa estrutura sobre a Conjectura de Goldbach, bem como as limitações e potenciais desdobramentos futuros da abordagem proposta. Em seguida, é dedicado uma seção para as \textbf{Considerações Finais sobre a Abordagem Estrutural} que fala sobre o objetivo principal do trabalho. Por fim, a seção de \textbf{Conclusão} resume os principais achados e sugere caminhos para investigações posteriores.
 
 	
 	\subsection*{A conjectura de Goldbach}
@@ -423,7 +423,7 @@
 	\end{proof}
 	
 	
-	\begin{proposition}
+	\begin{proposition}\label{prop: produto_p_menores_a_meio}
 		Seja \(a \in \mathbb{N}\) um número par tal que \(a > 6\). Então, não existe nenhum conjunto de primos \(P = \{p \in \mathbb{P} : p < \frac{a}{2}\}\) tal que
 		
 		\[
@@ -460,7 +460,7 @@
 		
 	\end{proof}
 	
-	\begin{proposition}[Existência de Primos Não Divisores]
+	\begin{proposition}[Existência de Primos Não Divisores]\label{prop:existencia_de_primos_nao_divisores}
 		Seja \(a \in \mathbb{N}\) um número par tal que \(a > 6\). Então, existe pelo menos um primo \(p \in \mathbb{P}\), com \(p < \frac{a}{2}\), tal que \(p\) não divide \(a\).
 	\end{proposition}
 	
@@ -471,7 +471,7 @@
 		a = k \cdot \prod_{p < \frac{a}{2}} p
 		\]
 		
-		para algum \(k \in \mathbb{N}\). No entanto, isso contradiz diretamente a Proposição~\ref{lema_produto_primos}, que estabelece que nenhum número par \(a > 6\) pode ser expresso como o produto de todos os primos menores que \(\frac{a}{2}\).
+		para algum \(k \in \mathbb{N}\). No entanto, isso contradiz diretamente a Proposição~\ref{prop: produto_p_menores_a_meio}, que estabelece que nenhum número par \(a > 6\) pode ser expresso como o produto de todos os primos menores que \(\frac{a}{2}\).
 		
 		Portanto, nossa suposição leva a um absurdo. Assim, necessariamente, existe pelo menos um primo \(p < \frac{a}{2}\) tal que \(p\) não divide \(a\).
 		
@@ -535,7 +535,7 @@
 		Assim, a distância entre pares pode ser compensada por deslocamentos nos simétricos de \(p\), mantendo \(m\) pertencente a \(A_p\), o que conclui a demonstração.
 	\end{proof}
 	
-	\begin{proposition}[Cobertura dos Números Pares pelos Subconjuntos \(A_i\)]
+	\begin{proposition}[Cobertura Parcial dos Números Pares pelos Subconjuntos \(A_p\)]\label{prop:cobertura_parcial_dos_pares}
 		Seja \(m\) um número par tal que \(m > 2\). Então, existe pelo menos um primo \(p \in P\) tal que \(p\) não divide \(m\), e, portanto, \(m\) deve pertencer a algum subconjunto \(A_p\), onde:
 		
 		\[
@@ -548,14 +548,14 @@
 	\begin{proof}
 		Suponha, por absurdo, que existe um número par \(m > 2\) tal que \(m\) não pertence a nenhum subconjunto \(A_p\) para todo \(p \in P\). Isso implica que, para todo primo \(p\), o número \(m\) é múltiplo de \(p\).
 		
-		Contudo, não existe número natural finito que seja múltiplo de todos os primos, pois o produto de infinitos primos diverge para o infinito. Portanto, é impossível que \(m\) seja múltiplo de todos os primos do conjunto \(P\).[Proposicao 3.3 e 3.4]
+		Contudo, já foi demonstrado nas Proposições \ref{prop: produto_p_menores_a_meio} e \ref{prop:existencia_de_primos_nao_divisores} que não há como \(m\) ser múltiplo de todos os primos \( p_i \) tais que \( p_i < m/2 \). 
 		
 		Logo, necessariamente, existe pelo menos um primo \(p\) tal que \(p\) não divide \(m\). Consequentemente, como as sequências \(S_n(p)\) são construídas excluindo os múltiplos de \(p\), o número \(m\) pode pertencer a algum subconjunto \(A_p = \{p + q \mid q \in Q_p\}\), onde \(q\) percorre os primos da sequência \(S_n(p)\).
 		
 		Isso conclui a demonstração.
 	\end{proof}
 	\begin{remark}
-		Este lema reforça que, embora cada subconjunto \(A_p\) exclua especificamente os múltiplos de \(p\), a união dos subconjuntos cobre parcialmente o conjunto dos números pares maiores que dois. Isso decorre do fato de que não existe número par finito que seja múltiplo de todos os primos. E parcialmente, pois nem todos os pares não múltiplos de p são garantidos em um único \(A_p\), porém a união dos \(A_p\) e a cobertura para todos os pares maiores que dois será demonstrada no próximo teorema.
+		A Proposição~\ref{prop:cobertura_parcial_dos_pares} reforça que, embora cada subconjunto \(A_p\) exclua especificamente os múltiplos de \(p\), a união dos subconjuntos cobre parcialmente o conjunto dos números pares maiores que dois. Isso decorre do fato de que não existe número par finito que seja múltiplo de todos os primos menores que a metade desse par. E parcialmente, pois nem todos os pares não múltiplos de p são garantidos em um único \(A_p\), porém a união dos \(A_p\) e a cobertura para todos os pares maiores que dois será demonstrada no próximo teorema.
 	\end{remark}
 	
 	\begin{lemma}[Propagação Estrutural por Deslocamento Simétrico]
@@ -620,7 +620,7 @@
 		Logo, a suposição de que \(a\) está fora de todos os conjuntos \(A_p\), inclusive por deslocamento simétrico, contradiz a própria estrutura construtiva baseada em infinitude, simetria e progressão. Isso conclui a demonstração por absurdo.
 	\end{proof}
 	
-	Os resultados apresentados até aqui — em particular, o Lema~\ref{lema:3.12}, que garante que todo número par \( a > 2 \) pertence a algum subconjunto \( A_p \), e o Corolário~\ref{cor:3.13}, que reforça essa afirmação via argumento de exclusão estrutural — permitem consolidar formalmente a cobertura completa do conjunto dos números pares maiores que dois por meio das somas entre primos organizadas nos subconjuntos \( A_p \).
+	Os resultados apresentados até aqui — em particular, o Lema~\ref{lema:cobertura_dos_pares}, que garante que todo número par \( a > 2 \) pertence a algum subconjunto \( A_p \), e o Corolário~\ref{coro:contradicao_estrutural}, que reforça essa afirmação via argumento de exclusão estrutural — permitem consolidar formalmente a cobertura completa do conjunto dos números pares maiores que dois por meio das somas entre primos organizadas nos subconjuntos \( A_p \).
 	
 	A seguir, enunciamos o resultado que expressa essa cobertura de forma global e sistemática.
 	
@@ -774,6 +774,20 @@
 	\subsection{Conclusão da Discussão}
 	O Corolário~\ref{coro:par_simetrico_primos}, portanto, não apenas reforça a validade da construção proposta, como também fornece uma formulação que conecta diretamente a Conjectura de Goldbach com o Teorema de Dirichlet aplicado às progressões associadas às sequências \(S_n(p)\), e com as propriedades de simetria dos números ímpares menores que um determinado limite. Além disso, esse resultado é a principal para demonstrar o Teorema~\ref{teo:goldbach_por_simetria_de_primos} deste trabalho.
 	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\section{Considerações Finais sobre a Abordagem Estrutural}
+	
+	O objetivo central deste trabalho não foi apresentar uma demonstração direta da Conjectura de Goldbach nos moldes tradicionais, isto é, a partir da simples verificação da existência de um par de primos \(p\) e \(q\) tal que \(a = p + q\) para cada número par \(a > 2\).
+	
+	Em vez disso, a proposta aqui desenvolvida busca construir uma estrutura matemática baseada em propriedades de simetria, progressões aritméticas e exclusão sistemática de múltiplos, com o intuito de compreender como os pares podem emergir da organização interna dos primos.
+	
+	A partir da definição das sequências \(S_n(p)\) e dos subconjuntos \(A_p = \{p + q \mid q \in Q_p\}\), onde \(Q_p\) representa os primos contidos em \(S_n(p)\), foi possível observar uma malha algébrica que sugere um padrão de cobertura dos números pares baseado em regularidades estruturais. Essa malha parece se propagar por meio de deslocamentos simétricos dos elementos \(q\), com a propriedade de que, caso \(q + 2k\) ou \(q - 2k\) seja primo, então o próximo (ou anterior) número par pode ser alcançado dentro do mesmo subconjunto \(A_p\).
+	
+	A abordagem aqui proposta, portanto, pode ser interpretada como uma tentativa de compreender a Conjectura de Goldbach não pela força bruta de combinar primos aleatoriamente, mas por meio de uma organização sistemática, onde a simetria dos ímpares e as restrições aritméticas impõem uma estrutura que pode justificar a representação de todos os pares.
+	
+	Ainda que essa estrutura possar não constituir, a priori, uma prova formal da conjectura, acredita-se que ela ofereça uma nova perspectiva sobre o problema, passível de aprofundamentos futuros e refinamentos que poderão, eventualmente, contribuir para a compreensão teórica mais ampla da conjectura e da distribuição dos primos.
+	
 	
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	\section{Conclusão}
@@ -785,6 +799,7 @@
 	Como trabalhos futuros, sugere-se aprofundar a análise das interseções entre os subconjuntos gerados, investigar a distribuição dos primos dentro das sequências \(S_n(p)\) e explorar a possibilidade de estender essa abordagem para outros problemas clássicos da Teoria dos Números. A proposta aqui apresentada também pode ser adaptada para análises computacionais, permitindo a geração e a verificação automatizada das estruturas formadas, contribuindo assim tanto para a pesquisa teórica quanto para o desenvolvimento de algoritmos relacionados à distribuição dos números primos.
 	
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
 	\section*{Agradecimentos}
 	
 	Ofereço este trabalho em homenagem a todos os meus professores de matemática, que contribuíram para minha formação e paixão pela matemática.
@@ -800,6 +815,12 @@
 		
 		\bibitem{paiva}
 		C. D. C. Paiva, et al. \textit{A busca pela prova da conjectura de Goldbach: explorando suas conquistas}. Caderno Pedagógico, 21(7): e5770-e5770, 2024.
+		
+		\bibitem{oliveira}
+		T. Oliveira e Silva, S. Herzog, and S. Pardi,
+		Empirical verification of the even Goldbach conjecture and computation of prime gaps up to \(4 \cdot 10^{18}\),
+		\textit{Math. Comp.} \textbf{83} (2014), no. 288, 2033--2060.
+		
 		
 		
 		
