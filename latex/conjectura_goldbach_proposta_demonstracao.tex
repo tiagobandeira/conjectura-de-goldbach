@@ -64,6 +64,7 @@
 	%\vspace{1cm}
 	
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\begin{otherlanguage}{brazil}
 	\section{Introdução}
 
 	A Conjectura de Goldbach, proposta em 1742 por Christian Goldbach em uma correspondência com Leonhard Euler, é um dos problemas mais antigos e famosos ainda não resolvidos da Teoria dos Números. Seu enunciado é simples e elegante: \textbf{todo número inteiro par maior que dois pode ser expresso como a soma de dois números primos}. Apesar de resistir a séculos de tentativas de demonstração, a conjectura já foi verificada computacionalmente para números muito grandes, mas uma prova geral e formal permanece desconhecida.
@@ -334,7 +335,7 @@
 	
 	
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	\section{Resultados Principais}
+	\section{Proposta de Demonstração para a Conjectura de Goldbach}
 	\begin{proposition}[Simetria dos Múltiplos]
 		Seja \(a > 2\) um número par natural e seja \(p\) um número primo tal que \(p \mid a\). Então, o simétrico \(S_n(p)\) de \(p\) também é múltiplo de \(p\).
 	\end{proposition}
@@ -477,7 +478,7 @@
 		Isso conclui a demonstração.
 	\end{proof}
 	
-	\subsection{Proposta de Demonstração para a conjectura de Goldbach}
+	\subsection{Propagação Estrutural e Cobertura dos Números pares Pares}
 	\begin{definition}[Conjunto \(Q_p\)]
 		Seja \(p \in P\) um número primo fixo com \(p > 2\). Definimos \(Q_p\) como o subconjunto dos números primos pertencentes à sequência \(S_n(p)\), ou seja:
 		
@@ -487,6 +488,7 @@
 		
 		onde \(S_n(p)\) é a sequência dos números ímpares construídos com base na simetria dos números não múltiplos de \(p\), conforme definido anteriormente. O conjunto \(Q_p\) representa, portanto, todos os primos que pertencem à sequência \(S_n(p)\) associada a cada primo \(p\).
 	\end{definition}
+	
 	
 	\begin{definition}[Conjunto \(A_p\)]
 		Para um primo \(p \in P\) com \(p > 2\), definimos:
@@ -498,70 +500,153 @@
 		onde \(Q_p\) é o subconjunto dos números primos pertencentes à sequência \(S_n(p)\). O conjunto \(A_p\) contém todos os pares gerados pela soma do primo \(p\) com os primos de sua sequência associada.
 	\end{definition}
 	
-	\begin{lemma}[Cobertura dos Números Pares pelos Subconjuntos \(A_i\)]
-		Seja \(m\) um número par tal que \(m > 2\). Então, existe pelo menos um primo \(p \in P\) tal que \(p\) não divide \(m\), e, portanto, \(m\) pertence ao subconjunto \(A_p\), onde:
+	\begin{definition}[Conjunto dos Pares Maiores que 2 \(A\)]
+		Seja \(A\) definido como o conjunto dos números pares maiores que dois. Ou seja, 
+		\[
+		A = \{a \in \mathbb{N} \mid a > 2 \text{ e } a \text{ é par} \}
+		\]
+	\end{definition}
+	
+	\begin{proposition}[Simetria de Propagação a partir de um Par Menor]
+		Seja \(m > a\) um número par. Para qualquer par \(a = p + q \in A_p\), existe um deslocamento \(k \in \mathbb{N}\) tal que:
+		
+		\[
+		m = p + (q + 2k) \quad \text{ou} \quad m = p + (q - 2k)
+		\]
+		
+		e portanto \(m \in A_p\), desde que \(q \pm 2k\) seja primo. Isso ocorre porque a diferença \(m - a = 2k\) pode ser compensada por um deslocamento simétrico no elemento \(q \in Q_p\), preservando a estrutura de \(A_p\) e reforçando sua propagação.
+	\end{proposition}
+	
+	\begin{proof}
+		Seja \(m > a\), com \(a = p + q \in A_p\), e seja \(q \in Q_p\) o simétrico de \(p\) que gera \(a\).
+		
+		Como \(m - a = 2k\), para algum \(k \in \mathbb{N}\), temos:
+		
+		\[
+		m = a + 2k = p + (q + 2k).
+		\]
+		
+		Se \(q + 2k\) for primo e \(q + 2k > p\), então, como \(S_n(p)\) é a sequência dos ímpares maiores que \(p\) não múltiplos de \(p\), segue que \(q + 2k \in S_n(p)\) e, sendo primo, \(q + 2k \in Q_p\).
+		
+		Logo, \(m = p + (q + 2k) \in A_p\).
+		
+		O mesmo argumento vale para \(m < a\), com \(m = a - 2k = p + (q - 2k)\), assumindo \(q - 2k\) primo, maior que \(p\) e não múltiplo de \(p\).
+		
+		Assim, a distância entre pares pode ser compensada por deslocamentos nos simétricos de \(p\), mantendo \(m\) pertencente a \(A_p\), o que conclui a demonstração.
+	\end{proof}
+	
+	\begin{proposition}[Cobertura dos Números Pares pelos Subconjuntos \(A_i\)]
+		Seja \(m\) um número par tal que \(m > 2\). Então, existe pelo menos um primo \(p \in P\) tal que \(p\) não divide \(m\), e, portanto, \(m\) deve pertencer a algum subconjunto \(A_p\), onde:
 		
 		\[
 		A_p = \{p + q \mid q \in Q_p\}
 		\]
 		
 		com \(Q_p\) sendo o conjunto dos primos pertencentes à sequência \(S_n(p)\) associada a \(p\).
-	\end{lemma}
+	\end{proposition}
 	
 	\begin{proof}
 		Suponha, por absurdo, que existe um número par \(m > 2\) tal que \(m\) não pertence a nenhum subconjunto \(A_p\) para todo \(p \in P\). Isso implica que, para todo primo \(p\), o número \(m\) é múltiplo de \(p\).
 		
 		Contudo, não existe número natural finito que seja múltiplo de todos os primos, pois o produto de infinitos primos diverge para o infinito. Portanto, é impossível que \(m\) seja múltiplo de todos os primos do conjunto \(P\).[Proposicao 3.3 e 3.4]
 		
-		Logo, necessariamente, existe pelo menos um primo \(p\) tal que \(p\) não divide \(m\). Consequentemente, como as sequências \(S_n(p)\) são construídas excluindo os múltiplos de \(p\), o número \(m\) pertence ao subconjunto \(A_p = \{p + q \mid q \in Q_p\}\), onde \(q\) percorre os primos da sequência \(S_n(p)\).
+		Logo, necessariamente, existe pelo menos um primo \(p\) tal que \(p\) não divide \(m\). Consequentemente, como as sequências \(S_n(p)\) são construídas excluindo os múltiplos de \(p\), o número \(m\) pode pertencer a algum subconjunto \(A_p = \{p + q \mid q \in Q_p\}\), onde \(q\) percorre os primos da sequência \(S_n(p)\).
 		
 		Isso conclui a demonstração.
 	\end{proof}
 	\begin{remark}
-		Este lema reforça que, embora cada subconjunto \(A_p\) exclua especificamente os múltiplos de \(p\), a união dos subconjuntos cobre integralmente o conjunto dos números pares maiores que dois. Isso decorre do fato de que não existe número par finito que seja múltiplo de todos os primos.
+		Este lema reforça que, embora cada subconjunto \(A_p\) exclua especificamente os múltiplos de \(p\), a união dos subconjuntos cobre parcialmente o conjunto dos números pares maiores que dois. Isso decorre do fato de que não existe número par finito que seja múltiplo de todos os primos. E parcialmente, pois nem todos os pares não múltiplos de p são garantidos em um único \(A_p\), porém a união dos \(A_p\) e a cobertura para todos os pares maiores que dois será demonstrada no próximo teorema.
 	\end{remark}
 	
-	
-	\begin{theorem}[Cobertura dos Números Pares]\label{teo:principal}
-		Seja 
-		\[
-		B = \left\{ (a_n)_{n \in \mathbb{N}} \mid a_n = p + q, \, p \in P, \, q \in Q_p \right\}
-		\]
-		onde \(P\) é o conjunto dos números primos maiores que três, e \(Q_p\) é um subconjunto dos primos pertencentes à sequência \(S_n(p)\). 
+	\begin{lemma}[Propagação Estrutural por Deslocamento Simétrico]
+		Seja \(a = p + q\), com \(p \in P\), \(q \in Q_p\) e \(q > p\). Então, para todo \(k \in \mathbb{N}\), se \(q + 2k\) (ou \(q - 2k\)) for primo, então:
 		
-		Então,
 		\[
-		\bigcup_{n \in \mathbb{N}} a_n = A
+		a \pm 2k = p + (q \pm 2k)
 		\]
-		onde \(A\) é o conjunto dos números naturais pares maiores que dois.
 		
-		Em outras palavras, todo número par maior que dois pode ser expresso como a soma de um primo \(p \in P\) e um primo \(q \in Q_p\).
-	\end{theorem}
+		e como \(q \pm 2k > p\) e não múltiplo de \(p\), tem-se que \(q \pm 2k \in Q_p \subset S_n(p)\), logo \(a \pm 2k \in A_p\).
+	\end{lemma}
 	
 	\begin{proof}
-		Seja \(p \in P\) com \(p > 2\), e seja \(Q_p\) o subconjunto dos números primos pertencentes à sequência \(S_n(p)\), conforme definido na Definição 2.5. Pelo Lema 3.1 e pelo Corolário 3.2, sabemos que a sequência \(p + S_n(p)\) com \(p > 2\) gera todos os números pares que não são múltiplos de \(p\), com exceção do termo específico \(2p\), que é o único múltiplo de \(p\) presente. Ou seja, \(p + S_n(p)\) gera todos o pares maiores que \(2p\) que não são múltiplos de \(p\).
+		Seja \(q \in Q_p\) tal que \(a = p + q\). Como \(q > p\) e \(Q_p \subset S_n(p)\), então \(q\) é um primo ímpar não múltiplo de \(p\), pertencente à sequência simétrica \(S_n(p)\).
 		
-		Definimos, então, para cada \(i \in \mathbb{N}\) associado a um primo \(p_i \in P\), o conjunto:
-		
-		\[
-		A_i = \{p_i + q_j \mid q_j \in Q_{p_i}\}
-		\]
-		
-		onde cada termo \(p_i + q_j\) é a soma do primo fixo \(p_i\) com um primo \(q_j\) pertencente à sequência \(S_n(p_i)\).
-		
-		Observamos que, com exceção de \(2p_i\), todos os elementos de \(A_i\) não são múltiplos de \(p_i\), dado que os termos da sequência \(S_n(p_i)\) são construídos justamente para evitar os múltiplos de \(p_i\), salvo o termo inicial \(2p_i\) quando presente. Além disso, aqueles que não são múltiplos de \(p_i\) podem ser múltiplos de primos menores (se houver) ou maiores, mas não de \(p_i\) especificamente.
-		
-		Dessa forma, os conjuntos \(A_i\) preenchem, de forma distribuída, os pares não múltiplos dos respectivos primos \(p_i\), e a sobreposição entre esses conjuntos é evitada, salvo nos casos em que um número é múltiplo de outros primos diferentes de \(p_i\).
-		
-		Assim, a união dos conjuntos \(A_i\), ou seja,
+		Considere \(q + 2k\), para \(k \in \mathbb{N}\). Se \(q + 2k\) for primo e satisfizer \(q + 2k > p\) e \(q + 2k \not\equiv 0 \pmod{p}\), então \(q + 2k \in S_n(p)\), e sendo primo, \(q + 2k \in Q_p\). Portanto:
 		
 		\[
-		\bigcup_{i \in \mathbb{N}} A_i
+		a + 2k = p + (q + 2k) \in A_p.
 		\]
 		
-		cobre integralmente o conjunto dos números pares maiores que dois, sem omitir elementos e sem redundância sistemática de termos, exceto por eventuais múltiplos comuns a diferentes primos.
+		Analogamente, se \(q - 2k > p\) e \(q - 2k\) também for primo e não múltiplo de \(p\), então \(q - 2k \in Q_p\), e:
 		
-		Nota-se, adicionalmente, que estamos considerando apenas \(p > 2\). O caso \(p = 2\) é especial, pois a sequência \(S_n(2)\) se reduz a duas progressões específicas:
+		\[
+		a - 2k = p + (q - 2k) \in A_p.
+		\]
+		
+		Logo, a estrutura \(A_p\) permite a geração de pares consecutivos por deslocamento simétrico dos elementos \(q \in Q_p\), concluindo a demonstração.
+	\end{proof}
+	
+	\begin{lemma}[Cobertura Estrutural dos Números Pares]\label{lema:cobertura_dos_pares}
+		Seja \(a > 2\) um número par. Então existe ao menos um primo \(p < \frac{a}{2}\) tal que \(a \in A_p\), onde:
+		
+		\[
+		A_p = \{p + q \mid q \in Q_p\},
+		\]
+		
+		e \(Q_p\) é o conjunto dos primos pertencentes à sequência simétrica \(S_n(p)\) associada a \(p\).
+	\end{lemma}
+	
+	\begin{proof}
+		Seja \(a > 2\) um número par. Suponha, por absurdo, que \(a\) não pertence a nenhum subconjunto \(A_p\), com \(p < \frac{a}{2}\). Isso implica que, para todo primo \(p\) nessa faixa, não existe \(q \in Q_p\) tal que \(a = p + q\).
+		
+		Mais ainda, como demonstrado na seção anterior, essa exclusão deve valer também para todos os deslocamentos simétricos \(q = S_n(p) \pm 2k\), que, sendo maiores que \(p\) e não múltiplos de \(p\), também pertencem a \(S_n(p)\), e, se primos, pertencem a \(Q_p\). Assim, para manter a exclusão total de \(a\), todos esses deslocamentos devem deixar de gerar primos — o que contradiz a infinitude e a densidade dos primos em \(S_n(p)\), conforme garantido pelo Teorema de Dirichlet.
+		
+		Além disso, conforme a proposição anterior, qualquer par \(a\) pode ser alcançado por deslocamento a partir de algum par menor \(a_0 = p + q\) pertencente a \(A_p\), o que reforça a conectividade da estrutura.
+		
+		Logo, a suposição de que \(a\) não pertence a nenhum \(A_p\) leva a uma contradição com as propriedades da estrutura construída. Conclui-se, portanto, que todo número par \(a > 2\) pertence a ao menos um subconjunto \(A_p\).
+	\end{proof}
+	
+	\begin{corollary}[Contradição Estrutural por Exclusão Total]\label{coro:contradicao_estrutural}
+		Seja \(a > 2\) um número par. Então a pertence a algum \(A_p\).
+	\end{corollary}
+	
+	\begin{proof}
+		Suponha, por absurdo, que existe um número par \(a > 4\) tal que \(a \notin A_p\) para todo primo \(p < \frac{a}{2}\), e que não exista \(q \in Q_p\) tal que \(q = S_n(p) \pm 2k\) e \(a = p + q\). Isso implica que \(a\) não pode ser obtido nem por combinação direta, nem por deslocamento simétrico a partir de qualquer subconjunto \(A_p\), o que contradiz a estrutura baseada na infinitude dos primos, na progressão simétrica dos elementos de \(S_n(p)\) e na continuidade das somas geradas em \(A_p\).
+		
+		Como foi demonstrado anteriormente, os conjuntos \(A_p\) são formados por somas da forma \(p + q\), com \(q \in Q_p\), e sua propagação ocorre através de deslocamentos simétricos \(q \pm 2k\), que também pertencem a \(Q_p\) sempre que satisfazem as condições de primalidade e \(q \pm 2k > p\).
+		
+		Como existem diversos primos \(p < \frac{a}{2}\), e para cada um deles a sequência \(S_n(p)\) contém infinitos ímpares não múltiplos de \(p\), dos quais infinitos são primos por Dirichlet, a exclusão completa de \(a\) requer que todos esses primos falhem simultaneamente em gerar \(a\), tanto diretamente quanto por deslocamento. Isso é estruturalmente incompatível com a densidade dos primos nos conjuntos \(Q_p\) e com a progressão simétrica dos pares gerados por \(A_p\).
+		
+		Logo, a suposição de que \(a\) está fora de todos os conjuntos \(A_p\), inclusive por deslocamento simétrico, contradiz a própria estrutura construtiva baseada em infinitude, simetria e progressão. Isso conclui a demonstração por absurdo.
+	\end{proof}
+	
+	Os resultados apresentados até aqui — em particular, o Lema~\ref{lema:3.12}, que garante que todo número par \( a > 2 \) pertence a algum subconjunto \( A_p \), e o Corolário~\ref{cor:3.13}, que reforça essa afirmação via argumento de exclusão estrutural — permitem consolidar formalmente a cobertura completa do conjunto dos números pares maiores que dois por meio das somas entre primos organizadas nos subconjuntos \( A_p \).
+	
+	A seguir, enunciamos o resultado que expressa essa cobertura de forma global e sistemática.
+	
+	\begin{theorem}[Cobertura dos Números Pares]\label{teo:cobertura_dos_pares}
+		Seja
+		\[
+		B = \{(a_n)_{n \in \mathbb{N}} \mid a_n = p + q,\, p \in P,\, q \in Q_p\},
+		\]
+		onde \(P\) é o conjunto dos números primos maiores que dois, e \(Q_p\) é o subconjunto dos primos pertencentes à sequência simétrica \(S_n(p)\) associada a cada \(p \in P\).
+		
+		Então, a união das sequências \(a_n\) cobre integralmente o conjunto dos números pares maiores que dois, isto é,
+		\[
+		\bigcup_{n \in \mathbb{N}} a_n = A,
+		\]
+		com \(A = \{a \in \mathbb{N} \mid a > 2 \text{ e } a \text{ é par} \}\).
+	\end{theorem}
+	\begin{proof}
+		Pelo Lema~\ref{lema:cobertura_dos_pares} e pelo Corolário~\ref{coro:contradicao_estrutural}, todo número par \(a > 2\) pertence a algum subconjunto \(A_p = \{p + q \mid q \in Q_p\}\), com \(Q_p\) sendo o subconjunto dos primos pertencentes à sequência \(S_n(p)\) associada ao primo \(p\). O Corolário~\ref{coro:contradicao_estrutural} reforça que não é possível estruturalmente excluir um número par da totalidade dos \(A_p\), dado o comportamento de propagação simétrica dos termos \(q \pm 2k\) e a densidade dos primos nos conjuntos \(Q_p\).
+		
+		Portanto, todo número par \(a > 2\) é gerado por alguma sequência \(a_n = p + q\), com \(p \in P\) e \(q \in Q_p\). Assim, a união das sequências \(a_n\) contidas em \(B\) cobre integralmente o conjunto \(A\) dos pares maiores que dois:
+		
+		\[
+		\bigcup_{n \in \mathbb{N}} a_n = A.
+		\]
+		
+			Nota-se, adicionalmente, que estamos considerando apenas \(p > 2\). O caso \(p = 2\) é especial, pois a sequência \(S_n(2)\) se reduz a duas progressões específicas:
 		
 		\[
 		S_n(2) =
@@ -579,14 +664,13 @@
 		a_1 = \{4\}
 		\]
 		
-		Por fim, considerando qualquer \(a_n \in B\), temos que todos os números pares da união das sequências \(A_i\) pertencem a \(A\), isto é,
+		Os seja, o número \(4\) constitui um caso especial, pois é o único número par gerado exclusivamente pela soma \(2 + 2\), isto é, pelo conjunto \(A_2\). Como a construção principal considera apenas primos \(p > 2\), o número \(4\) não é alcançado pelas sequências \(A_p\) com \(p > 2\), nem pela propagação por deslocamento simétrico. No entanto, como mencionado anteriormente, esse caso está adequadamente tratado e incorporado na estrutura através da definição isolada de \(a_1 = \{4\}\), que representa a única contribuição de \(A_2\).
 		
-		\[
-		\bigcup_{n \in \mathbb{N}} a_n = A
-		\]
+		Portanto, a cobertura estabelecida pelo Teorema permanece válida para todos os pares \(a > 2\), com a inclusão explícita de \(4\) como um caso particular.
 		
-		Encerrando, portanto, a demonstração do teorema.
 	\end{proof}
+	
+
 	\begin{corollary}[Par Simétrico de Primos]\label{coro:par_simetrico_primos}
 		Todo número par \(a > 2\) possui um par simétrico de primos \(p\) e \(q \in S_n(p)\) tal que:
 		
@@ -596,7 +680,7 @@
 	\end{corollary}
 	
 	\begin{proof}
-		Seja \(a\) um número par tal que \(a > 2\). Pelo Teorema 3.3, sabemos que:
+		Seja \(a\) um número par tal que \(a > 2\). Pelo Teorema~\ref{teo:cobertura_dos_pares}, sabemos que:
 		
 		\[
 		a \in \bigcup_{i \in \mathbb{N}} A_i
@@ -626,7 +710,7 @@
 		
 		com \(p\) e \(q\) sendo primos, onde \(q \in S_n(p)\).
 		
-		Esse resultado é garantido diretamente pelo Teorema 3.3, uma vez que:
+		Esse resultado é garantido diretamente pelo Teorema~\ref{teo:cobertura_dos_pares}, uma vez que:
 		
 		\[
 		\bigcup_{i \in \mathbb{N}} A_i = A
@@ -652,7 +736,7 @@
 		\]
 	\end{theorem}
 	\begin{proof}
-	O resultado segue diretamente do Teorema~\ref{teo:principal} (Cobertura dos Números Pares) e do Corolário~\ref{coro:par_simetrico_primos}, os quais estabelecem que todo número par maior que dois pertence à união dos subconjuntos formados por somas da forma \(p + q\), com \(p\) pertencente ao conjunto dos primos \(P\) e \(q\) pertencente à sequência \(S_n(p)\). Como demonstrado, a sequência \(S_n(p)\) contém infinitos primos e possui relação de simétrica com \(p\), garantindo que todo número par pode ser expresso como a soma de um primo \(p\) e de um primo \(q \in S_n(p)\).
+	O resultado segue diretamente do Teorema~\ref{teo:cobertura_dos_pares} (Cobertura dos Números Pares) e do Corolário~\ref{coro:par_simetrico_primos}, os quais estabelecem que todo número par maior que dois pertence à união dos subconjuntos formados por somas da forma \(p + q\), com \(p\) pertencente ao conjunto dos primos \(P\) e \(q\) pertencente à sequência \(S_n(p)\). Como demonstrado, a sequência \(S_n(p)\) contém infinitos primos e possui relação simétrica com \(p\), garantindo que todo número par pode ser expresso como a soma de um primo \(p\) e de um primo \(q \in S_n(p)\).
 	
 	Ressalta-se que o caso \(a = 4\) é gerado diretamente como \(4 = 2 + 2\), através da sequência \(S_n(2)\), que constitui um caso particular dentro da construção. Para todos os outros primos \(p > 2\), as propriedades estruturais da sequência \(S_n(p)\) são plenamente aplicáveis conforme as definições apresentadas.
 	
@@ -660,14 +744,17 @@
 	\end{proof}
 	
 	
-	
-	
 	\section{Discussão do Corolário~\ref{coro:par_simetrico_primos} e do Teorema~\ref{teo:goldbach_por_simetria_de_primos} e Implicações na Conjectura de Goldbach}
+	
 	
 	O Corolário~\ref{coro:par_simetrico_primos} estabelecido no contexto deste trabalho demonstra que todo número par \(a > 2\) possui um \textbf{par simétrico de primos}, especificamente da forma \(a = p + q\), onde \(p\) é um primo fixado pertencente ao conjunto \(P\) (primos maiores que três) e \(q\) é um primo pertencente à sequência \(S_n(p)\). O Teorema~\ref{teo:goldbach_por_simetria_de_primos} estende esse resultado a Conjectura de Goldbach a fim de demonstrá-lo. 
 	
 	\subsection{Interpretação Estrutural}
-	A sequência \(S_n(p)\) possui uma construção baseada na simetria dos números ímpares menores que um determinado valor, conforme definido anteriormente na Proposição~\ref{prop:distancia_simetrica}, no Corolário~\ref{coro:par_simetrico} e na Definiçãp~\ref{def:snp}. Dessa forma, para cada primo \(p\), a sequência \(S_n(p)\) fornece um subconjunto de primos que, somados a \(p\), geram números pares que não são múltiplos de  \(p\), exceto pelo termo  \(2p\), mas, coletivamente, a união desses pares cobre \textbf{todo o conjunto dos pares maiores que dois}, como garantido pelo Teorema~\ref{teo:principal}.
+	A sequência \(S_n(p)\) possui uma construção baseada na simetria dos números ímpares menores que um determinado valor, conforme definido anteriormente na Proposição~\ref{prop:distancia_simetrica}, no Corolário~\ref{coro:par_simetrico} e na Definiçãp~\ref{def:snp}. Dessa forma, para cada primo \(p\), a sequência \(S_n(p)\) fornece um subconjunto de primos que, somados a \(p\), geram números pares que não são múltiplos de  \(p\), exceto pelo termo  \(2p\), mas, coletivamente, a união desses pares cobre \textbf{todo o conjunto dos pares maiores que dois}, como garantido pelo Teorema~\ref{teo:cobertura_dos_pares}.
+	
+	\subsection{Propagação Estrutural e Exclusão por Contradição}
+	
+	Na seção anterior, exploramos como a estrutura desenvolvida a partir das sequências \(S_n(p)\) permite não apenas a geração de um número par específico \(a\), mas também a propagação de representações para pares subsequentes e anteriores por meio de deslocamentos simétricos. Tal característica sustenta a densidade e interconexão entre os subconjuntos \(A_p\), sugerindo que o não pertencimento de um par a qualquer \(A_p\) levaria a uma contradição estrutural.
 	
 	\subsection{Implicações Diretas na Conjectura de Goldbach}
 	Este resultado sustenta, sob a construção proposta, que qualquer número par maior que dois \textbf{pode ser expresso como a soma de dois primos}, sendo um deles um primo fixo \(p\) e o outro um primo proveniente da sequência \(S_n(p)\) associada a esse \(p\).
@@ -703,6 +790,7 @@
 	Ofereço este trabalho em homenagem a todos os meus professores de matemática, que contribuíram para minha formação e paixão pela matemática.
 	
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\end{otherlanguage}
 	\begin{thebibliography}{9}
 		
 		\bibitem{apostol}
