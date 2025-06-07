@@ -333,10 +333,49 @@
 		Por definição, \( S_n(p) \) é ímpar. De fato, como \( p > 2 \) é um número primo, ele também é ímpar. Assim, a soma de dois números ímpares é sempre um número par. Portanto, \( S_n(p) + p \) é par. 
 	\end{proof}
 	
+	\begin{proposition}[Propriedade da divisibilidade na soma]\label{prop:divisibilidade_na_soma}
+		Sejam \( a, b, c \in \mathbb{N} \), com \( a \neq 0 \). Então,
+		\[
+		a \mid (b + c) \text{ e } a \mid b \;\Longleftrightarrow\; a \mid c.
+		\]
+	\end{proposition}
+	
+	\begin{proof}
+		Suponha que \( a \mid (b + c) \) e \( a \mid b \). Então, existem \( f, g \in \mathbb{N} \) tais que
+		\[
+		b + c = a \cdot f \quad \text{e} \quad b = a \cdot g.
+		\]
+		Substituindo \( b \) na primeira equação, obtemos:
+		\[
+		a \cdot g + c = a \cdot f.
+		\]
+		Isolando \( c \), temos:
+		\[
+		c = a \cdot (f - g).
+		\]
+		Como \( f - g \in \mathbb{N} \) (já que \( f > g \)), segue que \( a \mid c \).
+		
+		Reciprocamente, suponha que \( a \mid b \) e \( a \mid c \). Então existem \( g, h \in \mathbb{N} \) tais que
+		\[
+		b = a \cdot g \quad \text{e} \quad c = a \cdot h.
+		\]
+		Somando essas expressões, temos:
+		\[
+		b + c = a \cdot g + a \cdot h = a \cdot (g + h).
+		\]
+		Logo, \( a \mid (b + c) \).
+		
+		Assim, mostramos que:
+		\[
+		a \mid (b + c) \text{ e } a \mid b \;\Longleftrightarrow\; a \mid c,
+		\]
+		como queríamos demonstrar.
+	\end{proof}
+	
 	
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	\section{Proposta de Demonstração para a Conjectura de Goldbach}
-	\begin{proposition}[Simetria dos Múltiplos]
+	\begin{proposition}[Simetria dos Múltiplos]\label{prop:simetria_dos_multiplos}
 		Seja \(a > 2\) um número par natural e seja \(p\) um número primo tal que \(p \mid a\). Então, o simétrico \(S_n(p)\) de \(p\) também é múltiplo de \(p\).
 	\end{proposition}
 	
@@ -349,7 +388,7 @@
 		p \mid (q + p)
 		\]
 		
-		O que implica que:
+		O que, pela Proposição~\ref{prop:divisibilidade_na_soma}, implica que:
 		
 		\[
 		p \mid q
@@ -370,43 +409,25 @@
 	\begin{proof}
 		Dividimos a demonstração em dois casos:
 		
-		\textbf{Caso I:} \(q\) é múltiplo de \(p\).
+		\textbf{Caso I:} \(q\) não é múltiplo de \(p\).
 		
-		Se \(q\) é múltiplo de \(p\), então pela ProposiçãoX, \(S_n(p)\) também é multiplo de \(p\). Portanto,
-		
+		Se \(p \nmid q \), então pelo contrapositivo das  Proposições ~\ref{prop:divisibilidade_na_soma} e ~\ref{prop:simetria_dos_multiplos} temos:
 		\[
-		p \mid q \implies 2p \mid (p + q)
-		\]
-		Uma vez que \(p + q\) é par.
-		Isso mostra que se \(q\) \textit{é múltiplo de} \(p\), então \(2p\) divide \(p + q\). O contrapositivo também é verdadeiro: se \(q\) \textit{não é múltiplo de} \(p\), então
-		
-		\[
-		2p \nmid (p + q)
-		\]
+		 p \nmid (p + q) \implies 2p \nmid (p + q)
+		\] 
 		
 		\textbf{Caso II:} \(q\) é primo.
 		
-		Suponha, por absurdo, que \(2p \mid (p + q)\). Então, existe um inteiro \(k > 0\) tal que
+		Se \(q\) é um primo e, por hipótese \(q > p\), então \(p \nmid q \) e procedemos como no Caso I.
 		
-		\[
-		p + q = 2p k
-		\]
-		
-		Isolando \(q\), obtemos
-		
-		\[
-		q = 2p k - p = p(2k - 1)
-		\]
-		
-		Ou seja, \(q\) é múltiplo de \(p\). Como \(p\) é um primo estritamente menor que \(q\) (pois \(q > p\)), isso implica que \(q\) é um número composto, o que contradiz a hipótese de que \(q\) é primo.
-		
-		Portanto, se \(q\) é primo,
+		Portanto, se \(q\) é primo maior que \(p\) ou \(q\) não é múltiplo de \(p\), então 
 		
 		\[
 		2p \nmid (p + q)
 		\]
 		
 		o que conclui a demonstração.
+		
 	\end{proof}
 	
 	\begin{corollary}
@@ -805,7 +826,7 @@
 	Ofereço este trabalho em homenagem a todos os meus professores de matemática, que contribuíram para minha formação e paixão pela matemática.
 	
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	\end{otherlanguage}
+	
 	\begin{thebibliography}{9}
 		
 		\bibitem{apostol}
@@ -821,11 +842,18 @@
 		Empirical verification of the even Goldbach conjecture and computation of prime gaps up to \(4 \cdot 10^{18}\),
 		\textit{Math. Comp.} \textbf{83} (2014), no. 288, 2033--2060.
 		
+		\bibitem{hefez}
+		A. Hefez,
+		\textit{Elementos de Aritmética},
+		Sociedade Brasileira de Matemática, 2006.
+		
+		
 		
 		
 		
 		
 	\end{thebibliography}
+    \end{otherlanguage}
 	%\bibliographystyle{amsplain} 
 	%\bibliography{bio} 
 	
