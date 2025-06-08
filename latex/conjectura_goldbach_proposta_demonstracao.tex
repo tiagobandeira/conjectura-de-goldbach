@@ -277,6 +277,16 @@
 	
 	O Teorema de Dirichlet sobre progressões aritméticas garante que toda progressão da forma $a + nd$, com $mdc(a, d) = 1$, contém infinitos números primos.~Por ser complexa e envolver ferramentas matemáticas além do escopo deste trabalho a prova do Teorema de Dirichlet não será demonstrada aqui. Porém é possível encontrá-la em ~\cite{apostol}.  
 	
+	\begin{theorem}[Postulado de Bertrand]\label{teo:postulado_de_bertrand}
+		Para todo número inteiro \( n > 1 \), existe pelo menos um número primo \( p \) tal que
+		\[
+		n < p < 2n.
+		\]
+	\end{theorem}
+	
+	A demonstração desse Teorema pode ser encontrada em Galvin \cite{Galvin2013} inspirada na prova de Erdős para o Postulado de Bertrand.
+	
+	
 	\begin{definition}[Sequência \(S_n(p)\)]\label{def:snp}
 		Seja \(p > 2\) um número primo fixado. Definimos a sequência \(S_n(p)\), com \(n \in \mathbb{N}\), como o conjunto dos números ímpares da forma
 		\[
@@ -528,7 +538,7 @@
 		\]
 	\end{definition}
 	
-	\begin{proposition}[Simetria de Propagação a partir de um Par Menor]
+	\begin{proposition}[Simetria de Propagação a partir de um Par Menor]\label{prop:propagacao_a_partir_par_menor}
 		Seja \(m > a\) um número par. Para qualquer par \(a = p + q \in A_p\), existe um deslocamento \(k \in \mathbb{N}\) tal que:
 		
 		\[
@@ -620,9 +630,15 @@
 	\begin{proof}
 		Seja \(a > 2\) um número par. Suponha, por absurdo, que \(a\) não pertence a nenhum subconjunto \(A_p\), com \(p < \frac{a}{2}\). Isso implica que, para todo primo \(p\) nessa faixa, não existe \(q \in Q_p\) tal que \(a = p + q\).
 		
-		Mais ainda, como demonstrado na seção anterior, essa exclusão deve valer também para todos os deslocamentos simétricos \(q = S_n(p) \pm 2k\), que, sendo maiores que \(p\) e não múltiplos de \(p\), também pertencem a \(S_n(p)\), e, se primos, pertencem a \(Q_p\). Assim, para manter a exclusão total de \(a\), todos esses deslocamentos devem deixar de gerar primos — o que contradiz a infinitude e a densidade dos primos em \(S_n(p)\), conforme garantido pelo Teorema de Dirichlet.
+		Mais ainda, como demonstrado na seção anterior, essa exclusão deve valer também para todos os deslocamentos simétricos \(q = S_n(p) \pm 2k\), que, sendo maiores que \(p\) e não múltiplos de \(p\), também pertencem a \(S_n(p)\), e, se primos, pertencem a \(Q_p\). Assim, para manter a exclusão total de \(a\), todos esses deslocamentos devem deixar de gerar primos — o que contradiz a infinitude e a densidade dos primos em \(S_n(p)\), conforme garantido pelo Teorema de Dirichlet. Isso também contradiz o Postulado de Bertrad (Teorema~\ref{teo:postulado_de_bertrand}), uma vez que:
 		
-		Além disso, conforme a proposição anterior, qualquer par \(a\) pode ser alcançado por deslocamento a partir de algum par menor \(a_0 = p + q\) pertencente a \(A_p\), o que reforça a conectividade da estrutura.
+		\[
+		\frac{a}{2} < q = S_n(p) < 2 \cdot \frac{a}{2} = a
+		\]
+		
+		Isto é, se \(p \ne q\), então existe pelo menos um \(q\) entre  \(a/2\) e \(a\) tal que \(q\) é primo.
+		
+		Além disso, conforme a Proposição~\ref{prop:propagacao_a_partir_par_menor}, qualquer par \(a\) pode ser alcançado por deslocamento a partir de algum par menor \(a_0 = p + q\) pertencente a \(A_p\), o que reforça a conectividade da estrutura.
 		
 		Logo, a suposição de que \(a\) não pertence a nenhum \(A_p\) leva a uma contradição com as propriedades da estrutura construída. Conclui-se, portanto, que todo número par \(a > 2\) pertence a ao menos um subconjunto \(A_p\).
 	\end{proof}
@@ -846,6 +862,12 @@
 		A. Hefez,
 		\textit{Elementos de Aritmética},
 		Sociedade Brasileira de Matemática, 2006.
+		
+		\bibitem{Galvin2013}
+		David Galvin,
+		\textit{Erdős's proof of Bertrand's postulate},
+		2013.
+		\url{https://www3.nd.edu/~dgalvin1/pdf/bertrand.pdf}
 		
 		
 		
