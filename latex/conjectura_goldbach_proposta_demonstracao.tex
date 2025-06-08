@@ -25,7 +25,7 @@
 \title{\textbf{Uma Proposta de Demonstração para a Conjectura de Goldbach Utilizando o Teorema de Dirichlet}\\
 	\large (Preprint)}
 \author{
-	Tiago Bandeira\thanks{tiagobandeirabarros@gmail.com} 
+	Tiago Bandeira\thanks{tiagobandeira.goldbach2025@gmail.com} 
 }
 \date{\today}
 
@@ -652,7 +652,7 @@
 		\]
 		onde \(P\) é o conjunto dos números primos maiores que dois, e \(Q_p\) é o subconjunto dos primos pertencentes à sequência simétrica \(S_n(p)\) associada a cada \(p \in P\).
 		
-		Então, a união das sequências \(a_n\) cobre integralmente o conjunto dos números pares maiores que dois, isto é,
+		Então, a união das sequências \(a_n\in B\) cobre integralmente o conjunto dos números pares maiores que dois, isto é,
 		\[
 		\bigcup_{n \in \mathbb{N}} a_n = A,
 		\]
@@ -685,7 +685,7 @@
 		a_1 = \{4\}
 		\]
 		
-		Os seja, o número \(4\) constitui um caso especial, pois é o único número par gerado exclusivamente pela soma \(2 + 2\), isto é, pelo conjunto \(A_2\). Como a construção principal considera apenas primos \(p > 2\), o número \(4\) não é alcançado pelas sequências \(A_p\) com \(p > 2\), nem pela propagação por deslocamento simétrico. No entanto, como mencionado anteriormente, esse caso está adequadamente tratado e incorporado na estrutura através da definição isolada de \(a_1 = \{4\}\), que representa a única contribuição de \(A_2\).
+		Ou seja, o número \(4\) constitui um caso especial, pois é o único número par gerado exclusivamente pela soma \(2 + 2\), isto é, pelo conjunto \(A_2\). Como a construção principal considera apenas primos \(p > 2\), o número \(4\) não é alcançado pelas sequências \(A_p\) com \(p > 2\), nem pela propagação por deslocamento simétrico. No entanto, como mencionado anteriormente, esse caso está adequadamente tratado e incorporado na estrutura através da definição isolada de \(a_1 = \{4\}\), que representa a única contribuição de \(A_2\).
 		
 		Portanto, a cobertura estabelecida pelo Teorema permanece válida para todos os pares \(a > 2\), com a inclusão explícita de \(4\) como um caso particular.
 		
@@ -704,24 +704,24 @@
 		Seja \(a\) um número par tal que \(a > 2\). Pelo Teorema~\ref{teo:cobertura_dos_pares}, sabemos que:
 		
 		\[
-		a \in \bigcup_{i \in \mathbb{N}} A_i
+		a \in \bigcup_{p \in P} A_p
 		\]
 		
-		onde cada subconjunto \(A_i\) é dado por:
+		onde cada subconjunto \(A_p\) é dado por:
 		
 		\[
-		A_i = \{p_i + q \mid q \in S_n(p_i)\}
+		A_p = \{p + q \mid q \in S_n(p)\}
 		\]
 		
-		com \(p_i\) um primo pertencente a \(P\) e \(q\) um primo pertencente à sequência \(S_n(p_i)\).
+		com \(p\) um primo pertencente a \(P\) e \(q\) um primo pertencente à sequência \(S_n(p)\).
 		
-		Por definição, todo elemento \(a \in A_i\) pode ser escrito como:
+		Por definição, todo elemento \(a \in A_p\) pode ser escrito como:
 		
 		\[
-		a = p_i + S_n(p_i)
+		a = p + S_n(p)
 		\]
 		
-		com \(p_i\) e \(S_n(p_i)\) ambos números primos. Como a sequência \(S_n(p_i)\) é simétrica em relação ao primo \(p_i\), de acordo com o Corolário~\ref{coro:par_simetrico} e com a Definição~\ref{def:snp}, então qualquer número par \(a \in A_i\) possui um par simétrico de primos.
+		com \(p\) e \(S_n(p)\) ambos números primos. Como a sequência \(S_n(p)\) é simétrica em relação ao primo \(p\), de acordo com o Corolário~\ref{coro:par_simetrico} e com a Definição~\ref{def:snp}, então qualquer número par \(a \in A_p\) possui um par simétrico de primos.
 		
 		Logo, todo número par \(a > 2\) pode ser representado como:
 		
@@ -731,10 +731,10 @@
 		
 		com \(p\) e \(q\) sendo primos, onde \(q \in S_n(p)\).
 		
-		Esse resultado é garantido diretamente pelo Teorema~\ref{teo:cobertura_dos_pares}, uma vez que:
+		Esse resultado é garantido diretamente pelo Teorema~\ref{teo:cobertura_dos_pares}, uma vez que, para todas a sequências \(a_n = p + S_n(p) \):
 		
 		\[
-		\bigcup_{i \in \mathbb{N}} A_i = A
+		\bigcup_{n \in \mathbb{N}} a_n = A
 		\]
 		
 		o que completa a demonstração. 
