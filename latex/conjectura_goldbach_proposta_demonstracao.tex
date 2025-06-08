@@ -67,11 +67,13 @@
 	\begin{otherlanguage}{brazil}
 	\section{Introdução}
 
-	A Conjectura de Goldbach, proposta em 1742 por Christian Goldbach em uma correspondência com Leonhard Euler, é um dos problemas mais antigos e famosos ainda não resolvidos da Teoria dos Números. Seu enunciado é simples e elegante: \textbf{todo número inteiro par maior que dois pode ser expresso como a soma de dois números primos}. Apesar de resistir a séculos de tentativas de demonstração, a conjectura já foi verificada computacionalmente para números muito grandes ( \(4 \cdot 10^{18} \) )\cite{oliveira}, mas uma prova geral e formal permanece desconhecida.
+	A Conjectura de Goldbach, proposta em 1742 por Christian Goldbach em uma correspondência com Leonhard Euler, é um dos problemas mais antigos e famosos ainda não resolvidos da Teoria dos Números. Seu enunciado é simples e elegante: \textbf{todo número inteiro par maior que dois pode ser expresso como a soma de dois números primos}. Apesar de resistir a séculos de tentativas de demonstração, a conjectura já foi verificada computacionalmente para números muito grandes (da ordem de \(4 \cdot 10^{18} \) )\cite{oliveira}, mas uma prova geral e formal permanece desconhecida.
 	
-	Diversas abordagens foram desenvolvidas ao longo do tempo para tentar compreender a estrutura que envolve a distribuição dos números primos e sua relação com os números pares. Dentre os trabalhos mais relevantes, destacam-se os estudos baseados em análise matemática, combinatória aditiva, estatística dos primos e o uso de progressões aritméticas associadas ao Teorema de Dirichlet, que garante a existência de infinitos primos em certas classes aritméticas.
+	Diversas abordagens foram desenvolvidas ao longo do tempo para tentar compreender a estrutura que envolve a distribuição dos números primos e sua relação com os números pares. Dentre os trabalhos mais relevantes, destacam-se os estudos baseados em análise matemática, combinatória aditiva, estatística dos primos e o uso de progressões aritméticas associadas ao Teorema de Dirichlet, que garante a existência de infinitos primos em certas classes aritméticas. 
 	
-	Este trabalho apresenta uma abordagem alternativa que busca estruturar a geração dos números pares maiores que dois através da soma de dois primos, sendo um deles fixado e o outro pertencente a uma sequência específica associada ao primo fixado. Mais precisamente, explora-se uma construção baseada na sequência \(S_n(p)\), composta por números ímpares simétricos relacionados a cada primo \(p > 2\), combinada com a aplicação do Teorema de Dirichlet para garantir a infinitude de primos dentro dessas sequências.
+	Além disso, uma abordagem análoga àquela de Ellman (2000)\cite{Ellman2000} foi adotada aqui, em que, a partir de uma análise combinatória das somas entre primos ímpares, mostra-se que a totalidade dos números pares é coberta. Embora a formalização técnica difira em relação ao trabalho original de Ellman, o espírito da estratégia — demonstrar a completude das somas entre primos — é compartilhado e inspira nosso método.
+	
+	Assim, este trabalho apresenta uma abordagem que busca estruturar a geração dos números pares maiores que dois através da soma de dois primos, sendo um deles fixado e o outro pertencente a uma sequência específica associada ao primo fixado. Mais precisamente, explora-se uma construção baseada na sequência \(S_n(p)\), composta por números ímpares simétricos relacionados a cada primo \(p > 2\), combinada com a aplicação do Teorema de Dirichlet para garantir a infinitude de primos dentro dessas sequências.
 	
 	A motivação para essa abordagem surge da observação das simetrias existentes entre os números ímpares menores que um dado número par, e da possibilidade de decompor o conjunto dos pares em subconjuntos construídos por somas do tipo \(p + q\), onde \(q\) percorre a sequência \(S_n(p)\). Essa decomposição revela uma estrutura interna que organiza os pares segundo progressões aritméticas, oferecendo uma nova perspectiva sobre o problema.
 	
@@ -756,6 +758,10 @@
 		o que completa a demonstração. 
 	\end{proof}
 	
+	\begin{remark}
+		Um par simétrico \(p\) e \(S_n(p)\) tal que \( a = p + S_n(p)\) é o equivalente na literatura a dizer que esse par é uma das partições de \(a\). Isso porque um mesmo par pode possuir várias partições, ou seja ele pode ser gerado a partir da soma entre pares distintos de primos, ou no caso deste artigo, dizemos que diferentes sequências \(a_n\) podem gerar um mesmo par.
+	\end{remark}
+	
 	
 	\begin{theorem}[Formulação Simétrica da Conjectura de Goldbach]\label{teo:goldbach_por_simetria_de_primos}
 		Todo número par \(a > 2\) pode ser expresso como a soma de dois números primos \(p\) e \(q\), tais que:
@@ -868,6 +874,11 @@
 		\textit{Erdős's proof of Bertrand's postulate},
 		2013.
 		\url{https://www3.nd.edu/~dgalvin1/pdf/bertrand.pdf}
+		
+		\bibitem{Ellman2000}
+		Roger Ellman,
+		\emph{A Proof of ``Goldbach's Conjecture''},
+		2000. Disponível em: \url{https://arxiv.org/abs/math/0005185}.
 		
 		
 		
