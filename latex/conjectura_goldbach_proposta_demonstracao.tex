@@ -518,9 +518,8 @@
 		Q_p = \left\{ q \in S_n(p) \mid q \text{ é primo} \right\}
 		\]
 		
-		onde \(S_n(p)\) é a sequência dos números ímpares construídos com base na simetria dos números não múltiplos de \(p\), conforme definido anteriormente. O conjunto \(Q_p\) representa, portanto, todos os primos que pertencem à sequência \(S_n(p)\) associada a cada primo \(p\).
+		onde \(S_n(p)\) é a sequência dos números ímpares construídos com base em simetrias desses ímpares com cada número par maior que dois, conforme definido anteriormente. O conjunto \(Q_p\) representa, portanto, todos os primos que pertencem à sequência \(S_n(p)\) associada a cada primo \(p\).
 	\end{definition}
-	
 	
 	\begin{definition}[Conjunto \(A_p\)]
 		Para um primo \(p \in P\) com \(p > 2\), definimos:
@@ -546,7 +545,7 @@
 		m = p + (q + 2k) \quad \text{ou} \quad m = p + (q - 2k)
 		\]
 		
-		e portanto \(m \in A_p\), desde que \(q \pm 2k\) seja primo. Isso ocorre porque a diferença \(m - a = 2k\) pode ser compensada por um deslocamento simétrico no elemento \(q \in Q_p\), preservando a estrutura de \(A_p\) e reforçando sua propagação.
+		e portanto \(m \in A_p\), desde que \(q \pm 2k\) seja primo.
 	\end{proposition}
 	
 	\begin{proof}
@@ -558,14 +557,18 @@
 		m = a + 2k = p + (q + 2k).
 		\]
 		
-		Se \(q + 2k\) for primo e \(q + 2k > p\), então, como \(S_n(p)\) é a sequência dos ímpares maiores que \(p\) não múltiplos de \(p\), segue que \(q + 2k \in S_n(p)\) e, sendo primo, \(q + 2k \in Q_p\).
+		Se \(q + 2k\) for primo e \(q + 2k > p\), então, como \(S_n(p)\) é a sequência dos ímpares maiores que \(p\), segue que \(q + 2k \in S_n(p)\) e, sendo primo, \(q + 2k \in Q_p\).
 		
 		Logo, \(m = p + (q + 2k) \in A_p\).
 		
-		O mesmo argumento vale para \(m < a\), com \(m = a - 2k = p + (q - 2k)\), assumindo \(q - 2k\) primo, maior que \(p\) e não múltiplo de \(p\).
+		O mesmo argumento vale para \(m < a\), com \(m = a - 2k = p + (q - 2k)\), assumindo \(q - 2k\) primo, maior que \(p\).
 		
 		Assim, a distância entre pares pode ser compensada por deslocamentos nos simétricos de \(p\), mantendo \(m\) pertencente a \(A_p\), o que conclui a demonstração.
 	\end{proof}
+	
+	\begin{remark}
+		 Isso ocorre porque a diferença \(m - a = 2k\) pode ser compensada por um deslocamento simétrico no elemento \(q \in Q_p\), preservando a estrutura de \(A_p\) e reforçando sua propagação.
+	\end{remark}
 	
 	\begin{proposition}[Cobertura Parcial dos Números Pares pelos Subconjuntos \(A_p\)]\label{prop:cobertura_parcial_dos_pares}
 		Seja \(m\) um número par tal que \(m > 2\). Então, existe pelo menos um primo \(p \in P\) tal que \(p\) não divide \(m\), e, portanto, \(m\) deve pertencer a algum subconjunto \(A_p\), onde:
@@ -580,9 +583,11 @@
 	\begin{proof}
 		Suponha, por absurdo, que existe um número par \(m > 2\) tal que \(m\) não pertence a nenhum subconjunto \(A_p\) para todo \(p \in P\). Isso implica que, para todo primo \(p\), o número \(m\) é múltiplo de \(p\).
 		
-		Contudo, já foi demonstrado nas Proposições \ref{prop: produto_p_menores_a_meio} e \ref{prop:existencia_de_primos_nao_divisores} que não há como \(m\) ser múltiplo de todos os primos \( p_i \) tais que \( p_i < m/2 \). 
+		Contudo, isso é um absurdo, pois já foi demonstrado nas Proposições \ref{prop: produto_p_menores_a_meio} e \ref{prop:existencia_de_primos_nao_divisores} que não há como \(m\) ser múltiplo de todos os primos \( p_i \) tais que \( p_i < m/2 \). 
 		
-		Logo, necessariamente, existe pelo menos um primo \(p\) tal que \(p\) não divide \(m\). Consequentemente, como as sequências \(a_n = p + S_n(p)\) são construídas excluindo os ímpares compostos em \(S_n(p)\) e, por sua vez, também os múltiplos de \(p\), o número \(m\) pode pertencer a algum subconjunto \(A_p = \{p + q \mid q \in Q_p\}\), onde \(q\) percorre os primos da sequência \(S_n(p)\).
+		Logo, necessariamente, existe pelo menos um primo \(p\) tal que \(p\) não divide \(m\). Como \(m\) pode ser escrito da forma \(p + S_n(p)\) e \(p \nmid m \), então \(p \nmid p +  S_n(p)\). Pelo Lema \ref{lema:multip}, \(p \nmid p +  q\) sempre que \(q\) é primo ou \(q\) é um ímpar composto não múltiplo de \(p\). 
+		
+		Portanto, se \(p \nmid m \), então \(q\) pode ser primo, reforçando que \(m\) deve pertencer a algum subconjunto \(A_p = \{p + q \mid q \in Q_p\}\), onde \(q\) percorre os primos da sequência \(S_n(p)\).
 		
 		Isso conclui a demonstração.
 	\end{proof}
