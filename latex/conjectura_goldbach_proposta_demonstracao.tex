@@ -1,16 +1,16 @@
 \documentclass[a4paper,11pt]{article}
 
 % Pacotes básicos
-\usepackage[utf8]{inputenc} % Codificação
-\usepackage[T1]{fontenc}    % Fontes com acentuação
-\usepackage[brazil,english]{babel}  % Idioma
-\usepackage{amsmath, amssymb, amsthm} % Matemática avançada
-\usepackage{geometry}       % Margens
-\usepackage{graphicx}       % Imagens
-\usepackage{hyperref}       % Links
-\usepackage{lmodern}        % Fonte melhorada
-\usepackage{mathrsfs}       % Fontes matemáticas adicionais
-\usepackage{enumitem}       % Listas personalizadas
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english,brazil]{babel}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\usepackage{mathrsfs}
+\usepackage{enumitem}
 
 % Configurações de página
 \geometry{
@@ -21,11 +21,11 @@
 	bottom=25mm,
 }
 
-% Comandos para título
-\title{\textbf{Uma Proposta de Demonstração para a Conjectura de Goldbach Utilizando o Teorema de Dirichlet}\\
+\title{\textbf{Uma Estrutura Combinatória Baseada em Simetrias para a
+		Conjectura de Goldbach}\\
 	\large (Preprint)}
 \author{
-	Tiago Bandeira\thanks{tiagobandeira.goldbach2025@gmail.com} 
+	Tiago Bandeira\thanks{tiagobandeira.goldbach2025@gmail.com}
 }
 \date{\today}
 
@@ -41,857 +41,695 @@
 \newtheorem{example}[theorem]{Exemplo}
 \newtheorem{conjecture}{Conjectura}
 
-% Início do documento
 \begin{document}
 	
 	\maketitle
+	
 	\begin{otherlanguage}{brazil}
-	\begin{abstract}
-		Este trabalho apresenta uma abordagem para a Conjectura de Goldbach, utilizando conceitos da Teoria dos Números relacionados a progressões aritméticas e simetrias entre números ímpares. Por meio da definição de uma sequência \(S_n(p)\), associada a cada número primo \(p > 2\), e da aplicação do Teorema de Dirichlet, mostra-se que todo número par maior que dois pode ser representado como a soma de um primo fixo e outro primo pertencente a essa sequência. O desenvolvimento teórico inclui definições formais, proposições, corolários e um teorema central que estabelece que a união dos subconjuntos formados por somas do tipo \(p + S_n(p)\) cobre integralmente o conjunto dos números pares maiores que dois. Embora este trabalho não afirme se tal resultado configura ou não uma demonstração definitiva da conjectura, a abordagem proposta oferece uma nova perspectiva estrutural sobre o problema e abre possibilidades para pesquisas futuras baseadas em decomposições algébricas e simétricas dos números pares.
-	\end{abstract}
+		\begin{abstract}
+			Este trabalho apresenta uma estrutura combinatória para o estudo da
+			Conjectura de Goldbach, baseada em simetrias entre números ímpares e em
+			progressões aritméticas associadas ao Teorema de Dirichlet. Por meio da
+			definição de uma sequência \(S_n(p)\), associada a cada primo \(p > 2\), e
+			dos subconjuntos \(A_p = \{p + q \mid q \in Q_p\}\), onde \(Q_p\) é o
+			conjunto dos primos em \(S_n(p)\), organiza-se o conjunto dos números pares
+			maiores que dois em subconjuntos estruturados por simetria e progressão
+			aritmética. Demonstra-se que: (i) \(S_n(p)\) contém infinitos primos
+			(Teorema de Dirichlet); (ii) para todo par \(a > 6\), existe algum primo
+			\(p < a/2\) com \(p \nmid a\) (condição necessária para \(a \in A_p\)); e
+			(iii) a estrutura de propagação por deslocamento simétrico é bem definida.
+			Identifica-se e expõe-se explicitamente a lacuna central que separa esses
+			resultados de uma demonstração de Goldbach: garantir que \(a - p\) seja
+			primo para algum \(p\) adequado é precisamente o enunciado da conjectura,
+			e nenhum dos argumentos apresentados fecha esse passo. O trabalho é
+			reposicionado, portanto, como uma contribuição estrutural que organiza o
+			problema de forma alternativa e abre caminhos para investigações futuras
+			por densidade analítica ou métodos de crivo.
+		\end{abstract}
 	\end{otherlanguage}
 	
-
 	\begin{abstract}
-		This paper presents an approach to the Goldbach Conjecture based on concepts from Number Theory related to arithmetic progressions and symmetries among odd numbers. Through the definition of a sequence \(S_n(p)\), associated with each prime number \(p > 2\), and the application of Dirichlet's theorem, it is shown that every even number greater than two can be expressed as the sum of a fixed prime and another prime belonging to this sequence. The theoretical development includes formal definitions, propositions, corollaries, and a central theorem that establishes that the union of the subsets formed by sums of the type \(p + S_n(p)\) fully covers the set of even numbers greater than two. While it is not claimed here whether this result constitutes a definitive proof of the conjecture, the proposed approach offers a new structural perspective on the problem and opens possibilities for future research based on algebraic and symmetric decompositions of even numbers.	
+		This paper presents a combinatorial framework for the study of the Goldbach
+		Conjecture, based on symmetries among odd numbers and arithmetic progressions
+		associated with Dirichlet's theorem. Through the definition of a sequence
+		\(S_n(p)\) for each prime \(p > 2\), and subsets \(A_p = \{p + q \mid q
+		\in Q_p\}\), where \(Q_p\) is the set of primes in \(S_n(p)\), the set of
+		even numbers greater than two is organized into subsets structured by
+		symmetry and arithmetic progression. It is proved that: (i) \(S_n(p)\)
+		contains infinitely many primes (Dirichlet's theorem); (ii) for every even
+		\(a > 6\), there exists a prime \(p < a/2\) with \(p \nmid a\) (a necessary
+		condition for \(a \in A_p\)); and (iii) the propagation structure via
+		symmetric displacement is well defined. The central gap separating these
+		results from a proof of Goldbach is explicitly identified and discussed:
+		ensuring that \(a - p\) is prime for some suitable \(p\) is precisely the
+		statement of the conjecture, and none of the arguments presented closes
+		this step. The work is thus repositioned as a structural contribution that
+		organizes the problem in an alternative way and opens paths for future
+		investigation via analytic density arguments or sieve methods.
 	\end{abstract}
 	
-	\textbf{Palavras-chave:} conjectura de goldbach; números primos; teoria dos números.
-	
-	%\vspace{0.5cm}
-	% sumario
-	%\tableofcontents
-	%\vspace{1cm}
+	\textbf{Palavras-chave:} conjectura de Goldbach; números primos; teoria dos
+	números; progressões aritméticas; estrutura combinatória.
 	
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	\begin{otherlanguage}{brazil}
-	\section{Introdução}
-
-	A Conjectura de Goldbach, proposta em 1742 por Christian Goldbach em uma correspondência com Leonhard Euler, é um dos problemas mais antigos e famosos ainda não resolvidos da Teoria dos Números. Seu enunciado é simples e elegante: \textbf{todo número inteiro par maior que dois pode ser expresso como a soma de dois números primos}. Apesar de resistir a séculos de tentativas de demonstração, a conjectura já foi verificada computacionalmente para números muito grandes (da ordem de \(4 \cdot 10^{18} \) )\cite{oliveira}, mas uma prova geral e formal permanece desconhecida.
-	
-	Diversas abordagens foram desenvolvidas ao longo do tempo para tentar compreender a estrutura que envolve a distribuição dos números primos e sua relação com os números pares. Dentre os trabalhos mais relevantes, destacam-se os estudos baseados em análise matemática, combinatória aditiva, estatística dos primos e o uso de progressões aritméticas associadas ao Teorema de Dirichlet, que garante a existência de infinitos primos em certas classes aritméticas. 
-	
-	Além disso, uma abordagem análoga àquela de Ellman (2000)\cite{Ellman2000} foi adotada aqui, em que, a partir de uma análise combinatória das somas entre primos ímpares, mostra-se que a totalidade dos números pares é coberta. Embora a formalização técnica difira em relação ao trabalho original de Ellman, o espírito da estratégia — demonstrar a completude das somas entre primos — é compartilhado e inspira nosso método.
-	
-	Assim, este trabalho apresenta uma abordagem que busca estruturar a geração dos números pares maiores que dois através da soma de dois primos, sendo um deles fixado e o outro pertencente a uma sequência específica associada ao primo fixado. Mais precisamente, explora-se uma construção baseada na sequência \(S_n(p)\), composta por números ímpares simétricos relacionados a cada primo \(p > 2\), combinada com a aplicação do Teorema de Dirichlet para garantir a infinitude de primos dentro dessas sequências.
-	
-	A motivação para essa abordagem surge da observação das simetrias existentes entre os números ímpares menores que um dado número par, e da possibilidade de decompor o conjunto dos pares em subconjuntos construídos por somas do tipo \(p + q\), onde \(q\) percorre a sequência \(S_n(p)\). Essa decomposição revela uma estrutura interna que organiza os pares segundo progressões aritméticas, oferecendo uma nova perspectiva sobre o problema.
-	
-	O presente artigo está organizado da seguinte forma: na seção de \textbf{Fundamentação Teórica} são apresentadas as definições formais, proposições, corolários e os teoremas clássicos que sustentam a construção da proposta, com destaque para o Teorema de Dirichlet e as propriedades das sequências \(S_n(p)\). Na seção de \textbf{Proposta de Demonstração para a Conjectura de Goldbach} é enunciado e demonstrado o teorema central do trabalho, que mostra como a união dos subconjuntos gerados pelas somas \(p + S_n(p)\) cobre o conjunto dos números pares maiores que dois. Na sequência, apresenta-se uma \textbf{Discussão do Corolários\ref{coro:par_simetrico_primos} e do Teorema\ref{teo:goldbach_por_simetria_de_primos} e Implicações na Conjectura de Goldbach}, na qual são analisadas as implicações dessa estrutura sobre a Conjectura de Goldbach, bem como as limitações e potenciais desdobramentos futuros da abordagem proposta. Em seguida, é dedicado uma seção para as \textbf{Considerações Finais sobre a Abordagem Estrutural} que fala sobre o objetivo principal do trabalho. Por fim, a seção de \textbf{Conclusão} resume os principais achados e sugere caminhos para investigações posteriores.
-
-	
-	\subsection*{A conjectura de Goldbach}
-	\begin{conjecture}[Conjectura de Goldbach]
-		Todo número inteiro par maior que dois pode ser expresso como a soma de dois números primos.
+		\section{Introdução}
 		
-		Formalmente, para todo \(n \in \mathbb{N}\) tal que \(n > 2\) e \(n\) é par, existe \(p, q \in \mathbb{P}\) (com \(\mathbb{P}\) sendo o conjunto dos números primos) tais que:
+		A Conjectura de Goldbach, proposta em 1742 por Christian Goldbach em uma
+		correspondência com Leonhard Euler, é um dos problemas mais antigos e
+		famosos ainda não resolvidos da Teoria dos Números. Seu enunciado é simples
+		e elegante: \textbf{todo número inteiro par maior que dois pode ser expresso
+			como a soma de dois números primos}. Apesar de resistir a séculos de
+		tentativas de demonstração, a conjectura já foi verificada
+		computacionalmente para números muito grandes (da ordem de
+		\(4 \cdot 10^{18}\))~\cite{oliveira}, mas uma prova geral e formal permanece
+		desconhecida.
 		
-		\[
-		n = p + q
-		\]
+		Diversas abordagens foram desenvolvidas ao longo do tempo para tentar
+		compreender a estrutura que envolve a distribuição dos números primos e
+		sua relação com os números pares. Dentre os trabalhos mais relevantes,
+		destacam-se os estudos baseados em análise matemática, combinatória
+		aditiva, estatística dos primos e o uso de progressões aritméticas
+		associadas ao Teorema de Dirichlet, que garante a existência de infinitos
+		primos em certas classes aritméticas.
 		
-	\end{conjecture}
-	
-	
-	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	\section{Fundamentação Teórica}
-	
-	\begin{proposition}
-		Seja $a \in \mathbb{N}$, com $a > 2$ e $a$ par. Considere a sequência ordenada dos números ímpares estritamente menores que $a$:
+		Além disso, uma abordagem análoga àquela de Ellman (2000)~\cite{Ellman2000}
+		foi adotada aqui, em que, a partir de uma análise combinatória das somas
+		entre primos ímpares, explora-se como a totalidade dos números pares pode
+		ser organizada. Embora a formalização técnica difira em relação ao trabalho
+		original de Ellman, o espírito da estratégia — organizar as somas entre
+		primos segundo uma estrutura interna — é compartilhado e inspira nosso
+		método.
 		
-		\[
-		S = \{1, 3, 5, \dotsc, a - 1\}
-		\]
+		O presente trabalho propõe uma \emph{estrutura combinatória} baseada na
+		sequência \(S_n(p)\), composta por números ímpares associados a cada primo
+		\(p > 2$ por relações de simetria, e nos subconjuntos \(A_p\) formados pelas
+		somas \(p + q\) com \(q \in Q_p\) (os primos de \(S_n(p)\)). O objetivo
+		\textbf{não é apresentar uma demonstração definitiva} da Conjectura de
+		Goldbach, mas sim desenvolver uma estrutura matemática alternativa para
+		organizá-la, identificar o que pode ser provado dentro dela e expor
+		com precisão onde se encontra a lacuna que impede uma demonstração completa.
 		
-		Então, para todo $k \in S$, vale que:
+		A motivação para essa abordagem surge da observação das simetrias existentes
+		entre os números ímpares menores que um dado número par, e da possibilidade
+		de decompor o conjunto dos pares em subconjuntos construídos por somas do
+		tipo \(p + q\), onde \(q\) percorre a sequência \(S_n(p)\). Essa
+		decomposição revela uma estrutura interna que organiza os pares segundo
+		progressões aritméticas, oferecendo uma nova perspectiva sobre o problema.
 		
-		\[
-		a = k + (a - k)
-		\]
+		O presente artigo está organizado da seguinte forma: na seção
+		\textbf{Fundamentação Teórica} são apresentadas as definições formais,
+		proposições, corolários e os teoremas clássicos que sustentam a construção
+		da proposta. Na seção \textbf{Estrutura Combinatória para a Conjectura de
+			Goldbach} são desenvolvidos os resultados que a estrutura permite
+		demonstrar, seguidos da identificação explícita da lacuna central do
+		argumento. Na sequência, apresenta-se a \textbf{Discussão e Implicações},
+		na qual são analisadas as implicações dessa estrutura e os caminhos
+		que ela abre para pesquisas futuras. Por fim, a \textbf{Conclusão} resume
+		os achados e sugere direções para investigações posteriores.
 		
-		e ambos $k$ e $a - k$ pertencem a $S$, sendo simétricos em relação aos termos centrais da sequência.
-	\end{proposition}
-	
-	
-	\begin{proof}
-		Observemos que os elementos de $S$ podem ser descritos pela progressão aritmética:
-		
-		\[
-		S = \{2n - 1 \mid n = 1, 2, \dotsc, \tfrac{a}{2} \}
-		\]
-		
-		O número total de elementos da sequência é $\tfrac{a}{2}$, inteiro pois $a$ é par.
-		
-		Seja um elemento arbitrário $k = 2n - 1$, com $n \in \{1, 2, \dotsc, \tfrac{a}{2}\}$. Calculamos seu par simétrico:
-		
-		\[
-		a - k = a - (2n - 1) = (a - 2n) + 1
-		\]
-		
-		Note que $(a - 2n)$ é par, e portanto $(a - 2n) + 1$ é ímpar. Além disso, verificamos que:
-		
-		\[
-		a - k \leq a - 1
-		\]
-		\[
-		a - k \geq 1
-		\]
-		
-		Logo, $a - k \in S$.
-		
-		A soma do par $(k, a - k)$ resulta em:
-		
-		\[
-		k + (a - k) = (2n - 1) + (a - (2n - 1)) = a
-		\]
-		
-		Portanto, qualquer elemento de $S$ somado ao seu simétrico gera exatamente $a$.
-		
-	\end{proof}
-	
-	\subsection{Exemplos}
-	
-	Seja $a = 12$:
-	
-	\[
-	S = \{1, 3, 5, 7, 9, 11\}
-	\]
-	Os pares simétricos são:
-	\[
-	1 + 11 = 12, \quad 3 + 9 = 12, \quad 5 + 7 = 12
-	\]
-	
-	Seja $a = 10$:
-	
-	\[
-	S = \{1, 3, 5, 7, 9\}
-	\]
-	Os pares simétricos são:
-	\[
-	1 + 9 = 10, \quad 3 + 7 = 10, \quad 5 + 5 = 10
-	\]
-	O termo central $5$ se emparelha consigo mesmo.
-	
-	%\subsection{Conclusão}
-	
-	Dessa forma, qualquer número par $a > 2$ pode ser decomposto como a soma de dois números ímpares menores que $a$, escolhidos de forma simétrica em relação aos termos centrais da sequência dos ímpares menores que $a$.
-		
-	\vspace{1cm}
-	
-	\begin{proposition}\label{prop:distancia_simetrica}
-		Seja $a \in \mathbb{N}$, com $a > 2$ e $a$ par, e seja
-		\[
-		S = \{1, 3, 5, \dotsc, a - 1\}
-		\]
-		a sequência dos números ímpares menores que $a$.
-		
-		Sejam $b, c \in S$ dois termos simétricos em relação aos termos centrais da sequência, e seja $i$ a distância posicional de $b$ até o centro da sequência $S$. Então, a diferença entre $c$ e $b$ satisfaz:
-		\[
-		|c - b| =
-		\begin{cases}
-			4i, & \text{se } |S| \text{ é ímpar} \\
-			4i + 2, & \text{se } |S| \text{ é par}
-		\end{cases}
-		\]
-		onde $|S| = \frac{a}{2}$ é o número de elementos da sequência.
-	\end{proposition}
-	
-	\begin{proof}
-		A sequência $S$ possui $N = \frac{a}{2}$ termos, com
-		\[
-		S = \{2n - 1 \mid n = 1, 2, \dotsc, N\}.
-		\]
-		
-		Considere $b$ o termo na posição $n$, com $1 \leq n \leq N$, e seu termo simétrico $c$ na posição $N - n + 1$. Assim,
-		\[
-		b = 2n - 1, \quad c = 2(N - n + 1) - 1 = 2N - 2n + 1.
-		\]
-		
-		A diferença entre os termos é:
-		\[
-		|c - b| = |(2N - 2n + 1) - (2n - 1)| = |2N - 4n + 2| = 2|N - 2n + 1|.
-		\]
-		
-		Definimos $i$ como a distância posicional de $b$ até o centro da sequência. Dependendo da paridade de $N$, o centro é definido como:
-		
-		\begin{itemize}
-			\item Se $N$ é ímpar, existe um termo central único na posição $m = \frac{N+1}{2}$. Assim,
+		\subsection*{A Conjectura de Goldbach}
+		\begin{conjecture}[Conjectura de Goldbach]
+			Todo número inteiro par maior que dois pode ser expresso como a soma de
+			dois números primos.
+			
+			Formalmente, para todo \(n \in \mathbb{N}\) tal que \(n > 2\) e \(n\) é
+			par, existem \(p, q \in \mathbb{P}\) (com \(\mathbb{P}\) sendo o conjunto
+			dos números primos) tais que:
 			\[
-			i = |n - m| = \left| n - \frac{N+1}{2} \right|.
+			n = p + q
 			\]
-			Neste caso,
+		\end{conjecture}
+		
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\section{Fundamentação Teórica}
+		
+		\begin{proposition}\label{prop:simetria_impares}
+			Seja $a \in \mathbb{N}$, com $a > 2$ e $a$ par. Considere a sequência
+			ordenada dos números ímpares estritamente menores que $a$:
 			\[
-			|N - 2n + 1| = 2i,
+			S = \{1, 3, 5, \dotsc, a - 1\}
 			\]
-			portanto,
+			Então, para todo $k \in S$, vale que:
 			\[
-			|c - b| = 2 \times 2i = 4i.
+			a = k + (a - k)
+			\]
+			e ambos $k$ e $a - k$ pertencem a $S$, sendo simétricos em relação aos
+			termos centrais da sequência.
+		\end{proposition}
+		
+		\begin{proof}
+			Os elementos de $S$ são descritos pela progressão aritmética:
+			\[
+			S = \{2n - 1 \mid n = 1, 2, \dotsc, \tfrac{a}{2}\}
+			\]
+			O número total de elementos é $\tfrac{a}{2}$, inteiro pois $a$ é par.
+			
+			Seja $k = 2n - 1$ arbitrário. Seu par simétrico é:
+			\[
+			a - k = a - (2n - 1) = (a - 2n) + 1
+			\]
+			Como $(a - 2n)$ é par, $(a - 2n) + 1$ é ímpar. Além disso,
+			$1 \leq a - k \leq a - 1$, logo $a - k \in S$. A soma verifica:
+			\[
+			k + (a - k) = (2n - 1) + (a - (2n - 1)) = a. \qedhere
+			\]
+		\end{proof}
+		
+		\subsection{Exemplos}
+		
+		Seja $a = 12$: $S = \{1, 3, 5, 7, 9, 11\}$, com pares simétricos $1+11=12$,
+		$3+9=12$, $5+7=12$.
+		
+		Seja $a = 10$: $S = \{1, 3, 5, 7, 9\}$, com pares simétricos $1+9=10$,
+		$3+7=10$, $5+5=10$ (o termo central $5$ emparelha-se consigo mesmo).
+		
+		Dessa forma, qualquer número par $a > 2$ pode ser decomposto como a soma de
+		dois ímpares menores que $a$, simétricos em relação aos termos centrais da
+		sequência.
+		
+		\begin{proposition}\label{prop:distancia_simetrica}
+			Seja $a \in \mathbb{N}$, com $a > 2$ e $a$ par, e seja
+			$S = \{1, 3, 5, \dotsc, a - 1\}$.
+			
+			Sejam $b, c \in S$ dois termos simétricos em relação ao centro da sequência,
+			e seja $i$ a distância posicional de $b$ até o centro. Então:
+			\[
+			|c - b| =
+			\begin{cases}
+				4i, & \text{se } |S| = \frac{a}{2} \text{ é ímpar} \\
+				4i + 2, & \text{se } |S| = \frac{a}{2} \text{ é par}
+			\end{cases}
+			\]
+		\end{proposition}
+		
+		\begin{proof}
+			A sequência $S$ possui $N = \frac{a}{2}$ termos. Sejam $b = 2n-1$ (posição
+			$n$) e $c = 2(N-n+1)-1 = 2N-2n+1$ (posição $N-n+1$). Então:
+			\[
+			|c - b| = |2N - 4n + 2| = 2|N - 2n + 1|.
+			\]
+			\begin{itemize}
+				\item Se $N$ é ímpar, o centro único está em posição $m = \frac{N+1}{2}$,
+				logo $i = |n - m|$ e $|N - 2n + 1| = 2i$, dando $|c-b| = 4i$.
+				\item Se $N$ é par, os dois centros estão em $m_1 = \frac{N}{2}$ e
+				$m_2 = \frac{N}{2}+1$. Para $b$ à esquerda do centro,
+				$i = m_1 - n$ e $|N - 2n + 1| = 2i+1$, dando $|c-b| = 4i+2$.
+				\qedhere
+			\end{itemize}
+		\end{proof}
+		
+		\begin{corollary}\label{coro:par_simetrico}
+			Nas condições da Proposição~\ref{prop:distancia_simetrica}, o termo
+			simétrico de $b$ satisfaz:
+			\[
+			c =
+			\begin{cases}
+				b + 4i, & \text{se } |S| \text{ é ímpar} \\
+				b + 4i + 2, & \text{se } |S| \text{ é par}
+			\end{cases}
+			\]
+		\end{corollary}
+		
+		\begin{theorem}[Teorema de Dirichlet para Progressões Aritméticas]%
+			\label{teo:dirichlet}
+			Sejam $a$ e $d$ inteiros positivos com $\mathrm{mdc}(a,d) = 1$. Então a
+			progressão aritmética $a,\, a+d,\, a+2d,\, \dotsc$ contém infinitos números
+			primos.
+		\end{theorem}
+		
+		A demonstração pode ser encontrada em~\cite{apostol}. Este teorema garante
+		a existência de infinitos primos em certas progressões, mas \emph{não}
+		garante que um elemento específico de uma progressão seja primo — distinção
+		fundamental para os limites do presente trabalho.
+		
+		\begin{theorem}[Postulado de Bertrand]\label{teo:postulado_de_bertrand}
+			Para todo inteiro $n > 1$, existe pelo menos um primo $p$ tal que
+			$n < p < 2n$.
+		\end{theorem}
+		
+		A demonstração pode ser encontrada em Galvin~\cite{Galvin2013}.
+		
+		\begin{definition}[Sequência $S_n(p)$]\label{def:snp}
+			Seja $p > 2$ um primo fixado. A sequência $S_n(p)$, com $n \in \mathbb{N}$,
+			é o conjunto dos números ímpares da forma:
+			\[
+			S_n(p) =
+			\begin{cases}
+				p + 4n \\
+				p + 4n + 2
+			\end{cases}
+			\quad \text{para todo } n \in \mathbb{N}.
+			\]
+			Observa-se que $S_n(p)$ cobre todos os ímpares maiores que $p$, conforme
+			o Corolário~\ref{coro:par_simetrico}.
+		\end{definition}
+		
+		\begin{proposition}\label{prop:snp_infinitos_primos}
+			A sequência $S_n(p)$ contém infinitos números primos.
+		\end{proposition}
+		
+		\begin{proof}
+			Os dois sub-casos correspondem às progressões $p + 4n$ e $p + 4n + 2$,
+			ambas da forma $p + 2k$ com $\mathrm{mdc}(p, 2) = 1$. Pelo
+			Teorema~\ref{teo:dirichlet}, cada uma contém infinitos primos.
+		\end{proof}
+		
+		\begin{remark}
+			A Definição~\ref{def:snp} está relacionada diretamente ao
+			Corolário~\ref{coro:par_simetrico}: os elementos de $S_n(p)$ são
+			precisamente os ímpares que, somados a $p$, geram um número par maior
+			que $2p$ por deslocamento simétrico.
+		\end{remark}
+		
+		\begin{remark}
+			Para $q \in S_n(p)$: ou $q$ é primo ímpar ou $q$ é composto ímpar. A
+			Proposição~\ref{prop:snp_infinitos_primos} garante que o primeiro caso
+			ocorre infinitas vezes, mas não determina \emph{quais} elementos de
+			$S_n(p)$ são primos.
+		\end{remark}
+		
+		\begin{proposition}
+			Seja $p > 2$ um primo e $n \in \mathbb{N}$. Então $S_n(p) + p$ é par.
+		\end{proposition}
+		
+		\begin{proof}
+			$S_n(p)$ é ímpar e $p > 2$ é ímpar; a soma de dois ímpares é par.
+		\end{proof}
+		
+		\begin{proposition}[Propriedade da divisibilidade na soma]%
+			\label{prop:divisibilidade_na_soma}
+			Sejam $a, b, c \in \mathbb{N}$ com $a \neq 0$. Então:
+			\[
+			a \mid (b + c) \text{ e } a \mid b \;\Longleftrightarrow\; a \mid c.
+			\]
+		\end{proposition}
+		
+		\begin{proof}
+			($\Rightarrow$) Se $b + c = a \cdot f$ e $b = a \cdot g$, então
+			$c = a(f-g)$, logo $a \mid c$.
+			($\Leftarrow$) Se $b = ag$ e $c = ah$, então $b + c = a(g+h)$, logo
+			$a \mid (b+c)$.
+		\end{proof}
+		
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\section{Estrutura Combinatória para a Conjectura de Goldbach}
+		
+		\begin{proposition}[Simetria dos Múltiplos]\label{prop:simetria_dos_multiplos}
+			Seja $a > 2$ par e $p$ primo com $p \mid a$. Então $S_n(p)$ é múltiplo
+			de $p$ sempre que $a = p + S_n(p)$.
+		\end{proposition}
+		
+		\begin{proof}
+			Se $p \mid a$ e $a = p + q$, então pela
+			Proposição~\ref{prop:divisibilidade_na_soma} temos $p \mid q$, ou seja,
+			$q = S_n(p)$ é múltiplo de $p$.
+		\end{proof}
+		
+		\begin{lemma}\label{lema:multip}
+			Seja $p > 2$ primo e $q > p$ ímpar em $S_n(p)$. Se $q$ é primo ou
+			$q$ não é múltiplo de $p$, então $2p \nmid (p + q)$.
+		\end{lemma}
+		
+		\begin{proof}
+			Se $q$ é primo e $q > p$, então $p \nmid q$. Logo, pela
+			Proposição~\ref{prop:divisibilidade_na_soma}, $p \nmid (p+q)$, portanto
+			$2p \nmid (p+q)$. O mesmo vale se $q$ é composto mas $p \nmid q$.
+		\end{proof}
+		
+		\begin{corollary}
+			Seja $p > 2$ primo. Se $q = S_n(p)$ é primo e $q > p$, então
+			$p \nmid (p + S_n(p))$.
+		\end{corollary}
+		
+		\begin{proof}
+			Segue imediatamente do Lema~\ref{lema:multip}, pois $q > p$ exclui
+			$q = p$.
+		\end{proof}
+		
+		\begin{proposition}\label{prop:produto_p_menores_a_meio}
+			Seja $a \in \mathbb{N}$ par com $a > 6$. Então:
+			\[
+			a \neq \prod_{p < a/2} p
+			\]
+			Em outras palavras, nenhum par $a > 6$ é igual ao produto de todos os
+			primos estritamente menores que $a/2$.
+		\end{proposition}
+		
+		\begin{proof}
+			Para $a > 6$ temos $a/2 > 3$, logo o produto inclui ao menos $2 \cdot 3
+			= 6$. Se $a/2 \geq 5$, o produto inclui $2 \cdot 3 \cdot 5 = 30 > a$
+			(pois $a \geq 10$ e $30 > 10$). Para $a$ maior, o produto cresce
+			multiplicativamente enquanto $a$ cresce linearmente, portanto a
+			igualdade é impossível.
+		\end{proof}
+		
+		\begin{proposition}[Existência de Primos Não Divisores]%
+			\label{prop:existencia_de_primos_nao_divisores}
+			Seja $a \in \mathbb{N}$ par com $a > 6$. Então existe pelo menos um
+			primo $p < a/2$ tal que $p \nmid a$.
+		\end{proposition}
+		
+		\begin{proof}
+			Por contradição: se todo primo $p < a/2$ dividisse $a$, então $a$ seria
+			múltiplo do produto de todos esses primos, contradizendo a
+			Proposição~\ref{prop:produto_p_menores_a_meio}.
+		\end{proof}
+		
+		\subsection{Definições dos Subconjuntos Estruturais}
+		
+		\begin{definition}[Conjunto $Q_p$]
+			Seja $p > 2$ primo. Define-se:
+			\[
+			Q_p = \{q \in S_n(p) \mid q \text{ é primo}\}
+			\]
+			$Q_p$ é infinito pela Proposição~\ref{prop:snp_infinitos_primos}.
+		\end{definition}
+		
+		\begin{definition}[Conjunto $A_p$]\label{def:Ap}
+			Para $p > 2$ primo:
+			\[
+			A_p = \{p + q \mid q \in Q_p\}
+			\]
+			$A_p$ contém todos os pares gerados somando $p$ com os primos de $S_n(p)$.
+		\end{definition}
+		
+		\begin{definition}[Conjunto $A$]
+			\[
+			A = \{a \in \mathbb{N} \mid a > 2 \text{ e } a \text{ é par}\}
+			\]
+		\end{definition}
+		
+		\subsection{Resultados Válidos sobre a Estrutura}
+		
+		\begin{proposition}[Condição Necessária para Cobertura]%
+			\label{prop:condicao_necessaria}
+			Seja $a > 6$ par. Então existe ao menos um primo $p < a/2$ com $p \nmid a$.
+			Tal $p$ satisfaz a \emph{condição necessária} (mas não suficiente) para que
+			$a \in A_p$, pois se $p \mid a$ e $a = p + q$, então $p \mid q$, de modo que
+			$q$ não pode ser primo maior que $p$.
+		\end{proposition}
+		
+		\begin{proof}
+			A existência de tal $p$ segue diretamente da
+			Proposição~\ref{prop:existencia_de_primos_nao_divisores}. A condição
+			necessária segue da Proposição~\ref{prop:simetria_dos_multiplos}: se
+			$p \mid a$, então $q = a - p$ é múltiplo de $p$, logo $q \notin Q_p$.
+			Portanto, $a \in A_p$ exige $p \nmid a$.
+		\end{proof}
+		
+		\begin{remark}\label{rem:lacuna}
+			\textbf{(Identificação da Lacuna Central.)}
+			A Proposição~\ref{prop:condicao_necessaria} mostra que a condição $p \nmid a$
+			é necessária para $a \in A_p$, mas \emph{não} suficiente. Para concluir
+			$a \in A_p$, é preciso garantir que $q = a - p$ seja primo. Isso é
+			precisamente o enunciado da Conjectura de Goldbach — não decorre do Teorema
+			de Dirichlet nem de qualquer resultado apresentado aqui. O Teorema de
+			Dirichlet garante que existem infinitos primos em $S_n(p)$; \emph{não}
+			garante que $a - p$ especificamente seja um deles.
+		\end{remark}
+		
+		\begin{proposition}[Propagação Condicional por Deslocamento Simétrico]%
+			\label{prop:propagacao}
+			Seja $a = p + q \in A_p$ com $q \in Q_p$. Para todo $k \in \mathbb{N}$,
+			se $q + 2k$ for primo (respectivamente $q - 2k > p$ e primo), então:
+			\[
+			a + 2k = p + (q + 2k) \in A_p \quad
+			(\text{resp.}\ a - 2k = p + (q - 2k) \in A_p).
+			\]
+		\end{proposition}
+		
+		\begin{proof}
+			Se $q + 2k$ é primo e $q + 2k > p$, então $q + 2k \in S_n(p)$ (pois
+			$S_n(p)$ cobre todos os ímpares $> p$) e, sendo primo, $q + 2k \in Q_p$.
+			Portanto $a + 2k = p + (q + 2k) \in A_p$. O caso $q - 2k$ é análogo.
+		\end{proof}
+		
+		\begin{remark}
+			A Proposição~\ref{prop:propagacao} é válida, mas condicional: ela afirma
+			que \emph{se} existir um primo na posição deslocada, \emph{então} o par
+			correspondente pertence a $A_p$. A existência desse primo não é garantida
+			pelo argumento estrutural, e esta é exatamente a mesma lacuna identificada
+			na Observação~\ref{rem:lacuna}.
+		\end{remark}
+		
+		\begin{lemma}[Propagação Estrutural por Deslocamento Simétrico]
+			Seja $a = p + q$ com $p \in \mathbb{P}$, $q \in Q_p$ e $q > p$. Se
+			$q \pm 2k$ for primo (e $> p$), então $q \pm 2k \in Q_p$ e
+			$a \pm 2k \in A_p$.
+		\end{lemma}
+		
+		\begin{proof}
+			Segue diretamente da Proposição~\ref{prop:propagacao} e da definição de
+			$Q_p$.
+		\end{proof}
+		
+		\subsection{A Lacuna Central e o Limite do Argumento}
+		
+		Os resultados acima estabelecem:
+		\begin{enumerate}
+			\item Para todo $a > 6$ par, existe $p < a/2$ primo com $p \nmid a$
+			(condição necessária para $a \in A_p$).
+			\item $S_n(p)$ contém infinitos primos (Dirichlet), logo $Q_p$ é infinito
+			e $A_p$ é infinito.
+			\item Se $a \in A_p$ para algum $p$, então os pares $a \pm 2k$ pertencem
+			a $A_p$ para todo $k$ tal que o deslocamento gere um primo.
+		\end{enumerate}
+		
+		O que \textbf{não} foi demonstrado — e constitui a lacuna que impede que
+		este trabalho seja uma prova de Goldbach — é:
+		
+		\begin{conjecture}[Cobertura Total — equivalente a Goldbach]\label{conj:cobertura}
+			Para todo número par $a > 2$, existe ao menos um primo $p < a/2$ tal que
+			$a \in A_p$, ou seja, tal que $a - p \in Q_p$ (i.e., $a - p$ é primo).
+		\end{conjecture}
+		
+		\begin{remark}
+			A Conjectura~\ref{conj:cobertura} é logicamente equivalente à Conjectura
+			de Goldbach: dizer que existe $p$ primo com $a - p$ primo é exatamente
+			dizer que $a$ é soma de dois primos. Portanto, qualquer argumento que
+			pretenda demonstrá-la sem hipóteses adicionais está, em essência,
+			tentando provar Goldbach diretamente.
+		\end{remark}
+		
+		Os argumentos apresentados nas versões anteriores deste trabalho nos Lemas
+		3.14 e 3.15 (Cobertura Estrutural e Contradição por Exclusão Total)
+		continham um raciocínio circular: assumiam que a exclusão de $a$ de todos
+		os $A_p$ contradiria Dirichlet por exigir que ``todos os deslocamentos
+		deixem de gerar primos''. Mas Dirichlet garante apenas a infinitude de
+		primos na progressão $S_n(p)$ — não que \emph{especificamente} $a - p$
+		seja primo. A não pertença de $a$ a $A_p$ não requer que nenhum primo
+		exista em $S_n(p)$; requer apenas que $a - p \notin \mathbb{P}$, o que é
+		compatível com a infinitude de outros primos em $S_n(p)$.
+		
+		Analogamente, o Postulado de Bertrand garante um primo entre $a/2$ e $a$,
+		mas não garante que ele seja da forma $a - p$ para algum primo $p$.
+		
+		\subsection{Resultados Condicionais}
+		
+		Enunciamos a seguir os resultados que \emph{seriam} válidos caso a
+		Conjectura~\ref{conj:cobertura} fosse provada, a título de organização
+		estrutural e motivação para investigações futuras.
+		
+		\begin{theorem}[Cobertura dos Números Pares — condicional]%
+			\label{teo:cobertura_dos_pares}
+			Assumindo a Conjectura~\ref{conj:cobertura}, seja
+			\[
+			B = \{(a_n)_{n \in \mathbb{N}} \mid a_n = p + q,\, p \in \mathbb{P},\,
+			q \in Q_p\}.
+			\]
+			Então a união das sequências $a_n \in B$ cobre integralmente o conjunto
+			dos números pares maiores que dois:
+			\[
+			\bigcup_{n \in \mathbb{N}} a_n = A.
 			\]
 			
-			\item Se $N$ é par, existem dois termos centrais nas posições $m_1 = \frac{N}{2}$ e $m_2 = \frac{N}{2} + 1$. Para $b$ à esquerda do centro,
-			\[
-			i = m_1 - n \implies 2i = |N - 2n|,
-			\]
-			e
-			\[
-			|N - 2n + 1| = 2i + 1,
-			\]
-			portanto,
-			\[
-			|c - b| = 2(2i + 1) = 4i + 2.
-			\]
-		\end{itemize}
+			\emph{(Caso especial: $a = 4 = 2 + 2$. Para $p = 2$, $S_n(2)$ não satisfaz
+				as condições de Dirichlet pois $\mathrm{mdc}(4,2) \neq 1$. O número $4$
+				é tratado como caso particular via $a_1 = \{4\}$.)}
+		\end{theorem}
 		
-		Assim, mostramos que a diferença entre termos simétricos na sequência $S$ segue a fórmula desejada, dependendo da paridade de $N$.
+		\begin{corollary}[Formulação Simétrica — condicional]\label{coro:par_simetrico_primos}
+			Assumindo a Conjectura~\ref{conj:cobertura}: todo número par $a > 2$
+			possui um par de primos $p$ e $q \in S_n(p)$ tal que $a = p + q$.
+		\end{corollary}
 		
-	\end{proof}
-	
-	\begin{corollary} \label{coro:par_simetrico}
-		Sejam $a \in \mathbb{N}$, com $a > 2$ e $a$ par, e
-		\[
-		S = \{1, 3, 5, \dotsc, a - 1\}
-		\]
-		a sequência dos números ímpares menores que $a$.
+		\begin{theorem}[Reformulação Simétrica da Conjectura de Goldbach]%
+			\label{teo:goldbach_por_simetria_de_primos}
+			As afirmações a seguir são equivalentes:
+			\begin{enumerate}[label=(\roman*)]
+				\item \emph{(Conjectura de Goldbach)} Todo par $a > 2$ é soma de dois
+				primos.
+				\item \emph{(Conjectura~\ref{conj:cobertura})} Para todo par $a > 2$,
+				existe primo $p < a/2$ com $a - p \in Q_p$.
+				\item \emph{(Cobertura)} $\bigcup_{p \in \mathbb{P}} A_p = A$.
+			\end{enumerate}
+		\end{theorem}
 		
-		Seja $b \in S$ um termo a uma distância posicional $i$ do centro da sequência. Então, seu termo simétrico $c \in S$ satisfaz:
-		
-		\[
-		c =
-		\begin{cases}
-			b + 4i, & \text{se } |S| \text{ é ímpar} \\
-			b + 4i + 2, & \text{se } |S| \text{ é par}
-		\end{cases}
-		\]
-		onde $|S| = \frac{a}{2}$ e $i$ é a distância posicional de $b$ até o centro da sequência.
-	\end{corollary}
-	
-	
-	
-	\begin{theorem}[Teorema de Dirichlet para Progressões Aritméticas] \label{teo:dirichlet}
-		Sejam $a$ e $d$ inteiros positivos tais que $mdc(a, d) = 1$. Então, a progressão aritmética da forma
-		
-		\[
-		a,\, a + d,\, a + 2d,\, a + 3d,\, \dots
-		\]
-		
-		contém infinitos números primos.
-	\end{theorem}
-	
-	O Teorema de Dirichlet sobre progressões aritméticas garante que toda progressão da forma $a + nd$, com $mdc(a, d) = 1$, contém infinitos números primos.~Por ser complexa e envolver ferramentas matemáticas além do escopo deste trabalho a prova do Teorema de Dirichlet não será demonstrada aqui. Porém é possível encontrá-la em ~\cite{apostol}.  
-	
-	\begin{theorem}[Postulado de Bertrand]\label{teo:postulado_de_bertrand}
-		Para todo número inteiro \( n > 1 \), existe pelo menos um número primo \( p \) tal que
-		\[
-		n < p < 2n.
-		\]
-	\end{theorem}
-	
-	A demonstração desse Teorema pode ser encontrada em Galvin \cite{Galvin2013} inspirada na prova de Erdős para o Postulado de Bertrand.
-	
-	
-	\begin{definition}[Sequência \(S_n(p)\)]\label{def:snp}
-		Seja \(p > 2\) um número primo fixado. Definimos a sequência \(S_n(p)\), com \(n \in \mathbb{N}\), como o conjunto dos números ímpares da forma
-		\[
-		S_n(p) = 
-		\begin{cases}
-			p + 4n \\
-			p + 4n + 2
-		\end{cases}
-		\]
-		para todo \(n \in \mathbb{N}\).
-	\end{definition}
-	
-	\vspace{0.5cm}
-	
-	\begin{proposition}
-		A sequência \(S_n(p)\) contém infinitos números primos.
-	\end{proposition}
-	
-	\begin{proof}
-		Observamos que, nos dois casos,
-		\begin{itemize}
-			\item Para \(p + 4n\), temos
-			\[
-			p + 4n = p + 2(2n) = p + 2k_1,
-			\]
-			para algum \(k_1 \in \mathbb{N}\).
+		\begin{proof}
+			(i)$\Leftrightarrow$(ii): Seja $a = p + q$ com $p, q$ primos. Como $p$
+			e $q$ são ambos maiores que $1$ e $p < a$, tomando $p < a/2$ (o menor
+			dos dois), temos $q = a - p > a/2 \geq p$, logo $q > p$ e $q \in S_n(p)$,
+			portanto $q \in Q_p$, dando (ii). A recíproca é imediata.
 			
-			\item Para \(p + 4n + 2\), temos
-			\[
-			p + 4n + 2 = p + 2(2n + 1) = p + 2k_2,
-			\]
-			para algum \(k_2 \in \mathbb{N}\).
+			(ii)$\Leftrightarrow$(iii): Por definição, $a \in A_p$ se e somente se
+			$a - p \in Q_p$ para algum $p$.
+		\end{proof}
+		
+		\begin{remark}
+			O Teorema~\ref{teo:goldbach_por_simetria_de_primos} é uma reformulação,
+			não uma prova. Ele mostra que a estrutura $A_p$ é uma linguagem alternativa
+			para expressar Goldbach, o que pode ser útil para ataques futuros ao problema.
+		\end{remark}
+		
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\section{Discussão e Implicações}
+		
+		\subsection{Interpretação Estrutural}
+		
+		A sequência $S_n(p)$ cobre todos os ímpares maiores que $p$, e $Q_p$ é o
+		seu subconjunto de primos — infinito por Dirichlet. Os subconjuntos $A_p$
+		organizam os pares maiores que $2p$ de acordo com o primo âncora $p$. A
+		interseção $A_p \cap A_{p'}$ para diferentes primos $p, p'$ é não vazia em
+		geral, o que reflete o fato de que um número par pode ser soma de mais de
+		um par de primos (partições de Goldbach).
+		
+		A estrutura de propagação (Proposição~\ref{prop:propagacao}) é uma
+		propriedade genuína dos conjuntos $A_p$: uma vez que $a \in A_p$, os pares
+		adjacentes $a \pm 2$ pertencem a $A_p$ condicionalmente à primalidade de
+		$q \pm 1$ — condição que está sujeita à distribuição dos primos e não pode
+		ser garantida a priori.
+		
+		\subsection{O Que Este Trabalho Demonstra}
+		
+		Os resultados plenamente demonstrados são:
+		\begin{itemize}
+			\item Para todo $a > 6$, existe $p < a/2$ com $p \nmid a$
+			(Prop.~\ref{prop:existencia_de_primos_nao_divisores}) — condição
+			necessária para $a \in A_p$.
+			\item $Q_p$ é infinito para todo primo $p > 2$ (Dirichlet).
+			\item A propagação dentro de $A_p$ funciona sempre que existem primos nas
+			posições deslocadas (Prop.~\ref{prop:propagacao}).
+			\item As três formulações do Teorema~\ref{teo:goldbach_por_simetria_de_primos}
+			são logicamente equivalentes entre si e a Goldbach.
 		\end{itemize}
 		
-		Como \(mdc(p, 2) = 1\), ambos os casos satisfazem as condições do  \textbf{Teorema de Dirichlet para progressões aritméticas}~\ref{teo:dirichlet}, que garante que toda progressão da forma \(a + kn\), com \(mdc(a, k) = 1\), contém infinitos números primos.
-		
-		Portanto, a sequência \(S_n(p)\) contém infinitos números primos.
-	\end{proof}
-	
-	\begin{remark}
-		Note que a definição ~\ref{def:snp} está relacionada diretamente ao Corolário ~\ref{coro:par_simetrico}.
-	\end{remark}
-	
-	\begin{remark}
-		Para um q = \(S_n(p)\): ou q é um primo ímpar ou q é um composto ímpar.
-	\end{remark}
-	
-	\begin{proposition}
-		Seja \( p > 2 \) um número primo e \( n \in \mathbb{N} \). Então, a soma \( S_n(p) + p \) é um número par.
-	\end{proposition}
-	
-	
-	\begin{proof}
-		Por definição, \( S_n(p) \) é ímpar. De fato, como \( p > 2 \) é um número primo, ele também é ímpar. Assim, a soma de dois números ímpares é sempre um número par. Portanto, \( S_n(p) + p \) é par. 
-	\end{proof}
-	
-	\begin{proposition}[Propriedade da divisibilidade na soma]\label{prop:divisibilidade_na_soma}
-		Sejam \( a, b, c \in \mathbb{N} \), com \( a \neq 0 \). Então,
-		\[
-		a \mid (b + c) \text{ e } a \mid b \;\Longleftrightarrow\; a \mid c.
-		\]
-	\end{proposition}
-	
-	\begin{proof}
-		Suponha que \( a \mid (b + c) \) e \( a \mid b \). Então, existem \( f, g \in \mathbb{N} \) tais que
-		\[
-		b + c = a \cdot f \quad \text{e} \quad b = a \cdot g.
-		\]
-		Substituindo \( b \) na primeira equação, obtemos:
-		\[
-		a \cdot g + c = a \cdot f.
-		\]
-		Isolando \( c \), temos:
-		\[
-		c = a \cdot (f - g).
-		\]
-		Como \( f - g \in \mathbb{N} \) (já que \( f > g \)), segue que \( a \mid c \).
-		
-		Reciprocamente, suponha que \( a \mid b \) e \( a \mid c \). Então existem \( g, h \in \mathbb{N} \) tais que
-		\[
-		b = a \cdot g \quad \text{e} \quad c = a \cdot h.
-		\]
-		Somando essas expressões, temos:
-		\[
-		b + c = a \cdot g + a \cdot h = a \cdot (g + h).
-		\]
-		Logo, \( a \mid (b + c) \).
-		
-		Assim, mostramos que:
-		\[
-		a \mid (b + c) \text{ e } a \mid b \;\Longleftrightarrow\; a \mid c,
-		\]
-		como queríamos demonstrar.
-	\end{proof}
-	
-	
-	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	\section{Proposta de Demonstração para a Conjectura de Goldbach}
-	\begin{proposition}[Simetria dos Múltiplos]\label{prop:simetria_dos_multiplos}
-		Seja \(a > 2\) um número par natural e seja \(p\) um número primo tal que \(p \mid a\). Então, o simétrico \(S_n(p)\) de \(p\) também é múltiplo de \(p\).
-	\end{proposition}
-	
-	\begin{proof}
-		Suponha, por absurdo, que o simétrico \(S_n(p) = q\) não seja múltiplo de \(p\). 
-		
-		Sendo \(a = q + p\) e assumindo que \(p \mid a\), segue que:
-		
-		\[
-		p \mid (q + p)
-		\]
-		
-		O que, pela Proposição~\ref{prop:divisibilidade_na_soma}, implica que:
-		
-		\[
-		p \mid q
-		\]
-		
-		O que é um absurdo, pois assumimos que \(q\) não é múltiplo de \(p\).
-		
-		Portanto, a suposição é falsa e conclui-se que \(S_n(p)\) é múltiplo de \(p\) sempre que \(p \mid a\).
-	\end{proof}
-	
-	\begin{lemma}\label{lema:multip}
-		Seja \(p > 2\) um número primo e \(q > p\) um número ímpar pertencente à sequência \(S_n(p)\). Se \(q\) é primo ou \(q\) não é múltiplo de \(p\), então
-		
-		\[
-		2p \nmid (p + q)
-		\]
-	\end{lemma}
-	\begin{proof}
-		Dividimos a demonstração em dois casos:
-		
-		\textbf{Caso I:} \(q\) não é múltiplo de \(p\).
-		
-		Se \(p \nmid q \), então pelo contrapositivo das  Proposições ~\ref{prop:divisibilidade_na_soma} e ~\ref{prop:simetria_dos_multiplos} temos:
-		\[
-		 p \nmid (p + q) \implies 2p \nmid (p + q)
-		\] 
-		
-		\textbf{Caso II:} \(q\) é primo.
-		
-		Se \(q\) é um primo e, por hipótese \(q > p\), então \(p \nmid q \) e procedemos como no Caso I.
-		
-		Portanto, se \(q\) é primo maior que \(p\) ou \(q\) não é múltiplo de \(p\), então 
-		
-		\[
-		2p \nmid (p + q)
-		\]
-		
-		o que conclui a demonstração.
-		
-	\end{proof}
-	
-	\begin{corollary}
-		Seja \(p > 2\) um número primo e \(n \in \mathbb{N}\). Se \(q=S_n(p)\) é primo e \(q > p\), então
-		\[
-		p \nmid (p + S_n(p))
-		\]
-		
-	\end{corollary}
-	
-	\begin{proof}
-		Segue imediatamente do Lema ~\ref{lema:multip}, observando que a única possibilidade de múltiplo de \(p\) ocorre quando \(S_n(p) = p\), o que é excluído pela condição \(S_n(p) > p\).
-	\end{proof}
-	
-	
-	\begin{proposition}\label{prop: produto_p_menores_a_meio}
-		Seja \(a \in \mathbb{N}\) um número par tal que \(a > 6\). Então, não existe nenhum conjunto de primos \(P = \{p \in \mathbb{P} : p < \frac{a}{2}\}\) tal que
-		
-		\[
-		a = \prod_{p < \frac{a}{2}} p
-		\]
-		
-		Em outras palavras, nenhum número par \(a > 6\) pode ser expresso como o produto de todos os primos estritamente menores que \(\frac{a}{2}\).
-	\end{proposition}
-	
-	\begin{proof}
-		Seja \(a\) um número par tal que \(a > 6\). Seja
-		
-		\[
-		P(a) = \prod_{p < \frac{a}{2}} p
-		\]
-		
-		o produto de todos os primos estritamente menores que \(\frac{a}{2}\).
-		
-		Observamos que para \(a > 6\) vale \(\frac{a}{2} > 3\), portanto o conjunto de primos menores que \(\frac{a}{2}\) contém pelo menos os primos 2 e 3, e frequentemente mais.
-		
-		O produto \(P(a)\) cresce de forma supermultiplicativa, já que cada primo adicionado ao produto faz com que seu valor cresça pelo menos multiplicando pelo menor primo seguinte.
-		
-		Basta verificar que para qualquer \(a > 6\), o produto \(P(a)\) é estritamente maior que \(a\):
-		
-		- Se \(\frac{a}{2} \geq 5\), então \(P(a) \geq 2 \cdot 3 \cdot 5 = 30\), e como \(\frac{a}{2} \geq 5\), então \(a \geq 10\), mas \(30 > 10\), logo a igualdade é impossível.
-		
-		- Para valores maiores de \(a\), o número de primos no produto só aumenta, e consequentemente \(P(a)\) cresce rapidamente.
-		
-		Logo, não existe \(a > 6\) par tal que
-		
-		\[
-		a = \prod_{p < \frac{a}{2}} p
-		\]
-		
-	\end{proof}
-	
-	\begin{proposition}[Existência de Primos Não Divisores]\label{prop:existencia_de_primos_nao_divisores}
-		Seja \(a \in \mathbb{N}\) um número par tal que \(a > 6\). Então, existe pelo menos um primo \(p \in \mathbb{P}\), com \(p < \frac{a}{2}\), tal que \(p\) não divide \(a\).
-	\end{proposition}
-	
-	\begin{proof}
-		Por contradição, suponha que todo primo \(p < \frac{a}{2}\) divide \(a\). Isso implicaria que \(a\) é múltiplo do produto de todos os primos estritamente menores que \(\frac{a}{2}\), ou seja,
-		
-		\[
-		a = k \cdot \prod_{p < \frac{a}{2}} p
-		\]
-		
-		para algum \(k \in \mathbb{N}\). No entanto, isso contradiz diretamente a Proposição~\ref{prop: produto_p_menores_a_meio}, que estabelece que nenhum número par \(a > 6\) pode ser expresso como o produto de todos os primos menores que \(\frac{a}{2}\).
-		
-		Portanto, nossa suposição leva a um absurdo. Assim, necessariamente, existe pelo menos um primo \(p < \frac{a}{2}\) tal que \(p\) não divide \(a\).
-		
-		Isso conclui a demonstração.
-	\end{proof}
-	
-	\subsection{Propagação Estrutural e Cobertura dos Números pares Pares}
-	\begin{definition}[Conjunto \(Q_p\)]
-		Seja \(p \in P\) um número primo fixo com \(p > 2\). Definimos \(Q_p\) como o subconjunto dos números primos pertencentes à sequência \(S_n(p)\), ou seja:
-		
-		\[
-		Q_p = \left\{ q \in S_n(p) \mid q \text{ é primo} \right\}
-		\]
-		
-		onde \(S_n(p)\) é a sequência dos números ímpares construídos com base em simetrias desses ímpares com cada número par maior que dois, conforme definido anteriormente. O conjunto \(Q_p\) representa, portanto, todos os primos que pertencem à sequência \(S_n(p)\) associada a cada primo \(p\).
-	\end{definition}
-	
-	\begin{definition}[Conjunto \(A_p\)]
-		Para um primo \(p \in P\) com \(p > 2\), definimos:
-		
-		\[
-		A_p = \{p + q \mid q \in Q_p\}
-		\]
-		
-		onde \(Q_p\) é o subconjunto dos números primos pertencentes à sequência \(S_n(p)\). O conjunto \(A_p\) contém todos os pares gerados pela soma do primo \(p\) com os primos de sua sequência associada.
-	\end{definition}
-	
-	\begin{definition}[Conjunto dos Pares Maiores que 2 \(A\)]
-		Seja \(A\) definido como o conjunto dos números pares maiores que dois. Ou seja, 
-		\[
-		A = \{a \in \mathbb{N} \mid a > 2 \text{ e } a \text{ é par} \}
-		\]
-	\end{definition}
-	
-	\begin{proposition}[Simetria de Propagação a partir de um Par Menor]\label{prop:propagacao_a_partir_par_menor}
-		Seja \(m > a\) um número par. Para qualquer par \(a = p + q \in A_p\), existe um deslocamento \(k \in \mathbb{N}\) tal que:
-		
-		\[
-		m = p + (q + 2k) \quad \text{ou} \quad m = p + (q - 2k)
-		\]
-		
-		e portanto \(m \in A_p\), desde que \(q \pm 2k\) seja primo.
-	\end{proposition}
-	
-	\begin{proof}
-		Seja \(m > a\), com \(a = p + q \in A_p\), e seja \(q \in Q_p\) o simétrico de \(p\) que gera \(a\).
-		
-		Como \(m - a = 2k\), para algum \(k \in \mathbb{N}\), temos:
-		
-		\[
-		m = a + 2k = p + (q + 2k).
-		\]
-		
-		Se \(q + 2k\) for primo e \(q + 2k > p\), então, como \(S_n(p)\) é a sequência dos ímpares maiores que \(p\), segue que \(q + 2k \in S_n(p)\) e, sendo primo, \(q + 2k \in Q_p\).
-		
-		Logo, \(m = p + (q + 2k) \in A_p\).
-		
-		O mesmo argumento vale para \(m < a\), com \(m = a - 2k = p + (q - 2k)\), assumindo \(q - 2k\) primo, maior que \(p\).
-		
-		Assim, a distância entre pares pode ser compensada por deslocamentos nos simétricos de \(p\), mantendo \(m\) pertencente a \(A_p\), o que conclui a demonstração.
-	\end{proof}
-	
-	\begin{remark}
-		 Isso ocorre porque a diferença \(m - a = 2k\) pode ser compensada por um deslocamento simétrico no elemento \(q \in Q_p\), preservando a estrutura de \(A_p\) e reforçando sua propagação.
-	\end{remark}
-	
-	\begin{proposition}[Cobertura Parcial dos Números Pares pelos Subconjuntos \(A_p\)]\label{prop:cobertura_parcial_dos_pares}
-		Seja \(m\) um número par tal que \(m > 2\). Então, existe pelo menos um primo \(p \in P\) tal que \(p\) não divide \(m\), e, portanto, \(m\) deve pertencer a algum subconjunto \(A_p\), onde:
-		
-		\[
-		A_p = \{p + q \mid q \in Q_p\}
-		\]
-		
-		com \(Q_p\) sendo o conjunto dos primos pertencentes à sequência \(S_n(p)\) associada a \(p\).
-	\end{proposition}
-	
-	\begin{proof}
-		Suponha, por absurdo, que existe um número par \(m > 2\) tal que \(m\) não pertence a nenhum subconjunto \(A_p\) para todo \(p \in P\). Isso implica que, para todo primo \(p\), o número \(m\) é múltiplo de \(p\).
-		
-		Contudo, isso é um absurdo, pois já foi demonstrado nas Proposições \ref{prop: produto_p_menores_a_meio} e \ref{prop:existencia_de_primos_nao_divisores} que não há como \(m\) ser múltiplo de todos os primos \( p_i \) tais que \( p_i < m/2 \). 
-		
-		Logo, necessariamente, existe pelo menos um primo \(p\) tal que \(p\) não divide \(m\). Como \(m\) pode ser escrito da forma \(p + S_n(p)\) e \(p \nmid m \), então \(p \nmid p +  S_n(p)\). Pelo Lema \ref{lema:multip}, \(p \nmid p +  q\) sempre que \(q\) é primo ou \(q\) é um ímpar composto não múltiplo de \(p\). 
-		
-		Portanto, se \(p \nmid m \), então \(q\) pode ser primo, reforçando que \(m\) deve pertencer a algum subconjunto \(A_p = \{p + q \mid q \in Q_p\}\), onde \(q\) percorre os primos da sequência \(S_n(p)\).
-		
-		Isso conclui a demonstração.
-	\end{proof}
-	\begin{remark}
-		A Proposição~\ref{prop:cobertura_parcial_dos_pares} reforça que, embora cada subconjunto \(A_p\) exclua especificamente os múltiplos de \(p\), a união dos subconjuntos cobre parcialmente o conjunto dos números pares maiores que dois. Isso decorre do fato de que não existe número par finito que seja múltiplo de todos os primos menores que a metade desse par. E parcialmente, pois nem todos os pares não múltiplos de p são garantidos em um único \(A_p\), porém a união dos \(A_p\) e a cobertura para todos os pares maiores que dois será demonstrada no próximo teorema.
-	\end{remark}
-	
-	\begin{lemma}[Propagação Estrutural por Deslocamento Simétrico]
-		Seja \(a = p + q\), com \(p \in P\), \(q \in Q_p\) e \(q > p\). Então, para todo \(k \in \mathbb{N}\), se \(q + 2k\) (ou \(q - 2k\)) for primo, então:
-		
-		\[
-		a \pm 2k = p + (q \pm 2k)
-		\]
-		
-		e como \(q \pm 2k > p\) e não múltiplo de \(p\), tem-se que \(q \pm 2k \in Q_p \subset S_n(p)\), logo \(a \pm 2k \in A_p\).
-	\end{lemma}
-	
-	\begin{proof}
-		Seja \(q \in Q_p\) tal que \(a = p + q\). Como \(q > p\) e \(Q_p \subset S_n(p)\), então \(q\) é um primo ímpar não múltiplo de \(p\), pertencente à sequência simétrica \(S_n(p)\).
-		
-		Considere \(q + 2k\), para \(k \in \mathbb{N}\). Se \(q + 2k\) for primo e satisfizer \(q + 2k > p\) e \(q + 2k \not\equiv 0 \pmod{p}\), então \(q + 2k \in S_n(p)\), e sendo primo, \(q + 2k \in Q_p\). Portanto:
-		
-		\[
-		a + 2k = p + (q + 2k) \in A_p.
-		\]
-		
-		Analogamente, se \(q - 2k > p\) e \(q - 2k\) também for primo e não múltiplo de \(p\), então \(q - 2k \in Q_p\), e:
-		
-		\[
-		a - 2k = p + (q - 2k) \in A_p.
-		\]
-		
-		Logo, a estrutura \(A_p\) permite a geração de pares consecutivos por deslocamento simétrico dos elementos \(q \in Q_p\), concluindo a demonstração.
-	\end{proof}
-	
-	\begin{lemma}[Cobertura Estrutural dos Números Pares]\label{lema:cobertura_dos_pares}
-		Seja \(a > 2\) um número par. Então existe ao menos um primo \(p < \frac{a}{2}\) tal que \(a \in A_p\), onde:
-		
-		\[
-		A_p = \{p + q \mid q \in Q_p\},
-		\]
-		
-		e \(Q_p\) é o conjunto dos primos pertencentes à sequência simétrica \(S_n(p)\) associada a \(p\).
-	\end{lemma}
-	
-	\begin{proof}
-		Seja \(a > 2\) um número par. Suponha, por absurdo, que \(a\) não pertence a nenhum subconjunto \(A_p\), com \(p < \frac{a}{2}\). Isso implica que, para todo primo \(p\) nessa faixa, não existe \(q \in Q_p\) tal que \(a = p + q\).
-		
-		Mais ainda, como demonstrado na seção anterior, essa exclusão deve valer também para todos os deslocamentos simétricos \(q = S_n(p) \pm 2k\), que, sendo maiores que \(p\) e não múltiplos de \(p\), também pertencem a \(S_n(p)\), e, se primos, pertencem a \(Q_p\). Assim, para manter a exclusão total de \(a\), todos esses deslocamentos devem deixar de gerar primos — o que contradiz a infinitude e a densidade dos primos em \(S_n(p)\), conforme garantido pelo Teorema de Dirichlet. Isso também contradiz o Postulado de Bertrad (Teorema~\ref{teo:postulado_de_bertrand}), uma vez que:
-		
-		\[
-		\frac{a}{2} < q = S_n(p) < 2 \cdot \frac{a}{2} = a
-		\]
-		
-		Isto é, se \(p \ne q\), então existe pelo menos um \(q\) entre  \(a/2\) e \(a\) tal que \(q\) é primo.
-		
-		Além disso, conforme a Proposição~\ref{prop:propagacao_a_partir_par_menor}, qualquer par \(a\) pode ser alcançado por deslocamento a partir de algum par menor \(a_0 = p + q\) pertencente a \(A_p\), o que reforça a conectividade da estrutura.
-		
-		Logo, a suposição de que \(a\) não pertence a nenhum \(A_p\) leva a uma contradição com as propriedades da estrutura construída. Conclui-se, portanto, que todo número par \(a > 2\) pertence a ao menos um subconjunto \(A_p\).
-	\end{proof}
-	
-	\begin{corollary}[Contradição Estrutural por Exclusão Total]\label{coro:contradicao_estrutural}
-		Seja \(a > 2\) um número par. Então a pertence a algum \(A_p\).
-	\end{corollary}
-	
-	\begin{proof}
-		Suponha, por absurdo, que existe um número par \(a > 4\) tal que \(a \notin A_p\) para todo primo \(p < \frac{a}{2}\), e que não exista \(q \in Q_p\) tal que \(q = S_n(p) \pm 2k\) e \(a = p + q\). Isso implica que \(a\) não pode ser obtido nem por combinação direta, nem por deslocamento simétrico a partir de qualquer subconjunto \(A_p\), o que contradiz a estrutura baseada na infinitude dos primos, na progressão simétrica dos elementos de \(S_n(p)\) e na continuidade das somas geradas em \(A_p\).
-		
-		Como foi demonstrado anteriormente, os conjuntos \(A_p\) são formados por somas da forma \(p + q\), com \(q \in Q_p\), e sua propagação ocorre através de deslocamentos simétricos \(q \pm 2k\), que também pertencem a \(Q_p\) sempre que satisfazem as condições de primalidade e \(q \pm 2k > p\).
-		
-		Como existem diversos primos \(p < \frac{a}{2}\), e para cada um deles a sequência \(S_n(p)\) contém infinitos ímpares não múltiplos de \(p\), dos quais infinitos são primos por Dirichlet, a exclusão completa de \(a\) requer que todos esses primos falhem simultaneamente em gerar \(a\), tanto diretamente quanto por deslocamento. Isso é estruturalmente incompatível com a densidade dos primos nos conjuntos \(Q_p\) e com a progressão simétrica dos pares gerados por \(A_p\).
-		
-		Logo, a suposição de que \(a\) está fora de todos os conjuntos \(A_p\), inclusive por deslocamento simétrico, contradiz a própria estrutura construtiva baseada em infinitude, simetria e progressão. Isso conclui a demonstração por absurdo.
-	\end{proof}
-	
-	Os resultados apresentados até aqui — em particular, o Lema~\ref{lema:cobertura_dos_pares}, que garante que todo número par \( a > 2 \) pertence a algum subconjunto \( A_p \), e o Corolário~\ref{coro:contradicao_estrutural}, que reforça essa afirmação via argumento de exclusão estrutural — permitem consolidar formalmente a cobertura completa do conjunto dos números pares maiores que dois por meio das somas entre primos organizadas nos subconjuntos \( A_p \).
-	
-	A seguir, enunciamos o resultado que expressa essa cobertura de forma global e sistemática.
-	
-	\begin{theorem}[Cobertura dos Números Pares]\label{teo:cobertura_dos_pares}
-		Seja
-		\[
-		B = \{(a_n)_{n \in \mathbb{N}} \mid a_n = p + q,\, p \in P,\, q \in Q_p\},
-		\]
-		onde \(P\) é o conjunto dos números primos maiores que dois, e \(Q_p\) é o subconjunto dos primos pertencentes à sequência simétrica \(S_n(p)\) associada a cada \(p \in P\).
-		
-		Então, a união das sequências \(a_n\in B\) cobre integralmente o conjunto dos números pares maiores que dois, isto é,
-		\[
-		\bigcup_{n \in \mathbb{N}} a_n = A,
-		\]
-		com \(A = \{a \in \mathbb{N} \mid a > 2 \text{ e } a \text{ é par} \}\).
-	\end{theorem}
-	\begin{proof}
-		Pelo Lema~\ref{lema:cobertura_dos_pares} e pelo Corolário~\ref{coro:contradicao_estrutural}, todo número par \(a > 2\) pertence a algum subconjunto \(A_p = \{p + q \mid q \in Q_p\}\), com \(Q_p\) sendo o subconjunto dos primos pertencentes à sequência \(S_n(p)\) associada ao primo \(p\). O Corolário~\ref{coro:contradicao_estrutural} reforça que não é possível estruturalmente excluir um número par da totalidade dos \(A_p\), dado o comportamento de propagação simétrica dos termos \(q \pm 2k\) e a densidade dos primos nos conjuntos \(Q_p\).
-		
-		Portanto, todo número par \(a > 2\) é gerado por alguma sequência \(a_n = p + q\), com \(p \in P\) e \(q \in Q_p\). Assim, a união das sequências \(a_n\) contidas em \(B\) cobre integralmente o conjunto \(A\) dos pares maiores que dois:
-		
-		\[
-		\bigcup_{n \in \mathbb{N}} a_n = A.
-		\]
-		
-			Nota-se, adicionalmente, que estamos considerando apenas \(p > 2\). O caso \(p = 2\) é especial, pois a sequência \(S_n(2)\) se reduz a duas progressões específicas:
-		
-		\[
-		S_n(2) =
-		\begin{cases}
-			4n + 2 \\
-			4n + 4
-		\end{cases}
-		\]
-		
-		que não satisfazem as condições do Teorema de Dirichlet, pois \(mdc(4,2) \neq 1\) e \(mdc(4,4) \neq 1\). Portanto, \(p = 2\) não é incluído na definição geral do teorema.
-		
-		Se estendermos a definição formalmente para \(p = 2\), o único termo válido seria quando \(n = 0\), ou seja,
-		
-		\[
-		a_1 = \{4\}
-		\]
-		
-		Ou seja, o número \(4\) constitui um caso especial, pois é o único número par gerado exclusivamente pela soma \(2 + 2\), isto é, pelo conjunto \(A_2\). Como a construção principal considera apenas primos \(p > 2\), o número \(4\) não é alcançado pelas sequências \(A_p\) com \(p > 2\), nem pela propagação por deslocamento simétrico. No entanto, como mencionado anteriormente, esse caso está adequadamente tratado e incorporado na estrutura através da definição isolada de \(a_1 = \{4\}\), que representa a única contribuição de \(A_2\).
-		
-		Portanto, a cobertura estabelecida pelo Teorema permanece válida para todos os pares \(a > 2\), com a inclusão explícita de \(4\) como um caso particular.
-		
-	\end{proof}
-	
-
-	\begin{corollary}[Par Simétrico de Primos]\label{coro:par_simetrico_primos}
-		Todo número par \(a > 2\) possui um par simétrico de primos \(p\) e \(q \in S_n(p)\) tal que:
-		
-		\[
-		a = p + S_n(p)
-		\]
-	\end{corollary}
-	
-	\begin{proof}
-		Seja \(a\) um número par tal que \(a > 2\). Pelo Teorema~\ref{teo:cobertura_dos_pares}, sabemos que:
-		
-		\[
-		a \in \bigcup_{p \in P} A_p
-		\]
-		
-		onde cada subconjunto \(A_p\) é dado por:
-		
-		\[
-		A_p = \{p + q \mid q \in S_n(p)\}
-		\]
-		
-		com \(p\) um primo pertencente a \(P\) e \(q\) um primo pertencente à sequência \(S_n(p)\).
-		
-		Por definição, todo elemento \(a \in A_p\) pode ser escrito como:
-		
-		\[
-		a = p + S_n(p)
-		\]
-		
-		com \(p\) e \(S_n(p)\) ambos números primos. Como a sequência \(S_n(p)\) é simétrica em relação ao primo \(p\), de acordo com o Corolário~\ref{coro:par_simetrico} e com a Definição~\ref{def:snp}, então qualquer número par \(a \in A_p\) possui um par simétrico de primos.
-		
-		Logo, todo número par \(a > 2\) pode ser representado como:
-		
-		\[
-		a = p + q
-		\]
-		
-		com \(p\) e \(q\) sendo primos, onde \(q \in S_n(p)\).
-		
-		Esse resultado é garantido diretamente pelo Teorema~\ref{teo:cobertura_dos_pares}, uma vez que, para todas a sequências \(a_n = p + S_n(p) \):
-		
-		\[
-		\bigcup_{n \in \mathbb{N}} a_n = A
-		\]
-		
-		o que completa a demonstração. 
-	\end{proof}
-	
-	\begin{remark}
-		Um par simétrico \(p\) e \(S_n(p)\) tal que \( a = p + S_n(p)\) é o equivalente na literatura a dizer que esse par é uma das partições de \(a\). Isso porque um mesmo par pode possuir várias partições, ou seja ele pode ser gerado a partir da soma entre pares distintos de primos, ou no caso deste artigo, dizemos que diferentes sequências \(a_n\) podem gerar um mesmo par.
-	\end{remark}
-	
-	
-	\begin{theorem}[Formulação Simétrica da Conjectura de Goldbach]\label{teo:goldbach_por_simetria_de_primos}
-		Todo número par \(a > 2\) pode ser expresso como a soma de dois números primos \(p\) e \(q\), tais que:
-		
-		\[
-		a = p + q
-		\]
-		
-		onde \(p\) é um número primo pertencente ao conjunto \(P\) (primos maiores que dois) e \(q\) é um número primo pertencente à sequência \(S_n(p)\) associada a \(p\), conforme definida neste trabalho.
-		
-		Em outras palavras, para todo número par \(a > 2\), existe um par simétrico de primos \((p, q)\), sendo \(q \in S_n(p)\), tal que:
-		
-		\[
-		a = p + S_n(p)
-		\]
-	\end{theorem}
-	\begin{proof}
-	O resultado segue diretamente do Teorema~\ref{teo:cobertura_dos_pares} (Cobertura dos Números Pares) e do Corolário~\ref{coro:par_simetrico_primos}, os quais estabelecem que todo número par maior que dois pertence à união dos subconjuntos formados por somas da forma \(p + q\), com \(p\) pertencente ao conjunto dos primos \(P\) e \(q\) pertencente à sequência \(S_n(p)\). Como demonstrado, a sequência \(S_n(p)\) contém infinitos primos e possui relação simétrica com \(p\), garantindo que todo número par pode ser expresso como a soma de um primo \(p\) e de um primo \(q \in S_n(p)\).
-	
-	Ressalta-se que o caso \(a = 4\) é gerado diretamente como \(4 = 2 + 2\), através da sequência \(S_n(2)\), que constitui um caso particular dentro da construção. Para todos os outros primos \(p > 2\), as propriedades estruturais da sequência \(S_n(p)\) são plenamente aplicáveis conforme as definições apresentadas.
-	
-	Isso conclui a demonstração.
-	\end{proof}
-	
-	
-	\section{Discussão do Corolário~\ref{coro:par_simetrico_primos} e do Teorema~\ref{teo:goldbach_por_simetria_de_primos} e Implicações na Conjectura de Goldbach}
-	
-	
-	O Corolário~\ref{coro:par_simetrico_primos} estabelecido no contexto deste trabalho demonstra que todo número par \(a > 2\) possui um \textbf{par simétrico de primos}, especificamente da forma \(a = p + q\), onde \(p\) é um primo fixado pertencente ao conjunto \(P\) (primos maiores que três) e \(q\) é um primo pertencente à sequência \(S_n(p)\). O Teorema~\ref{teo:goldbach_por_simetria_de_primos} estende esse resultado a Conjectura de Goldbach a fim de demonstrá-lo. 
-	
-	\subsection{Interpretação Estrutural}
-	A sequência \(S_n(p)\) possui uma construção baseada na simetria dos números ímpares menores que um determinado valor, conforme definido anteriormente na Proposição~\ref{prop:distancia_simetrica}, no Corolário~\ref{coro:par_simetrico} e na Definiçãp~\ref{def:snp}. Dessa forma, para cada primo \(p\), a sequência \(S_n(p)\) fornece um subconjunto de primos que, somados a \(p\), geram números pares que não são múltiplos de  \(p\), exceto pelo termo  \(2p\), mas, coletivamente, a união desses pares cobre \textbf{todo o conjunto dos pares maiores que dois}, como garantido pelo Teorema~\ref{teo:cobertura_dos_pares}.
-	
-	\subsection{Propagação Estrutural e Exclusão por Contradição}
-	
-	Na seção anterior, exploramos como a estrutura desenvolvida a partir das sequências \(S_n(p)\) permite não apenas a geração de um número par específico \(a\), mas também a propagação de representações para pares subsequentes e anteriores por meio de deslocamentos simétricos. Tal característica sustenta a densidade e interconexão entre os subconjuntos \(A_p\), sugerindo que o não pertencimento de um par a qualquer \(A_p\) levaria a uma contradição estrutural.
-	
-	\subsection{Implicações Diretas na Conjectura de Goldbach}
-	Este resultado sustenta, sob a construção proposta, que qualquer número par maior que dois \textbf{pode ser expresso como a soma de dois primos}, sendo um deles um primo fixo \(p\) e o outro um primo proveniente da sequência \(S_n(p)\) associada a esse \(p\).
-	
-	A simetria observada na construção da sequência \(S_n(p)\) não apenas sugere, mas também estrutura formalmente a geração dos pares como combinações específicas de primos e seus simétricos dentro das sequências.
-	
-	\subsection{Observação de Relevância}
-	Ainda que o Teorema~\ref{teo:goldbach_por_simetria_de_primos} possa não constituir uma demonstração completa da Conjectura de Goldbach no sentido clássico, este trabalho fornece uma estrutura formal elaborada e uma decomposição do conjunto dos pares em subconjuntos que, isoladamente, são gerados pela soma de primos específicos com seus simétricos nas sequências \(S_n(p)\).
-	
-	Essa abordagem pode, portanto, representar uma estratégia alternativa na busca de uma demonstração completa, ao invés de se focar exclusivamente na busca de por um par de primos qualquer, opta-se pela decomposição sistemática do conjunto dos pares, distribuindo-os segundo as progressões e simetrias associadas a cada primo \(p\).
-	
-	\subsection{Perspectivas}
-	Essa formulação permite avançar na análise estrutural do problema, podendo conduzir a novos lemas e teoremas que, eventualmente, possam atacar os casos residuais ou demonstrar a exaustividade da cobertura para todos os números pares.
-	
-	Além disso, a abordagem sugere a possibilidade de análise algorítmica, uma vez que cada subconjunto \(A_i\) pode ser gerado computacionalmente a partir de um primo \(p_i\) e dos elementos da sequência \(S_n(p_i)\).
-	
-	\subsection{Conclusão da Discussão}
-	O Corolário~\ref{coro:par_simetrico_primos}, portanto, não apenas reforça a validade da construção proposta, como também fornece uma formulação que conecta diretamente a Conjectura de Goldbach com o Teorema de Dirichlet aplicado às progressões associadas às sequências \(S_n(p)\), e com as propriedades de simetria dos números ímpares menores que um determinado limite. Além disso, esse resultado é a principal para demonstrar o Teorema~\ref{teo:goldbach_por_simetria_de_primos} deste trabalho.
-	
-	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	
-	\section{Considerações Finais sobre a Abordagem Estrutural}
-	
-	O objetivo central deste trabalho não foi apresentar uma demonstração direta da Conjectura de Goldbach nos moldes tradicionais, isto é, a partir da simples verificação da existência de um par de primos \(p\) e \(q\) tal que \(a = p + q\) para cada número par \(a > 2\).
-	
-	Em vez disso, a proposta aqui desenvolvida busca construir uma estrutura matemática baseada em propriedades de simetria, progressões aritméticas e exclusão sistemática de múltiplos, com o intuito de compreender como os pares podem emergir da organização interna dos primos.
-	
-	A partir da definição das sequências \(S_n(p)\) e dos subconjuntos \(A_p = \{p + q \mid q \in Q_p\}\), onde \(Q_p\) representa os primos contidos em \(S_n(p)\), foi possível observar uma malha algébrica que sugere um padrão de cobertura dos números pares baseado em regularidades estruturais. Essa malha parece se propagar por meio de deslocamentos simétricos dos elementos \(q\), com a propriedade de que, caso \(q + 2k\) ou \(q - 2k\) seja primo, então o próximo (ou anterior) número par pode ser alcançado dentro do mesmo subconjunto \(A_p\).
-	
-	A abordagem aqui proposta, portanto, pode ser interpretada como uma tentativa de compreender a Conjectura de Goldbach não pela força bruta de combinar primos aleatoriamente, mas por meio de uma organização sistemática, onde a simetria dos ímpares e as restrições aritméticas impõem uma estrutura que pode justificar a representação de todos os pares.
-	
-	Ainda que essa estrutura possar não constituir, a priori, uma prova formal da conjectura, acredita-se que ela ofereça uma nova perspectiva sobre o problema, passível de aprofundamentos futuros e refinamentos que poderão, eventualmente, contribuir para a compreensão teórica mais ampla da conjectura e da distribuição dos primos.
-	
-	
-	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	\section{Conclusão}
-	
-	Este trabalho apresentou uma abordagem alternativa para a Conjectura de Goldbach, fundamentada na decomposição dos números pares maiores que dois em somas da forma \(p + q\), onde \(p\) é um primo fixo e \(q\) pertence a uma sequência específica \(S_n(p)\) associada a esse primo. A partir da aplicação do Teorema de Dirichlet e das propriedades de simetria dos números ímpares, foi possível demonstrar que a união dos subconjuntos formados por essas somas gera integralmente o conjunto dos números pares maiores que dois.
-	
-	Embora haja a possibilidade do resultado obtido não configurar uma prova definitiva da Conjectura de Goldbach através do Teorema~\ref{teo:goldbach_por_simetria_de_primos}, ele oferece uma contribuição significativa no sentido de estruturar o problema sob uma nova ótica, organizando os números pares segundo padrões algébricos e simétricos. Além disso, essa abordagem abre espaço para a formulação de novos lemas, conjecturas auxiliares e estratégias de demonstração que podem ser exploradas em pesquisas futuras.
-	
-	Como trabalhos futuros, sugere-se aprofundar a análise das interseções entre os subconjuntos gerados, investigar a distribuição dos primos dentro das sequências \(S_n(p)\) e explorar a possibilidade de estender essa abordagem para outros problemas clássicos da Teoria dos Números. A proposta aqui apresentada também pode ser adaptada para análises computacionais, permitindo a geração e a verificação automatizada das estruturas formadas, contribuindo assim tanto para a pesquisa teórica quanto para o desenvolvimento de algoritmos relacionados à distribuição dos números primos.
-	
-	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	
-	\section*{Agradecimentos}
-	
-	Ofereço este trabalho em homenagem a todos os meus professores de matemática, que contribuíram para minha formação e paixão pela matemática.
-	
-	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	
-	\begin{thebibliography}{9}
-		
-		\bibitem{apostol}
-		T. M. Apostol.
-		\textit{Introduction to Analytic Number Theory}.
-		Springer, 1976.
-		
-		\bibitem{paiva}
-		C. D. C. Paiva, et al. \textit{A busca pela prova da conjectura de Goldbach: explorando suas conquistas}. Caderno Pedagógico, 21(7): e5770-e5770, 2024.
-		
-		\bibitem{oliveira}
-		T. Oliveira e Silva, S. Herzog, and S. Pardi,
-		Empirical verification of the even Goldbach conjecture and computation of prime gaps up to \(4 \cdot 10^{18}\),
-		\textit{Math. Comp.} \textbf{83} (2014), no. 288, 2033--2060.
-		
-		\bibitem{hefez}
-		A. Hefez,
-		\textit{Elementos de Aritmética},
-		Sociedade Brasileira de Matemática, 2006.
-		
-		\bibitem{Galvin2013}
-		David Galvin,
-		\textit{Erdős's proof of Bertrand's postulate},
-		2013.
-		\url{https://www3.nd.edu/~dgalvin1/pdf/bertrand.pdf}
-		
-		\bibitem{Ellman2000}
-		Roger Ellman,
-		\emph{A Proof of ``Goldbach's Conjecture''},
-		2000. Disponível em: \url{https://arxiv.org/abs/math/0005185}.
-		
-		
-		
-		
-		
-		
-	\end{thebibliography}
-    \end{otherlanguage}
-	%\bibliographystyle{amsplain} 
-	%\bibliography{bio} 
-	
+		\subsection{O Que Não Foi Demonstrado}
+		
+		A afirmação central que permanece aberta é a
+		Conjectura~\ref{conj:cobertura}: para todo $a$ específico, garantir que
+		$a - p$ é primo para algum primo $p$. Este passo exige que o par $(p, a-p)$
+		seja uma partição de Goldbach — que é exatamente o que a conjectura afirma.
+		
+		Nenhum argumento de infinitude (Dirichlet, Bertrand, densidade dos primos)
+		é suficiente para garantir isso: eles estabelecem que existem muitos primos
+		``próximos'' de $a/2$, mas não que algum deles seja complementar de um primo.
+		
+		\subsection{Caminhos para Investigações Futuras}
+		
+		A estrutura proposta sugere algumas direções promissoras:
+		
+		\begin{enumerate}
+			\item \textbf{Argumento de densidade}: estimar a densidade de $A_p$ dentro
+			de $A$ e mostrar que, para $a$ grande, a probabilidade de $a \notin
+			\bigcup A_p$ tende a zero. Isso exigiria funções $L$ de Dirichlet e
+			estimativas de crivo (Crivo de Selberg, por exemplo).
+			
+			\item \textbf{Análise das interseções}: investigar formalmente
+			$|A_{p_1} \cap A_{p_2} \cap \dotsb \cap A_{p_k}|$ para coleções
+			finitas de primos, conectando com as conjecturas de Hardy-Littlewood
+			sobre pares de primos.
+			
+			\item \textbf{Verificação computacional}: os subconjuntos $A_p$ são
+			gerados computacionalmente a partir de um primo $p$ e dos primos de
+			$S_n(p)$. Uma análise empírica da cobertura progressiva $\bigcup_{p
+				\leq P} A_p$ em função de $P$ e do alcance $a_{\max}$ pode revelar
+			padrões para orientar o trabalho teórico.
+			
+			\item \textbf{Extensão a outros problemas}: a estrutura de simetria pode
+			ser adaptada para a Conjectura de Goldbach fraca (já provada por
+			Helfgott~\cite{Helfgott2013}) como teste de validação, ou para
+			outros problemas da combinatória aditiva dos primos.
+		\end{enumerate}
+		
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\section{Conclusão}
+		
+		Este trabalho desenvolveu uma estrutura combinatória alternativa para
+		organizar a Conjectura de Goldbach, baseada na sequência \(S_n(p)\) e nos
+		subconjuntos \(A_p = \{p + q \mid q \in Q_p\}\). Os resultados válidos
+		obtidos são: (i) a existência garantida de um primo \(p < a/2\) com
+		\(p \nmid a\) para todo par \(a > 6\), fornecendo a condição necessária
+		para \(a \in A_p\); (ii) a infinitude de \(Q_p\) por Dirichlet; (iii) a
+		propriedade de propagação condicional dentro de \(A_p\); e (iv) a
+		equivalência lógica entre a Conjectura de Goldbach e a cobertura
+		\(\bigcup A_p = A\).
+		
+		A lacuna central foi identificada e exposta com precisão: o passo de
+		garantir que \(a - p\) seja primo para algum \(p\) adequado não decorre
+		dos resultados anteriores e é logicamente equivalente à própria conjectura.
+		Versões anteriores deste trabalho continham argumentos circulares nesse
+		ponto (confusão entre ``existem infinitos primos em \(S_n(p)\)'' e
+		``\(a - p\) é primo''), que foram removidos na presente versão.
+		
+		O trabalho é apresentado, portanto, não como uma demonstração de Goldbach,
+		mas como uma contribuição estrutural que reapresenta o problema em uma
+		linguagem de simetria e progressão aritmética, potencialmente útil como
+		ponto de partida para abordagens por densidade analítica, crivos ou
+		argumentos probabilísticos.
+		
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		
+		\section*{Agradecimentos}
+		
+		Ofereço este trabalho em homenagem a todos os meus professores de
+		matemática, que contribuíram para minha formação e paixão pela matemática.
+		
+		Agradeço também às revisões críticas que motivaram a reformulação honesta
+		do escopo deste trabalho.
+		
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		
+		\begin{thebibliography}{9}
+			
+			\bibitem{apostol}
+			T. M. Apostol.
+			\textit{Introduction to Analytic Number Theory}.
+			Springer, 1976.
+			
+			\bibitem{paiva}
+			C. D. C. Paiva et al.
+			\textit{A busca pela prova da conjectura de Goldbach: explorando suas
+				conquistas}.
+			Caderno Pedagógico, 21(7): e5770--e5770, 2024.
+			
+			\bibitem{oliveira}
+			T. Oliveira e Silva, S. Herzog, and S. Pardi.
+			Empirical verification of the even Goldbach conjecture and computation of
+			prime gaps up to \(4 \cdot 10^{18}\).
+			\textit{Math.\ Comp.} \textbf{83} (2014), no.\ 288, 2033--2060.
+			
+			\bibitem{hefez}
+			A. Hefez.
+			\textit{Elementos de Aritmética}.
+			Sociedade Brasileira de Matemática, 2006.
+			
+			\bibitem{Galvin2013}
+			D. Galvin.
+			\textit{Erdős's proof of Bertrand's postulate}, 2013.
+			\url{https://www3.nd.edu/~dgalvin1/pdf/bertrand.pdf}
+			
+			\bibitem{Ellman2000}
+			R. Ellman.
+			\textit{A Proof of ``Goldbach's Conjecture''}, 2000.
+			\url{https://arxiv.org/abs/math/0005185}
+			
+			\bibitem{Helfgott2013}
+			H. A. Helfgott.
+			\textit{Major arcs for Goldbach's theorem}, 2013.
+			\url{https://arxiv.org/abs/1305.2897}
+			
+		\end{thebibliography}
+		
+	\end{otherlanguage}
 \end{document}
