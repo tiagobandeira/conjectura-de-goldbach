@@ -181,6 +181,17 @@
 		$\calA = \{a\in\NN : a > 2,\; a\text{ par}\}$.
 	\end{definition}
 	
+	\begin{remark}[Consist\^encia com a nota\c{c}\~ao de~\cite{bandeira2026estrutura}]
+		Em~\cite{bandeira2026estrutura}, $S_n(p)$ \'e apresentada por dois sub-casos:
+		$p+4n$ e $p+4n+2$ (para $n\in\NN$). A Defini\c{c}\~ao~2.4 acima \'e
+		equivalente, reunindo ambos em uma uni\~ao expl\'icita.
+		Todo \'impar $q > p$ escreve-se como $q = p + 2m$ para algum $m \geq 1$:
+		se $m$ \'e par ($m = 2n$), ent\~ao $q \in \{p+4n\}$;
+		se \'impar ($m = 2n+1$), ent\~ao $q \in \{p+4n+2\}$.
+		Portanto $S_n(p)$ cobre exatamente todos os \'impares maiores que $p$
+		em ambas as nota\c{c}\~oes.
+	\end{remark}
+	
 	\begin{theorem}[Dirichlet]
 		Para todo primo $p>2$, o conjunto $Q_p$ \'e infinito, e consequentemente $A_p$ \'e infinito.
 	\end{theorem}
@@ -260,23 +271,44 @@
 		\[
 		\sum_{i=1}^{\infty}\bP(E_i)
 		\;\geq\; 24\sum_{k=1}^{\infty}\frac{1}{[\ln(2k-1)]^3}
-		\;\geq\; 24\int_{3}^{\infty}\frac{dx}{(\ln x)^3}
-		\;\geq\; 24\int_{3}^{\infty}\frac{dx}{x}
-		= +\infty.\qedhere
+		\;\geq\; 24\int_{3}^{\infty}\frac{dx}{(\ln x)^3}.
 		\]
+		A integral do lado direito diverge. De fato, pela substitui\c{c}\~ao
+		$u = \ln x$ (i.e.\ $x = e^u$, $dx = e^u\,du$):
+		\[
+		\int_{3}^{\infty}\frac{dx}{(\ln x)^3}
+		= \int_{\ln 3}^{\infty}\frac{e^u}{u^3}\,du.
+		\]
+		Como $e^u/u^3 \to +\infty$ quando $u\to\infty$, existe $u_0\geq\ln 3$ tal que
+		$e^u/u^3 \geq 1$ para todo $u\geq u_0$. Portanto
+		\[
+		\int_{\ln 3}^{\infty}\frac{e^u}{u^3}\,du
+		\;\geq\; \int_{u_0}^{\infty} 1\,du = +\infty.
+		\]
+		Observa\c{c}\~ao: a compara\c{c}\~ao direta $1/(\ln x)^3 > 1/x$ \emph{n\~ao} \'e
+		v\'alida para todo $x\geq 3$ (falha na regi\~ao $x\approx 10$--$100$,
+		onde $(\ln x)^3 > x$), e por isso n\~ao \'e utilizada aqui.
+		\qedhere
 	\end{proof}
 	
-	\begin{proposition}[Saturação estrutural via Borel--Cantelli]
+	\begin{proposition}[Saturação estrutural via Borel--Cantelli --- \emph{condicional}]
 		\label{prop:saturacao}
-		Sob a Hip\'otese de Cram\'er, a probabilidade de que $E_i$ ocorra infinitas vezes \'e 1:
+		\emph{Assumindo} a Hip\'otese de Cram\'er (Hip\'otese~4.1), a probabilidade de que
+		$E_i$ ocorra infinitas vezes \'e~$1$:
 		\[
 		\bP\!\bigl(\limsup_{i\to\infty} E_i\bigr) = 1.
 		\]
+		Este resultado \'e condicional: \'e um teorema relativo ao modelo probabil\'istico
+		de Cram\'er, n\~ao um resultado incondicional sobre os n\'umeros primos.
 	\end{proposition}
 	\begin{proof}
-		Segue do Segundo Lema de Borel--Cantelli~\cite{durrett2019}: diverr\^encia de
-		$\sum\bP(E_i)$ (Lema~\ref{lem:diverge}) mais quasi-independ\^encia
-		assint\'otica implica recorr\^encia quase certa.
+		Pelo Lema~\ref{lem:diverge}, $\sum\bP(E_i) = \infty$.
+		Pela Hip\'otese~4.1, janelas com $|i-j|\geq 3$ s\~ao assintoticamente independentes.
+		O Segundo Lema de Borel--Cantelli~\cite{durrett2019} --- que exige, al\'em da
+		diverg\^encia da s\'erie, alguma forma de independ\^encia ou quasi-independ\^encia
+		--- aplica-se e garante recorr\^encia quase certa.
+		Janelas sobrepostas ($|i-j|<3$) s\~ao tratadas pelo fator de corre\c{c}\~ao $1/3$
+		e n\~ao afetam a diverg\^encia nem a conclus\~ao de Borel--Cantelli.
 	\end{proof}
 	
 	\begin{lemma}[Crescimento assintótico de $K_u$]

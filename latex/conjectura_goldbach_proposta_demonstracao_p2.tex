@@ -70,7 +70,7 @@
 	A Conjectura de Goldbach~\cite{goldbach1742}, enunciada em 1742,
 	afirma que todo número par maior que 2 pode ser escrito como a
 	soma de dois números primos. Apesar de verificada computacionalmente
-	até $4 \times 10^{18}$~\cite{oliveira2012}, uma demonstração
+	até $4 \times 10^{18}$~\cite{oliveira2014}, uma demonstração
 	rigorosa permanece em aberto.
 	
 	Neste trabalho adotamos uma perspectiva geométrico-probabilística.
@@ -317,11 +317,17 @@
 	
 	\subsection{Proposição principal}
 	
-	\begin{proposition}
+	\begin{proposition}[Saturação estrutural --- \emph{condicional}]
 		\label{prop:principal}
-		Sob a Hipótese~\ref{hip:cramer}, em $G_{3,N}$ com mapeamento
-		não-obstrutivo, a existência de ao menos um sucesso $E_i$ é
-		um evento quase certo para $N \to \infty$.
+		\emph{Assumindo} a Hipótese~\ref{hip:cramer} (quasi-independência
+		de Cramér), em $G_{3,N}$ a probabilidade de que $E_i$ ocorra
+		infinitas vezes é 1:
+		\[
+		P\!\bigl(\limsup_{i\to\infty} E_i\bigr) = 1.
+		\]
+		Este resultado é \textbf{condicional}: é um teorema dentro do
+		modelo probabilístico de Cramér, não um resultado incondicional
+		sobre os números primos.
 	\end{proposition}
 	
 	\begin{proof}
@@ -335,17 +341,14 @@
 			&= P(D_1 \cup D_2 \cup C_v) \\
 			&= 3p(k)^3 - 3p(k)^5 + p(k)^7.
 		\end{align*}
-		Para provar que $\lim_{N\to\infty} P(\bigcup_{i=1}^{N-2} E_i) = 1$,
-		analisamos a probabilidade complementar:
-		\[
-		P\!\left(\bigcap_{i=1}^{N-2} E_i^c\right)
-		= \prod_{i=1}^{N-2} \bigl(1 - P(E_i)\bigr).
-		\]
 		Pelo Lema~\ref{lem:divergencia} abaixo, $\sum P(E_i) = \infty$.
-		Sob a quasi-independência da Hipótese~\ref{hip:cramer}
-		(para janelas não-sobrepostas), o Segundo Lema de
-		Borel-Cantelli~\cite{durrett2019} garante que o produto acima
-		converge para zero. Portanto, $P(E_i \text{ ocorre i.o.}) = 1$.
+		O Segundo Lema de Borel-Cantelli~\cite{durrett2019} exige
+		divergência da série (satisfeita) e quasi-independência entre
+		os eventos. A Hipótese~\ref{hip:cramer} fornece essa
+		quasi-independência para janelas com $|i-j|\geq 3$;
+		janelas sobrepostas são tratadas pelo fator $1/3$
+		da Proposição~\ref{prop:unicidade}.
+		Portanto, $P(E_i \text{ ocorre i.o.}) = 1$.
 	\end{proof}
 	
 	\begin{lemma}[Divergência da série de probabilidades]
@@ -360,16 +363,31 @@
 		\sum_{i=1}^{\infty} P(E_i)
 		\;\geq\; 3\sum_{k=1}^{\infty}
 		\left(\frac{2}{\ln(2k-1)}\right)^3
-		= 24\sum_{k=1}^{\infty} \frac{1}{[\ln(2k-1)]^3}.
+		= 24\sum_{k=1}^{\infty} \frac{1}{[\ln(2k-1)]^3}
+		\;\geq\; 24\int_{3}^{\infty}\frac{dx}{(\ln x)^3}.
 		\]
-		Comparamos com a integral $\int_2^{\infty} \frac{1}{(\ln x)^3}\,dx$.
-		Para todo $x \geq 3$, $(\ln x)^3 < x$, logo
-		$\frac{1}{(\ln x)^3} > \frac{1}{x}$, e
+		A integral do lado direito diverge. Pela substituição
+		$u = \ln x$ (i.e.\ $x = e^u$, $dx = e^u\,du$):
 		\[
-		\int_2^{\infty} \frac{dx}{(\ln x)^3}
-		\;>\; \int_3^{\infty} \frac{dx}{x} \;=\; +\infty.
+		\int_{3}^{\infty}\frac{dx}{(\ln x)^3}
+		= \int_{\ln 3}^{\infty}\frac{e^u}{u^3}\,du.
 		\]
-		Pelo Teste da Integral, a série diverge.
+		Como $e^u/u^3 \to +\infty$ quando $u \to \infty$, existe
+		$u_0 \geq \ln 3$ tal que $e^u/u^3 \geq 1$ para todo $u \geq u_0$.
+		Portanto
+		\[
+		\int_{\ln 3}^{\infty}\frac{e^u}{u^3}\,du
+		\;\geq\; \int_{u_0}^{\infty} 1\,du \;=\; +\infty.
+		\]
+		
+		\smallskip
+		\noindent\textit{Nota.}
+		A comparação direta $(\ln x)^3 < x$ (e portanto
+		$1/(\ln x)^3 > 1/x$) \emph{não} vale para todo $x \geq 3$:
+		por exemplo, em $x = 50$ temos $(\ln 50)^3 \approx 59{,}8 > 50$.
+		A igualdade $(\ln x)^3 = x$ ocorre apenas em torno de
+		$x \approx 100$, e a desigualdade só se inverte acima desse valor.
+		Por isso a comparação com $1/x$ não é usada aqui.
 	\end{proof}
 	
 	\begin{corollary}
@@ -525,50 +543,36 @@
 	O resultado central desta seção é a comparação entre as ordens
 	de grandeza envolvidas.
 	
-	\begin{corollary}[Goldbach como consequência de ordem inferior]
+	\begin{remark}[Comparação heurística de restritividade probabilística]
 		\label{cor:goldbach}
 		Sob a Hipótese~\ref{hip:cramer} e os resultados das
-		Seções~\ref{sec:saturacao}--\ref{sec:assintotica}, a condição
-		de existência de pares aditivos (Goldbach) é estritamente menos
-		restritiva do que a condição de formação geométrica de trios
-		primos na malha $3 \times N$.
-	\end{corollary}
-	
-	\begin{proof}
-		O número esperado de trios primos na malha escala como
-		(Lema~\ref{lem:ku}):
+		Seções~\ref{sec:saturacao}--\ref{sec:assintotica}, podemos
+		comparar as ordens de grandeza envolvidas. O número esperado de
+		trios primos na malha escala como (Lema~\ref{lem:ku}):
 		\[
-		\mathcal{K}_u \;=\; \Omega\!\left(\frac{N}{(\ln N)^3}\right).
+		\mathcal{K}_u \;=\; \Omega\!\left(\frac{N}{(\ln N)^3}\right),
 		\]
-		O número esperado de representações de Goldbach escala como:
+		enquanto a estimativa de Hardy-Littlewood para representações
+		de Goldbach escala como:
 		\[
 		\mathcal{G}(N) \;=\; \Omega\!\left(\frac{N}{(\ln N)^2}\right).
 		\]
-		Para $N$ suficientemente grande,
-		$\frac{N}{(\ln N)^2} \gg \frac{N}{(\ln N)^3}$,
-		pois $\ln N \to \infty$. Portanto, $\mathcal{G}(N) \gg \mathcal{K}_u$.
-		
-		Em termos de restritividade: a existência de um trio primo na malha
-		requer a primalidade \emph{simultânea} de três elementos em
-		configuração rígida. A existência de um par de Goldbach requer
-		apenas a primalidade de dois elementos cuja soma seja $2N$ —
-		sem restrição geométrica adicional. Formalmente, a condição de
-		trio é uma interseção de três eventos, enquanto a condição de
-		par é uma interseção de dois. Como
+		Como $\mathcal{G}(N)/\mathcal{K}_u \sim \ln N \to \infty$,
+		a condição de existência de um par de Goldbach é, no modelo
+		de Cramér, probabilisticamente menos restritiva do que a
+		condição de formação de um trio primo em configuração rígida.
+		Formalmente, para $p = 2/\ln N < 1$:
 		\[
-		P(\text{trio}) = p^3 \;\leq\; p^2 = P(\text{par}),
-		\quad p = \frac{2}{\ln N} < 1,
+		P(\text{trio}) = p^3 \;\leq\; p^2 = P(\text{par})
+		\quad \text{para todo } N > e^2 \approx 7{,}4.
 		\]
-		a condição de trio é \emph{estritamente mais restritiva} para
-		todo $N > e^2 \approx 7{,}4$.
-		
-		Dado que a Proposição~\ref{prop:principal} demonstra a
-		inevitabilidade da saturação para o caso de grau 3 (trios),
-		e dado que a condição de grau 2 (pares) é probabilisticamente
-		menos exigente por um fator assintótico de $\ln N$, o modelo
-		de malha é consistente com — e fornece suporte heurístico
-		adicional para — a inevitabilidade das partições de Goldbach.
-	\end{proof}
+		Isso torna o modelo de malha \emph{consistente com} — mas não
+		\emph{implica formalmente} — a inevitabilidade das partições
+		de Goldbach. Trata-se de um argumento de \textbf{plausibilidade
+			heurística}, não de uma redução lógica entre os dois problemas.
+		As limitações precisas estão listadas na
+		Observação~\ref{obs:limitacoes}.
+	\end{remark}
 	
 	\begin{remark}[Limitações do argumento]
 		\label{obs:limitacoes}
@@ -619,7 +623,7 @@
 		restritiva do que a condição de trios primos na malha por
 		um fator de $\ln N$, o que é consistente com — mas não implica
 		formalmente — a Conjectura de Goldbach
-		(Corolário~\ref{cor:goldbach}, Observação~\ref{obs:limitacoes}).
+		(Observação~\ref{cor:goldbach} e Observação~\ref{obs:limitacoes}).
 	\end{enumerate}
 	
 	Como trabalhos futuros, apontamos: (i) a formalização rigorosa das
@@ -648,7 +652,7 @@
 		prime numbers,''
 		\textit{Acta Arithmetica}, vol.~2, pp.~23--46, 1936.
 		
-		\bibitem{oliveira2012}
+		\bibitem{oliveira2014}
 		T.~Oliveira e Silva, S.~Herzog, and S.~Pardi,
 		``Empirical verification of the even Goldbach conjecture and
 		computation of prime gaps up to $4 \times 10^{18}$,''
