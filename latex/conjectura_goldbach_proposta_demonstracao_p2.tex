@@ -435,6 +435,17 @@
 		donde o resultado.
 	\end{proof}
 	
+	\subsection{Refinamento Estrutural: A Correção de Hardy-Littlewood}
+	Embora o modelo de Cramér (Lema 5.1) forneça a ordem de grandeza correta $O(N/(\ln N)^3)$, ele assume independência perfeita entre as células, ignorando as restrições modulares locais (por exemplo, a impossibilidade de três números ímpares consecutivos com diferença 2 serem todos primos, pois um será múltiplo de 3). 
+	
+	Para obter a densidade assintótica exata das diagonais primas em $G_{3,N}$, devemos invocar a Conjectura das $k$-uplas de Hardy-Littlewood. Tomando a diagonal $D_1$ cujos elementos crescem a passos de $\Delta_1 = 2N+2$ e $\Delta_2 = 4N+4$ (conforme Equação 1), a expectativa real de trios na janela é corrigida pela Série Singular $\mathfrak{S}(D_1, N)$:
+	
+	\begin{equation}
+		K_u^{(exato)} \sim \mathfrak{S}(D_1, N) \cdot \frac{8N}{(\ln N)^3}
+	\end{equation}
+	
+	onde a constante estrutural $\mathfrak{S}(D_1, N)$ depende da congruência de $N$. Por exemplo, se $N \equiv -1 \pmod 3$, o passo $2N+2$ é múltiplo de 3, evitando a colisão modular e maximizando a densidade de configurações primas. A introdução desta correlação local não altera a divergência da série utilizada no Segundo Lema de Borel-Cantelli (já que $\mathfrak{S} > 0$), mas comprova que a geometria da grade interage ativamente com as propriedades aritméticas dos primos.
+	
 	\begin{proposition}[Ponto de virada e saturação estrutural]
 		\label{prop:virada}
 		Seja $\Phi(\mathcal{K}_u) = \binom{\mathcal{K}_u+1}{2}$ a função

@@ -247,7 +247,7 @@
 		\]
 		Esta hip\'otese \'e uma inst\^ancia do modelo de Cram\'er~\cite{cramer1936},
 		consistente com as melhores heur\'isticas e evid\^encias computacionais dispon\'iveis,
-		mas n\~ao provada.
+		mas n\~ao provada. Nota: Cramér captura a ordem de grandeza global, mas o modelo geométrico completo exige correções de correlação local (Série Singular de Hardy-Littlewood), que preservam o fator assintótico essencial $1/(\ln N)^3$.
 	\end{hypothesis}
 	
 	\begin{lemma}[Divergência da série de probabilidades]
@@ -735,6 +735,53 @@
 		geom\'etrico for vi\'avel, ele poderia, em princ\'ipio, contornar a obstru\c{c}\~ao
 		de paridade por constru\c{c}\~ao.
 	\end{remark}
+	
+	\section{Direções Futuras: O Paradigma do Crivo Geométrico}
+	\label{sec:crivo_geometrico}
+	
+	Os resultados discutidos nas seções anteriores evidenciam que a obstrução estrutural para a demonstração da Conjectura de Goldbach via crivos clássicos --- o problema da paridade --- manifesta-se quantitativamente na diferença de ordem de grandeza entre o fator $K_u$ (trios na malha) e $G(N)$ (pares na reta numérica). Reconhecer essa fronteira não é o fim da análise, mas o ponto de partida para a formulação de uma nova classe de ferramentas.
+	
+	Nesta seção, delineamos as bases teóricas de um \textit{programa de pesquisa} focado no desenvolvimento de um ``Crivo Geométrico'', projetado especificamente para operar fora das limitações dos crivos multiplicativos de Selberg, Friedlander e Iwaniec.
+	
+	\subsection{A Obstrução Multiplicativa e a Alternativa Espacial}
+	
+	O crivo de Selberg clássico baseia-se em pesos $\lambda_d$ que são fundamentalmente multiplicativos. Esta arquitetura gera o pecado original da paridade: a função de peso avalia um número $n$ isoladamente, baseando-se apenas em seus divisores, tornando-se ``cega'' para a diferença entre um número com um fator primo ($P_1$) e um com dois fatores ($P_2$).
+	
+	A proposta central do crivo geométrico é substituir esses pesos multiplicativos por pesos derivados estritamente da estrutura topológica da malha $G_{3,N}$. Estes pesos são \textbf{não-multiplicativos por construção}.
+	
+	\subsection{Definição do Peso Geométrico $\Omega_N(n)$}
+	
+	Para cada número ímpar $n \in G_{3,N}$, seja $\mathcal{W}(n) = \{i : n \in W_i\}$ o conjunto de índices das janelas $3 \times 3$ que contêm o elemento $n$. Definimos o peso geométrico espacial de $n$ como:
+	
+	\begin{equation}
+		\Omega_N(n) = \frac{1}{|\mathcal{W}(n)|} \sum_{i \in \mathcal{W}(n)} \frac{|\{m \in W_i \setminus \{n\} : m \in \mathbb{P}\}|}{2} \in [0, 1]
+	\end{equation}
+	
+	Em termos conceituais, $\Omega_N(n)$ representa a fração média de \textit{vizinhos} de $n$ (nas janelas às quais ele pertence) que são números primos. É crucial notar que o cálculo de $\Omega_N(n)$ \textbf{não utiliza a primalidade do próprio $n$}, mas apenas o contexto geométrico ao seu redor.
+	
+	Este peso quebra a paridade porque é intrinsecamente contextual. A hipótese subjacente é a de que um número primo ($P_1$) e um quase-primo ($P_2$) geram ``campos gravitacionais'' aritméticos distintos em sua vizinhança. Devido a correlações locais, um primo puro tende a estar imerso em configurações espaciais diferentes das de um número composto, algo que a função $\lambda_d$ não tem capacidade de mapear.
+	
+	\subsection{O Estimador Geométrico para Goldbach}
+	
+	Utilizando o peso espacial, podemos construir um estimador alternativo para o número de partições de Goldbach de um par fixo $a$. Define-se:
+	
+	\begin{equation}
+		\hat{\pi}_2(a, N) = \sum_{\substack{p < a/2 \\ a-p \in G_{3,N}}} \Omega_N(p) \cdot \Omega_N(a-p)
+	\end{equation}
+	
+	A conjectura de trabalho que emerge deste framework é que $\hat{\pi}_2(a, N) \geq c > 0$ para $N$ suficientemente grande em função de $a$, o que implicaria rigorosamente que $\pi_2(a) \geq 1$. Note que a esperança acumulada $K_u$, explorada neste trabalho, é essencialmente uma normalização de $\sum_i \Omega_N(n_i)^{3/2}$. O crivo geométrico generaliza essa métrica para buscar alvos aditivos bidimensionais.
+	
+	\subsection{O Nó Computacional e Caminhos de Resolução}
+	
+	O desafio central deste novo paradigma --- o seu ``nó'' analítico --- reside no fato de que $\Omega_N(n)$ depende da primalidade dos vizinhos, o que o torna a priori incomputável sem um oráculo sobre a distribuição exata dos primos. Existem duas abordagens principais para desatar este nó, sendo uma delas uma armadilha e a outra um caminho promissor:
+	
+	\begin{enumerate}
+		\item \textbf{A Abordagem Probabilística (Insuficiente):} Uma tentativa natural seria substituir a primalidade discreta dos vizinhos pela expectativa de Cramér ($2/\ln m$). Contudo, ao fazê-lo, $\Omega_N(n)$ colapsa em uma função suave e determinística baseada apenas na magnitude geométrica da vizinhança. Isso \textit{reintroduz a cegueira de paridade}, pois alisa artificialmente as flutuações que diferenciam um primo de um $P_2$.
+		
+		\item \textbf{A Abordagem Correlacional / Ergódica (O Caminho Robusto):} Para que o peso preserve sua capacidade de quebrar a paridade sem exigir o conhecimento prévio dos primos, deve-se tratar a dependência via funções de correlação superior. A probabilidade de um vizinho $m$ ser primo, dado que $n$ tem determinada estrutura multiplicativa, requer a incorporação da Conjectura das $k$-uplas de Hardy-Littlewood. Mais ambiciosamente, $G_{3,N}$ deve ser modelada através de Dinâmica Topológica e Teoria Ergódica (em um paralelo com a maquinaria utilizada por Green e Tao para progressões aritméticas), demonstrando que o limite de $\Omega_N(n)$ converge para distribuições distintas sobre conjuntos de interesse.
+	\end{enumerate}
+	
+	Em suma, embora o desenvolvimento de uma maquinaria ergódica completa para $\Omega_N(n)$ fuja ao escopo do presente artigo, a formulação da estrutura $G_{3,N}$ oferece um arcabouço rigoroso para que a teoria de crivos evolua do domínio puramente multiplicativo para abordagens espaço-contextuais.
 	
 	%% ===========================================================
 	\section{Conclus\~ao}

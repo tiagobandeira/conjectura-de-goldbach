@@ -6,7 +6,7 @@
 \contentsline {section}{\numberline {6}An\'alise de Densidade Unificada}{6}{section.6}%
 \contentsline {section}{\numberline {7}A Lacuna Central e Perspectivas}{7}{section.7}%
 \contentsline {subsection}{\numberline {7.1}O que foi demonstrado}{7}{subsection.7.1}%
-\contentsline {subsection}{\numberline {7.2}O que não foi demonstrado}{7}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.2}O que não foi demonstrado}{8}{subsection.7.2}%
 \contentsline {subsection}{\numberline {7.3}Perspectivas para pesquisas futuras}{8}{subsection.7.3}%
 \contentsline {section}{\numberline {8}Redu\c {c}\~ao Dimensional: $G_{3,N}$ como Dobramento de $S_n(p)$}{8}{section.8}%
 \contentsline {section}{\numberline {9}An\'alise por M\'etodos de Crivo}{9}{section.9}%
@@ -14,7 +14,12 @@
 \contentsline {subsection}{\numberline {9.2}O Crivo de Selberg e o limite superior}{9}{subsection.9.2}%
 \contentsline {subsection}{\numberline {9.3}O Teorema de Chen e os ``quase-primos''}{10}{subsection.9.3}%
 \contentsline {subsection}{\numberline {9.4}O Problema da Paridade}{10}{subsection.9.4}%
-\contentsline {subsection}{\numberline {9.5}O problema da paridade no framework unificado: uma interpreta\c {c}\~ao}{10}{subsection.9.5}%
+\contentsline {subsection}{\numberline {9.5}O problema da paridade no framework unificado: uma interpreta\c {c}\~ao}{11}{subsection.9.5}%
 \contentsline {subsection}{\numberline {9.6}O fator $\ln N$ como manifesta\c {c}\~ao do problema da paridade}{11}{subsection.9.6}%
-\contentsline {subsection}{\numberline {9.7}Implica\c {c}\~oes para o framework unificado}{11}{subsection.9.7}%
-\contentsline {section}{\numberline {10}Conclus\~ao}{12}{section.10}%
+\contentsline {subsection}{\numberline {9.7}Implica\c {c}\~oes para o framework unificado}{12}{subsection.9.7}%
+\contentsline {section}{\numberline {10}Direções Futuras: O Paradigma do Crivo Geométrico}{12}{section.10}%
+\contentsline {subsection}{\numberline {10.1}A Obstrução Multiplicativa e a Alternativa Espacial}{12}{subsection.10.1}%
+\contentsline {subsection}{\numberline {10.2}Definição do Peso Geométrico $\Omega _N(n)$}{13}{subsection.10.2}%
+\contentsline {subsection}{\numberline {10.3}O Estimador Geométrico para Goldbach}{13}{subsection.10.3}%
+\contentsline {subsection}{\numberline {10.4}O Nó Computacional e Caminhos de Resolução}{13}{subsection.10.4}%
+\contentsline {section}{\numberline {11}Conclus\~ao}{14}{section.11}%
