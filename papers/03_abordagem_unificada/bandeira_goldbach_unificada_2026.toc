@@ -1,12 +1,12 @@
-\contentsline {section}{\numberline {1}Introdu\c {c}\~ao}{2}{section.1}%
-\contentsline {section}{\numberline {2}Nota\c {c}\~ao Unificada e Preliminares}{3}{section.2}%
-\contentsline {section}{\numberline {3}A Estrutura Combinat\'oria: $S_n(p)$ e $A_p$}{4}{section.3}%
+\contentsline {section}{\numberline {1}Introdu\c {c}\~ao}{3}{section.1}%
+\contentsline {section}{\numberline {2}Nota\c {c}\~ao Unificada e Preliminares}{4}{section.2}%
+\contentsline {section}{\numberline {3}A Estrutura Combinat\'oria: $S_n(p)$ e $A_p$}{5}{section.3}%
 \contentsline {section}{\numberline {4}A Malha Geom\'etrica: Grade $3\times N$ e Satura\c {c}\~ao}{5}{section.4}%
 \contentsline {section}{\numberline {5}O Elo: Testemunhas Geom\'etricas e Cobertura de $\DOTSB \bigcup@ \slimits@ A_p$}{6}{section.5}%
 \contentsline {section}{\numberline {6}An\'alise de Densidade Unificada}{7}{section.6}%
 \contentsline {section}{\numberline {7}A Lacuna Central e Perspectivas}{8}{section.7}%
 \contentsline {subsection}{\numberline {7.1}O que foi demonstrado}{8}{subsection.7.1}%
-\contentsline {subsection}{\numberline {7.2}O que não foi demonstrado}{8}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.2}O que não foi demonstrado}{9}{subsection.7.2}%
 \contentsline {subsection}{\numberline {7.3}Perspectivas para pesquisas futuras}{9}{subsection.7.3}%
 \contentsline {section}{\numberline {8}Redu\c {c}\~ao Dimensional: $G_{3,N}$ como Dobramento de $S_n(p)$}{9}{section.8}%
 \contentsline {section}{\numberline {9}An\'alise por M\'etodos de Crivo}{10}{section.9}%
@@ -14,16 +14,16 @@
 \contentsline {subsection}{\numberline {9.2}O Crivo de Selberg e o limite superior}{10}{subsection.9.2}%
 \contentsline {subsection}{\numberline {9.3}O Teorema de Chen e os ``quase-primos''}{11}{subsection.9.3}%
 \contentsline {subsection}{\numberline {9.4}O Problema da Paridade}{11}{subsection.9.4}%
-\contentsline {subsection}{\numberline {9.5}O problema da paridade no framework unificado: uma interpreta\c {c}\~ao}{11}{subsection.9.5}%
+\contentsline {subsection}{\numberline {9.5}O problema da paridade no framework unificado: uma interpreta\c {c}\~ao}{12}{subsection.9.5}%
 \contentsline {subsection}{\numberline {9.6}O fator $\ln N$ como manifesta\c {c}\~ao do problema da paridade}{12}{subsection.9.6}%
-\contentsline {subsection}{\numberline {9.7}Implica\c {c}\~oes para o framework unificado}{12}{subsection.9.7}%
+\contentsline {subsection}{\numberline {9.7}Implica\c {c}\~oes para o framework unificado}{13}{subsection.9.7}%
 \contentsline {section}{\numberline {10}Formalização Dinâmica: A Grade como Sistema Ergódico}{13}{section.10}%
 \contentsline {subsection}{\numberline {10.1}O Espaço Simbólico e o Operador de Shift}{13}{subsection.10.1}%
 \contentsline {subsection}{\numberline {10.2}Medida Empírica e o Filtro de Módulos (W-Trick)}{14}{subsection.10.2}%
 \contentsline {subsection}{\numberline {10.3}Conjecturas Ergódicas para a Estrutura Goldbach}{14}{subsection.10.3}%
 \contentsline {section}{\numberline {11}Direções Futuras: O Paradigma do Crivo Geométrico}{15}{section.11}%
-\contentsline {subsection}{\numberline {11.1}A Obstrução Multiplicativa e a Alternativa Espacial}{15}{subsection.11.1}%
+\contentsline {subsection}{\numberline {11.1}A Obstrução Multiplicativa e a Alternativa Espacial}{16}{subsection.11.1}%
 \contentsline {subsection}{\numberline {11.2}Definição do Peso Geométrico $\Omega _N(n)$}{16}{subsection.11.2}%
 \contentsline {subsection}{\numberline {11.3}O Estimador Geométrico para Goldbach}{16}{subsection.11.3}%
-\contentsline {subsection}{\numberline {11.4}O Nó Computacional e Caminhos de Resolução}{16}{subsection.11.4}%
+\contentsline {subsection}{\numberline {11.4}O Nó Computacional e Caminhos de Resolução}{17}{subsection.11.4}%
 \contentsline {section}{\numberline {12}Conclus\~ao}{17}{section.12}%

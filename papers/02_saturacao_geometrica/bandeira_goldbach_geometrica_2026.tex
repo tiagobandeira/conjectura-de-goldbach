@@ -56,10 +56,20 @@
 		Por fim, comparamos as ordens de grandeza obtidas com a estimativa
 		de Hardy-Littlewood para pares de Goldbach, argumentando que a
 		condição de existência de pares é estritamente menos restritiva do
-		que a condição geométrica de trios aqui demonstrada; este contraste
-		fornece \emph{sustentação heurística} adicional à Conjectura de
-		Goldbach, sem contudo constituir uma prova formal.
+		que a condição geométrica de trios aqui demonstrada. Esse artigo, por tanto, fornece uma contextualização da raridade relativa entre trios e pares.
 	\end{abstract}
+	
+	\begin{quote}
+		\textbf{Nota do Autor.}
+		
+		Este trabalho investiga uma abordagem geométrica e probabilística para a Conjectura de Goldbach baseada em malhas discretas e recorrência de configurações primas.
+		
+		O objetivo é explorar estruturas heurísticas e propriedades assintóticas relacionadas à saturação geométrica da malha, sem reivindicar uma demonstração da conjectura.
+		
+		As hipóteses probabilísticas utilizadas, incluindo aproximações inspiradas no modelo de Cramér, são explicitamente indicadas ao longo do texto.
+		
+		Comentários, críticas e sugestões matemáticas são bem-vindos.
+	\end{quote}
 	
 	\tableofcontents
 	\vspace{1cm}
@@ -544,7 +554,7 @@
 	de grandeza envolvidas.
 	
 	\begin{remark}[Comparação heurística de restritividade probabilística]
-		\label{cor:goldbach}
+		\label{obs:goldbach}
 		Sob a Hipótese~\ref{hip:cramer} e os resultados das
 		Seções~\ref{sec:saturacao}--\ref{sec:assintotica}, podemos
 		comparar as ordens de grandeza envolvidas. O número esperado de
@@ -566,9 +576,7 @@
 		P(\text{trio}) = p^3 \;\leq\; p^2 = P(\text{par})
 		\quad \text{para todo } N > e^2 \approx 7{,}4.
 		\]
-		Isso torna o modelo de malha \emph{consistente com} — mas não
-		\emph{implica formalmente} — a inevitabilidade das partições
-		de Goldbach. Trata-se de um argumento de \textbf{plausibilidade
+		Essa comparação mostra apenas que, se o modelo probabilístico de Cramér fosse exato, então esperaríamos mais pares de Goldbach do que trios na grade. Não oferece qualquer evidência a favor ou contra a Conjectura de Goldbach, pois a conjectura exige cobertura pontual, não densidade assintótica. O interesse deste resultado é estritamente interno: ele quantifica a raridade relativa das configurações estudadas. Trata-se de um argumento de \textbf{plausibilidade
 			heurística}, não de uma redução lógica entre os dois problemas.
 		As limitações precisas estão listadas na
 		Observação~\ref{obs:limitacoes}.
@@ -576,7 +584,7 @@
 	
 	\begin{remark}[Limitações do argumento]
 		\label{obs:limitacoes}
-		O Corolário~\ref{cor:goldbach} \textbf{não} constitui uma prova
+		O Corolário~\ref{obs:goldbach} \textbf{não} constitui uma prova
 		da Conjectura de Goldbach pelas seguintes razões:
 		\begin{enumerate}
 			\item A Hipótese~\ref{hip:cramer} (quasi-independência) não está
@@ -618,12 +626,11 @@
 		\times 10^4$ no modelo direto e $N^* \approx 1{,}1 \times 10^6$
 		no modelo estrito (Proposição~\ref{prop:virada}).
 		
-		\item \textbf{Suporte heurístico a Goldbach}: A condição de
+		\item \textbf{Comparação de restritividade}: A condição de
 		existência de pares de Goldbach é assintoticamente menos
 		restritiva do que a condição de trios primos na malha por
-		um fator de $\ln N$, o que é consistente com — mas não implica
-		formalmente — a Conjectura de Goldbach
-		(Observação~\ref{cor:goldbach} e Observação~\ref{obs:limitacoes}).
+		um fator de $\ln N$, o que é consistente com — mas não oferece evidência a favor ou contra — a Conjectura de Goldbach
+		(Observação~\ref{obs:goldbach} e Observação~\ref{obs:limitacoes}).
 	\end{enumerate}
 	
 	Como trabalhos futuros, apontamos: (i) a formalização rigorosa das
