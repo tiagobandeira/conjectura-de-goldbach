@@ -3,6 +3,18 @@
 Todas as mudanças significativas neste projeto são documentadas aqui.
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
+## [v2.1.0] – 2026-05-15
+
+### Principais alterações
+
+- Inclusão de **Nota do Autor** em todos os três artigos, explicitando o escopo exploratório e a separação entre resultados rigorosos e hipóteses heurísticas.
+- Artigo geométrico: substituição de “suporte heurístico a Goldbach” por **“Comparação de restritividade”**, com a observação explícita de que a diferença de ordens de grandeza **não oferece evidência a favor ou contra** a conjectura.
+- Artigo unificado (Seção 11): adição de advertências qualificando o **Crivo Geométrico** como programa especulativo, não como resultado estabelecido.
+- Artigo combinatório: aprimoramento da comparação com Ellman, reforçando a distinção entre infinitude de primos e cobertura pontual.
+- Pequenas correções de redação e referências cruzadas.
+
+**Nota:** Nenhum resultado matemático novo foi introduzido. O trabalho permanece como uma investigação estrutural e heurística.
+
 ---
 
 ## [v2.0.0] — 2026-05-15
