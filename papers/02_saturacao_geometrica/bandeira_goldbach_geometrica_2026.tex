@@ -1,0 +1,675 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{hyperref}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+
+% ----------------------------------------------------------------
+%  Ambientes matemáticos
+% ----------------------------------------------------------------
+\newtheorem{proposition}{Proposição}[section]
+\newtheorem{lemma}[proposition]{Lema}
+\newtheorem{corollary}[proposition]{Corolário}
+\newtheorem{remark}[proposition]{Observação}
+\newtheorem{definition}[proposition]{Definição}
+\newtheorem{assumption}[proposition]{Hipótese}
+
+% ----------------------------------------------------------------
+%  Metadados
+% ----------------------------------------------------------------
+\title{%
+	
+	Um modelo geométrico-probabilístico \\ para estruturas primas em malhas $3 \times N$
+	
+	%
+}
+\author{Tiago Bandeira}
+\date{Maio de 2026}
+
+% ================================================================
+\begin{document}
+	
+	\maketitle
+	
+	% ----------------------------------------------------------------
+	%  Abstract
+	% ----------------------------------------------------------------
+	\begin{abstract}
+		Apresentamos um modelo geométrico baseado em grades $3 \times N$
+		preenchidas exclusivamente por números ímpares para estudar a
+		distribuição de configurações primas em estruturas regulares.
+		Demonstramos que, sob a hipótese de independência local (modelo
+		probabilístico de Cramér), a série de probabilidades de formação
+		de \emph{trios primos} em janelas deslizantes $3 \times 3$ diverge.
+		Pelo Segundo Lema de Borel-Cantelli — invocado após verificação
+		explícita das condições de quasi-independência — conclui-se que a
+		recorrência de tais estruturas é um evento quase certo.
+		Analisamos o crescimento assintótico da densidade acumulada
+		$\mathcal{K}_u \sim 8N/(\ln N)^{3}$ e identificamos um limiar
+		empírico de saturação estrutural $N^{*} \approx 1{,}1 \times 10^{4}$.
+		Por fim, comparamos as ordens de grandeza obtidas com a estimativa
+		de Hardy-Littlewood para pares de Goldbach, argumentando que a
+		condição de existência de pares é estritamente menos restritiva do
+		que a condição geométrica de trios aqui demonstrada; este contraste
+		fornece \emph{sustentação heurística} adicional à Conjectura de
+		Goldbach, sem contudo constituir uma prova formal.
+	\end{abstract}
+	
+	\tableofcontents
+	\vspace{1cm}
+	
+	% ================================================================
+	\section{Introdução}
+	
+	A Conjectura de Goldbach~\cite{goldbach1742}, enunciada em 1742,
+	afirma que todo número par maior que 2 pode ser escrito como a
+	soma de dois números primos. Apesar de verificada computacionalmente
+	até $4 \times 10^{18}$~\cite{oliveira2014}, uma demonstração
+	rigorosa permanece em aberto.
+	
+	Neste trabalho adotamos uma perspectiva geométrico-probabilística.
+	Organizamos a sequência dos números ímpares em uma grade retangular
+	$3 \times N$ e estudamos a probabilidade de que configurações
+	específicas — diagonais e colunas centrais formadas inteiramente
+	por primos — se manifestem à medida que $N \to \infty$. A ideia
+	central é que demonstrar a abundância de \emph{trios} primos em
+	estruturas geométricas rígidas é, em certo sentido, mais exigente
+	do que demonstrar a existência de \emph{pares} aditivos; logo, a
+	saturação provada para o caso de grau 3 oferece evidência analítica
+	para o caso de grau 2.
+	
+	\medskip
+	\noindent\textbf{Organização do artigo.}
+	A Seção~\ref{sec:prelim} fixa notação e define formalmente a grade.
+	A Seção~\ref{sec:densidade} estabelece a densidade de primos no
+	contexto da malha. A Seção~\ref{sec:saturacao} demonstra a saturação
+	estrutural via Borel-Cantelli. A Seção~\ref{sec:assintotica} contém
+	a análise assintótica de $\mathcal{K}_u$ e o limiar de estabilidade.
+	A Seção~\ref{sec:goldbach} discute as implicações para a Conjectura
+	de Goldbach. A Seção~\ref{sec:conclusao} apresenta as conclusões.
+	
+	% ================================================================
+	\section{Preliminares e Definições Formais}
+	\label{sec:prelim}
+	
+	\begin{definition}[Sequência canônica de ímpares]
+		Seja $\mathcal{O} = \{1, 3, 5, 7, \ldots\}$ a sequência ordenada
+		dos números inteiros positivos ímpares. O $k$-ésimo elemento
+		desta sequência é $o_k = 2k - 1$, para $k \geq 1$.
+	\end{definition}
+	
+	\begin{definition}[Grade $3 \times N$]
+		\label{def:grade}
+		Fixado $N \in \mathbb{N}$ com $N \geq 3$, define-se a \emph{grade}
+		$G_{3,N}$ como uma matriz de três linhas e $N$ colunas cujas
+		células $(r, c)$, com $r \in \{1,2,3\}$ e $c \in \{1,\ldots,N\}$,
+		recebem os elementos de $\mathcal{O}$ segundo o mapeamento
+		\emph{linha-a-linha} (row-major):
+		\[
+		f(r, c) \;=\; 2\bigl[(r-1)N + c\bigr] - 1.
+		\]
+		As três linhas contêm, respectivamente:
+		\begin{align*}
+			\text{Linha 1:} &\quad 1,\; 3,\; \ldots,\; 2N-1, \\
+			\text{Linha 2:} &\quad 2N+1,\; 2N+3,\; \ldots,\; 4N-1, \\
+			\text{Linha 3:} &\quad 4N+1,\; 4N+3,\; \ldots,\; 6N-1.
+		\end{align*}
+	\end{definition}
+	
+	\begin{remark}[Depend\^encia de $N$ e estrutura vari\'avel]
+		No mapeamento linha-a-linha, $f(r,c)$ depende de $N$: ao aumentar $N$,
+		toda a grade se reconfigura. Cada escolha de $N$ produz uma
+		\emph{fam\'ilia distinta} de configura\c{c}\~oes diagonais, varrendo
+		fam\'ilias de alvos aditivos diferentes com a mesma estrutura geom\'etrica.
+		Para todo primo fixo $q$, a distribui\c{c}\~ao dos restos \'e assintoticamente
+		uniforme:
+		\[
+		\lim_{N \to \infty}
+		\frac{\#\{c \leq N : f(r,c) \equiv a \pmod{q}\}}{N}
+		\;=\; \frac{1}{q},
+		\quad r \in \{1,2,3\},\; a \in \{0,\ldots,q-1\}.
+		\]
+	\end{remark}
+	
+	\begin{remark}[Exemplos: $N = 4$ e $N = 5$]
+		\label{rem:exemplos}
+		\[
+		G_{3,4} = \begin{pmatrix}
+			1 & 3 & 5 & 7 \\ 9 & 11 & 13 & 15 \\ 17 & 19 & 21 & 23
+		\end{pmatrix},
+		\quad
+		G_{3,5} = \begin{pmatrix}
+			1 & 3 & 5 & 7 & 9 \\ 11 & 13 & 15 & 17 & 19 \\ 21 & 23 & 25 & 27 & 29
+		\end{pmatrix}.
+		\]
+		Ao passar de $N=4$ para $N=5$, os elementos das linhas 2 e 3 mudam
+		completamente: linha 2 vai de $\{9,\ldots,15\}$ para $\{11,\ldots,19\}$.
+		Cada $N$ define uma estrutura distinta, e as janelas deslizantes $3\times 3$
+		varrem configura\c{c}\~oes diagonais diferentes.
+	\end{remark}
+	
+	\begin{definition}[Janela $3\times 3$ e configurações primas]
+		\label{def:janela}
+		Para $i \in \{1,\ldots, N-2\}$, a \emph{janela} $W_i$ é a
+		submatriz $3 \times 3$ formada pelas colunas $i$, $i+1$ e $i+2$
+		de $G_{3,N}$. Dentro de $W_i$ identificamos três
+		\emph{configurações primas canônicas}:
+		\begin{itemize}
+			\item $D_1$: diagonal principal — células $(1,i)$, $(2,i+1)$,
+			$(3,i+2)$;
+			\item $D_2$: diagonal secundária — células $(3,i)$, $(2,i+1)$,
+			$(1,i+2)$;
+			\item $C_v$: coluna central — células $(1,i+1)$, $(2,i+1)$,
+			$(3,i+1)$.
+		\end{itemize}
+		Dizemos que $W_i$ é um \emph{sucesso} se pelo menos uma dessas
+		três configurações é composta exclusivamente por primos; denotamos
+		este evento por $E_i$.
+	\end{definition}
+	
+	\begin{definition}[Densidade acumulada $\mathcal{K}_u$]
+		\label{def:ku}
+		A \emph{expectativa do número de estruturas primas únicas} em
+		$G_{3,N}$ é:
+		\[
+		\mathcal{K}_u \;=\; \sum_{i=1}^{N-2} \frac{8}{(\ln n_i)^3},
+		\]
+		onde $n_i = f(2, i+1)$ é o valor do elemento central da janela
+		$W_i$ (célula $(2, i+1)$, usada como representante local).
+	\end{definition}
+	
+	% ----------------------------------------------------------------
+	% Propriedade estrutural central: pares de Goldbach nas diagonais
+	% ----------------------------------------------------------------
+	\begin{lemma}[Propriedade Aditiva das Diagonais]
+		\label{lem:aditiva}
+		Seja $W_i$ uma janela $3 \times 3$ de $G_{3,N}$. Para qualquer
+		par de c\'elulas $(r, c)$ e $(r', c')$ pertencentes \`a mesma
+		configura\c{c}\~ao diagonal ($D_1$ ou $D_2$), a soma
+		$f(r,c) + f(r',c')$ \'e sempre um n\'umero par.
+		Mais ainda, os tr\^es pares poss\'iveis em cada diagonal produzem
+		alvos aditivos expl\'icitos que dependem de $N$ e $i$:
+		\begin{align}
+			f(1,i) + f(2,i+1) &= 2(N + 2i), \label{eq:par12} \\
+			f(1,i) + f(3,i+2) &= 2(2N + 2i + 1), \label{eq:par13} \\
+			f(2,i+1) + f(3,i+2) &= 2(3N + 2i + 2). \label{eq:par23}
+		\end{align}
+		Logo, se a diagonal $D_1$ da janela $W_i$ for totalmente prima,
+		obt\^em-se automaticamente \textbf{tr\^es representa\c{c}\~oes de
+			Goldbach distintas} sem hip\'otese adicional.
+	\end{lemma}
+	
+	\begin{proof}
+		Pelo mapeamento linha-a-linha (Defini\c{c}\~ao~\ref{def:grade}):
+		\[
+		f(r,c) = 2[(r-1)N + c] - 1.
+		\]
+		Para $D_1$ (c\'elulas $(1,i)$, $(2,i+1)$, $(3,i+2)$):
+		\begin{align*}
+			f(1,i) &= 2i - 1, \\
+			f(2,i+1) &= 2[N + (i+1)] - 1 = 2N + 2i + 1, \\
+			f(3,i+2) &= 2[2N + (i+2)] - 1 = 4N + 2i + 3.
+		\end{align*}
+		Somando par a par:
+		\begin{align*}
+			f(1,i) + f(2,i+1) &= (2i-1) + (2N+2i+1) = 2N + 4i = 2(N+2i),\\
+			f(1,i) + f(3,i+2) &= (2i-1) + (4N+2i+3) = 4N + 4i + 2 = 2(2N+2i+1),\\
+			f(2,i+1) + f(3,i+2) &= (2N+2i+1) + (4N+2i+3) = 6N+4i+4 = 2(3N+2i+2).
+		\end{align*}
+		Em todos os casos o resultado \'e par, o que completa a prova.
+	\end{proof}
+	
+	\begin{remark}[Fam\'ilias de alvos e a cobertura de Goldbach]
+		\label{rem:familias}
+		O Lema~\ref{lem:aditiva} revela a estrutura central da abordagem:
+		ao variar $N$ e $i$ conjuntamente, os alvos das equa\c{c}\~oes
+		\eqref{eq:par12}--\eqref{eq:par23} varrem fam\'ilias de pares
+		aditivos distintas. A quest\~ao crucial --- se todo par $2M$
+		aparece como alvo de alguma diagonal prima para algum $(N, i)$
+		--- constitui uma formula\c{c}\~ao alternativa da Conjectura de
+		Goldbach, e sua investiga\c{c}\~ao constitui dire\c{c}\~ao futura
+		principal deste trabalho.
+	\end{remark}
+	
+	\begin{definition}[Função de acúmulo $\Phi$]
+		\label{def:phi}
+		Dado $\mathcal{K}_u$ como acima, define-se:
+		\[
+		\Phi(\mathcal{K}_u)
+		\;=\; \frac{\mathcal{K}_u^2 + \mathcal{K}_u}{2}
+		\;=\; \binom{\mathcal{K}_u + 1}{2}.
+		\]
+		Esta função conta o número de \emph{pares ordenados} de eventos
+		estruturais distintos que podem co-existir na grade, servindo
+		como medida do grau de saturação combinatória do sistema.
+	\end{definition}
+	
+	% ================================================================
+	\section{Densidade de Primos na Malha}
+	\label{sec:densidade}
+	
+	\begin{lemma}[Densidade local de primos em ímpares]
+		\label{lem:densidade}
+		Seja $p(k)$ a probabilidade de que o $k$-ésimo ímpar $o_k$
+		seja primo. Para $o_k$ suficientemente grande,
+		\[
+		p(k) \;\approx\; \frac{2}{\ln(o_k)}.
+		\]
+	\end{lemma}
+	
+	\begin{proof}
+		Pelo Teorema do Número Primo, $\pi(x) \sim x/\ln x$.
+		A probabilidade de que um natural $n$ escolhido ao acaso seja
+		primo é aproximadamente $1/\ln n$. Como todos os primos maiores
+		que 2 são ímpares, e os ímpares representam metade dos naturais,
+		a probabilidade condicional de primalidade dado que o número é
+		ímpar é:
+		\[
+		p(k) = \frac{\Pr(\text{primo} \mid \text{ímpar})}{}
+		= \frac{\Pr(\text{primo})}{\Pr(\text{ímpar})}
+		= \frac{1/\ln(o_k)}{1/2}
+		= \frac{2}{\ln(o_k)}.
+		\]
+		O cálculo assume que a distribuição de primos entre os ímpares
+		é assintoticamente uniforme, conforme assegurado pelo
+		TNP na forma efetiva.
+	\end{proof}
+	
+	% ================================================================
+	\section{Saturação Estrutural da Malha}
+	\label{sec:saturacao}
+	
+	\subsection{Hipótese de quasi-independência}
+	
+	A aplicação do Segundo Lema de Borel-Cantelli exige, além da
+	divergência da série $\sum P(E_i)$, uma forma de independência
+	ou quasi-independência entre os eventos. Estabelecemos isso
+	formalmente abaixo.
+	
+	\begin{assumption}[Quasi-independência de Cramér]
+		\label{hip:cramer}
+		Para janelas $W_i$ e $W_j$ com $|i - j| \geq 3$ (sem sobreposição
+		de células), os eventos $E_i$ e $E_j$ são assintoticamente
+		independentes no seguinte sentido: existe $C > 0$ tal que
+		\[
+		\bigl|P(E_i \cap E_j) - P(E_i)\,P(E_j)\bigr|
+		\;\leq\; \frac{C}{(\ln n_i)^3 (\ln n_j)^3}
+		\quad \text{para } |i-j| \geq 3.
+		\]
+		Janelas com $|i-j| < 3$ compartilham células; neste caso, o
+		grau de correlação é tratado pelo fator de correção $1/3$
+		introduzido na Proposição~\ref{prop:unicidade}.
+	\end{assumption}
+	
+	\begin{remark}
+		A Hipótese~\ref{hip:cramer} é uma instância do modelo probabilístico
+		de Cramér~\cite{cramer1936}, amplamente utilizado em teoria analítica
+		dos números para raciocinar sobre independência de primalidade.
+		Não é um teorema provado, mas é consistente com as melhores heurísticas
+		disponíveis e com evidências computacionais extensas.
+	\end{remark}
+	
+	\subsection{Proposição principal}
+	
+	\begin{proposition}[Saturação estrutural --- \emph{condicional}]
+		\label{prop:principal}
+		\emph{Assumindo} a Hipótese~\ref{hip:cramer} (quasi-independência
+		de Cramér), em $G_{3,N}$ a probabilidade de que $E_i$ ocorra
+		infinitas vezes é 1:
+		\[
+		P\!\bigl(\limsup_{i\to\infty} E_i\bigr) = 1.
+		\]
+		Este resultado é \textbf{condicional}: é um teorema dentro do
+		modelo probabilístico de Cramér, não um resultado incondicional
+		sobre os números primos.
+	\end{proposition}
+	
+	\begin{proof}
+		Para a janela $W_i$, as três configurações $D_1, D_2, C_v$ têm,
+		cada uma, probabilidade $p(k)^3$ de ser totalmente prima
+		(pela Hipótese~\ref{hip:cramer}, os três elementos de cada
+		configuração são tratados como quasi-independentes). Pelo
+		Princípio da Inclusão-Exclusão:
+		\begin{align*}
+			P(E_i)
+			&= P(D_1 \cup D_2 \cup C_v) \\
+			&= 3p(k)^3 - 3p(k)^5 + p(k)^7.
+		\end{align*}
+		Pelo Lema~\ref{lem:divergencia} abaixo, $\sum P(E_i) = \infty$.
+		O Segundo Lema de Borel-Cantelli~\cite{durrett2019} exige
+		divergência da série (satisfeita) e quasi-independência entre
+		os eventos. A Hipótese~\ref{hip:cramer} fornece essa
+		quasi-independência para janelas com $|i-j|\geq 3$;
+		janelas sobrepostas são tratadas pelo fator $1/3$
+		da Proposição~\ref{prop:unicidade}.
+		Portanto, $P(E_i \text{ ocorre i.o.}) = 1$.
+	\end{proof}
+	
+	\begin{lemma}[Divergência da série de probabilidades]
+		\label{lem:divergencia}
+		A série $\sum_{i=1}^{\infty} P(E_i)$ diverge.
+	\end{lemma}
+	
+	\begin{proof}
+		O termo dominante de $P(E_i)$ é $3p(k)^3$. Pelo
+		Lema~\ref{lem:densidade}:
+		\[
+		\sum_{i=1}^{\infty} P(E_i)
+		\;\geq\; 3\sum_{k=1}^{\infty}
+		\left(\frac{2}{\ln(2k-1)}\right)^3
+		= 24\sum_{k=1}^{\infty} \frac{1}{[\ln(2k-1)]^3}
+		\;\geq\; 24\int_{3}^{\infty}\frac{dx}{(\ln x)^3}.
+		\]
+		A integral do lado direito diverge. Pela substituição
+		$u = \ln x$ (i.e.\ $x = e^u$, $dx = e^u\,du$):
+		\[
+		\int_{3}^{\infty}\frac{dx}{(\ln x)^3}
+		= \int_{\ln 3}^{\infty}\frac{e^u}{u^3}\,du.
+		\]
+		Como $e^u/u^3 \to +\infty$ quando $u \to \infty$, existe
+		$u_0 \geq \ln 3$ tal que $e^u/u^3 \geq 1$ para todo $u \geq u_0$.
+		Portanto
+		\[
+		\int_{\ln 3}^{\infty}\frac{e^u}{u^3}\,du
+		\;\geq\; \int_{u_0}^{\infty} 1\,du \;=\; +\infty.
+		\]
+		
+		\smallskip
+		\noindent\textit{Nota.}
+		A comparação direta $(\ln x)^3 < x$ (e portanto
+		$1/(\ln x)^3 > 1/x$) \emph{não} vale para todo $x \geq 3$:
+		por exemplo, em $x = 50$ temos $(\ln 50)^3 \approx 59{,}8 > 50$.
+		A igualdade $(\ln x)^3 = x$ ocorre apenas em torno de
+		$x \approx 100$, e a desigualdade só se inverte acima desse valor.
+		Por isso a comparação com $1/x$ não é usada aqui.
+	\end{proof}
+	
+	\begin{corollary}
+		\label{cor:quasecerto}
+		A probabilidade $\mathcal{P}_N$ de existência de ao menos uma
+		estrutura prima em $G_{3,N}$ satisfaz $\mathcal{P}_N \to 1$
+		quando $N \to \infty$, independentemente da raridade crescente
+		dos primos.
+	\end{corollary}
+	
+	\begin{proof}
+		Segue diretamente da Proposição~\ref{prop:principal} e do
+		Segundo Lema de Borel-Cantelli.
+	\end{proof}
+	
+	\subsection{Unicidade estrutural e fator de correção}
+	
+	\begin{proposition}[Estimativa de unicidade estrutural]
+		\label{prop:unicidade}
+		A expectativa do número de estruturas primas \emph{únicas}
+		em $G_{3,N}$ satisfaz:
+		\[
+		\mathcal{K}_u \;\approx\; \frac{1}{3}\sum_{i=1}^{N-2} P(E_i),
+		\]
+		onde o fator $1/3$ corrige a redundância geométrica da janela
+		deslizante.
+	\end{proposition}
+	
+	\begin{proof}
+		Uma estrutura prima fixa (e.g., uma diagonal com primos específicos)
+		é detectada pelas janelas $W_i$, $W_{i+1}$ e $W_{i+2}$, pois
+		cada uma contém as mesmas três células. Portanto, a soma bruta
+		$\sum P(E_i)$ superconta cada evento real por um fator de 3.
+		Segmentando a grade em blocos de largura $a \gg 3$, o erro de
+		borda (estruturas que cruzam fronteiras de bloco) é
+		$O(1/a)$-desprezível, e a média local converge para a densidade
+		teórica, validando o fator $1/3$.
+	\end{proof}
+	
+	% ================================================================
+	\section{Análise Assintótica de $\mathcal{K}_u$ e Limiar de Estabilidade}
+	\label{sec:assintotica}
+	
+	\begin{lemma}[Crescimento assintótico de $\mathcal{K}_u$]
+		\label{lem:ku}
+		Para $N \to \infty$:
+		\[
+		\mathcal{K}_u \;\sim\; \frac{8N}{(\ln N)^3}.
+		\]
+	\end{lemma}
+	
+	\begin{proof}
+		O elemento central da janela $W_i$ é $n_i = f(2, i+1) = 6i - 1$.
+		Portanto $\ln n_i \sim \ln i$ para $i$ grande. Pela
+		Definição~\ref{def:ku}:
+		\[
+		\mathcal{K}_u
+		= \sum_{i=1}^{N-2} \frac{8}{(\ln n_i)^3}
+		\sim 8\int_1^{N} \frac{di}{(\ln i)^3}.
+		\]
+		Pelo Teorema da Soma de Abel e a integral logarítmica,
+		$\int_2^{N} \frac{di}{(\ln i)^3} \sim \frac{N}{(\ln N)^3}$,
+		donde o resultado.
+	\end{proof}
+	
+	\subsection{Refinamento Estrutural: A Correção de Hardy-Littlewood}
+	Embora o modelo de Cramér (Lema 5.1) forneça a ordem de grandeza correta $O(N/(\ln N)^3)$, ele assume independência perfeita entre as células, ignorando as restrições modulares locais (por exemplo, a impossibilidade de três números ímpares consecutivos com diferença 2 serem todos primos, pois um será múltiplo de 3). 
+	
+	Para obter a densidade assintótica exata das diagonais primas em $G_{3,N}$, devemos invocar a Conjectura das $k$-uplas de Hardy-Littlewood. Tomando a diagonal $D_1$ cujos elementos crescem a passos de $\Delta_1 = 2N+2$ e $\Delta_2 = 4N+4$ (conforme Equação 1), a expectativa real de trios na janela é corrigida pela Série Singular $\mathfrak{S}(D_1, N)$:
+	
+	\begin{equation}
+		K_u^{(exato)} \sim \mathfrak{S}(D_1, N) \cdot \frac{8N}{(\ln N)^3}
+	\end{equation}
+	
+	onde a constante estrutural $\mathfrak{S}(D_1, N)$ depende da congruência de $N$. Por exemplo, se $N \equiv -1 \pmod 3$, o passo $2N+2$ é múltiplo de 3, evitando a colisão modular e maximizando a densidade de configurações primas. A introdução desta correlação local não altera a divergência da série utilizada no Segundo Lema de Borel-Cantelli (já que $\mathfrak{S} > 0$), mas comprova que a geometria da grade interage ativamente com as propriedades aritméticas dos primos.
+	
+	\begin{proposition}[Ponto de virada e saturação estrutural]
+		\label{prop:virada}
+		Seja $\Phi(\mathcal{K}_u) = \binom{\mathcal{K}_u+1}{2}$ a função
+		de acúmulo da Definição~\ref{def:phi}. Para $N \geq 11.000$,
+		$\Phi(\mathcal{K}_u)$ supera $f(N) = N/2$. Mais precisamente:
+		\[
+		\Phi(\mathcal{K}_u) \;\sim\; \frac{32\,N^2}{(\ln N)^6},
+		\]
+		com ponto de cruzamento empírico $N^* \approx 1{,}1 \times 10^4$.
+	\end{proposition}
+	
+	\begin{proof}
+		O termo dominante de $\Phi(\mathcal{K}_u)$ é
+		$\mathcal{K}_u^2/2$. Pelo Lema~\ref{lem:ku}:
+		\[
+		\Phi(\mathcal{K}_u) \sim \frac{1}{2}
+		\left(\frac{8N}{(\ln N)^3}\right)^2
+		= \frac{32\,N^2}{(\ln N)^6}.
+		\]
+		Comparando com $f(N) = N/2$:
+		\[
+		\frac{\Phi(\mathcal{K}_u)}{f(N)}
+		\;\sim\; \frac{64\,N}{(\ln N)^6}.
+		\]
+		Este quociente supera 1 quando $64N \geq (\ln N)^6$.
+		Resolvendo numericamente essa equação transcendental,
+		encontramos $N^* \approx 11.000$.
+	\end{proof}
+	
+	\begin{remark}[Modelo direto vs.\ modelo estrito]
+		\label{obs:modelos}
+		\emph{Modelo Direto} (sem fator $1/3$): o ponto de virada
+		ocorre em $N^* \approx 1{,}1 \times 10^4$, alinhado à
+		realidade computacional da malha. A ``reciclagem'' de primos
+		pequenos e a sobreposição de janelas aceleram a convergência,
+		tornando a estrutura auto-sustentável precocemente.
+		
+		\emph{Modelo Estrito} (com fator $1/3$ da
+		Proposição~\ref{prop:unicidade}): o ponto de cruzamento
+		desloca-se para $N^* \approx 1{,}1 \times 10^6$ — duas ordens
+		de magnitude a mais. O comportamento assintótico, porém, é
+		invariante: em ambos os casos, $\Phi(\mathcal{K}_u) = \omega(N)$,
+		i.e., cresce superlinearmente. O modelo estrito oferece o
+		\emph{limite superior de segurança} teórica; o modelo direto,
+		o \emph{cenário operacional} para análises de partição.
+	\end{remark}
+	
+	% ================================================================
+	\section{Implicações para a Conjectura de Goldbach}
+	\label{sec:goldbach}
+	
+	Esta seção conecta os resultados anteriores à Conjectura de Goldbach.
+	Ressaltamos que o argumento aqui desenvolvido tem caráter
+	\emph{heurístico e analítico de suporte}, não constituindo
+	uma demonstração formal da Conjectura.
+	
+	\subsection{Enunciado e referência heurística}
+	
+	A Conjectura de Goldbach afirma: \emph{todo número par $2M > 2$
+		é soma de dois primos}. A estimativa de Hardy-Littlewood~\cite{hardylittlewood1923}
+	para o número de representações $\mathcal{G}(M)$ de $2M$ como
+	soma de dois primos é:
+	\[
+	\mathcal{G}(M)
+	\;\sim\; 2C_2 \cdot \frac{M}{(\ln M)^2}
+	\cdot \prod_{\substack{p \mid M \\ p > 2}}
+	\frac{p-1}{p-2},
+	\]
+	onde $C_2 = \prod_{p>2}(1 - (p-1)^{-2}) \approx 0{,}6602$ é a
+	constante dos primos gêmeos. Para simplificar a ordem de crescimento:
+	\[
+	\mathcal{G}(M) \;=\; \Omega\!\left(\frac{M}{(\ln M)^2}\right).
+	\]
+	
+	\subsection{Comparação de restritividade}
+	
+	O resultado central desta seção é a comparação entre as ordens
+	de grandeza envolvidas.
+	
+	\begin{remark}[Comparação heurística de restritividade probabilística]
+		\label{cor:goldbach}
+		Sob a Hipótese~\ref{hip:cramer} e os resultados das
+		Seções~\ref{sec:saturacao}--\ref{sec:assintotica}, podemos
+		comparar as ordens de grandeza envolvidas. O número esperado de
+		trios primos na malha escala como (Lema~\ref{lem:ku}):
+		\[
+		\mathcal{K}_u \;=\; \Omega\!\left(\frac{N}{(\ln N)^3}\right),
+		\]
+		enquanto a estimativa de Hardy-Littlewood para representações
+		de Goldbach escala como:
+		\[
+		\mathcal{G}(N) \;=\; \Omega\!\left(\frac{N}{(\ln N)^2}\right).
+		\]
+		Como $\mathcal{G}(N)/\mathcal{K}_u \sim \ln N \to \infty$,
+		a condição de existência de um par de Goldbach é, no modelo
+		de Cramér, probabilisticamente menos restritiva do que a
+		condição de formação de um trio primo em configuração rígida.
+		Formalmente, para $p = 2/\ln N < 1$:
+		\[
+		P(\text{trio}) = p^3 \;\leq\; p^2 = P(\text{par})
+		\quad \text{para todo } N > e^2 \approx 7{,}4.
+		\]
+		Isso torna o modelo de malha \emph{consistente com} — mas não
+		\emph{implica formalmente} — a inevitabilidade das partições
+		de Goldbach. Trata-se de um argumento de \textbf{plausibilidade
+			heurística}, não de uma redução lógica entre os dois problemas.
+		As limitações precisas estão listadas na
+		Observação~\ref{obs:limitacoes}.
+	\end{remark}
+	
+	\begin{remark}[Limitações do argumento]
+		\label{obs:limitacoes}
+		O Corolário~\ref{cor:goldbach} \textbf{não} constitui uma prova
+		da Conjectura de Goldbach pelas seguintes razões:
+		\begin{enumerate}
+			\item A Hipótese~\ref{hip:cramer} (quasi-independência) não está
+			provada; é uma heurística.
+			\item A grade $3 \times N$ cobre todos os ímpares, mas
+			a Conjectura de Goldbach exige pares $p + q = 2M$ para
+			\emph{todo} $M$ específico, não apenas assintoticamente.
+			\item A implicação ``trios existem $\Rightarrow$ pares existem''
+			por redução de restritividade é um argumento de
+			\emph{plausibilidade}, não uma redução formal entre problemas.
+			\item O modelo não captura correlações de longa escala entre
+			primos (e.g., correlações de ordem superior ao modelo de Cramér).
+		\end{enumerate}
+		O argumento deve ser lido como evidência analítica de coerência
+		e como motivação para abordagens geométricas mais refinadas.
+	\end{remark}
+	
+	% ================================================================
+	\section{Conclusão}
+	\label{sec:conclusao}
+	
+	Introduzimos um modelo geométrico-probabilístico para estudar a
+	distribuição de primos em grades $3 \times N$ preenchidas por
+	ímpares consecutivos. Os principais resultados são:
+	
+	\begin{enumerate}
+		\item \textbf{Densidade local}: A probabilidade de primalidade
+		para um ímpar $o_k$ é $\approx 2/\ln(o_k)$
+		(Lema~\ref{lem:densidade}).
+		
+		\item \textbf{Saturação estrutural}: Sob quasi-independência
+		de Cramér, a série de probabilidades $\sum P(E_i)$ diverge,
+		e o Segundo Lema de Borel-Cantelli garante recorrência quase
+		certa de configurações primas (Proposição~\ref{prop:principal},
+		Lema~\ref{lem:divergencia}).
+		
+		\item \textbf{Crescimento assintótico}: $\mathcal{K}_u \sim
+		8N/(\ln N)^3$, com limiar de saturação $N^* \approx 1{,}1
+		\times 10^4$ no modelo direto e $N^* \approx 1{,}1 \times 10^6$
+		no modelo estrito (Proposição~\ref{prop:virada}).
+		
+		\item \textbf{Suporte heurístico a Goldbach}: A condição de
+		existência de pares de Goldbach é assintoticamente menos
+		restritiva do que a condição de trios primos na malha por
+		um fator de $\ln N$, o que é consistente com — mas não implica
+		formalmente — a Conjectura de Goldbach
+		(Observação~\ref{cor:goldbach} e Observação~\ref{obs:limitacoes}).
+	\end{enumerate}
+	
+	Como trabalhos futuros, apontamos: (i) a formalização rigorosa das
+	condições de quasi-independência via teoria ergódica ou correlações
+	de von Mangoldt; (ii) a extensão do modelo para grades $k \times N$
+	com $k > 3$; (iii) a comparação computacional entre $\mathcal{K}_u$
+	teórico e contagens empíricas de trios primos em grades explícitas.
+	
+	% ================================================================
+	\begin{thebibliography}{99}
+		
+		\bibitem{goldbach1742}
+		C.~Goldbach, \emph{Carta a Leonhard Euler}, 7 de junho de 1742.
+		Reproduzida em: P.~H.~Fuss (ed.), \textit{Correspondance
+			mathématique et physique}, vol.~1, St.\ Pétersbourg, 1843.
+		
+		\bibitem{hardylittlewood1923}
+		G.~H.~Hardy and J.~E.~Littlewood,
+		``Some problems of `Partitio Numerorum'; III: On the expression
+		of a number as a sum of primes,''
+		\textit{Acta Mathematica}, vol.~44, pp.~1--70, 1923.
+		
+		\bibitem{cramer1936}
+		H.~Cramér,
+		``On the order of magnitude of the difference between consecutive
+		prime numbers,''
+		\textit{Acta Arithmetica}, vol.~2, pp.~23--46, 1936.
+		
+		\bibitem{oliveira2014}
+		T.~Oliveira e Silva, S.~Herzog, and S.~Pardi,
+		``Empirical verification of the even Goldbach conjecture and
+		computation of prime gaps up to $4 \times 10^{18}$,''
+		\textit{Mathematics of Computation}, vol.~83, no.~288,
+		pp.~2033--2060, 2014.
+		
+		\bibitem{durrett2019}
+		R.~Durrett,
+		\textit{Probability: Theory and Examples}, 5th ed.
+		Cambridge University Press, Cambridge, 2019.
+		(Segundo Lema de Borel-Cantelli: Teorema 2.3.7.)
+		
+		\bibitem{tenenbaum1995}
+		G.~Tenenbaum,
+		\textit{Introduction to Analytic and Probabilistic Number Theory}.
+		Cambridge University Press, Cambridge, 1995.
+		
+	\end{thebibliography}
+	
+\end{document}

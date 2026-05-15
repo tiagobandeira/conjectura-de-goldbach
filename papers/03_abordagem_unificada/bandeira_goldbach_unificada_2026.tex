@@ -1,0 +1,1042 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+%\usepackage[english]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{enumerate}
+\usepackage{parskip}
+
+\geometry{margin=2.8cm, top=3cm, bottom=3cm}
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	citecolor=blue,
+	urlcolor=blue
+}
+
+%% Ambientes de teorema
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{proposition}[theorem]{Proposi\c{c}\~ao}
+\newtheorem{lemma}[theorem]{Lema}
+\newtheorem{corollary}[theorem]{Corol\'ario}
+\newtheorem{definition}[theorem]{Defini\c{c}\~ao}
+\newtheorem{hypothesis}[theorem]{Hip\'otese}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Observa\c{c}\~ao}
+
+%% Macros
+\newcommand{\calO}{\mathcal{O}}
+\newcommand{\calA}{\mathcal{A}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\bP}{\mathbb{P}}
+
+\title{%
+	\textbf{Uma Abordagem Unificada para a Conjectura de Goldbach:}\\[4pt]
+	\large Estrutura Combinat\'oria, Satura\c{c}\~ao Geom\'etrica\\
+	e o Elo entre Trios e Pares Primos%
+}
+\author{Tiago Bandeira\\\small \texttt{tiagobandeira.goldbach2025@gmail.com}}
+\date{Maio de 2026 \\ \small \emph{Preprint --- vers\~ao unificada de \cite{bandeira2026estrutura,bandeira2026geometrica}}}
+
+\begin{document}
+	
+	\maketitle
+	
+	\begin{abstract}
+		Este trabalho unifica duas abordagens complementares para o estudo da Conjectura de Goldbach.
+		A \textbf{abordagem combinat\'oria}~\cite{bandeira2026estrutura} define, para cada primo $p>2$,
+		uma sequ\^encia $S_n(p)$ de \'impares e subconjuntos $A_p = \{p+q \mid q \in Q_p\}$,
+		onde $Q_p$ \'e o conjunto dos primos de $S_n(p)$; prova-se que $Q_p$ \'e infinito (Dirichlet)
+		e a lacuna central --- garantir que $a-p$ seja primo para todo $a$ espec\'ifico --- \'e
+		identificada com precis\~ao.
+		A \textbf{abordagem geom\'etrico-probabil\'istica}~\cite{bandeira2026geometrica} organiza os \'impares
+		em uma grade $3\times N$, demonstra via Segundo Lema de Borel--Cantelli (sob quasi-independ\^encia
+		de Cram\'er) que trios primos em configura\c{c}\~oes r\'igidas recorrem quase certamente,
+		e estabelece que a densidade acumulada $K_u \sim 8N/(\ln N)^3$.
+		
+		A contribui\c{c}\~ao central deste trabalho unificado \'e mostrar que
+		\emph{cada trio primo detectado em uma janela $3\times 3$ da grade constitui uma
+			testemunha geom\'etrica expl\'icita de que tr\^es n\'umeros pares pertencem a $\bigcup_p A_p$}.
+		Este elo transforma a satura\c{c}\~ao geom\'etrica em uma medida de densidade de cobertura
+		da estrutura combinat\'oria. A lacuna central permanece intacta em ambos os \^angulos:
+		provar que todo par $2M$ espec\'ifico \'e testemunhado \'e precisamente a Conjectura
+		de Goldbach. O trabalho \'e apresentado como contribui\c{c}\~ao estrutural e anal\'itica,
+		com perspectivas para abordagens por crivos, fun\c{c}\~oes~$L$ ou m\'etodos computacionais.
+	\end{abstract}
+	
+	\setcounter{tocdepth}{2}
+	\tableofcontents
+	
+	\bigskip
+	\hrule
+	\bigskip
+	
+	%% ===========================================================
+	\section{Introdu\c{c}\~ao}
+	
+	A Conjectura de Goldbach~\cite{goldbach1742}, enunciada em 1742, afirma que todo n\'umero
+	par maior que 2 pode ser escrito como a soma de dois n\'umeros primos.
+	Verificada computacionalmente at\'e $4\times 10^{18}$~\cite{oliveira2014},
+	ela permanece sem demonstra\c{c}\~ao rigorosa.
+	
+	Este trabalho nasce da converg\^encia de duas linhas de investiga\c{c}\~ao desenvolvidas
+	separadamente pelo autor:
+	
+	\begin{enumerate}[(1)]
+		\item Uma \textbf{abordagem combinat\'oria}~\cite{bandeira2026estrutura}, baseada em simetrias
+		entre \'impares e progress\~oes aritm\'eticas, que organiza os pares em subconjuntos
+		$A_p$ estruturados por um primo \emph{\^ancora} $p$, prova resultados v\'alidos
+		e identifica com honestidade a lacuna que impede esta estrutura de constituir uma prova.
+		
+		\item Uma \textbf{abordagem geom\'etrico-probabil\'istica}~\cite{bandeira2026geometrica},
+		baseada em grades $3\times N$ preenchidas por \'impares consecutivos, que demonstra
+		via Borel--Cantelli a quase certeza de recorr\^encia de trios primos em configura\c{c}\~oes
+		r\'igidas, e compara a densidade resultante com a estimativa de Hardy--Littlewood.
+	\end{enumerate}
+	
+	\subsection*{A quest\~ao unificadora}
+	
+	Dado que ambas as estruturas estudam o mesmo fen\^omeno --- a distribui\c{c}\~ao de primos
+	em rela\c{c}\~ao a pares aditivos --- existe uma conex\~ao natural entre elas?
+	
+	A resposta \'e \textbf{sim}. A tese central deste trabalho pode ser enunciada informalmente como:
+	
+	\begin{quote}
+		\itshape
+		Cada trio primo detectado em uma janela $3\times3$ da grade $G_{3,N}$
+		\'e uma testemunha geom\'etrica expl\'icita de que tr\^es n\'umeros pares
+		pertencem a $\bigcup_p A_p$. Portanto, a satura\c{c}\~ao geom\'etrica (Borel--Cantelli)
+		\'e uma forma de medir a \emph{densidade de cobertura} da estrutura combinat\'oria.
+	\end{quote}
+	
+	Este elo n\~ao resolve a Conjectura de Goldbach --- e n\~ao pretende. Mas ele:
+	\begin{itemize}
+		\item unifica os dois quadros em uma linguagem comum;
+		\item identifica precisamente o que cada um prova e o que n\~ao prova;
+		\item sugere novas dire\c{c}\~oes de pesquisa, em particular a pergunta:
+		\emph{qual frac\c{c}\~ao dos pares $2M$ \'e coberta pelas testemunhas
+			geom\'etricas, e essa frac\c{c}\~ao pode ser levada a 1 por m\'etodos anal\'iticos?}
+	\end{itemize}
+	
+	\subsection*{Organiza\c{c}\~ao}
+	
+	A Se\c{c}\~ao~2 fixa a nota\c{c}\~ao unificada.
+	As Se\c{c}\~oes~3 e~4 revisam, respectivamente, a estrutura combinat\'oria e a malha geom\'etrica.
+	A Se\c{c}\~ao~5 estabelece o elo entre trios primos e a cobertura de $\bigcup_p A_p$.
+	A Se\c{c}\~ao~6 analisa a densidade de cobertura unificada.
+	A Se\c{c}\~ao~7 discute a lacuna central e perspectivas.
+	A Se\c{c}\~ao~8 apresenta a redu\c{c}\~ao dimensional da grade como dobramento da fita.
+	A Se\c{c}\~ao~9 desenvolve a an\'alise por m\'etodos de crivo e o problema da paridade.
+	A Se\c{c}\~ao~10 formaliza a grade como sistema erg\'odico e enuncia as conjecturas principais.
+	A Se\c{c}\~ao~11 delineia o programa de pesquisa do crivo geom\'etrico.
+	A Se\c{c}\~ao~12 conclui.
+	
+	%% ===========================================================
+	\section{Nota\c{c}\~ao Unificada e Preliminares}
+	
+	\begin{definition}[Sequência canônica de ímpares]
+		Seja $\calO = \{1,3,5,7,\ldots\}$ a sequ\^encia ordenada dos inteiros positivos
+		\'impares. O $k$-\'esimo elemento \'e $o_k = 2k-1$, para $k\geq 1$.
+	\end{definition}
+	
+	\begin{definition}[Grade $3\times N$]
+		Fixado $N\in\NN$ com $N\geq 3$, a grade $G_{3,N}$ \'e uma matriz de tr\^es linhas
+		e $N$ colunas cujas c\'elulas $(r,c)$, $r\in\{1,2,3\}$, $c\in\{1,\ldots,N\}$,
+		recebem os elementos de $\calO$ pelo mapeamento linha-a-linha:
+		\[
+		f(r,c) = 2[(r-1)N + c] - 1.
+		\]
+		As tr\^es linhas cont\^em, respectivamente:
+		\[
+		\text{Linha 1: } 1,3,\ldots,2N-1;\quad
+		\text{Linha 2: } 2N+1,\ldots,4N-1;\quad
+		\text{Linha 3: } 4N+1,\ldots,6N-1.
+		\]
+	\end{definition}
+	
+	\begin{definition}[Janela $3\times3$ e evento $E_i$]
+		Para $i\in\{1,\ldots,N-2\}$, a janela $W_i$ \'e a submatriz formada
+		pelas colunas $i,i+1,i+2$ de $G_{3,N}$.  As tr\^es configura\c{c}\~oes
+		can\^onicas s\~ao:
+		\begin{itemize}
+			\item $D_1$: diagonal principal --- c\'elulas $(1,i),(2,i+1),(3,i+2)$;
+			\item $D_2$: diagonal secund\'aria --- c\'elulas $(3,i),(2,i+1),(1,i+2)$;
+			\item $C_v$: coluna central --- c\'elulas $(1,i+1),(2,i+1),(3,i+1)$.
+		\end{itemize}
+		O evento $E_i$ \'e ``$W_i$ \'e um sucesso'', i.e., ao menos uma configura\c{c}\~ao
+		\'e totalmente prima.
+	\end{definition}
+	
+	\begin{definition}[Sequência $S_n(p)$, conjuntos $Q_p$ e $A_p$]
+		Seja $p>2$ primo fixado.  Define-se
+		\[
+		S_n(p) = \{p+4n : n\in\NN\}\cup\{p+4n+2 : n\in\NN\},
+		\]
+		o conjunto dos \'impares maiores que $p$.  Definem-se ainda:
+		\[
+		Q_p = \{q\in S_n(p) : q\text{ \'e primo}\},\qquad
+		A_p = \{p+q : q\in Q_p\}.
+		\]
+		O conjunto dos pares maiores que 2 \'e
+		$\calA = \{a\in\NN : a > 2,\; a\text{ par}\}$.
+	\end{definition}
+	
+	\begin{remark}[Consist\^encia com a nota\c{c}\~ao de~\cite{bandeira2026estrutura}]
+		Em~\cite{bandeira2026estrutura}, $S_n(p)$ \'e apresentada por dois sub-casos:
+		$p+4n$ e $p+4n+2$ (para $n\in\NN$). A Defini\c{c}\~ao~2.4 acima \'e
+		equivalente, reunindo ambos em uma uni\~ao expl\'icita.
+		Todo \'impar $q > p$ escreve-se como $q = p + 2m$ para algum $m \geq 1$:
+		se $m$ \'e par ($m = 2n$), ent\~ao $q \in \{p+4n\}$;
+		se \'impar ($m = 2n+1$), ent\~ao $q \in \{p+4n+2\}$.
+		Portanto $S_n(p)$ cobre exatamente todos os \'impares maiores que $p$
+		em ambas as nota\c{c}\~oes.
+	\end{remark}
+	
+	\begin{theorem}[Dirichlet]
+		Para todo primo $p>2$, o conjunto $Q_p$ \'e infinito, e consequentemente $A_p$ \'e infinito.
+	\end{theorem}
+	
+	\begin{theorem}[TNP --- densidade local em $\calO$]
+		A probabilidade de que o $k$-\'esimo \'impar $o_k$ seja primo satisfaz,
+		para $o_k$ suficientemente grande:
+		\[
+		\bP(\text{primo}\mid\text{\'impar}) \approx \frac{2}{\ln(o_k)}.
+		\]
+	\end{theorem}
+	
+	%% ===========================================================
+	\section{A Estrutura Combinat\'oria: $S_n(p)$ e $A_p$}
+	
+	Esta se\c{c}\~ao resume os resultados v\'alidos de~\cite{bandeira2026estrutura}.
+	
+	\begin{proposition}[Simetria dos pares ímpares]
+		Para todo par $a>2$ e todo $k\in S=\{1,3,\ldots,a-1\}$, vale
+		$a = k + (a-k)$ com $a-k\in S$.  Em particular, $S$ cont\'em $a/2$ pares
+		sim\'etricos em rela\c{c}\~ao ao seu centro.
+	\end{proposition}
+	
+	\begin{proposition}[Condição necessária de cobertura]
+		\label{prop:cond-nec}
+		Seja $a>6$ par. Existe ao menos um primo $p<a/2$ com $p\nmid a$.
+		Tal $p$ satisfaz a condi\c{c}\~ao necess\'aria (mas n\~ao suficiente) para $a\in A_p$:
+		se $p\mid a$, ent\~ao $a-p$ \'e m\'ultiplo de $p$, logo n\~ao pode ser primo maior que~$p$.
+	\end{proposition}
+	
+	\begin{proposition}[Propagação condicional dentro de $A_p$]
+		Se $a = p+q \in A_p$ com $q\in Q_p$, ent\~ao para todo $k\in\NN$: se $q\pm 2k$
+		for primo e $> p$, ent\~ao $a\pm 2k\in A_p$.
+	\end{proposition}
+	
+	\begin{remark}[A lacuna combinatória]
+		\label{rem:lacuna-comb}
+		Nenhum dos resultados acima garante que, para um par $a$ espec\'ifico,
+		$a-p$ seja primo para algum $p$.  O Teorema de Dirichlet assegura que $Q_p$ \'e
+		infinito, mas n\~ao que $a-p\in Q_p$.  Esta \'e a lacuna central.
+	\end{remark}
+	
+	\begin{theorem}[Equivalência --- reformulação de Goldbach]
+		\label{thm:equiv}
+		As seguintes afirma\c{c}\~oes s\~ao logicamente equivalentes:
+		\begin{enumerate}[\normalfont(i)]
+			\item \emph{(Goldbach)} Todo par $a>2$ \'e soma de dois primos.
+			\item Para todo par $a>2$, existe primo $p<a/2$ com $a-p\in Q_p$.
+			\item $\bigcup_{p\in\bP} A_p = \calA$.
+		\end{enumerate}
+	\end{theorem}
+	
+	%% ===========================================================
+	\section{A Malha Geom\'etrica: Grade $3\times N$ e Satura\c{c}\~ao}
+	
+	Esta se\c{c}\~ao resume os resultados de~\cite{bandeira2026geometrica}.
+	
+	\begin{hypothesis}[Quasi-independência de Cramér]
+		Para janelas $W_i$ e $W_j$ com $|i-j|\geq 3$, os eventos $E_i$ e $E_j$ s\~ao
+		assintoticamente independentes: existe $C>0$ tal que
+		\[
+		\bigl|\bP(E_i\cap E_j) - \bP(E_i)\bP(E_j)\bigr|
+		\leq \frac{C}{(\ln n_i)^3(\ln n_j)^3}.
+		\]
+		Esta hip\'otese \'e uma inst\^ancia do modelo de Cram\'er~\cite{cramer1936},
+		consistente com as melhores heur\'isticas e evid\^encias computacionais dispon\'iveis,
+		mas n\~ao provada. Nota: Cramér captura a ordem de grandeza global, mas o modelo geométrico completo exige correções de correlação local (Série Singular de Hardy-Littlewood), que preservam o fator assintótico essencial $1/(\ln N)^3$.
+	\end{hypothesis}
+	
+	\begin{lemma}[Divergência da série de probabilidades]
+		\label{lem:diverge}
+		A s\'erie $\sum_{i=1}^{\infty}\bP(E_i)$ diverge.
+	\end{lemma}
+	\begin{proof}
+		O termo dominante de $\bP(E_i)$ \'e $3\,p(k)^3$ com $p(k)\approx 2/\ln(o_k)$.
+		Logo
+		\[
+		\sum_{i=1}^{\infty}\bP(E_i)
+		\;\geq\; 24\sum_{k=1}^{\infty}\frac{1}{[\ln(2k-1)]^3}
+		\;\geq\; 24\int_{3}^{\infty}\frac{dx}{(\ln x)^3}.
+		\]
+		A integral do lado direito diverge. De fato, pela substitui\c{c}\~ao
+		$u = \ln x$ (i.e.\ $x = e^u$, $dx = e^u\,du$):
+		\[
+		\int_{3}^{\infty}\frac{dx}{(\ln x)^3}
+		= \int_{\ln 3}^{\infty}\frac{e^u}{u^3}\,du.
+		\]
+		Como $e^u/u^3 \to +\infty$ quando $u\to\infty$, existe $u_0\geq\ln 3$ tal que
+		$e^u/u^3 \geq 1$ para todo $u\geq u_0$. Portanto
+		\[
+		\int_{\ln 3}^{\infty}\frac{e^u}{u^3}\,du
+		\;\geq\; \int_{u_0}^{\infty} 1\,du = +\infty.
+		\]
+		Observa\c{c}\~ao: a compara\c{c}\~ao direta $1/(\ln x)^3 > 1/x$ \emph{n\~ao} \'e
+		v\'alida para todo $x\geq 3$ (falha na regi\~ao $x\approx 10$--$100$,
+		onde $(\ln x)^3 > x$), e por isso n\~ao \'e utilizada aqui.
+		\qedhere
+	\end{proof}
+	
+	\begin{proposition}[Saturação estrutural via Borel--Cantelli --- \emph{condicional}]
+		\label{prop:saturacao}
+		\emph{Assumindo} a Hip\'otese de Cram\'er (Hip\'otese~4.1), a probabilidade de que
+		$E_i$ ocorra infinitas vezes \'e~$1$:
+		\[
+		\bP\!\bigl(\limsup_{i\to\infty} E_i\bigr) = 1.
+		\]
+		Este resultado \'e condicional: \'e um teorema relativo ao modelo probabil\'istico
+		de Cram\'er, n\~ao um resultado incondicional sobre os n\'umeros primos.
+	\end{proposition}
+	\begin{proof}
+		Pelo Lema~\ref{lem:diverge}, $\sum\bP(E_i) = \infty$.
+		Pela Hip\'otese~4.1, janelas com $|i-j|\geq 3$ s\~ao assintoticamente independentes.
+		O Segundo Lema de Borel--Cantelli~\cite{durrett2019} --- que exige, al\'em da
+		diverg\^encia da s\'erie, alguma forma de independ\^encia ou quasi-independ\^encia
+		--- aplica-se e garante recorr\^encia quase certa.
+		Janelas sobrepostas ($|i-j|<3$) s\~ao tratadas pelo fator de corre\c{c}\~ao $1/3$
+		e n\~ao afetam a diverg\^encia nem a conclus\~ao de Borel--Cantelli.
+	\end{proof}
+	
+	\begin{lemma}[Crescimento assintótico de $K_u$]
+		\label{lem:ku}
+		A expectativa do n\'umero de estruturas primas \'unicas em $G_{3,N}$ satisfaz:
+		\[
+		K_u \;\sim\; \frac{8N}{(\ln N)^3}.
+		\]
+	\end{lemma}
+	
+	\begin{proposition}[Propriedade aditiva das diagonais]
+		\label{prop:aditiva}
+		Para a diagonal $D_1$ da janela $W_i$, com elementos
+		$f(1,i)$, $f(2,i+1)$, $f(3,i+2)$, valem:
+		\begin{align}
+			f(1,i)+f(2,i+1)   &= 2(N+2i), \label{eq:s1}\\
+			f(1,i)+f(3,i+2)   &= 2(2N+2i+1), \label{eq:s2}\\
+			f(2,i+1)+f(3,i+2) &= 2(3N+2i+2). \label{eq:s3}
+		\end{align}
+		Em particular, se $D_1$ for totalmente prima,
+		as tr\^es somas acima s\~ao representa\c{c}\~oes de Goldbach.
+	\end{proposition}
+	
+	%% ===========================================================
+	\section{O Elo: Testemunhas Geom\'etricas e Cobertura de $\bigcup A_p$}
+	
+	Esta \'e a contribui\c{c}\~ao central do trabalho unificado.
+	
+	\begin{definition}[Testemunha geométrica de Goldbach]
+		A janela $W_i$ em $G_{3,N}$ \'e uma \emph{testemunha geom\'etrica} para o par $2M$ se
+		existe uma configura\c{c}\~ao prima em $W_i$ cujos dois elementos somam $2M$.
+	\end{definition}
+	
+	\begin{proposition}[Trios primos como testemunhas de $A_p$]
+		\label{prop:elo}
+		Seja $D_1 = (p_1,p_2,p_3)$ uma diagonal totalmente prima em $W_i\subset G_{3,N}$,
+		com $p_1 < p_2 < p_3$.  Ent\~ao:
+		\begin{enumerate}[\normalfont(i)]
+			\item $p_2\in Q_{p_1}$, logo $p_1+p_2\in A_{p_1}$;
+			\item $p_3\in Q_{p_1}$, logo $p_1+p_3\in A_{p_1}$;
+			\item $p_3\in Q_{p_2}$, logo $p_2+p_3\in A_{p_2}$.
+		\end{enumerate}
+		Em outras palavras, cada trio primo na grade gera \textbf{tr\^es} elementos de
+		$\bigcup_p A_p$.
+	\end{proposition}
+	\begin{proof}
+		Como $p_1,p_2,p_3$ s\~ao todos \'impares e $p_j>p_i$ para $j>i$, a diferen\c{c}a
+		$p_j - p_i$ \'e par e positiva, logo $p_j \in S_n(p_i)$
+		(pois $S_n(p_i)$ cobre todos os \'impares maiores que $p_i$).
+		Como $p_j$ \'e primo, $p_j\in Q_{p_i}$, e portanto $p_i+p_j\in A_{p_i}$.
+	\end{proof}
+	
+	\begin{remark}[O elo em linguagem diagramática]
+		A rela\c{c}\~ao entre as duas estruturas pode ser resumida no diagrama:
+		\[
+		\underbrace{\text{trio primo em }W_i}_{\text{evento geom\'etrico }E_i}
+		\;\Longrightarrow\;
+		\underbrace{p_1{+}p_2,\;p_1{+}p_3,\;p_2{+}p_3\;\in\;\bigcup_p A_p}_{\text{cobertura combinat\'oria}}
+		\]
+		e a Proposi\c{c}\~ao~\ref{prop:saturacao} garante que o lado esquerdo ocorre
+		infinitas vezes com probabilidade~1.
+		
+		Em termos concretos:
+		\begin{itemize}
+			\item A \textbf{abordagem combinat\'oria} pergunta:
+			\emph{Quais pares $a$ pertencem a $\bigcup_p A_p$?}
+			\item A \textbf{abordagem geom\'etrica} gera testemunhas concretas
+			de que certos pares pertencem a $\bigcup_p A_p$,
+			e mede a densidade dessas testemunhas.
+			\item A \textbf{satura\c{c}\~ao geom\'etrica} \'e, portanto, uma
+			\emph{medida de densidade de cobertura} da estrutura combinat\'oria.
+		\end{itemize}
+	\end{remark}
+	
+	\begin{corollary}[Goldbach como problema de cobertura total]
+		\label{cor:cobertura}
+		A Conjectura de Goldbach \'e equivalente \`a afirma\c{c}\~ao de que as testemunhas
+		geom\'etricas, ao variar $N$ e $i$, cobrem \emph{todos} os pares $2M>2$
+		--- e n\~ao apenas uma fra\c{c}\~ao assintoticamente densa deles.
+	\end{corollary}
+	\begin{proof}
+		Pelas Proposi\c{c}\~oes~\ref{prop:aditiva} e~\ref{prop:elo}, cada par $2M$ que
+		\'e soma de dois primos \'e gerado como testemunha de alguma janela $W_i$
+		em algum $G_{3,N}$.  A equivalencia plena com Goldbach segue do
+		Teorema~\ref{thm:equiv}.
+	\end{proof}
+	
+	%% ===========================================================
+	\section{An\'alise de Densidade Unificada}
+	
+	\begin{proposition}[Representações de Goldbach geradas pela grade]
+		O n\'umero esperado de representa\c{c}\~oes de Goldbach geradas por trios primos
+		na grade $G_{3,N}$ satisfaz:
+		\[
+		R(N) := 3\,K_u \;\sim\; \frac{24N}{(\ln N)^3}.
+		\]
+	\end{proposition}
+	\begin{proof}
+		Cada sucesso $E_i$ gera em expectativa 3 representa\c{c}\~oes (uma por par
+		de elementos na configura\c{c}\~ao prima dominante).
+		O resultado segue do Lema~\ref{lem:ku}.
+	\end{proof}
+	
+	\begin{corollary}[Comparação com Hardy--Littlewood]
+		\label{cor:hl}
+		A estimativa de Hardy--Littlewood~\cite{hardylittlewood1923} para o n\'umero de
+		representa\c{c}\~oes de $2M$ como soma de dois primos \'e
+		$G(M) = \Omega\!\bigl(M/(\ln M)^2\bigr)$.
+		Comparando com $R(N)$:
+		\[
+		\frac{R(N)}{G(N)} \;\sim\; \frac{24}{C\ln N} \;\to\; 0, \quad N\to\infty.
+		\]
+	\end{corollary}
+	
+	\begin{remark}[Os dois lados da comparação]
+		O Corol\'ario~\ref{cor:hl} tem duas faces complementares:
+		
+		\smallskip
+		\textbf{Trios s\~ao mais raros que pares} (esperado): exigir tr\^es primos
+		simult\^aneos em configura\c{c}\~ao r\'igida \'e um fator $\ln N$ mais dif\'icil.
+		A grade gera representa\c{c}\~oes na ordem $N/(\ln N)^3$, enquanto Hardy--Littlewood
+		prev\^e $N/(\ln N)^2$.
+		
+		\smallskip
+		\textbf{Ambos divergem} (crucial): tanto $R(N)$ quanto $G(N)$ crescem para infinito.
+		Isso \'e consistente com --- mas n\~ao implica --- a cobertura total de $\calA$.
+		Uma abordagem por densidade teria de mostrar que para cada $2M$ \emph{fixo},
+		ao menos uma testemunha existe dentre todas as poss\'iveis grades e janelas.
+		
+		\smallskip
+		Esta tens\~ao entre \emph{densidade assint\'otica} (o que temos) e
+		\emph{cobertura pontual} (o que Goldbach pede) \'e exatamente a lacuna
+		central, expressa em linguagem unificada.
+	\end{remark}
+	
+	\begin{proposition}[Limiar de saturação]
+		A fun\c{c}\~ao de ac\'umulo $\Phi(K_u) = \binom{K_u+1}{2}$ supera $N/2$ para:
+		\begin{itemize}
+			\item $N \geq N^* \approx 1{,}1\times 10^4$ (modelo direto, sem fator $1/3$);
+			\item $N \geq N^* \approx 1{,}1\times 10^6$ (modelo estrito, com fator $1/3$).
+		\end{itemize}
+		Em ambos os casos, $\Phi(K_u) = \omega(N)$, i.e., cresce superlinearmente.
+	\end{proposition}
+	
+	%% ===========================================================
+	\section{A Lacuna Central e Perspectivas}
+	
+	\subsection{O que foi demonstrado}
+	
+	Sob nota\c{c}\~ao unificada, os resultados plenamente demonstrados s\~ao:
+	
+	\textbf{Estrutura combinat\'oria.}
+	Para todo $a>6$ par, existe $p<a/2$ primo com $p\nmid a$ (condi\c{c}\~ao necess\'aria
+	para $a\in A_p$); $Q_p$ \'e infinito (Dirichlet); a propaga\c{c}\~ao dentro de $A_p$
+	\'e v\'alida condicionalmente \`a exist\^encia de primos nas posi\c{c}\~oes deslocadas.
+	
+	\textbf{Malha geom\'etrica.}
+	Sob quasi-independ\^encia de Cram\'er, $\sum\bP(E_i)=\infty$ e trios primos ocorrem
+	quase certamente infinitas vezes (Borel--Cantelli); $K_u\sim 8N/(\ln N)^3$.
+	
+	\textbf{O elo.}
+	Cada trio primo em $G_{3,N}$ gera tr\^es elementos de $\bigcup_p A_p$
+	(Proposi\c{c}\~ao~\ref{prop:elo}); a cobertura de todos os pares \'e equivalente
+	\`a Conjectura de Goldbach (Corol\'ario~\ref{cor:cobertura}).
+	
+	\subsection{O que não foi demonstrado}
+	
+	A lacuna \'e \'unica e clara, vista de ambos os \^angulos:
+	
+	\begin{itemize}
+		\item \textbf{Lado combinat\'orio}: n\~ao se demonstra que $a-p\in Q_p$
+		para algum $p$ e para todo $a$ espec\'ifico
+		(Observa\c{c}\~ao~\ref{rem:lacuna-comb}).
+		
+		\item \textbf{Lado geom\'etrico}: a Proposi\c{c}\~ao~\ref{prop:saturacao}
+		prova que trios primos ocorrem infinitas vezes ao variar $N$,
+		mas n\~ao que cada $2M$ fixo \'e atingido por algum par primo.
+		
+		\item \textbf{Em linguagem unificada}: $\bigcup_p A_p$ \'e ``denso''
+		no sentido de que qualquer intervalo cont\'em elementos,
+		mas provar que $\bigcup_p A_p = \calA$ --- i.e., que nenhum par \'e exclu\'ido
+		--- \'e exatamente Goldbach.
+	\end{itemize}
+	
+	\subsection{Perspectivas para pesquisas futuras}
+	
+	A s\'intese das duas estruturas sugere as seguintes dire\c{c}\~oes:
+	
+	\begin{enumerate}
+		\item \textbf{Abordagem por crivos.}
+		A estrutura $A_p$ \'e naturalmente filtrada por crivos:
+		$a\notin A_p$ se e somente se $a-p$ \'e composto para todo
+		$q\in S_n(p)$ com $q=a-p$.
+		O Crivo de Selberg ou o Crivo Grande poderiam estimar
+		$|\calA\setminus\bigcup_{p\leq P} A_p|$ em fun\c{c}\~ao de $P$
+		e do alcance, dando uma cota superior para o n\'umero de pares n\~ao cobertos.
+		
+		\item \textbf{Varia\c{c}\~ao de $N$ e cobertura seletiva.}
+		A Proposi\c{c}\~ao~\ref{prop:aditiva} mostra que ao variar $N$,
+		os alvos aditivos das diagonais varrem fam\'ilias diferentes de pares.
+		Uma an\'alise sistem\'atica de quais pares $2M$ s\~ao alcan\c{c}ados
+		para quais $(N,i)$ poderia revelar padr\~oes que orientem o trabalho te\'orico
+		e conecte a cobertura geom\'etrica com a estrutura de $\bigcup_p A_p$.
+		
+		\item \textbf{Fun\c{c}\~oes $L$ e correla\c{c}\~oes de longa escala.}
+		A Hip\'otese de Cram\'er ignora correla\c{c}\~oes de ordem superior.
+		A incorpora\c{c}\~ao de fun\c{c}\~oes $L$ de Dirichlet ou da fun\c{c}\~ao
+		de von Mangoldt $\Lambda$ poderia refinar a estimativa de $K_u$ e dar
+		controle sobre a densidade de cobertura al\'em do que o modelo probabil\'istico
+		permite.
+		
+		\item \textbf{Extens\~ao a grades $k\times N$.}
+		Para $k=2$, a condi\c{c}\~ao de ``par primo'' \'e a condi\c{c}\~ao de Goldbach
+		diretamente, e as janelas $2\times 2$ degenerariam em pares.
+		A an\'alise de grades $2\times N$ pelo mesmo m\'etodo geom\'etrico-probabil\'istico
+		poderia dar uma vers\~ao mais direta do argumento, com limiar de satura\c{c}\~ao
+		menor e liga\c{c}\~ao mais imediata com a conjectura.
+		
+		\item \textbf{Verifica\c{c}\~ao computacional.}
+		Implementar $G_{3,N}$ para $N$ moderado, contar os trios primos,
+		compar\'a-los com $K_u$ te\'orico, e cruzar os pares gerados com as
+		representa\c{c}\~oes de Goldbach conhecidas at\'e $4\times 10^{18}$.
+		Esse cruzamento permitiria estimar empiricamente a fra\c{c}\~ao de pares
+		cobertos pela estrutura geom\'etrica.
+	\end{enumerate}
+	
+	%% ===========================================================
+	\section{Redu\c{c}\~ao Dimensional: $G_{3,N}$ como Dobramento de $S_n(p)$}
+	
+	\begin{remark}[A grade como fita dobrada]
+		H\'a uma conex\~ao geom\'etrica mais profunda entre as duas estruturas que permanece
+		impl\'icita nos argumentos anteriores, mas merece ser registrada explicitamente.
+		
+		A grade $G_{3,N}$ cont\'em os \'impares $\{1, 3, \ldots, 6N-1\}$ --- exatamente
+		$3N$ elementos.  O maior elemento \'e $f(3,N) = 6N-1$.
+		A sequ\^encia sim\'etrica $S$ associada ao par $a = 6N$ seria
+		$S = \{1, 3, \ldots, 6N-1\}$, precisamente o mesmo conjunto.
+		Portanto, $G_{3,N}$ \'e a \emph{fita sim\'etrica de $6N$ dobrada em tr\^es linhas}:
+		
+		\[
+		\underbrace{1,\; 3,\;\ldots,\; 2N-1}_{\text{Linha 1}}
+		\;\Big|\;
+		\underbrace{2N+1,\;\ldots,\; 4N-1}_{\text{Linha 2}}
+		\;\Big|\;
+		\underbrace{4N+1,\;\ldots,\; 6N-1}_{\text{Linha 3}}
+		\]
+		
+		O ``primeiro dobramento'' transforma a fita linear em pares sim\'etricos $(k, 6N-k)$
+		--- a estrutura de $S_n(p)$ para primos $p$ na fita.
+		O ``segundo dobramento'' enrola esses pares em tr\^es linhas, criando $G_{3,N}$.
+		
+		As diagonais $D_1$ e $D_2$ nas janelas $3\times 3$ s\~ao, portanto, artefatos diretos
+		desta dupla dobra: elas conectam elementos das tr\^es ``camadas'' da fita,
+		e a propriedade aditiva (Proposi\c{c}\~ao~\ref{prop:aditiva}) \'e a manifesta\c{c}\~ao
+		alg\'ebrica da simetria de dobramento.
+		
+		Em outras palavras: a estrutura combinat\'oria $S_n(p)$ vive em dimens\~ao~1
+		(a fita), e $G_{3,N}$ \'e a sua redu\c{c}\~ao dimensional em uma grade 2D que
+		preserva as rela\c{c}\~oes aditivas. O elo da Se\c{c}\~ao~5 \'e, por este prisma,
+		uma afirma\c{c}\~ao sobre como a geometria do dobramento captura a \'algebra da simetria.
+	\end{remark}
+	
+	%% ===========================================================
+	\section{An\'alise por M\'etodos de Crivo}
+	
+	Esta se\c{c}\~ao investiga como os m\'etodos de crivo cl\'assicos se articulam
+	com o framework unificado, e qual \'e o alcance e os limites dessa articula\c{c}\~ao.
+	
+	\subsection{Formula\c{c}\~ao do problema de cobertura via crivo}
+	
+	No framework unificado, a Conjectura de Goldbach equivale a mostrar que
+	$\bigcup_p A_p = \calA$ (Teorema~\ref{thm:equiv}).
+	A abordagem por crivo reformula essa quest\~ao como um problema de contagem:
+	para um par fixo $a$, defina o conjunto de candidatos
+	\[
+	\mathcal{C}(a) = \{a - p : p \in \bP,\; p < a/2\} \subset Q_p\text{-candidatos},
+	\]
+	e o n\'umero de parti\c{c}\~oes de Goldbach de $a$:
+	\[
+	\pi_2(a) = \bigl|\{p < a/2 : p\in\bP,\; a-p\in\bP\}\bigr|
+	= \bigl|\{p < a/2 : a - p \in Q_p\}\bigr|.
+	\]
+	Goldbach exige $\pi_2(a) \geq 1$ para todo $a > 2$ par.
+	
+	\subsection{O Crivo de Selberg e o limite superior}
+	
+	O Crivo de Selberg~\cite{selberg1947} fornece o melhor limite superior dispon\'ivel
+	para $\pi_2(a)$.  A constru\c{c}\~ao escolhe pesos $\lambda_d$ com $\lambda_1 = 1$
+	para minimizar
+	\[
+	\sum_{\substack{n \leq a/2 \\ n \equiv 0 \pmod{d}, d|P(z)}} \lambda_d^2,
+	\]
+	onde $P(z) = \prod_{p < z} p$.  O resultado cl\'assico para a soma de dois primos \'e:
+	
+	\begin{proposition}[Selberg --- limite superior para $\pi_2$]
+		\label{prop:selberg}
+		Para $a$ par suficientemente grande, com a nota\c{c}\~ao $\mathfrak{S}(a) = \prod_{p|a,\, p>2}\frac{p-1}{p-2}$:
+		\[
+		\pi_2(a) \;\leq\; \frac{8\,C_2 \cdot \mathfrak{S}(a) \cdot a}{(\ln a)^2}
+		\;=\; O\!\left(\frac{a}{(\ln a)^2}\right),
+		\]
+		onde $C_2 = \prod_{p>2}(1-(p-1)^{-2}) \approx 0{,}6602$ \'e a constante dos
+		primos g\^emeos.
+	\end{proposition}
+	
+	\begin{remark}[O crivo fornece s\'o limite superior]
+		A Proposi\c{c}\~ao~\ref{prop:selberg} diz que $\pi_2(a)$ n\~ao pode ser
+		\emph{grande demais} --- h\'a no m\'aximo $O(a/(\ln a)^2)$ parti\c{c}\~oes.
+		O que n\~ao fornece \'e um limite inferior: o crivo de Selberg sozinho
+		n\~ao prova $\pi_2(a) \geq 1$.
+		A estimativa de Hardy--Littlewood, $G(M) \sim 2C_2\,\mathfrak{S}(M)\cdot M/(\ln M)^2$,
+		\'e uma conjectura (n\~ao um teorema) que coincide em ordem com o limite
+		superior de Selberg, e sugere que o limite \'e quase justo.
+	\end{remark}
+	
+	\subsection{O Teorema de Chen e os ``quase-primos''}
+	
+	O resultado mais pr\'oximo de Goldbach obtido por m\'etodos de crivo \'e o
+	Teorema de Chen (1966)~\cite{chen1966}:
+	
+	\begin{theorem}[Chen, 1966]
+		Todo n\'umero par suficientemente grande $a$ pode ser escrito como $a = p + q$,
+		onde $p$ \'e primo e $q$ \'e $P_2$ --- um produto de no m\'aximo dois fatores primos.
+	\end{theorem}
+	
+	Na linguagem do framework unificado, o Teorema de Chen afirma:
+	\[
+	\calA_{\text{grande}} \;\subseteq\; \bigcup_p \bigl(A_p \cup B_p\bigr),
+	\]
+	onde $B_p = \{p + q : q \in S_n(p),\; q = r\cdot s,\; r,s \in \bP\}$ \'e o conjunto
+	dos pares gerados por primos \^ancora com ``quase-primos'' da sequ\^encia $S_n(p)$.
+	Goldbach requer apenas $A_p$ (sem $B_p$); Chen prova $A_p \cup B_p$.
+	
+	\subsection{O Problema da Paridade}
+	
+	A raz\~ao pela qual o crivo de Selberg prova Chen mas n\~ao Goldbach \'e o
+	\textbf{problema da paridade}, identificado por Selberg nos anos 1950:
+	
+	\begin{remark}[Problema da paridade --- enunciado informal]
+		Fun\c{c}\~oes de crivo baseadas em pesos multiplicativos $\lambda_d$
+		(como o crivo de Selberg) s\~ao \emph{cegas} \`a paridade do n\'umero de fatores
+		primos de um inteiro.  Em particular, elas n\~ao conseguem distinguir, em m\'edia,
+		entre:
+		\begin{itemize}
+			\item N\'umeros com um n\'umero \'impar de fatores primos (primos s\~ao o caso
+			extremo), e
+			\item N\'umeros com um n\'umero par de fatores primos ($P_2$'s s\~ao o caso
+			extremo ao lado).
+		\end{itemize}
+		Consequentemente, qualquer bound obtido por crivo multiplicativo
+		para $|\{n \leq X : n \in \bP\}|$ tamb\'em se aplica ---
+		com a mesma ordem de magnitude ---
+		a $|\{n \leq X : n \in P_2\}|$.
+		O crivo ``prova Chen'' (distingue $\bP\cup P_2$ de $P_k$ com $k\geq 3$),
+		mas n\~ao consegue distinguir $\bP$ de $P_2$ dentro de $\bP\cup P_2$.
+	\end{remark}
+	
+	\subsection{O problema da paridade no framework unificado: uma interpreta\c{c}\~ao}
+	
+	O framework unificado oferece uma interpreta\c{c}\~ao geom\'etrica do problema
+	da paridade que clarifica onde est\'a a obstru\c{c}\~ao.
+	
+	\begin{proposition}[Assimetria parity-free da malha]
+		\label{prop:parity-free}
+		As testemunhas geom\'etricas geradas pela grade $G_{3,N}$ s\~ao automaticamente
+		elementos de $\bigcup_p A_p$ (n\~ao de $\bigcup_p B_p$): um trio $(p_1,p_2,p_3)$
+		detectado em uma janela $3\times3$ consiste, por defini\c{c}\~ao, de tr\^es primos.
+		A grade n\~ao gera $P_2$'s.
+	\end{proposition}
+	
+	\begin{remark}[A grade ``resolve'' a paridade --- mas cria outro problema]
+		A Proposi\c{c}\~ao~\ref{prop:parity-free} revela uma assimetria interessante entre
+		as duas abordagens:
+		
+		\medskip
+		\begin{center}
+			\begin{tabular}{lcc}
+				\hline
+				Abordagem & Problema da paridade & Cobertura de $\calA$ \\
+				\hline
+				Crivo de Selberg & Sim (inerente) & $\calA_{\text{grande}} \subseteq \bigcup(A_p\cup B_p)$ \\
+				Grade $G_{3,N}$  & N\~ao (detecta s\'o primos) & Fra\c{c}\~ao de $\bigcup A_p$ \\
+				\hline
+			\end{tabular}
+		\end{center}
+		\medskip
+		
+		O crivo tem boa cobertura mas \'e cego \`a paridade.
+		A grade \'e ``parity-free'' mas cobre apenas uma fra\c{c}\~ao dos pares.
+		Nenhuma das duas, isoladamente, resolve Goldbach.
+		
+		Uma dire\c{c}\~ao especulativa interessante: \'e poss\'ivel usar a estrutura
+		geom\'etrica da grade (que filtra automaticamente $B_p$) como informa\c{c}\~ao
+		adicional em um crivo modificado, potencialmente evitando a obstru\c{c}\~ao de paridade
+		ao incorporar a geometria como peso n\~ao-multiplicativo?
+	\end{remark}
+	
+	\subsection{O fator $\ln N$ como manifesta\c{c}\~ao do problema da paridade}
+	
+	O Corol\'ario~\ref{cor:hl} mostrou que
+	\[
+	\frac{R(N)}{G(N)} \sim \frac{1}{\ln N} \to 0.
+	\]
+	Podemos agora reinterpretar este fator \`a luz do problema da paridade:
+	
+	\begin{proposition}[Reinterpretação do fator $\ln N$]
+		\label{prop:fator-ln}
+		O fator $1/\ln N$ entre a densidade de testemunhas geom\'etricas $R(N) \sim 24N/(\ln N)^3$
+		e a estimativa de Hardy--Littlewood $G(N) \sim C\,N/(\ln N)^2$ pode ser decomposto como:
+		\[
+		G(N) = \underbrace{R(N)}_{\text{primos puros }(A_p)} + \underbrace{(G(N) - R(N))}_{\text{contribui\c{c}\~ao de }B_p},
+		\]
+		onde o segundo termo \'e dominante em ordem $N/(\ln N)^2$, consistente com a contribui\c{c}\~ao
+		esperada dos $P_2$'s no Teorema de Chen.
+		Em outras palavras, o fator $\ln N$ n\~ao \'e um artefato do modelo geom\'etrico:
+		\'e a \emph{assinatura quantitativa do problema da paridade} --- a diferen\c{c}a entre
+		contar apenas primos $(A_p)$ e contar primos mais $P_2$'s $(A_p \cup B_p)$.
+	\end{proposition}
+	
+	\begin{remark}
+		Esta interpreta\c{c}\~ao \'e heur\'istica: ela assume que $G(N)$ conta $A_p \cup B_p$
+		uniformemente, o que n\~ao \'e provado. Mas a ordem de grandeza \'e consistente
+		com a teoria de crivos, e fornece uma leitura geom\'etrica natural do fator $\ln N$.
+	\end{remark}
+	
+	\subsection{Implica\c{c}\~oes para o framework unificado}
+	
+	A an\'alise de crivos permite enunciar a lacuna central em uma terceira linguagem,
+	al\'em da combinat\'oria e da geom\'etrica:
+	
+	\begin{corollary}[Lacuna em linguagem de crivo]
+		No framework unificado, a Conjectura de Goldbach equivale a superar o problema
+		da paridade de forma \emph{global}: n\~ao basta mostrar que $A_p \cup B_p$ cobre
+		$\calA$ (Chen), nem que $A_p$ tem densidade positiva (este trabalho).
+		\'E preciso mostrar que $A_p$ cobre $\calA$ \emph{pontualmente}, o que exige
+		distinguir primos de $P_2$'s em $\mathcal{C}(a)$ para cada $a$ espec\'ifico ---
+		exatamente o que o problema da paridade proibe aos crivos multiplicativos.
+	\end{corollary}
+	
+	\begin{remark}[Caminhos al\'em da paridade]
+		Os mecanismos conhecidos para contornar o problema da paridade s\~ao raros
+		e n\~ao se aplicam diretamente a Goldbach:
+		\begin{itemize}
+			\item \textbf{Fun\c{c}\~oes $L$ e m\'etodo do c\'irculo} (Hardy--Littlewood, Vinogradov):
+			provam a conjectura de Goldbach tern\'aria (todo \'impar $> 5$ \'e soma de tr\^es primos,
+			Helfgott 2013~\cite{helfgott2013}) mas n\~ao a bin\'aria.
+			\item \textbf{Crivo combinat\'orio de Buchstab}: permite iterar o crivo e chegar
+			ao $P_2$ de Chen, mas emperrar no $P_1$ (primos puros) por causa da paridade.
+			\item \textbf{Crivos de ordem superior com twist}: abordagem em desenvolvimento
+			que incorpora fun\c{c}\~oes de Liouville $\lambda(n)$ como pesos para quebrar
+			a blindagem de paridade; ainda sem resultado conclusivo para Goldbach bin\'ario.
+		\end{itemize}
+		O framework deste trabalho sugere uma quarta dire\c{c}\~ao: usar os pesos geom\'etricos
+		da grade $G_{3,N}$ --- que s\~ao n\~ao-multiplicativos e naturalmente ``parity-free''
+		--- como um substituto para os pesos $\lambda_d$ do crivo de Selberg. Se tal crivo
+		geom\'etrico for vi\'avel, ele poderia, em princ\'ipio, contornar a obstru\c{c}\~ao
+		de paridade por constru\c{c}\~ao.
+	\end{remark}
+	
+	\section{Formalização Dinâmica: A Grade como Sistema Ergódico}
+	\label{sec:ergodica}
+	
+	A transição de um modelo heurístico probabilístico para um arcabouço rigoroso exige a superação da hipótese de independência local (Cramér). Para contornar a obstrução da paridade e capturar as correlações estruturais da malha $G_{3,N}$ sem pressupor o conhecimento da distribuição dos primos, formalizamos a grade sob a ótica da Teoria Ergódica e dos sistemas dinâmicos topológicos.
+	
+	Esta abordagem traduz o problema da existência de configurações primas (como a diagonal totalmente prima $D_1$) em um problema de \textit{recorrência múltipla} em um espaço de medida.
+	
+	\subsection{O Espaço Simbólico e o Operador de Shift}
+	
+	Seja $\mathcal{P} \subset \mathbb{N}$ o conjunto dos números ímpares primos. Definimos o espaço de fase $X = \{0,1\}^{\mathbb{N}}$ e representamos a distribuição dos primos pela sequência indicadora $x \in X$, onde:
+	\begin{equation}
+		x(n) = \begin{cases} 
+			1 & \text{se } 2n-1 \in \mathcal{P} \\
+			0 & \text{caso contrário}
+		\end{cases}
+	\end{equation}
+	
+	Definimos o operador de \textit{shift} contínuo $T: X \to X$ como $(Tx)(n) = x(n+1)$. Este operador modela o deslocamento ao longo da sequência de números ímpares (um passo de $+2$ nos inteiros).
+	
+	A malha $G_{3,N}$, por sua construção linha-a-linha (Definição 2.2), gera distâncias determinísticas entre suas células. Na configuração diagonal principal $D_1$, composta pelas células $(1, i), (2, i+1), (3, i+2)$, a diferença de valor entre as células adjacentes é de $2N+2$. Em termos do nosso operador de shift no índice dos ímpares, isso corresponde a uma translação de $\Delta = N+1$ passos.
+	
+	Portanto, a exist\^encia de um sucesso em $D_1$ na janela $W_i$ equivale a:
+	\begin{equation}
+		x(i) \cdot x(i+\Delta) \cdot x(i+2\Delta) = 1,
+	\end{equation}
+	ou seja, a encontrar tr\^es termos da sequ\^encia indicadora, espa\c{c}ados de
+	$\Delta = N+1$, todos iguais a~1.
+	Em nota\c{c}\~ao de shift: $(T^k x)(n) = x(n+k)$, de modo que
+	$x(i+k) = (T^k x)(i)$; assim a condi\c{c}\~ao acima escreve-se
+	equivalentemente $x(i)\cdot(T^\Delta x)(i)\cdot(T^{2\Delta}x)(i)=1$.
+	
+	\subsection{Medida Empírica e o Filtro de Módulos (W-Trick)}
+	
+	Para aplicar teoremas de recorrência, o sistema dinâmico deve preservar medida. Como os primos têm densidade zero em $\mathbb{N}$, adotamos uma medida empírica normalizada (análoga ao Princípio de Transferência de Green-Tao). 
+	
+	Seja $\mu_N$ a medida de probabilidade emp\'irica suportada na malha $G_{3,N}$.
+	Para evitar obstru\c{c}\~oes triviais de congru\^encia --- por exemplo,
+	se $3 \mid \Delta$ os tr\^es \'indices $i, i+\Delta, i+2\Delta$ caem na mesma classe
+	residual m\'od~$3$, tornando imp\'ossivel a primalidade simult\^anea para primos $>3$
+	--- aplicamos o \emph{$W$-trick}: fixamos $W = \prod_{p \leq w} p$ para
+	$w = w(N) \to \infty$ lentamente (e.g.\ $w = \log\log N$), e restringimos
+	a medida $\mu_N$ aos \'indices $i$ para os quais $i, i+\Delta, i+2\Delta$
+	pertencem a classes residuais $b_1, b_2, b_3 \pmod{W}$ com $\gcd(b_j, W)=1$.
+	Sob esta restri\c{c}\~ao, os primos comportam-se de forma pseudo-aleat\'oria
+	com densidade relativa $\phi(W)/W > 0$ no subconjunto filtrado
+	(onde $\phi$ \'e a fun\c{c}\~ao de Euler).
+	
+	\subsection{Conjecturas Ergódicas para a Estrutura Goldbach}
+	
+	A tradu\c{c}\~ao da grade $G_{3,N}$ para o sistema din\^amico $(X, \mu_N, T)$ permite
+	formular as conjecturas centrais do programa erg\'odico, substituindo a diverg\^encia
+	de Borel--Cantelli por converg\^encia em m\'edia erg\'odica sobre translações.
+	
+	\begin{hypothesis}[Recorr\^encia Estrutural na Malha]
+		\label{hyp:ergodica}
+		Seja $A = \{x\in X : x(0)=1\}$ o conjunto cil\'indrico de sequ\^encias com primo
+		na posi\c{c}\~ao inicial, e $\Delta = N+1$.
+		Para todo $N$ suficientemente grande (livre de obstru\c{c}\~oes modulares locais
+		ap\'os o $W$-trick):
+		\[
+		\liminf_{M \to \infty} \frac{1}{M} \sum_{i=1}^{M}
+		\mu_N\!\bigl(T^{-i}A \cap T^{-(i+\Delta)}A \cap T^{-(i+2\Delta)}A\bigr)
+		\;\geq\; \mathfrak{S}(D_1, N) \cdot \left(\frac{c}{\ln N}\right)^3 > 0,
+		\]
+		onde $c>0$ \'e uma constante absoluta e $\mathfrak{S}(D_1,N)$ \'e a constante de
+		correla\c{c}\~ao estrutural da S\'erie Singular de Hardy--Littlewood
+		associada \`a progress\~ao com passo $\Delta$.
+	\end{hypothesis}
+	
+	\begin{remark}[Por que a m\'edia sobre $i$ \'e necess\'aria]
+		O somatório $\frac{1}{M}\sum_{i=1}^M$ \'e a m\'edia de Ces\`aro sobre
+		\emph{transla\c{c}\~oes} do sistema: o argumento de $\mu_N$ muda com $i$,
+		pois $T^{-i}A$ \'e o conjunto de sequ\^encias com primo na posi\c{c}\~ao $i$.
+		Sem essa m\'edia, a express\~ao seria uma medida constante repetida $M$ vezes,
+		colapsando trivialmente. A forma correta \'e exatamente a m\'edia erg\'odica de
+		m\'ultipla recorr\^encia (cf.\ Teorema de Furstenberg para averages de Ces\`aro).
+	\end{remark}
+	
+	\begin{hypothesis}[Densidade de Cobertura via Ergodicidade]
+		\label{hyp:cobertura-ergodica}
+		Se a Hip\'otese~\ref{hyp:ergodica} for verdadeira, ent\~ao a proje\c{c}\~ao
+		das recorr\^encias de volta aos inteiros --- via as Proposi\c{c}\~oes~\ref{prop:aditiva}
+		e~\ref{prop:elo} --- garante que a densidade superior do conjunto de pares n\~ao cobertos
+		tende a zero:
+		\[
+		\overline{d}\!\Bigl(\calA \setminus \bigcup_{p \leq P} A_p\Bigr) \;\to\; 0
+		\quad\text{quando } P\to\infty.
+		\]
+	\end{hypothesis}
+	
+	\begin{remark}[Rela\c{c}\~ao com resultados conhecidos e com a lacuna]
+		A Hip\'otese~\ref{hyp:cobertura-ergodica} \'e deliberadamente mais fraca que Goldbach:
+		``quase todo par \'e soma de dois primos'' j\'a \'e conhecido por outros meios
+		(m\'etodo do c\'irculo; o conjunto excepcional tem tamanho $o(N)$).
+		O interesse est\'a em \emph{como} chegar a esse resultado via geometria da grade,
+		sem crivos multiplicativos, e em se o m\'etodo pode ser refinado para eliminar
+		inteiramente o conjunto excepcional.
+		A lacuna entre ``densidade nula'' (Hip\'otese~\ref{hyp:cobertura-ergodica}) e
+		``conjunto vazio'' (Goldbach) \'e o passo que permanece aberto.
+	\end{remark}
+	
+	Esta formaliza\c{c}\~ao exp\~oe o caminho para provar a validade da malha $G_{3,N}$
+	sem recorrer a fun\c{c}\~oes multiplicativas, utilizando a invari\^ancia de
+	transla\c{c}\~ao e a estabilidade din\^amica das constela\c{c}\~oes de \'impares na reta.
+	
+	\section{Direções Futuras: O Paradigma do Crivo Geométrico}
+	\label{sec:crivo_geometrico}
+	
+	Os resultados discutidos nas seções anteriores evidenciam que a obstrução estrutural para a demonstração da Conjectura de Goldbach via crivos clássicos --- o problema da paridade --- manifesta-se quantitativamente na diferença de ordem de grandeza entre o fator $K_u$ (trios na malha) e $G(N)$ (pares na reta numérica). Reconhecer essa fronteira não é o fim da análise, mas o ponto de partida para a formulação de uma nova classe de ferramentas.
+	
+	Nesta seção, delineamos as bases teóricas de um \textit{programa de pesquisa} focado no desenvolvimento de um ``Crivo Geométrico'', projetado especificamente para operar fora das limitações dos crivos multiplicativos de Selberg, Friedlander e Iwaniec.
+	
+	\subsection{A Obstrução Multiplicativa e a Alternativa Espacial}
+	
+	O crivo de Selberg clássico baseia-se em pesos $\lambda_d$ que são fundamentalmente multiplicativos. Esta arquitetura gera o pecado original da paridade: a função de peso avalia um número $n$ isoladamente, baseando-se apenas em seus divisores, tornando-se ``cega'' para a diferença entre um número com um fator primo ($P_1$) e um com dois fatores ($P_2$).
+	
+	A proposta central do crivo geométrico é substituir esses pesos multiplicativos por pesos derivados estritamente da estrutura topológica da malha $G_{3,N}$. Estes pesos são \textbf{não-multiplicativos por construção}.
+	
+	\subsection{Definição do Peso Geométrico $\Omega_N(n)$}
+	
+	Para cada número ímpar $n \in G_{3,N}$, seja $\mathcal{W}(n) = \{i : n \in W_i\}$ o conjunto de índices das janelas $3 \times 3$ que contêm o elemento $n$. Definimos o peso geométrico espacial de $n$ como:
+	
+	\begin{equation}
+		\Omega_N(n) = \frac{1}{|\mathcal{W}(n)|} \sum_{i \in \mathcal{W}(n)} \frac{|\{m \in W_i \setminus \{n\} : m \in \mathbb{P}\}|}{2} \in [0, 1]
+	\end{equation}
+	
+	Em termos conceituais, $\Omega_N(n)$ representa a fração média de \textit{vizinhos} de $n$ (nas janelas às quais ele pertence) que são números primos. É crucial notar que o cálculo de $\Omega_N(n)$ \textbf{não utiliza a primalidade do próprio $n$}, mas apenas o contexto geométrico ao seu redor.
+	
+	Este peso quebra a paridade porque é intrinsecamente contextual. A hipótese subjacente é a de que um número primo ($P_1$) e um quase-primo ($P_2$) geram ``campos gravitacionais'' aritméticos distintos em sua vizinhança. Devido a correlações locais, um primo puro tende a estar imerso em configurações espaciais diferentes das de um número composto, algo que a função $\lambda_d$ não tem capacidade de mapear.
+	
+	\subsection{O Estimador Geométrico para Goldbach}
+	
+	Utilizando o peso espacial, podemos construir um estimador alternativo para o número de partições de Goldbach de um par fixo $a$. Define-se:
+	
+	\begin{equation}
+		\hat{\pi}_2(a, N) = \sum_{\substack{p < a/2 \\ a-p \in G_{3,N}}} \Omega_N(p) \cdot \Omega_N(a-p)
+	\end{equation}
+	
+	A conjectura de trabalho que emerge deste framework é que $\hat{\pi}_2(a, N) \geq c > 0$ para $N$ suficientemente grande em função de $a$, o que implicaria rigorosamente que $\pi_2(a) \geq 1$. Note que a esperança acumulada $K_u$, explorada neste trabalho, é essencialmente uma normalização de $\sum_i \Omega_N(n_i)^{3/2}$. O crivo geométrico generaliza essa métrica para buscar alvos aditivos bidimensionais.
+	
+	\subsection{O Nó Computacional e Caminhos de Resolução}
+	
+	O desafio central deste novo paradigma --- o seu ``nó'' analítico --- reside no fato de que $\Omega_N(n)$ depende da primalidade dos vizinhos, o que o torna a priori incomputável sem um oráculo sobre a distribuição exata dos primos. Existem duas abordagens principais para desatar este nó, sendo uma delas uma armadilha e a outra um caminho promissor:
+	
+	\begin{enumerate}
+		\item \textbf{A Abordagem Probabilística (Insuficiente):} Uma tentativa natural seria substituir a primalidade discreta dos vizinhos pela expectativa de Cramér ($2/\ln m$). Contudo, ao fazê-lo, $\Omega_N(n)$ colapsa em uma função suave e determinística baseada apenas na magnitude geométrica da vizinhança. Isso \textit{reintroduz a cegueira de paridade}, pois alisa artificialmente as flutuações que diferenciam um primo de um $P_2$.
+		
+		\item \textbf{A Abordagem Correlacional / Ergódica (O Caminho Robusto):} Para que o peso preserve sua capacidade de quebrar a paridade sem exigir o conhecimento prévio dos primos, deve-se tratar a dependência via funções de correlação superior. A probabilidade de um vizinho $m$ ser primo, dado que $n$ tem determinada estrutura multiplicativa, requer a incorporação da Conjectura das $k$-uplas de Hardy-Littlewood. Mais ambiciosamente, $G_{3,N}$ deve ser modelada através de Dinâmica Topológica e Teoria Ergódica (em um paralelo com a maquinaria utilizada por Green e Tao para progressões aritméticas), demonstrando que o limite de $\Omega_N(n)$ converge para distribuições distintas sobre conjuntos de interesse.
+	\end{enumerate}
+	
+	Em suma, embora o desenvolvimento de uma maquinaria ergódica completa para $\Omega_N(n)$ fuja ao escopo do presente artigo, a formulação da estrutura $G_{3,N}$ oferece um arcabouço rigoroso para que a teoria de crivos evolua do domínio puramente multiplicativo para abordagens espaço-contextuais.
+	
+	
+	%% ===========================================================
+	\section{Conclus\~ao}
+	
+	Este trabalho prop\^os uma s\'intese entre duas abordagens complementares para o
+	estudo da Conjectura de Goldbach:
+	
+	\begin{enumerate}
+		\item A \textbf{estrutura combinat\'oria} ($S_n(p)$, $A_p$) organiza os pares
+		em subconjuntos estruturados por simetria e progress\~ao aritm\'etica,
+		prova resultados v\'alidos (Dirichlet, condi\c{c}\~ao necess\'aria, propaga\c{c}\~ao)
+		e exp\~oe com precis\~ao onde est\'a a lacuna.
+		
+		\item A \textbf{malha geom\'etrica} ($G_{3,N}$, $K_u$) demonstra a quase certeza
+		de recorr\^encia de trios primos via Borel--Cantelli,
+		e quantifica a densidade de tais estruturas assintoticamente.
+		
+		\item O \textbf{elo} \'e a identifica\c{c}\~ao dos trios primos na grade como
+		\emph{testemunhas geom\'etricas} de cobertura de $\bigcup_p A_p$:
+		cada sucesso $E_i$ gera tr\^es representa\c{c}\~oes de Goldbach
+		(Proposi\c{c}\~ao~\ref{prop:elo}), e a satura\c{c}\~ao geom\'etrica \'e,
+		portanto, uma \emph{medida de densidade de cobertura} da estrutura combinat\'oria.
+		
+		\item A \textbf{an\'alise de crivos} (Se\c{c}\~ao~9) revela que o fator $\ln N$
+		entre $K_u$ e $G(N)$ \'e a assinatura quantitativa do problema da paridade
+		(Proposi\c{c}\~ao~\ref{prop:fator-ln}), e que a grade $G_{3,N}$ \'e naturalmente
+		\emph{parity-free} (Proposi\c{c}\~ao~\ref{prop:parity-free}) --- uma propriedade
+		que crivos multiplicativos cl\'assicos n\~ao possuem.
+		
+		\item A \textbf{formaliza\c{c}\~ao erg\'odica} (Se\c{c}\~ao~10) traduz a exist\^encia
+		de configura\c{c}\~oes primas em problema de recorr\^encia m\'ultipla no sistema
+		$(X, \mu_N, T)$, formula as Hip\'oteses~\ref{hyp:ergodica}--\ref{hyp:cobertura-ergodica}
+		em linguagem rigorosa e identifica a lacuna precisa entre ``densidade nula do conjunto
+		excepcional'' (o que a ergodicidade pode provar) e ``conjunto excepcional vazio''
+		(o que Goldbach exige).
+	\end{enumerate}
+	
+	A lacuna central permanece, agora enunciada em \emph{quatro} linguagens equivalentes:
+	(i) garantir $a-p\in Q_p$ para $a$ espec\'ifico (combinat\'oria);
+	(ii) garantir que todo $2M$ fixo \'e testemunhado pela grade (geometria);
+	(iii) distinguir $A_p$ de $A_p\cup B_p$ para todo $a$ (crivos);
+	(iv) passar de ``conjunto excepcional de densidade nula'' para ``conjunto vazio''
+	(teoria erg\'odica).
+	
+	A contribui\c{c}\~ao estrutural deste trabalho \'e mostrar que estas tr\^es
+	formula\c{c}\~oes s\~ao facetas do mesmo objeto, e que a geometria da grade
+	oferece um mecanismo natural --- pesos n\~ao-multiplicativos e parity-free ---
+	que pode ser o ponto de partida para uma abordagem de crivo de novo tipo.
+	
+	\begin{thebibliography}{9}
+		
+		\bibitem{goldbach1742}
+		C. Goldbach,
+		\emph{Carta a Leonhard Euler}, 7 de junho de 1742.
+		Reproduzida em: P. H. Fuss (ed.),
+		\emph{Correspondance math\'ematique et physique}, vol.~1,
+		St.~P\'etersbourg, 1843.
+		
+		\bibitem{hardylittlewood1923}
+		G. H. Hardy e J. E. Littlewood,
+		``Some problems of `Partitio Numerorum'; III: On the expression of
+		a number as a sum of primes,''
+		\emph{Acta Mathematica}, vol.~44, pp.~1--70, 1923.
+		
+		\bibitem{cramer1936}
+		H. Cram\'er,
+		``On the order of magnitude of the difference between consecutive prime numbers,''
+		\emph{Acta Arithmetica}, vol.~2, pp.~23--46, 1936.
+		
+		\bibitem{oliveira2014}
+		T. Oliveira e Silva, S. Herzog, e S. Pardi,
+		``Empirical verification of the even Goldbach conjecture and computation of prime gaps
+		up to $4\times 10^{18}$,''
+		\emph{Mathematics of Computation}, vol.~83, no.~288, pp.~2033--2060, 2014.
+		
+		\bibitem{durrett2019}
+		R. Durrett,
+		\emph{Probability: Theory and Examples}, 5th~ed.
+		Cambridge University Press, Cambridge, 2019.
+		
+		\bibitem{apostol1976}
+		T. M. Apostol,
+		\emph{Introduction to Analytic Number Theory}.
+		Springer, 1976.
+		
+		\bibitem{selberg1947}
+		A. Selberg,
+		``On an elementary method in the theory of primes,''
+		\emph{Norske Vid. Selsk. Forh. (Trondheim)}, vol.~19, no.~18, pp.~64--67, 1947.
+		
+		\bibitem{chen1966}
+		J. R. Chen,
+		``On the representation of a large even integer as the sum of a prime and the product
+		of at most two primes,''
+		\emph{Kexue Tongbao}, vol.~17, pp.~385--386, 1966.
+		(Prova completa: \emph{Sci. Sinica}, vol.~16, pp.~157--176, 1973.)
+		
+		\bibitem{helfgott2013}
+		H. A. Helfgott,
+		``Major arcs for Goldbach's theorem,'' 2013.
+		\texttt{arXiv:1305.2897}.
+		
+		\bibitem{bandeira2026estrutura}
+		T. Bandeira,
+		``Uma Estrutura Combinat\'oria Baseada em Simetrias para a Conjectura de Goldbach,''
+		\emph{Preprint}, 2 de maio de 2026.
+		
+		\bibitem{bandeira2026geometrica}
+		T. Bandeira,
+		``Satura\c{c}\~ao Geom\'etrica e Inevitabilidade Estrutural:
+		Uma Abordagem de Malhas $3\times N$ para a Conjectura de Goldbach,''
+		\emph{Preprint}, maio de 2026.
+		
+	\end{thebibliography}
+	
+\end{document}
