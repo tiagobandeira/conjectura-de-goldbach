@@ -126,10 +126,14 @@
 	
 	A Se\c{c}\~ao~2 fixa a nota\c{c}\~ao unificada.
 	As Se\c{c}\~oes~3 e~4 revisam, respectivamente, a estrutura combinat\'oria e a malha geom\'etrica.
-	A Se\c{c}\~ao~5 estabelece o elo.
+	A Se\c{c}\~ao~5 estabelece o elo entre trios primos e a cobertura de $\bigcup_p A_p$.
 	A Se\c{c}\~ao~6 analisa a densidade de cobertura unificada.
-	A Se\c{c}\~ao~7 discute a lacuna central e perspectivas futuras.
-	A Se\c{c}\~ao~8 conclui.
+	A Se\c{c}\~ao~7 discute a lacuna central e perspectivas.
+	A Se\c{c}\~ao~8 apresenta a redu\c{c}\~ao dimensional da grade como dobramento da fita.
+	A Se\c{c}\~ao~9 desenvolve a an\'alise por m\'etodos de crivo e o problema da paridade.
+	A Se\c{c}\~ao~10 formaliza a grade como sistema erg\'odico e enuncia as conjecturas principais.
+	A Se\c{c}\~ao~11 delineia o programa de pesquisa do crivo geom\'etrico.
+	A Se\c{c}\~ao~12 conclui.
 	
 	%% ===========================================================
 	\section{Nota\c{c}\~ao Unificada e Preliminares}
@@ -761,12 +765,117 @@
 			que incorpora fun\c{c}\~oes de Liouville $\lambda(n)$ como pesos para quebrar
 			a blindagem de paridade; ainda sem resultado conclusivo para Goldbach bin\'ario.
 		\end{itemize}
-		O framework deste trabalho sugere uma quarta direita: usar os pesos geom\'etricos
+		O framework deste trabalho sugere uma quarta dire\c{c}\~ao: usar os pesos geom\'etricos
 		da grade $G_{3,N}$ --- que s\~ao n\~ao-multiplicativos e naturalmente ``parity-free''
 		--- como um substituto para os pesos $\lambda_d$ do crivo de Selberg. Se tal crivo
 		geom\'etrico for vi\'avel, ele poderia, em princ\'ipio, contornar a obstru\c{c}\~ao
 		de paridade por constru\c{c}\~ao.
 	\end{remark}
+	
+	\section{Formalização Dinâmica: A Grade como Sistema Ergódico}
+	\label{sec:ergodica}
+	
+	A transição de um modelo heurístico probabilístico para um arcabouço rigoroso exige a superação da hipótese de independência local (Cramér). Para contornar a obstrução da paridade e capturar as correlações estruturais da malha $G_{3,N}$ sem pressupor o conhecimento da distribuição dos primos, formalizamos a grade sob a ótica da Teoria Ergódica e dos sistemas dinâmicos topológicos.
+	
+	Esta abordagem traduz o problema da existência de configurações primas (como a diagonal totalmente prima $D_1$) em um problema de \textit{recorrência múltipla} em um espaço de medida.
+	
+	\subsection{O Espaço Simbólico e o Operador de Shift}
+	
+	Seja $\mathcal{P} \subset \mathbb{N}$ o conjunto dos números ímpares primos. Definimos o espaço de fase $X = \{0,1\}^{\mathbb{N}}$ e representamos a distribuição dos primos pela sequência indicadora $x \in X$, onde:
+	\begin{equation}
+		x(n) = \begin{cases} 
+			1 & \text{se } 2n-1 \in \mathcal{P} \\
+			0 & \text{caso contrário}
+		\end{cases}
+	\end{equation}
+	
+	Definimos o operador de \textit{shift} contínuo $T: X \to X$ como $(Tx)(n) = x(n+1)$. Este operador modela o deslocamento ao longo da sequência de números ímpares (um passo de $+2$ nos inteiros).
+	
+	A malha $G_{3,N}$, por sua construção linha-a-linha (Definição 2.2), gera distâncias determinísticas entre suas células. Na configuração diagonal principal $D_1$, composta pelas células $(1, i), (2, i+1), (3, i+2)$, a diferença de valor entre as células adjacentes é de $2N+2$. Em termos do nosso operador de shift no índice dos ímpares, isso corresponde a uma translação de $\Delta = N+1$ passos.
+	
+	Portanto, a exist\^encia de um sucesso em $D_1$ na janela $W_i$ equivale a:
+	\begin{equation}
+		x(i) \cdot x(i+\Delta) \cdot x(i+2\Delta) = 1,
+	\end{equation}
+	ou seja, a encontrar tr\^es termos da sequ\^encia indicadora, espa\c{c}ados de
+	$\Delta = N+1$, todos iguais a~1.
+	Em nota\c{c}\~ao de shift: $(T^k x)(n) = x(n+k)$, de modo que
+	$x(i+k) = (T^k x)(i)$; assim a condi\c{c}\~ao acima escreve-se
+	equivalentemente $x(i)\cdot(T^\Delta x)(i)\cdot(T^{2\Delta}x)(i)=1$.
+	
+	\subsection{Medida Empírica e o Filtro de Módulos (W-Trick)}
+	
+	Para aplicar teoremas de recorrência, o sistema dinâmico deve preservar medida. Como os primos têm densidade zero em $\mathbb{N}$, adotamos uma medida empírica normalizada (análoga ao Princípio de Transferência de Green-Tao). 
+	
+	Seja $\mu_N$ a medida de probabilidade emp\'irica suportada na malha $G_{3,N}$.
+	Para evitar obstru\c{c}\~oes triviais de congru\^encia --- por exemplo,
+	se $3 \mid \Delta$ os tr\^es \'indices $i, i+\Delta, i+2\Delta$ caem na mesma classe
+	residual m\'od~$3$, tornando imp\'ossivel a primalidade simult\^anea para primos $>3$
+	--- aplicamos o \emph{$W$-trick}: fixamos $W = \prod_{p \leq w} p$ para
+	$w = w(N) \to \infty$ lentamente (e.g.\ $w = \log\log N$), e restringimos
+	a medida $\mu_N$ aos \'indices $i$ para os quais $i, i+\Delta, i+2\Delta$
+	pertencem a classes residuais $b_1, b_2, b_3 \pmod{W}$ com $\gcd(b_j, W)=1$.
+	Sob esta restri\c{c}\~ao, os primos comportam-se de forma pseudo-aleat\'oria
+	com densidade relativa $\phi(W)/W > 0$ no subconjunto filtrado
+	(onde $\phi$ \'e a fun\c{c}\~ao de Euler).
+	
+	\subsection{Conjecturas Ergódicas para a Estrutura Goldbach}
+	
+	A tradu\c{c}\~ao da grade $G_{3,N}$ para o sistema din\^amico $(X, \mu_N, T)$ permite
+	formular as conjecturas centrais do programa erg\'odico, substituindo a diverg\^encia
+	de Borel--Cantelli por converg\^encia em m\'edia erg\'odica sobre translações.
+	
+	\begin{hypothesis}[Recorr\^encia Estrutural na Malha]
+		\label{hyp:ergodica}
+		Seja $A = \{x\in X : x(0)=1\}$ o conjunto cil\'indrico de sequ\^encias com primo
+		na posi\c{c}\~ao inicial, e $\Delta = N+1$.
+		Para todo $N$ suficientemente grande (livre de obstru\c{c}\~oes modulares locais
+		ap\'os o $W$-trick):
+		\[
+		\liminf_{M \to \infty} \frac{1}{M} \sum_{i=1}^{M}
+		\mu_N\!\bigl(T^{-i}A \cap T^{-(i+\Delta)}A \cap T^{-(i+2\Delta)}A\bigr)
+		\;\geq\; \mathfrak{S}(D_1, N) \cdot \left(\frac{c}{\ln N}\right)^3 > 0,
+		\]
+		onde $c>0$ \'e uma constante absoluta e $\mathfrak{S}(D_1,N)$ \'e a constante de
+		correla\c{c}\~ao estrutural da S\'erie Singular de Hardy--Littlewood
+		associada \`a progress\~ao com passo $\Delta$.
+	\end{hypothesis}
+	
+	\begin{remark}[Por que a m\'edia sobre $i$ \'e necess\'aria]
+		O somatório $\frac{1}{M}\sum_{i=1}^M$ \'e a m\'edia de Ces\`aro sobre
+		\emph{transla\c{c}\~oes} do sistema: o argumento de $\mu_N$ muda com $i$,
+		pois $T^{-i}A$ \'e o conjunto de sequ\^encias com primo na posi\c{c}\~ao $i$.
+		Sem essa m\'edia, a express\~ao seria uma medida constante repetida $M$ vezes,
+		colapsando trivialmente. A forma correta \'e exatamente a m\'edia erg\'odica de
+		m\'ultipla recorr\^encia (cf.\ Teorema de Furstenberg para averages de Ces\`aro).
+	\end{remark}
+	
+	\begin{hypothesis}[Densidade de Cobertura via Ergodicidade]
+		\label{hyp:cobertura-ergodica}
+		Se a Hip\'otese~\ref{hyp:ergodica} for verdadeira, ent\~ao a proje\c{c}\~ao
+		das recorr\^encias de volta aos inteiros --- via as Proposi\c{c}\~oes~\ref{prop:aditiva}
+		e~\ref{prop:elo} --- garante que a densidade superior do conjunto de pares n\~ao cobertos
+		tende a zero:
+		\[
+		\overline{d}\!\Bigl(\calA \setminus \bigcup_{p \leq P} A_p\Bigr) \;\to\; 0
+		\quad\text{quando } P\to\infty.
+		\]
+	\end{hypothesis}
+	
+	\begin{remark}[Rela\c{c}\~ao com resultados conhecidos e com a lacuna]
+		A Hip\'otese~\ref{hyp:cobertura-ergodica} \'e deliberadamente mais fraca que Goldbach:
+		``quase todo par \'e soma de dois primos'' j\'a \'e conhecido por outros meios
+		(m\'etodo do c\'irculo; o conjunto excepcional tem tamanho $o(N)$).
+		O interesse est\'a em \emph{como} chegar a esse resultado via geometria da grade,
+		sem crivos multiplicativos, e em se o m\'etodo pode ser refinado para eliminar
+		inteiramente o conjunto excepcional.
+		A lacuna entre ``densidade nula'' (Hip\'otese~\ref{hyp:cobertura-ergodica}) e
+		``conjunto vazio'' (Goldbach) \'e o passo que permanece aberto.
+	\end{remark}
+	
+	Esta formaliza\c{c}\~ao exp\~oe o caminho para provar a validade da malha $G_{3,N}$
+	sem recorrer a fun\c{c}\~oes multiplicativas, utilizando a invari\^ancia de
+	transla\c{c}\~ao e a estabilidade din\^amica das constela\c{c}\~oes de \'impares na reta.
 	
 	\section{Direções Futuras: O Paradigma do Crivo Geométrico}
 	\label{sec:crivo_geometrico}
@@ -815,6 +924,7 @@
 	
 	Em suma, embora o desenvolvimento de uma maquinaria ergódica completa para $\Omega_N(n)$ fuja ao escopo do presente artigo, a formulação da estrutura $G_{3,N}$ oferece um arcabouço rigoroso para que a teoria de crivos evolua do domínio puramente multiplicativo para abordagens espaço-contextuais.
 	
+	
 	%% ===========================================================
 	\section{Conclus\~ao}
 	
@@ -837,17 +947,26 @@
 		(Proposi\c{c}\~ao~\ref{prop:elo}), e a satura\c{c}\~ao geom\'etrica \'e,
 		portanto, uma \emph{medida de densidade de cobertura} da estrutura combinat\'oria.
 		
-		\item A \textbf{an\'alise de crivos} (Se\c{c}\~ao~8) revela que o fator $\ln N$
+		\item A \textbf{an\'alise de crivos} (Se\c{c}\~ao~9) revela que o fator $\ln N$
 		entre $K_u$ e $G(N)$ \'e a assinatura quantitativa do problema da paridade
 		(Proposi\c{c}\~ao~\ref{prop:fator-ln}), e que a grade $G_{3,N}$ \'e naturalmente
 		\emph{parity-free} (Proposi\c{c}\~ao~\ref{prop:parity-free}) --- uma propriedade
 		que crivos multiplicativos cl\'assicos n\~ao possuem.
+		
+		\item A \textbf{formaliza\c{c}\~ao erg\'odica} (Se\c{c}\~ao~10) traduz a exist\^encia
+		de configura\c{c}\~oes primas em problema de recorr\^encia m\'ultipla no sistema
+		$(X, \mu_N, T)$, formula as Hip\'oteses~\ref{hyp:ergodica}--\ref{hyp:cobertura-ergodica}
+		em linguagem rigorosa e identifica a lacuna precisa entre ``densidade nula do conjunto
+		excepcional'' (o que a ergodicidade pode provar) e ``conjunto excepcional vazio''
+		(o que Goldbach exige).
 	\end{enumerate}
 	
-	A lacuna central permanece, agora enunciada em tr\^es linguagens equivalentes:
+	A lacuna central permanece, agora enunciada em \emph{quatro} linguagens equivalentes:
 	(i) garantir $a-p\in Q_p$ para $a$ espec\'ifico (combinat\'oria);
 	(ii) garantir que todo $2M$ fixo \'e testemunhado pela grade (geometria);
-	(iii) distinguir $A_p$ de $A_p\cup B_p$ para todo $a$ (crivos).
+	(iii) distinguir $A_p$ de $A_p\cup B_p$ para todo $a$ (crivos);
+	(iv) passar de ``conjunto excepcional de densidade nula'' para ``conjunto vazio''
+	(teoria erg\'odica).
 	
 	A contribui\c{c}\~ao estrutural deste trabalho \'e mostrar que estas tr\^es
 	formula\c{c}\~oes s\~ao facetas do mesmo objeto, e que a geometria da grade
