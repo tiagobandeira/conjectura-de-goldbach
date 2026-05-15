@@ -3,7 +3,7 @@
 % Pacotes básicos
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage[english,brazil]{babel}
+\usepackage[english]{babel}
 \usepackage{amsmath, amssymb, amsthm}
 \usepackage{geometry}
 \usepackage{graphicx}
@@ -45,7 +45,7 @@
 	
 	\maketitle
 	
-	\begin{otherlanguage}{brazil}
+	\begin{otherlanguage*}{english}
 		\begin{abstract}
 			Este trabalho apresenta uma estrutura combinatória para o estudo da
 			Conjectura de Goldbach, baseada em simetrias entre números ímpares e em
@@ -66,7 +66,7 @@
 			problema de forma alternativa e abre caminhos para investigações futuras
 			por densidade analítica ou métodos de crivo.
 		\end{abstract}
-	\end{otherlanguage}
+	\end{otherlanguage*}
 	
 	\begin{abstract}
 		This paper presents a combinatorial framework for the study of the Goldbach
@@ -92,7 +92,7 @@
 	números; progressões aritméticas; estrutura combinatória.
 	
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	\begin{otherlanguage}{brazil}
+	\begin{otherlanguage*}{english}
 		\section{Introdução}
 		
 		A Conjectura de Goldbach, proposta em 1742 por Christian Goldbach em uma
@@ -113,13 +113,15 @@
 		associadas ao Teorema de Dirichlet, que garante a existência de infinitos
 		primos em certas classes aritméticas.
 		
-		Além disso, uma abordagem análoga àquela de Ellman (2000)~\cite{Ellman2000}
-		foi adotada aqui, em que, a partir de uma análise combinatória das somas
-		entre primos ímpares, explora-se como a totalidade dos números pares pode
-		ser organizada. Embora a formalização técnica difira em relação ao trabalho
-		original de Ellman, o espírito da estratégia — organizar as somas entre
-		primos segundo uma estrutura interna — é compartilhado e inspira nosso
-		método.
+		O trabalho de Ellman (2000)~\cite{Ellman2000} propõe uma abordagem
+		combinatória com espírito similar ao deste artigo: organizar as somas entre
+		primos ímpares para cobrir os números pares. A distinção técnica central
+		está em como os dois trabalhos tratam a relação entre a infinitude de primos
+		numa progressão e a cobertura de um par específico. O Teorema de Dirichlet
+		garante que existem infinitos primos em $S_n(p)$, mas não garante que
+		$a - p$ seja primo para um $a$ fixo — distinção que este trabalho identifica
+		explicitamente na Observação~\ref{rem:lacuna} e que é desenvolvida na
+		Seção~\ref{sec:discussao}.
 		
 		O presente trabalho propõe uma \emph{estrutura combinatória} baseada na
 		sequência \(S_n(p)\), composta por números ímpares associados a cada primo
@@ -484,7 +486,7 @@
 			$Q_p$.
 		\end{proof}
 		
-		\subsection{A Lacuna Central e o Limite do Argumento}
+		\subsection{A Lacuna Central e o Limite do Argumento}\label{sec:lacuna}
 		
 		Os resultados acima estabelecem:
 		\begin{enumerate}
@@ -583,7 +585,7 @@
 		\end{remark}
 		
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-		\section{Discussão e Implicações}
+		\section{Discussão e Implicações}\label{sec:discussao}
 		
 		\subsection{Interpretação Estrutural}
 		
@@ -599,6 +601,29 @@
 		adjacentes $a \pm 2$ pertencem a $A_p$ condicionalmente à primalidade de
 		$q \pm 1$ — condição que está sujeita à distribuição dos primos e não pode
 		ser garantida a priori.
+		
+		\subsection{Nota sobre Trabalhos Relacionados: Comparação com Ellman}
+		\label{sec:ellman}
+		
+		O trabalho de Ellman~\cite{Ellman2000} explora uma ideia estruturalmente próxima
+		à deste artigo: organizar as somas de primos ímpares em subconjuntos para cobrir
+		os números pares. Vale registrar, com precisão técnica, o ponto em que os dois
+		trabalhos divergem — não para criticar a iniciativa, mas porque a distinção é
+		pedagogicamente útil para delimitar o escopo do presente artigo.
+		
+		Ellman argumenta que, como o Teorema de Dirichlet garante infinitos primos em
+		progressões aritméticas e os subconjuntos de somas crescem indefinidamente, a
+		cobertura total dos pares se seguiria. A limitação técnica desse argumento é que
+		\emph{infinitos primos em $S_n(p)$} não implica que \emph{$a - p$ especificamente
+			seja primo para um $a$ dado}. Em linguagem formal: Dirichlet garante $|Q_p| = \infty$,
+		mas não garante $a - p \in Q_p$ para um $a$ fixo. A não pertença de $a$ a $A_p$
+		é compatível com a existência de infinitos outros primos em $S_n(p)$.
+		
+		Esta distinção — entre \emph{existência assintótica} e \emph{cobertura pontual} —
+		é precisamente o que a Observação~\ref{rem:lacuna} identifica como a lacuna central
+		deste trabalho. Ao nomear essa distinção de forma explícita, este artigo posiciona
+		a estrutura $S_n(p), A_p$ como uma contribuição organizacional honesta, sem
+		reivindicar o que ela ainda não demonstra.
 		
 		\subsection{O Que Este Trabalho Demonstra}
 		
@@ -731,5 +756,5 @@
 			
 		\end{thebibliography}
 		
-	\end{otherlanguage}
+	\end{otherlanguage*}
 \end{document}
