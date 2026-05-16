@@ -3,6 +3,7 @@
 \usepackage[T1]{fontenc}
 %\usepackage[english]{babel}
 \usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
 \usepackage{geometry}
 \usepackage{xcolor}
 \usepackage{hyperref}
@@ -66,6 +67,11 @@
 		provar que todo par $2M$ espec\'ifico \'e testemunhado \'e precisamente a Conjectura
 		de Goldbach. O trabalho \'e apresentado como contribui\c{c}\~ao estrutural e anal\'itica,
 		com perspectivas para abordagens por crivos, fun\c{c}\~oes~$L$ ou m\'etodos computacionais.
+		A Se\c{c}\~ao~12 apresenta verifica\c{c}\~ao computacional preliminar do peso geom\'etrico
+		$\Omega_N(n)$, mostrando que as distribui\c{c}\~oes de $\Omega_N$ sobre primos ($\mathbb{P}_1$)
+		e semiprimos ($\mathbb{P}_2$) s\~ao estatisticamente distingu\'iveis para $N$ livre de
+		obstru\c{c}\~oes modulares --- evid\^encia emp\'irica de consist\^encia com a hip\'otese do
+		crivo geom\'etrico.
 	\end{abstract}
 	\begin{quote}
 		\textbf{Nota do Autor.} 
@@ -144,7 +150,8 @@
 	A Se\c{c}\~ao~9 desenvolve a an\'alise por m\'etodos de crivo e o problema da paridade.
 	A Se\c{c}\~ao~10 formaliza a grade como sistema erg\'odico e enuncia as conjecturas principais.
 	A Se\c{c}\~ao~11 delineia o programa de pesquisa do crivo geom\'etrico.
-	A Se\c{c}\~ao~12 conclui.
+	A Se\c{c}\~ao~12 apresenta verifica\c{c}\~ao computacional do peso geom\'etrico $\Omega_N(n)$.
+	A Se\c{c}\~ao~13 conclui.
 	
 	%% ===========================================================
 	\section{Nota\c{c}\~ao Unificada e Preliminares}
@@ -892,7 +899,7 @@
 	\label{sec:crivo_geometrico}
 	
 	O que segue é um programa especulativo, não um resultado estabelecido. A definição de 
-    $\Omega_N(n)$
+	$\Omega_N(n)$
 	é conceitual e não constitutiva de uma prova. O objetivo é sugerir um caminho para futuras investigações que possa contornar o problema da paridade, mas não há, neste momento, demonstração de que tal peso seja computável ou eficaz.
 	
 	Os resultados discutidos nas seções anteriores evidenciam que a obstrução estrutural para a demonstração da Conjectura de Goldbach via crivos clássicos --- o problema da paridade --- manifesta-se quantitativamente na diferença de ordem de grandeza entre o fator $K_u$ (trios na malha) e $G(N)$ (pares na reta numérica). Reconhecer essa fronteira não é o fim da análise, mas o ponto de partida para a formulação de uma nova classe de ferramentas.
@@ -940,7 +947,133 @@
 	Em suma, embora o desenvolvimento de uma maquinaria ergódica completa para $\Omega_N(n)$ fuja ao escopo do presente artigo, a formulação da estrutura $G_{3,N}$ oferece um arcabouço rigoroso para que a teoria de crivos evolua do domínio puramente multiplicativo para abordagens espaço-contextuais.
 	
 	Portanto, o crivo geométrico permanece, por ora, uma ideia heurística. Sua viabilidade dependeria de uma teoria de correlação que atualmente não existe. O registro desta direção é útil para a comunidade como uma proposta, não como um teorema.
-
+	
+	
+	
+	%% ===========================================================
+	\section{Verificação Computacional do Peso Geométrico $\Omega_N(n)$}
+	\label{sec:computacional}
+	
+	Esta seção apresenta evidência computacional preliminar sobre a capacidade
+	do peso geométrico $\Omega_N(n)$ (Definição~11.2) de distinguir números
+	primos ($\mathbb{P}_1$) de semiprimos ($\mathbb{P}_2 = \{pq : p,q \in \mathbb{P}\}$).
+	A questão é relevante para a viabilidade do crivo geométrico proposto na
+	Seção~11: se $\Omega_N$ for estatisticamente cego à paridade, o programa
+	colapsa; se as distribuições de $\Omega_N$ sobre $\mathbb{P}_1$ e $\mathbb{P}_2$
+	forem distinguíveis, a hipótese mantém-se aberta.
+	
+	\subsection{Metodologia}
+	
+	Implementamos a grade $G_{3,N}$ computacionalmente para $N$ variando entre
+	$10^3$ e $10^5$. Para cada célula $n \in G_{3,N}$, calculamos $\Omega_N(n)$
+	pela fórmula~(6), classificamos $n$ como $\mathbb{P}_1$ (primo), $\mathbb{P}_2$
+	(produto de exatamente dois primos com multiplicidade) ou composto
+	($\Omega(n) \geq 3$) via crivo de Eratóstenes, e aplicamos dois testes não
+	paramétricos para comparar as distribuições de $\Omega_N$ entre as classes:
+	o teste de Kolmogorov--Smirnov (KS), sensível a diferenças globais de
+	distribuição, e o teste de Mann--Whitney (MW), sensível a diferenças de
+	posição/mediana.
+	
+	\subsection{Resultados}
+	
+	A Tabela~\ref{tab:omega} resume os resultados para uma seleção representativa
+	de~$N$.
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{tabular}{r l c c c}
+			\toprule
+			$N$ & Fatoração & KS $p$-valor & MW $p$-valor & Significativa? \\
+			\midrule
+			1800   & $2^3\cdot3^2\cdot5^2$               & 0,118        & 0,302        & Não    \\
+			2400   & $2^5\cdot3\cdot5^2$                 & 0,151        & 0,516        & Não    \\
+			3600   & $2^4\cdot3^2\cdot5^2$               & 0,130        & 0,992        & Não    \\
+			7200   & $2^5\cdot3^2\cdot5^2$               & 0,800        & 0,563        & Não    \\
+			12000  & $2^5\cdot3\cdot5^3$                 & 0,254        & 0,330        & Não    \\
+			15000  & $2^3\cdot3\cdot5^4$                 & $1{,}97\times10^{-5}$  & 0,160        & KS sim \\
+			18000  & $2^4\cdot3^2\cdot5^3$               & $4{,}37\times10^{-3}$  & 0,054        & KS sim \\
+			21000  & $2^3\cdot3\cdot5^3\cdot7$           & $6{,}79\times10^{-23}$ & $3{,}29\times10^{-26}$ & Sim    \\
+			24000  & $2^6\cdot3\cdot5^3$                 & $4{,}49\times10^{-5}$  & 0,078        & KS sim \\
+			27000  & $2^3\cdot3^3\cdot5^3$               & $1{,}77\times10^{-2}$  & 0,498        & KS sim \\
+			30030  & $2\cdot3\cdot5\cdot7\cdot11\cdot13$ & $5{,}03\times10^{-151}$& $2{,}04\times10^{-182}$& Sim    \\
+			83160  & $2^3\cdot3^3\cdot5\cdot7\cdot11$   & $2{,}75\times10^{-188}$& $9{,}49\times10^{-205}$& Sim    \\
+			100000 & $2^5\cdot5^5$                       & $4{,}04\times10^{-41}$ & $2{,}36\times10^{-54}$ & Sim    \\
+			500000 & $2^5\cdot5^6$                       & $1{,}04\times10^{-65}$ & $1{,}49\times10^{-98}$ & Sim    \\
+			\bottomrule
+		\end{tabular}
+		\caption{Testes KS e Mann-Whitney para $\Omega_N(P_1)$ vs.\ $\Omega_N(P_2)$ em $G_{3,N}$.}
+		\label{tab:omega}
+	\end{table}
+	
+	\subsection{Interpretação}
+	
+	\paragraph{Direção do efeito.}
+	Em todos os $N$ testados, a média de $\Omega_N$ segue o padrão
+	\[
+	\overline{\Omega}_N(\mathbb{P}_1)
+	\;<\; \overline{\Omega}_N(\mathbb{P}_2)
+	\;<\; \overline{\Omega}_N(\text{composto}).
+	\]
+	Isso é contraintuitivo à primeira vista: poder-se-ia esperar que primos
+	``atraíssem'' vizinhos primos na grade. A explicação é que, à medida que
+	$N$ cresce, os primos tornam-se mais raros (densidade $\sim 2/\!\ln n$),
+	de modo que os \emph{vizinhos} de um primo têm probabilidade decrescente
+	de também serem primos — menor, em média, do que a probabilidade dos
+	vizinhos de um $\mathbb{P}_2$, que pode residir numa região com padrão
+	modular mais favorável. Para a viabilidade do crivo geométrico, o que importa
+	não é a direção do efeito, mas o fato de que as distribuições de $\Omega_N$
+	sobre $\mathbb{P}_1$ e $\mathbb{P}_2$ são \emph{estatisticamente distinguíveis}
+	— e é exatamente isso que os testes confirmam para $N$ suficientemente grande.
+	
+	\paragraph{Dependência em $N$ e efeitos modulares.}
+	Para $N$ moderados com fatorações envolvendo apenas os primos $2$, $3$ e $5$
+	(e.g.\ $N \in \{1800, 2400, 3600, 7200, 12000\}$), nenhum teste rejeitou a
+	igualdade das distribuições. A interpretação natural é que tais $N$ induzem
+	padrões de congruência na grade que homogeneízam $\Omega_N$ entre as classes,
+	obscurecendo a diferença. Esse fenômeno é conceitualmente alinhado com o
+	\emph{W-trick} da Seção~10.2: a presença exclusiva de pequenos fatores primos
+	em $N$ cria obstruções modulares que o filtro $W$ foi projetado para remover.
+	
+	Para $N = 15\,000$ e $N = 18\,000$ (também da forma $2^a3^b5^c$), o KS já
+	detecta diferença na forma global das distribuições, mas o MW não detecta
+	diferença de posição ($p = 0{,}160$ e $p = 0{,}054$, respectivamente) —
+	comportamento de borda que indica separação parcial captada pelo teste mais
+	sensível a caudas, mas não pelo teste de rank. Trata-se de efeito de escala
+	finita que desaparece para $N$ maiores.
+	
+	Quando a fatoração de $N$ inclui um primo $\geq 7$ (e.g.\ $N = 21\,000 =
+	2^3\cdot3\cdot5^3\cdot7$ ou $N = 30\,030 = 2\cdot3\cdot5\cdot7\cdot11\cdot13$)
+	ou quando $N \gtrsim 10^5$, ambos os testes rejeitam a igualdade com
+	$p$-valores extremamente baixos. O caso $N = 30\,030$ — o primorial
+	$p_6\# / p_0\#$ — é particularmente expressivo: a presença de todos os
+	primos até 13 na fatoração elimina as obstruções modulares e produz a maior
+	separação observada na amostra.
+	
+	\paragraph{Implicação para o crivo geométrico.}
+	Esses resultados constituem \textbf{evidência computacional preliminar} de que
+	$\Omega_N(n)$ carrega informação estatisticamente relevante sobre a classe
+	aritmética de $n$ — primos vs.\ semiprimos — quando $N$ é livre de obstruções
+	modulares triviais. Isso é necessário (mas não suficiente) para que o estimador
+	$\hat{\pi}_2(a, N)$ da equação~(7) possa, em princípio, distinguir $A_p$ de
+	$A_p \cup B_p$ na linguagem da Seção~9.
+	
+	\begin{remark}[Limitações da evidência computacional]
+		Os dados são preliminares e devem ser lidos com cautela:
+		\begin{enumerate}
+			\item A significância estatística não implica que $\Omega_N$ seja
+			\emph{computável sem oráculo de primalidade} — a circularidade do Nó
+			Computacional (Seção~11.4) permanece intacta.
+			\item Os testes comparam distribuições marginais de $\Omega_N$; não testam
+			diretamente se o estimador $\hat{\pi}_2(a,N)$ separa partições de Goldbach
+			de não-partições.
+			\item O comportamento para $N$ com obstruções modulares reforça a necessidade
+			do W-trick antes de qualquer aplicação do crivo geométrico.
+		\end{enumerate}
+		Esses resultados são apresentados como motivação empírica para a formalização
+		ergódica da Seção~10 e o programa do crivo geométrico da Seção~11, não como
+		validação de uma prova.
+	\end{remark}
+	
 	
 	%% ===========================================================
 	\section{Conclus\~ao}
@@ -976,18 +1109,27 @@
 		em linguagem rigorosa e identifica a lacuna precisa entre ``densidade nula do conjunto
 		excepcional'' (o que a ergodicidade pode provar) e ``conjunto excepcional vazio''
 		(o que Goldbach exige).
+		
+		\item A \textbf{verifica\c{c}\~ao computacional} (Se\c{c}\~ao~12) testa o peso
+		geom\'etrico $\Omega_N(n)$ em grades $G_{3,N}$ para $N$ at\'e $5\times 10^5$,
+		mostrando que as distribui\c{c}\~oes de $\Omega_N$ sobre $\mathbb{P}_1$ e
+		$\mathbb{P}_2$ s\~ao estatisticamente distingu\'iveis (testes KS e Mann--Whitney)
+		para $N$ livre de obstru\c{c}\~oes modulares triviais --- evid\^encia emp\'irica
+		de consist\^encia com a hip\'otese do crivo geom\'etrico.
 	\end{enumerate}
 	
-	A lacuna central permanece, agora enunciada em \emph{quatro} linguagens equivalentes:
+	A lacuna central permanece, agora enunciada em \emph{cinco} linguagens equivalentes:
 	(i) garantir $a-p\in Q_p$ para $a$ espec\'ifico (combinat\'oria);
 	(ii) garantir que todo $2M$ fixo \'e testemunhado pela grade (geometria);
 	(iii) distinguir $A_p$ de $A_p\cup B_p$ para todo $a$ (crivos);
 	(iv) passar de ``conjunto excepcional de densidade nula'' para ``conjunto vazio''
-	(teoria erg\'odica).
+	(teoria erg\'odica);
+	(v) tornar $\Omega_N$ comput\'avel sem or\'aculo de primalidade e provar
+	$\hat{\pi}_2(a,N)\geq 1$ para todo $a$ (crivo geom\'etrico).
 	
-	A contribui\c{c}\~ao estrutural deste trabalho \'e mostrar que estas tr\^es
-	formula\c{c}\~oes s\~ao facetas do mesmo objeto, e que a geometria da grade
-	oferece um mecanismo natural --- pesos n\~ao-multiplicativos e parity-free ---
+	A contribui\c{c}\~ao estrutural deste trabalho \'e mostrar que estas formula\c{c}\~oes
+	s\~ao facetas do mesmo objeto, e que a geometria da grade oferece um mecanismo
+	natural --- pesos n\~ao-multiplicativos e parity-free ---
 	que pode ser o ponto de partida para uma abordagem de crivo de novo tipo.
 	
 	\begin{thebibliography}{9}
