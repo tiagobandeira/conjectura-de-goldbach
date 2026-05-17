@@ -3,6 +3,76 @@
 Todas as mudanças significativas neste projeto são documentadas aqui.
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
+## [v2.3.0] — 2026-05-16
+
+### Paper 04 — Propriedade de Soma Constante (expansão maior)
+
+#### Adicionado
+- Artigo expandido de artigo curto para manuscrito completo de 9 seções e 13 páginas.
+- **Seção 4 — Corolário Âncora**: prova formal de $f(2,i+1)=S(i)/3$; definição do
+  complemento oracle-free $C(n,i)=S(i)-n$; prova de que $C(n,i)$ é sempre par —
+  condição necessária para aplicação da Série Singular de Hardy–Littlewood em [Paper 05].
+- **Seção 5 — Estrutura aritmética das configurações**: prova de que $D_1$, $D_2$ e
+  $C_v$ são progressões aritméticas com razões $2N+2$, $2N-2$ e $2N$; diferenças
+  entre linhas sempre iguais a $2N$; uniformidade modular $f(r,c)\equiv 2c-1\pmod{2N}$
+  com interpretação das obstruções modulares para $N$ altamente composto.
+- **Seção 6 — Por que $G_{3,N}$? O caso privilegiado entre as grades $G_{k,N}$**:
+  justificativa formal da escolha de $k=3$ via três condições necessárias simultâneas
+  (âncora inteira, complemento par, igualdade tripla $D_1=D_2=C_v$); análise dos
+  casos $k=2,3,4,5$ e $k$ geral; tabela resumo; observação conclusiva de que $k=3$
+  é o caso natural mínimo — responde explicitamente "por que estudar $G_{3,N}$ e não
+  $G_{k,N}$ para $k$ arbitrário?".
+- **Seção 7 — Conexão com Goldbach** (expansão): adicionada observação de que
+  $p_a+p_c=2\cdot f(2,i+1)$; formalização de $C(n,i)$ como fundamento oracle-free
+  de $\Omega^*_N$; observação de que cada $D_1$ primo povoa três instâncias distintas
+  de $\bigcup A_p$.
+- **Seção 8 — Exemplos numéricos** (expansão): quatro trios primos verificados
+  ($D_1$, $D_2$, $C_v$, e caso com obstrução modular $N=1800$) com representações
+  binárias e ternárias explícitas.
+- Introdução reescrita para explicitar o papel estrutural do artigo na série: fornece
+  a base algébrica que torna possível o estimador oracle-free de [Paper 05].
+
+### Paper 03 — Abordagem Unificada
+
+#### Adicionado
+- **Nota de revisão na Seção 11.4**: informa que o nó computacional identificado
+  foi resolvido em [Paper 05] via Invariante Âncora de [Paper 02]; aponta para
+  $\Omega^*_N$ e a verificação computacional correspondente.
+- Duas entradas adicionadas à bibliografia: `bandeira2026propriedade` (Paper 02
+  expandido) e `bandeira2026ancora` (Paper 05).
+
+### Paper 05 — Invariante Âncora (novo manuscrito)
+
+#### Adicionado
+- **"O Invariante Âncora da Grade $G_{3,N}$ e um Estimador Geométrico Oracle-Free
+  para a Conjectura de Goldbach"**: novo artigo que resolve o nó computacional
+  central do programa do crivo geométrico identificado em [Paper 03, Seção 11.4].
+- **Peso oracle-free $\Omega^*_N(n)$**: definido como média da Série Singular de
+  Hardy–Littlewood $\mathfrak{S}(C(n,i))$ sobre as janelas de $n$; computável
+  sem nenhum teste de primalidade sobre vizinhos.
+- **Complemento $C(n,i)=S(i)-n$**: exploração da consequência não desenvolvida
+  em [Paper 02] — o Invariante Âncora determina por posição o complemento
+  aritmético de qualquer elemento da janela.
+- **Verificação computacional** em $G_{3,N}$ para $N$ de $10^3$ a $10^5$:
+  $\Omega^*_N$ discrimina $P_1$ de $P_2$ em todos os $N$ testados via testes
+  Kolmogorov–Smirnov e Mann–Whitney — incluindo $N \in \{1800, 2400, 3600,
+  7200, 12000\}$ com fatoração restrita a $\{2,3,5\}$ onde $\Omega_N$ falha
+  completamente.
+- **Resultado central**: $\Omega^*_N$ não é aproximação de $\Omega_N$ — correlação
+  entre os dois pesos próxima de zero ($r\approx -0{,}06$ para $P_1$), confirmando
+  sinais aritmeticamente independentes.
+- **Conexão com o método do círculo**: fator $\mathfrak{S}(C)$ identificado como
+  núcleo da estimativa de Hardy–Littlewood, conectando o crivo geométrico
+  diretamente à heurística clássica sem passar pela estrutura multiplicativa do
+  crivo de Selberg.
+- **Extensões** a outros problemas clássicos: Legendre, primos gêmeos, Oppermann
+  e Brocard formulados como instâncias do mesmo mecanismo geométrico com
+  ancoragens distintas; Atlas de Ancoragens (Tabela 2).
+- **Direções futuras**: formalização ergódica de $\Omega^*_N$, refinamento via
+  funções $L$ de Dirichlet, extensão a grades $k\times N$, testes computacionais
+  prioritários (primorial $p_6\#$, estimador $\hat{\pi}_2(a,N)$ para pares específicos).
+- Código-fonte disponibilizado em repositório público (`crivo_geometrico_v2.py`).
+
 ## [v2.2.0] — 2026-05-16
 
 ### Paper 03 — Abordagem Unificada
