@@ -3,6 +3,74 @@
 Todas as mudanças significativas neste projeto são documentadas aqui.
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
+## [v2.4.1] — 2026-05-17
+
+### Paper 06 — Problema B: Desigualdade Estrutural (novo manuscrito)
+
+#### Adicionado
+- **"Problema B do Crivo Geométrico: Demonstração da Desigualdade Estrutural"**:
+  novo artigo que fornece o **fechamento analítico definitivo** das lacunas L1 e L2,
+  estabelecendo que a média de `Ω_N^*` sobre compostos é estritamente maior do que
+  sobre primos, sem qualquer teste de primalidade sobre vizinhos.
+- **Expansão de Dirichlet de `Ω_N^*(n)`** via a função multiplicativa `α(d) = ∏_{p|d} 1/(p−2)`;
+  prova de convergência absoluta da série `Σ α(d)/d → C_M ≈ 1,515` (Lema 2.2 e
+  Propriedade 2.3); fórmula de Perron registrada para uso posterior (Lema 2.4).
+- **Média global `µ_global(X) → C_M ≈ 1,515`** (Lema 3.1): expansão da soma total
+  por inversão de somatório, refinamento do erro a `O(X^{1/2+ε})` via Cauchy‑Schwarz
+  e somas de Gauss, alinhamento com a estabilização observada computacionalmente.
+- **Redução à função de von Mangoldt e decomposição de Vaughan** (Seção 4):
+  separação de `S(X)` em partes Tipo I (`a ≤ U = X^{1/2}`, soma longa em `b`) e
+  Tipo II (`a > U`, soma curta em `b`).
+- **Fechamento de L1 — Parte Tipo I** (Proposição 5.1):
+  - *Cancelamento do termo divergente*: a Parte 1 de `S_a` se anula por
+    ortogonalidade de Möbius em progressões aritméticas, extinguindo o termo
+    residual `X log X`.
+  - *Emergência da constante do crivo*: a Parte 2 sobrevive via a identidade
+    `Σ_{gcd(m,D)=1} µ(m) log m / m = −D/φ(D)` e a fatoração multiplicativa
+    `Σ_{g|N} µ(g)φ(g)/g = 1/N`, produzindo o fechamento exato
+    `Parte 2 = −d / (φ(d) · gcd(d,k))`.
+  - Estimativa consolidada via Bombieri‑Vinogradov:
+    `S_I(X) = X · C_I + o(X)`, com `C_I = ⅓ Σ_k Σ_d α(d) / (φ(d) · gcd(d,k))`.
+- **Fechamento de L2 — Parte Tipo II via Kloosterman‑Weil** (Lema 6.1):
+  expansão de Fourier da congruência `ab ≡ −k (mod d)`, redução a somas de
+  Kloosterman, aplicação das cotas de Weil (`|Σ e^{2πi(rx+sx̄)/d}| ≤ 2√d`),
+  resultado `S_{II}(X) = O(X^{3/4+ε}) = o(X)`.
+- **Constante do crivo `C_p ≈ 1,108`** (Lema 7.1): limite de convergência exato
+  de `µ_primo(X)`, identificado como `C_I` via fórmula de Abel; extensão de
+  Dirichlet sobre o totiente de Euler absolutamente convergente.
+- **Teorema principal — Desigualdade estrutural** (Teorema 7.2):
+  como `C_M > C_p`, a diferença `µ_global − µ_primo` é estritamente positiva
+  para `X` grande; por argumento de média ponderada,
+  `µ_comp(X) > µ_global(X) > µ_primo(X)`.
+- **Aplicações às Conjecturas de Goldbach e Legendre** (Seção 8):
+  formuladas como **Conjecturas de Trabalho 8.2–8.3**; lacuna remanescente
+  explicitada: passar da desigualdade de médias para cobertura pontual de todo
+  par `2M` exige argumento adicional identificado mas não provado.
+- **Seção 9 — Lacunas e hipóteses de trabalho remanescentes**:
+  lista sistemática dos pontos em aberto após o fechamento de L1 e L2,
+  incluindo extensão da verificação computacional além de `N = 10^5`.
+- Observação estrutural central: o problema da paridade — que bloqueia crivos
+  multiplicativos clássicos — é reformulado em termos aditivos via complemento
+  `C(n,i) = S(i) − n`, abrindo caminho ao método do círculo ou métodos ergódicos.
+
+### README
+
+#### Alterado
+- "cinco artigos complementares" → **"seis artigos complementares"**; perspectiva
+  analítica adicionada à lista de abordagens.
+- Diagrama da linha de Goldbach atualizado: Paper 06 inserido acima de Paper 05
+  como **estado atual**, com as constantes `C_M ≈ 1,515` e `C_p ≈ 1,108`.
+- Seção "Progresso recente" reescrita para Paper 06 (quatro etapas da prova).
+- Estrutura do repositório: pasta `06_problema_b/` adicionada.
+- Seção "Artigos": entrada completa do Paper 06 adicionada.
+- Tabela resumo: cinco novas linhas de resultados incondicionais (Lemas 3.1,
+  6.1, 7.1; Proposição 5.1; Teorema 7.2); Conjecturas 8.2–8.3 adicionadas à
+  tabela de lacunas abertas.
+- Citação BibTeX do Paper 06 adicionada (`bandeira2026problemab`).
+- Exemplo de compilação LaTeX atualizado para `06_problema_b/`.
+
+---
+
 ## [v2.3.0] — 2026-05-16
 
 ### Paper 04 — Propriedade de Soma Constante (expansão maior)
@@ -73,6 +141,8 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
   prioritários (primorial $p_6\#$, estimador $\hat{\pi}_2(a,N)$ para pares específicos).
 - Código-fonte disponibilizado em repositório público (`crivo_geometrico_v2.py`).
 
+---
+
 ## [v2.2.0] — 2026-05-16
 
 ### Paper 03 — Abordagem Unificada
@@ -107,12 +177,14 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
   binárias (52, 94, 136) e representação ternária (141) verificadas.
 - Nota sobre D₂ e Cᵥ: cada configuração gera três pares distintos dos de D₁.
 
-## [v2.1.0] – 2026-05-15
+---
+
+## [v2.1.0] — 2026-05-15
 
 ### Principais alterações
 
 - Inclusão de **Nota do Autor** em todos os três artigos, explicitando o escopo exploratório e a separação entre resultados rigorosos e hipóteses heurísticas.
-- Artigo geométrico: substituição de “suporte heurístico a Goldbach” por **“Comparação de restritividade”**, com a observação explícita de que a diferença de ordens de grandeza **não oferece evidência a favor ou contra** a conjectura.
+- Artigo geométrico: substituição de "suporte heurístico a Goldbach" por **"Comparação de restritividade"**, com a observação explícita de que a diferença de ordens de grandeza **não oferece evidência a favor ou contra** a conjectura.
 - Artigo unificado (Seção 11): adição de advertências qualificando o **Crivo Geométrico** como programa especulativo, não como resultado estabelecido.
 - Artigo combinatório: aprimoramento da comparação com Ellman, reforçando a distinção entre infinitude de primos e cobertura pontual.
 - Pequenas correções de redação e referências cruzadas.
