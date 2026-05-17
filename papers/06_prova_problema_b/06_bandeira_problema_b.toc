@@ -1,0 +1,30 @@
+\contentsline {section}{\numberline {1}Introdução}{3}{section.1}%
+\contentsline {paragraph}{Organização.}{3}{section*.2}%
+\contentsline {section}{\numberline {2}Definições e expansão de Dirichlet}{3}{section.2}%
+\contentsline {subsection}{\numberline {2.1}O peso oracle-free}{3}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Propriedades de convergência de $\alpha (d)$}{4}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Fórmula de Perron (para uso posterior)}{4}{subsection.2.3}%
+\contentsline {section}{\numberline {3}Comportamento assintótico da média global}{4}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Expansão da soma total}{5}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Refinamento do erro a $O(X^{1/2+\varepsilon })$}{5}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}A média global}{5}{subsection.3.3}%
+\contentsline {section}{\numberline {4}Redução à função de von Mangoldt e decomposição de Vaughan}{5}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Redução via von Mangoldt}{5}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Decomposição de Vaughan}{6}{subsection.4.2}%
+\contentsline {section}{\numberline {5}Estimativa da parte Tipo I e Fechamento de L1}{6}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Expansão de $\Omega ^*(ab)$ na parte Tipo I}{6}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}O Cancelamento do Termo Divergente (Parte 1)}{7}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}A Emergência da Constante do Crivo (Parte 2)}{7}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}Estimativa Consolidada da Soma Tipo I}{8}{subsection.5.4}%
+\contentsline {section}{\numberline {6}Estimativa da parte Tipo II (Kloosterman–Weil)}{8}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Expansão de Fourier da congruência}{8}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Somas de Kloosterman e cotas de Weil}{9}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Estimativa final de $\mathcal {S}_{\mathrm {II}}$}{9}{subsection.6.3}%
+\contentsline {section}{\numberline {7}Desigualdade estrutural – Problema B e Parametrização de L2}{9}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Comportamento de $\mu _{\mathrm {primo}}(X)$}{9}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Teorema principal}{10}{subsection.7.2}%
+\contentsline {section}{\numberline {8}Aplicações às Conjecturas de Goldbach e Legendre}{10}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Conjectura de Goldbach}{11}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}Conjectura de Legendre}{11}{subsection.8.2}%
+\contentsline {section}{\numberline {9}Lacunas e hipóteses de trabalho remanescentes}{11}{section.9}%
+\contentsline {section}{\numberline {10}Conclusão}{11}{section.10}%
