@@ -1,0 +1,24 @@
+\contentsline {section}{\numberline {1}Introdução}{2}{section.1}%
+\contentsline {section}{\numberline {2}Definição da grade $G_{3,N}$ e das janelas}{3}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Grade $G_{3,N}$}{3}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Janelas $3\times 3$}{3}{subsection.2.2}%
+\contentsline {section}{\numberline {3}Lema da soma constante}{4}{section.3}%
+\contentsline {section}{\numberline {4}Corolário âncora}{5}{section.4}%
+\contentsline {section}{\numberline {5}Estrutura aritmética das configurações}{5}{section.5}%
+\contentsline {subsection}{\numberline {5.1}As configurações são progressões aritméticas}{5}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Diferenças constantes entre linhas}{6}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Estrutura modular dos elementos}{6}{subsection.5.3}%
+\contentsline {section}{\numberline {6}Por que $G_{3,N}$? O caso privilegiado entre as grades $G_{k,N}$}{7}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Soma da coluna central}{8}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Tabela resumo}{9}{subsection.6.2}%
+\contentsline {section}{\numberline {7}Conexão com as conjecturas de Goldbach}{9}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Configurações totalmente primas e a Conjectura forte}{9}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Conjectura fraca (ternária)}{9}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}O complemento $C(n,i)$ como fundamento oracle-free}{10}{subsection.7.3}%
+\contentsline {section}{\numberline {8}Exemplos numéricos}{10}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Verificação básica: $N=5$, $i=2$}{10}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}Trio primo e representações de Goldbach: $N=20$, $i=3$}{11}{subsection.8.2}%
+\contentsline {subsection}{\numberline {8.3}Trio primo em $D_2$: $N=10$, $i=4$}{11}{subsection.8.3}%
+\contentsline {subsection}{\numberline {8.4}Exemplo com a coluna central $C_v$: $N=15$, $i=5$}{11}{subsection.8.4}%
+\contentsline {subsection}{\numberline {8.5}Obstrução modular e o papel de $C(n,i)$}{12}{subsection.8.5}%
+\contentsline {section}{\numberline {9}Conclusão}{12}{section.9}%

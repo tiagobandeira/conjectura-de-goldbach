@@ -3,43 +3,128 @@
 \usepackage[T1]{fontenc}
 \usepackage{amsmath, amssymb, amsthm}
 \usepackage{geometry}
+\usepackage{hyperref}
 \geometry{margin=2.5cm}
 
-\newtheorem{lema}{Lema}
-\newtheorem{proposicao}{Proposição}
-\newtheorem{observacao}{Observação}
+\newtheorem{lema}{Lema}[section]
+\newtheorem{corolario}[lema]{Corolário}
+\newtheorem{proposicao}[lema]{Proposição}
+\newtheorem{observacao}[lema]{Observação}
+\newtheorem{definicao}[lema]{Definição}
+\newtheorem{exemplo}[lema]{Exemplo}
 
-\title{Uma propriedade de soma constante na grade $3\times N$ e as conjecturas de Goldbach}
-\author{Tiago Bandeira}
-\date{Maio de 2026}
+\title{Uma propriedade de soma constante na grade $3\times N$:\\
+	Invariante Âncora, estrutura aritmética e conexões\\
+	com as conjecturas de Goldbach}
+\author{Tiago Bandeira\\
+	\small\texttt{tiagobandeira.goldbach2025@gmail.com}}
+\date{Maio de 2026\\[4pt]
+	\small Preprint — Paper 2 da série; complementa \cite{bandeira2026}}
 
 \begin{document}
 	
 	\maketitle
 	
 	\begin{abstract}
-		A grade $G_{3,N}$, formada pelos primeiros $3N$ números ímpares organizados em três linhas, possui uma propriedade aritmética notável: em cada janela $3\times 3$ as três configurações canônicas (diagonal principal, diagonal secundária e coluna central) têm a mesma soma $S = 3(2N+2i+1)$. Quando tais configurações são totalmente primas, os pares de elementos fornecem representações da Conjectura de Goldbach (forte) e a soma dos três elementos fornece uma representação da Conjectura de Goldbach fraca. Este artigo explora essa propriedade geométrico-aditiva de forma elementar e autocontida.
+		A grade $G_{3,N}$, formada pelos primeiros $3N$ números ímpares organizados em três
+		linhas, possui uma propriedade aritmética notável: em cada janela $3\times 3$ as três
+		configurações canônicas (diagonal principal $D_1$, diagonal secundária $D_2$ e coluna
+		central $C_v$) têm sempre a mesma soma $S(i)=3(2N+2i+1)$. Demonstramos esse
+		\textbf{Lema da Soma Constante} de forma rigorosa e derivamos, como consequência
+		imediata, o \textbf{Invariante Âncora}: o elemento central da linha mediana satisfaz
+		$f(2,i{+}1)=S(i)/3$, determinando por sua posição o \textit{complemento aritmético}
+		oracle-free $C(n,i)=S(i)-n$ de qualquer outro elemento da janela.
+		
+		Mostramos que cada configuração canônica é uma progressão aritmética com razão
+		determinada por $N$, e que as diferenças entre linhas são constantes — revelando a
+		estrutura modular uniforme dos elementos da grade. Generalizamos o resultado para
+		grades $k\times N$: a soma da coluna central é sempre $k$ vezes o elemento da linha
+		mediana quando $k$ é ímpar; para $k$ par não existe âncora inteira central, e para
+		$k=4$ o complemento $C$ é sempre par mas a âncora é racional.
+		
+		Finalmente, mostramos que quando uma configuração é totalmente prima ela produz
+		simultaneamente três representações da Conjectura de Goldbach binária (forte) e uma
+		da Conjectura de Goldbach ternária (fraca), e que o complemento $C(n,i)$ é sempre
+		par — fato que, explorado em \cite{bandeira2026c}, fundamenta o estimador
+		geométrico oracle-free $\Omega^*_N$.
 	\end{abstract}
 	
+	\tableofcontents
+	\bigskip
+	
+	%----------------------------------------------------------------------
 	\section{Introdução}
+	%----------------------------------------------------------------------
 	
-	A grade $G_{3,N}$ é construída organizando os números ímpares consecutivos em três linhas de $N$ colunas. Em trabalhos anteriores~\cite{bandeira2026}, essa grade foi usada para estudar a distribuição de primos em configurações rígidas. Durante essas investigações, observou-se uma identidade algébrica simples, porém surpreendente: em cada submatriz $3\times 3$ (denominada janela $W_i$), as três configurações que desempenham papel central – a diagonal principal, a diagonal secundária e a coluna central – possuem sempre a mesma soma.
+	A grade $G_{3,N}$ é construída organizando os primeiros $3N$ números ímpares
+	consecutivos em três linhas de $N$ colunas. Introduzida em~\cite{bandeira2026} para
+	estudar a distribuição de primos em configurações geométricas rígidas, ela revelou
+	propriedades aritméticas que não eram aparentes na reta numérica usual. Em particular,
+	durante a investigação do \textit{peso geométrico} $\Omega_N(n)$ — que mede a fração
+	de vizinhos primos de uma célula — observou-se uma identidade algébrica simples mas
+	central: em qualquer submatriz $3\times 3$ (denominada \textbf{janela} $W_i$), as três
+	configurações canônicas têm exatamente a mesma soma.
 	
-	Este artigo apresenta essa propriedade de forma independente, demonstra-a rigorosamente e mostra como ela fornece uma \textit{testemunha geométrica unificada} das duas conjecturas de Goldbach:
+	Este artigo apresenta essa propriedade de forma independente e autocontida, e
+	desenvolve todas as consequências que ela implica para a série de trabalhos sobre a
+	Conjectura de Goldbach.
+	
+	\medskip
+	
+	O papel deste artigo no contexto da série é estrutural: ele fornece a fundação
+	algébrica que torna possível o passo seguinte. O peso geométrico $\Omega_N(n)$
+	introduzido em~\cite{bandeira2026} depende de um \textit{oráculo de primalidade} —
+	é preciso saber quais vizinhos são primos para calculá-lo. Isso impede sua utilização
+	como crivo \textit{a priori}. O Invariante Âncora (Seção~\ref{sec:ancora}) resolve
+	esse obstáculo: como $f(2,i{+}1)=S(i)/3$ é determinado apenas pela posição na grade, o
+	complemento $C(n,i)=S(i)-n$ é computável sem qualquer teste de primalidade. Com ele,
+	o trabalho~\cite{bandeira2026c} constrói o estimador oracle-free $\Omega^*_N$, que
+	supera $\Omega_N$ em robustez computacional.
+	
+	\medskip
+	
+	As principais contribuições deste artigo são:
 	\begin{itemize}
-		\item a \textbf{conjectura forte} (binária): todo número par $>2$ é soma de dois primos;
-		\item a \textbf{conjectura fraca} (ternária): todo número ímpar $>5$ é soma de três primos.
+		\item O \textbf{Lema da Soma Constante} (Seção~\ref{sec:lema}): $D_1=D_2=C_v=S(i)$
+		para toda janela $W_i$.
+		\item O \textbf{Invariante Âncora} (Seção~\ref{sec:ancora}): $f(2,i{+}1)=S(i)/3$
+		e a paridade garantida do complemento $C(n,i)$.
+		\item A \textbf{estrutura aritmética das configurações} (Seção~\ref{sec:aritm}):
+		cada configuração canônica é uma progressão aritmética com razão que depende
+		de $N$; diferenças entre linhas são constantes; estrutura modular uniforme.
+		\item A \textbf{generalização para grades $k\times N$} (Seção~\ref{sec:general}):
+		análise da âncora para $k$ arbitrário, com distinção entre $k$ par e ímpar.
+		\item As \textbf{conexões com Goldbach} (Seção~\ref{sec:goldbach}): cada trio primo
+		produz três representações binárias e uma ternária; o complemento $C(n,i)$
+		como fundamento oracle-free.
 	\end{itemize}
-	Enquanto a conjectura fraca já foi demonstrada por Helfgott~\cite{helfgott2013}, a conexão estrutural aqui apresentada permanece interessante do ponto de vista didático e heurístico.
 	
+	\medskip
+	
+	Enquanto a Conjectura de Goldbach fraca (todo ímpar $>5$ é soma de três primos) foi
+	demonstrada por Helfgott~\cite{helfgott2013}, e o resultado de Vinogradov cobre os
+	inteiros suficientemente grandes, a conexão geométrica aqui apresentada tem valor
+	estrutural independente: ela exibe, no mesmo objeto algébrico, testemunhas das duas
+	formas da conjectura, e fornece o complemento $C$ como novo objeto de estudo cujas
+	propriedades aditivas são centrais ao programa do crivo geométrico.
+	
+	%----------------------------------------------------------------------
 	\section{Definição da grade $G_{3,N}$ e das janelas}
+	\label{sec:definicao}
+	%----------------------------------------------------------------------
 	
 	\subsection{Grade $G_{3,N}$}
-	Seja $N\ge 3$ um inteiro. A grade $G_{3,N}$ é uma matriz com $3$ linhas e $N$ colunas, cujas células recebem os números ímpares positivos em ordem linha a linha. A célula na linha $r\in\{1,2,3\}$ e coluna $c\in\{1,\dots,N\}$ é definida por
-	\[
-	f(r,c)=2\bigl[(r-1)N + c\bigr] - 1.
-	\]
-	Assim, as três linhas contêm respectivamente:
+	
+	\begin{definicao}
+		Seja $N\ge 3$ um inteiro. A \textbf{grade} $G_{3,N}$ é uma matriz com $3$ linhas e
+		$N$ colunas, cujas células recebem os números ímpares positivos em ordem linha a
+		linha. A célula na linha $r\in\{1,2,3\}$ e coluna $c\in\{1,\dots,N\}$ é:
+		\[
+		f(r,c) = 2\bigl[(r-1)N + c\bigr] - 1.
+		\]
+	\end{definicao}
+	
+	As três linhas contêm respectivamente:
 	\begin{align*}
 		\text{Linha 1:}&\quad 1,\;3,\;\dots,\;2N-1,\\
 		\text{Linha 2:}&\quad 2N+1,\;2N+3,\;\dots,\;4N-1,\\
@@ -47,7 +132,10 @@
 	\end{align*}
 	
 	\subsection{Janelas $3\times 3$}
-	Para $i=1,\dots,N-2$, a \textbf{janela} $W_i$ é a submatriz de $G_{3,N}$ formada pelas colunas $i$, $i+1$ e $i+2$. Dentro de $W_i$ destacamos três configurações canônicas (ver Figura~\ref{fig:janela}):
+	
+	Para $i=1,\dots,N-2$, a \textbf{janela} $W_i$ é a submatriz de $G_{3,N}$ formada
+	pelas colunas $i$, $i+1$ e $i+2$. Dentro de $W_i$ destacamos três
+	\textbf{configurações canônicas}:
 	\begin{itemize}
 		\item $\mathbf{D_1}$ (diagonal principal): células $(1,i)$, $(2,i+1)$, $(3,i+2)$;
 		\item $\mathbf{D_2}$ (diagonal secundária): células $(3,i)$, $(2,i+1)$, $(1,i+2)$;
@@ -56,148 +144,657 @@
 	
 	\begin{figure}[h]
 		\centering
-		\fbox{\begin{minipage}{0.5\textwidth}
+		\fbox{\begin{minipage}{0.55\textwidth}
 				\centering
 				\small
 				\begin{tabular}{ccc}
-					$f(1,i)$ & $f(1,i+1)$ & $f(1,i+2)$\\
-					$f(2,i)$ & $f(2,i+1)$ & $f(2,i+2)$\\
+					$f(1,i)$ & $f(1,i+1)$ & $f(1,i+2)$\\[2pt]
+					$f(2,i)$ & $f(2,i+1)$ & $f(2,i+2)$\\[2pt]
 					$f(3,i)$ & $f(3,i+1)$ & $f(3,i+2)$
 				\end{tabular}
-				\\[2mm]
-				\emph{Diagonal D$_1$: $(1,i),(2,i+1),(3,i+2)$;\quad D$_2$: $(3,i),(2,i+1),(1,i+2)$;\quad C$_v$: $(1,i+1),(2,i+1),(3,i+1)$.}
+				\\[3mm]
+				\emph{$D_1$: $(1,i),(2,i+1),(3,i+2)$;\quad
+					$D_2$: $(3,i),(2,i+1),(1,i+2)$;\quad
+					$C_v$: $(1,i+1),(2,i+1),(3,i+1)$.}
 		\end{minipage}}
-		\caption{Janela $W_i$ e as três configurações.}
+		\caption{Janela $W_i$ e as três configurações canônicas.}
 		\label{fig:janela}
 	\end{figure}
 	
-	\section{Lema da soma constante}
+	\begin{observacao}
+		O elemento $f(2,i+1)$ pertence simultaneamente a $D_1$, $D_2$ e $C_v$.
+		Ele é o \textit{elemento de interseção} das três configurações e,
+		como veremos, o pivô aritmético da janela.
+	\end{observacao}
 	
-	\begin{lema}
-		Para qualquer janela $W_i$ ($1\le i\le N-2$) da grade $G_{3,N}$, as três configurações $D_1$, $D_2$ e $C_v$ têm a mesma soma, dada por
+	%----------------------------------------------------------------------
+	\section{Lema da soma constante}
+	\label{sec:lema}
+	%----------------------------------------------------------------------
+	
+	\begin{lema}[Soma Constante]
+		\label{lema:soma}
+		Para qualquer janela $W_i$ ($1\le i\le N-2$) da grade $G_{3,N}$, as três
+		configurações $D_1$, $D_2$ e $C_v$ têm a mesma soma, dada por
 		\[
-		\boxed{\;D_1 = D_2 = C_v = 3(2N+2i+1)\; }.
+		\boxed{\;D_1 \;=\; D_2 \;=\; C_v \;=\; S(i) \;:=\; 3(2N+2i+1)\;}.
 		\]
 	\end{lema}
 	
 	\begin{proof}
-		Usando a definição de $f(r,c)$:
+		Usando a fórmula $f(r,c)=2[(r-1)N+c]-1$:
+		
+		\medskip\noindent\textbf{Diagonal $D_1$:}
 		\begin{align*}
-			f(1,i) &= 2i-1,\\
+			f(1,i)   &= 2i-1,\\
 			f(2,i+1) &= 2\bigl[N+(i+1)\bigr]-1 = 2N+2i+1,\\
 			f(3,i+2) &= 2\bigl[2N+(i+2)\bigr]-1 = 4N+2i+3.
 		\end{align*}
-		Somando os três elementos de $D_1$:
 		\[
-		D_1 = (2i-1)+(2N+2i+1)+(4N+2i+3)=6N+6i+3 = 3(2N+2i+1).
+		D_1 = (2i-1)+(2N+2i+1)+(4N+2i+3) = 6N+6i+3 = 3(2N+2i+1).
 		\]
 		
-		Para $D_2$:
+		\medskip\noindent\textbf{Diagonal $D_2$:}
 		\begin{align*}
-			f(3,i) &= 2[2N+i]-1 = 4N+2i-1,\\
+			f(3,i)   &= 2[2N+i]-1 = 4N+2i-1,\\
 			f(2,i+1) &= 2N+2i+1,\\
 			f(1,i+2) &= 2(i+2)-1 = 2i+3.
 		\end{align*}
-		Somando:
 		\[
-		D_2 = (4N+2i-1)+(2N+2i+1)+(2i+3)=6N+6i+3.
+		D_2 = (4N+2i-1)+(2N+2i+1)+(2i+3) = 6N+6i+3.
 		\]
 		
-		Para $C_v$:
+		\medskip\noindent\textbf{Coluna central $C_v$:}
 		\begin{align*}
 			f(1,i+1) &= 2(i+1)-1 = 2i+1,\\
 			f(2,i+1) &= 2N+2i+1,\\
 			f(3,i+1) &= 2[2N+(i+1)]-1 = 4N+2i+1.
 		\end{align*}
-		Somando:
 		\[
-		C_v = (2i+1)+(2N+2i+1)+(4N+2i+1)=6N+6i+3.
+		C_v = (2i+1)+(2N+2i+1)+(4N+2i+1) = 6N+6i+3.
 		\]
 		
-		Portanto, as três somas coincidem. 
+		Portanto $D_1=D_2=C_v=6N+6i+3=3(2N+2i+1)$.
 	\end{proof}
 	
-	\section{Conexão com as conjecturas de Goldbach}
-	
-	\subsection{Conjectura forte (binária)}
-	Se uma configuração (por exemplo $D_1$) for \textbf{totalmente prima} – ou seja, $f(1,i), f(2,i+1), f(3,i+2)$ são todos primos – então os três pares de elementos fornecem números pares:
-	\begin{align*}
-		p_1 &= f(1,i)+f(2,i+1) = 2(N+2i),\\
-		p_2 &= f(1,i)+f(3,i+2) = 2(2N+2i+1),\\
-		p_3 &= f(2,i+1)+f(3,i+2) = 2(3N+2i+2).
-	\end{align*}
-	Cada uma dessas somas é um número par maior que $2$ (para $N\ge 3$). Assim, um único trio primo na grade produz \textbf{três representações de Goldbach binárias} (três pares de primos que somam pares distintos). O mesmo raciocínio aplica-se a $D_2$ e $C_v$: cada configuração totalmente prima gera três representações binárias, mas com valores de pares diferentes, pois os elementos que compõem cada configuração são distintos entre si.
-	
-	\subsection{Conjectura fraca (ternária)}
-	O Lema da soma constante mostra que a soma dos três elementos da configuração é sempre $3(2N+2i+1)$. Se os três elementos forem primos, então
-	\[
-	\text{primo}_1 + \text{primo}_2 + \text{primo}_3 = 3(2N+2i+1),
-	\]
-	que é um número ímpar (pois $2N+2i+1 = 2(N+i)+1$ é ímpar, e o produto de $3$ por um número ímpar é ímpar) e maior que $5$ quando $N\ge 3$. Logo, cada trio primo na grade também fornece uma \textbf{representação da Goldbach ternária} para aquele ímpar.
-	
 	\begin{observacao}
-		Enquanto a Goldbach fraca já foi provada por Helfgott~\cite{helfgott2013}, a estrutura geométrica aqui apresentada tem valor didático e estrutural: ela exibe, no mesmo objeto, testemunhas das duas conjecturas. Além disso, o lema independe da primalidade – a igualdade das somas é um fato algébrico da grade.
+		A demonstração é puramente algébrica: a igualdade das somas é um fato sobre a
+		bijeção $f(r,c)$ e independe de qualquer propriedade de primalidade dos elementos.
 	\end{observacao}
 	
-	\section{Exemplo numérico}
+	%----------------------------------------------------------------------
+	\section{Corolário âncora}
+	\label{sec:ancora}
+	%----------------------------------------------------------------------
 	
-	Tomemos $N=5$ e $i=2$. A grade $G_{3,5}$ é
+	O Lema~\ref{lema:soma} tem uma consequência imediata que será central para o programa
+	do crivo geométrico.
+	
+	\begin{corolario}[Invariante Âncora]
+		\label{cor:ancora}
+		O elemento da linha mediana na coluna central de $W_i$ satisfaz:
+		\[
+		f(2,\,i+1) \;=\; \frac{S(i)}{3} \;=\; 2N+2i+1.
+		\]
+		Em particular, $f(2,i+1)$ divide $S(i)$ exatamente e é um \emph{invariante} da
+		janela $W_i$: é determinado apenas por $N$ e pela posição $i$, sem qualquer
+		informação de primalidade.
+	\end{corolario}
+	
+	\begin{proof}
+		Direto de $f(2,i+1)=2[(2-1)N+(i+1)]-1=2N+2i+1$ e $S(i)/3=2N+2i+1$.
+	\end{proof}
+	
+	O Corolário~\ref{cor:ancora} permite definir o \textbf{complemento aritmético} de
+	qualquer célula $n$ em relação à janela $W_i$ que a contém.
+	
+	\begin{definicao}[Complemento oracle-free]
+		\label{def:complemento}
+		Para $n=f(r,c)$ e janela $W_i$ contendo $n$, define-se:
+		\[
+		C(n,i) \;:=\; S(i) - n \;=\; 3(2N+2i+1) - n.
+		\]
+	\end{definicao}
+	
+	\begin{proposicao}[Paridade do complemento]
+		\label{prop:paridade}
+		Para todo elemento $n$ da grade $G_{3,N}$ e toda janela $W_i$ contendo $n$,
+		o complemento $C(n,i)$ é sempre par.
+	\end{proposicao}
+	
+	\begin{proof}
+		Todo elemento $f(r,c)=2[(r-1)N+c]-1$ é ímpar por construção. A soma
+		$S(i)=3(2N+2i+1)$ é o produto de $3$ por um número ímpar, logo ímpar.
+		Portanto $C(n,i)=S(i)-n=\text{ímpar}-\text{ímpar}$ é par.
+	\end{proof}
+	
+	\begin{observacao}
+		A paridade garantida de $C(n,i)$ é essencial para a aplicação em~\cite{bandeira2026c}:
+		a Série Singular de Hardy–Littlewood $\mathfrak{S}(C)=\prod_{p\mid C,\, p>2}
+		\frac{p-1}{p-2}$ é definida sobre inteiros pares, e a
+		Proposição~\ref{prop:paridade} garante que $C(n,i)$ satisfaz essa hipótese
+		para toda célula da grade, tornando $\mathfrak{S}(C(n,i))$ bem-definida sem
+		qualquer restrição adicional.
+	\end{observacao}
+	
+	\begin{observacao}
+		A denominação ``oracle-free'' refere-se ao fato de que $C(n,i)=3(2N+2i+1)-n$
+		depende apenas de $N$, da posição $i$ e do valor $n$ — nenhum dos quais requer
+		um teste de primalidade. Em contraste, o peso $\Omega_N(n)$ de~\cite{bandeira2026}
+		requer saber se cada vizinho de $n$ é primo. O complemento $C(n,i)$ é o objeto
+		que permite contornar essa dependência.
+	\end{observacao}
+	
+	%----------------------------------------------------------------------
+	\section{Estrutura aritmética das configurações}
+	\label{sec:aritm}
+	%----------------------------------------------------------------------
+	
+	A coincidência das três somas não é acidental: cada configuração canônica possui uma
+	estrutura aritmética interna precisa, que revelamos nesta seção.
+	
+	\subsection{As configurações são progressões aritméticas}
+	
+	\begin{proposicao}[Progressões aritméticas]
+		\label{prop:pa}
+		Cada uma das três configurações canônicas forma uma progressão aritmética:
+		\begin{align*}
+			D_1 &:\quad 2i-1,\quad 2N+2i+1,\quad 4N+2i+3
+			\quad(\text{razão }\ r_{D_1}=2N+2),\\
+			D_2 &:\quad 2i+3,\quad 2N+2i+1,\quad 4N+2i-1
+			\quad(\text{razão }\ r_{D_2}=2N-2),\\
+			C_v &:\quad 2i+1,\quad 2N+2i+1,\quad 4N+2i+1
+			\quad(\text{razão }\ r_{C_v}=2N).
+		\end{align*}
+	\end{proposicao}
+	
+	\begin{proof}
+		As expressões dos elementos foram calculadas na demonstração do Lema~\ref{lema:soma}.
+		As diferenças entre termos consecutivos são:
+		\begin{align*}
+			D_1:\quad & (2N+2i+1)-(2i-1) = 2N+2,\quad (4N+2i+3)-(2N+2i+1)=2N+2.\\
+			D_2:\quad & \text{Em ordem crescente: } f(1,i+2)< f(2,i+1)< f(3,i)\\
+			& (2N+2i+1)-(2i+3) = 2N-2,\quad (4N+2i-1)-(2N+2i+1)=2N-2.\\
+			C_v:\quad & (2N+2i+1)-(2i+1) = 2N,\quad (4N+2i+1)-(2N+2i+1)=2N.
+		\end{align*}
+		Em cada caso a diferença entre termos consecutivos é constante.
+	\end{proof}
+	
+	\begin{observacao}
+		As três razões $2N+2$, $2N-2$ e $2N$ são simétricas em torno de $2N$ e somam
+		$6N$. As razões dependem exclusivamente de $N$: janelas distintas (valores diferentes
+		de $i$) produzem progressões com as mesmas razões mas termos iniciais distintos.
+	\end{observacao}
+	
+	\subsection{Diferenças constantes entre linhas}
+	
+	\begin{proposicao}[Diferenças entre linhas]
+		\label{prop:dif}
+		Para qualquer coluna $c$, a diferença entre elementos de linhas consecutivas é
+		constante:
+		\[
+		f(r+1,c) - f(r,c) = 2N \quad \text{para todo } r\in\{1,2\},\ c\in\{1,\dots,N\}.
+		\]
+		Consequentemente, a grade $G_{3,N}$ é \emph{verticalmente uniforme}: cada coluna
+		é uma progressão aritmética de razão $2N$.
+	\end{proposicao}
+	
+	\begin{proof}
+		$f(r+1,c)-f(r,c)=2[(r)N+c]-1-\bigl(2[(r-1)N+c]-1\bigr)=2N$.
+	\end{proof}
+	
+	Em particular, dentro de qualquer janela $W_i$, as linhas 1, 2 e 3 na mesma coluna
+	$j\in\{i,i+1,i+2\}$ satisfazem $f(2,j)-f(1,j)=f(3,j)-f(2,j)=2N$, ou seja,
+	cada coluna da janela é também uma progressão aritmética de razão $2N$ — a mesma
+	razão de $C_v$.
+	
+	\subsection{Estrutura modular dos elementos}
+	
+	\begin{proposicao}[Uniformidade modular]
+		\label{prop:mod}
+		Para todo $r\in\{1,2,3\}$ e $c\in\{1,\dots,N\}$:
+		\[
+		f(r,c) \;\equiv\; 2c - 1 \pmod{2N}.
+		\]
+		Em particular, todos os elementos de uma mesma coluna têm o mesmo resíduo módulo
+		$2N$, independentemente da linha.
+	\end{proposicao}
+	
+	\begin{proof}
+		$f(r,c)=2(r-1)N+2c-1\equiv 2c-1\pmod{2N}$.
+	\end{proof}
+	
+	\begin{corolario}
+		Os elementos das três configurações canônicas têm os seguintes resíduos módulo $2N$:
+		\begin{align*}
+			D_1 &:\quad (2i-1),\;(2i+1),\;(2i+3)\pmod{2N},\\
+			D_2 &:\quad (2i-1),\;(2i+1),\;(2i+3)\pmod{2N},\\
+			C_v &:\quad (2i+1),\;(2i+1),\;(2i+1)\pmod{2N}.
+		\end{align*}
+		As diagonais $D_1$ e $D_2$ têm os mesmos três resíduos (em ordens diferentes), e
+		os três elementos de $C_v$ são congruentes entre si módulo $2N$.
+	\end{corolario}
+	
+	\begin{proof}
+		Aplica-se diretamente a Proposição~\ref{prop:mod} às colunas $i$, $i+1$, $i+2$.
+		Para $C_v$, os três elementos estão na mesma coluna $i+1$, logo todos têm
+		resíduo $2(i+1)-1=2i+1$.
+	\end{proof}
+	
+	\begin{observacao}
+		A uniformidade modular de $C_v$ implica que se $2N$ tem fatores primos pequenos
+		(i.e., $N$ é altamente composto), então todos os três elementos de $C_v$ ficam na
+		mesma classe de resíduo modulo esses fatores — criando obstruções à primalidade
+		simultânea. Esse fenômeno é a origem das ``obstruções modulares'' descritas
+		em~\cite{bandeira2026} para $N$ com fatoração em $\{2,3,5\}$, e é precisamente
+		o problema que $\Omega^*_N$ contorna ao trabalhar com o complemento $C(n,i)$ em
+		vez dos próprios elementos.
+	\end{observacao}
+	
+	%----------------------------------------------------------------------
+	\section{Por que $G_{3,N}$? O caso privilegiado entre as grades $G_{k,N}$}
+	\label{sec:general}
+	%----------------------------------------------------------------------
+	
+	A escolha de $G_{3,N}$ como objeto central desta série não é arbitrária nem
+	meramente convencional. Esta seção responde à pergunta natural: \emph{por que estudar $G_{3,N}$
+		e não $G_{k,N}$ para $k$ arbitrário?} A resposta é que $k=3$ é o único
+	valor que satisfaz simultaneamente três condições necessárias para o programa
+	do crivo geométrico — e essa coincidência é o que torna os resultados das
+	seções anteriores possíveis.
+	
+	As três condições são:
+	\begin{enumerate}
+		\item \textbf{Existência da âncora inteira.} Para que $S(i)/k$ seja um elemento
+		real da grade (e não apenas um valor racional), é preciso que $k$ seja
+		ímpar — caso contrário não há linha mediana inteira.
+		\item \textbf{Complemento $C(n,i)$ sempre par.} A Série Singular
+		$\mathfrak{S}(C)$ de Hardy–Littlewood requer que $C$ seja par;
+		isso ocorre quando $S_k(i)$ é ímpar, o que exige $k$ ímpar e o
+		elemento âncora ímpar — ambos garantidos para $k=3$.
+		\item \textbf{Igualdade tripla $D_1=D_2=C_v=S(i)$.} Essa propriedade é
+		específica da geometria de janelas $3\times 3$: com $k=3$ linhas e
+		$3$ colunas, as duas diagonais e a coluna central são os únicos
+		percursos que cobrem uma célula por linha e passam pelo pivô
+		$f(2,i+1)$. Para $k>3$, janelas mais altas admitem percursos
+		diagonais adicionais que \emph{não} têm a mesma soma, destruindo
+		a unicidade do Lema~\ref{lema:soma}.
+	\end{enumerate}
+	
+	O caso $k=3$ é o \emph{menor} valor ímpar para o qual as três condições
+	coexistem de forma não-trivial. Para $k=1$ a grade degenera numa linha e
+	não há configurações diagonais. Para $k=3$, as condições se alinham
+	precisamente — e é isso que faz de $S(i)=3(2N+2i+1)$, do Invariante
+	Âncora $f(2,i+1)=S(i)/3$ e do complemento $C(n,i)=S(i)-n$ (sempre par)
+	objetos bem definidos e aritmeticamente úteis.
+	
+	A análise a seguir torna esse argumento preciso, mostrando o que se perde
+	para cada $k\ne 3$.
+	
+	\begin{definicao}[Grade $G_{k,N}$]
+		Para $k,N\ge 2$ inteiros, a grade $G_{k,N}$ é a matriz $k\times N$ cujas células
+		recebem os primeiros $kN$ números ímpares linha a linha:
+		\[
+		f_k(r,c) = 2\bigl[(r-1)N+c\bigr]-1,\quad r\in\{1,\dots,k\},\;c\in\{1,\dots,N\}.
+		\]
+	\end{definicao}
+	
+	\subsection{Soma da coluna central}
+	
+	Para qualquer coluna $j\in\{1,\dots,N\}$, a soma dos $k$ elementos da coluna é:
+	\begin{align*}
+		\Sigma_k(j) &:= \sum_{r=1}^{k} f_k(r,j)
+		= \sum_{r=1}^{k} \bigl[2(r-1)N + 2j -1\bigr]\\
+		&= k(2j-1) + 2N\sum_{r=1}^{k}(r-1)
+		= k(2j-1) + 2N\cdot\frac{k(k-1)}{2}\\
+		&= k\bigl[(k-1)N + 2j - 1\bigr].
+	\end{align*}
+	
+	\begin{proposicao}[$k$ ímpar: existência da âncora]
+		\label{prop:kpar}
+		Quando $k$ é ímpar, existe uma linha mediana $r^*=\frac{k+1}{2}$ (inteira), e
+		\[
+		\Sigma_k(j) = k\cdot f_k(r^*,j).
+		\]
+		O elemento $f_k(r^*,j)$ é o \textbf{invariante âncora} da coluna $j$ em
+		$G_{k,N}$.
+	\end{proposicao}
+	
+	\begin{proof}
+		$f_k(r^*,j)=2\bigl[(r^*-1)N+j\bigr]-1=2\bigl[\frac{k-1}{2}N+j\bigr]-1=(k-1)N+2j-1$.
+		Portanto $k\cdot f_k(r^*,j)=k[(k-1)N+2j-1]=\Sigma_k(j)$.
+	\end{proof}
+	
+	\begin{observacao}[$k=3$]
+		Para $k=3$, $r^*=2$ e $\Sigma_3(j)=3(2N+2j-1)=3f_3(2,j)=S(j-1)$ (com $j=i+1$),
+		recuperando o Corolário~\ref{cor:ancora}.
+	\end{observacao}
+	
+	\begin{proposicao}[$k=2$: ausência de âncora]
+		\label{prop:k2}
+		Para $k=2$, a soma da coluna é
+		\[
+		\Sigma_2(j) = 2(N+2j-1),
+		\]
+		que é sempre par. Não existe linha mediana inteira, logo não há âncora no sentido
+		do Corolário~\ref{cor:ancora}. O complemento $C_2(n,j):=\Sigma_2(j)-n$ é ímpar
+		(par menos ímpar), de modo que a Série Singular de Hardy–Littlewood não se aplica
+		diretamente.
+	\end{proposicao}
+	
+	\begin{proof}
+		$\Sigma_2(j)=2[(2j-1)+N]= 2(N+2j-1)$. Para $n=f_2(r,j)$ ímpar,
+		$C_2(n,j)=2(N+2j-1)-n$ é par menos ímpar, portanto ímpar.
+	\end{proof}
+	
+	\begin{proposicao}[$k=4$: âncora racional e complemento par]
+		\label{prop:k4}
+		Para $k=4$, a soma da coluna é
+		\[
+		\Sigma_4(j) = 4(3N+2j-1),
+		\]
+		sempre divisível por $4$. Não há linha mediana inteira (a ``âncora'' seria
+		$3N+2j-1$, que não corresponde a $f_4(r,j)$ para nenhum $r$ inteiro em geral).
+		Entretanto, o complemento $C_4(n,j):=\Sigma_4(j)-n$ é \emph{sempre par}
+		(par menos ímpar é ímpar; mas $\Sigma_4(j)=4(\cdots)$ é par, logo $C_4=\text{par}-\text{ímpar}=\text{ímpar}$).
+	\end{proposicao}
+	
+	\begin{proof}
+		$\Sigma_4(j)=4[(4-1)N+2j-1]=4(3N+2j-1)$. Este é divisível por $4$, logo par.
+		Para $n$ ímpar, $C_4=4(3N+2j-1)-n=\text{par}-\text{ímpar}=\text{ímpar}$.
+	\end{proof}
+	
+	\begin{observacao}
+		O caso $k=4$ difere do caso $k=3$ em dois aspectos: (i) não há âncora inteira
+		(a linha mediana cairia entre as linhas 2 e 3); (ii) o complemento $C_4$ é ímpar,
+		não par, de modo que $\mathfrak{S}(C_4)$ não é diretamente aplicável. Uma variante
+		da Série Singular para inteiros ímpares pode ser definida, mas requer adaptações.
+		Para $k=5$, a âncora existe ($r^*=3$) e o complemento é par, recuperando as
+		propriedades favoráveis de $k=3$.
+	\end{observacao}
+	
+	\subsection{Tabela resumo}
+	
+	\begin{center}
+		\begin{tabular}{ccccl}
+			\hline
+			$k$ & $\Sigma_k(j)$ & Âncora inteira? & $C_k(n,j)$ par? & Observação\\
+			\hline
+			$2$ & $2(N+2j-1)$ & Não & Não (ímpar) & Sem âncora nem $\mathfrak{S}$\\
+			$3$ & $3(2N+2j-1)$ & Sim ($r^*=2$) & Sim & Caso principal\\
+			$4$ & $4(3N+2j-1)$ & Não & Não (ímpar) & $\mathfrak{S}$ não se aplica\\
+			$5$ & $5(4N+2j-1)$ & Sim ($r^*=3$) & Sim & Análogo a $k=3$\\
+			$k$ ímpar & $k[(k-1)N+2j-1]$ & Sim ($r^*=\frac{k+1}{2}$) & Sim & Caso geral favorável\\
+			$k$ par & $k[\frac{(k-1)}{1}N+\cdots]$ & Não & Não & Requer tratamento distinto\\
+			\hline
+		\end{tabular}
+	\end{center}
+	
+	\begin{observacao}[Unicidade de $k=3$ para o programa do crivo geométrico]
+		A tabela mostra que $k=3$ e $k=5$ são os primeiros casos com âncora inteira
+		e complemento par. Entretanto, $k=5$ falha na condição~3: janelas $5\times 3$
+		admitem dez percursos diagonais distintos entre linhas 1 e 5, e apenas dois
+		deles (as diagonais extremas) passam pelo elemento central; a coluna central
+		tem cinco elementos. A igualdade tripla $D_1=D_2=C_v$ --- que é o
+		Lema~\ref{lema:soma} e o fundamento de tudo que se segue --- não tem análogo
+		direto para $k=5$.
+		
+		Portanto, \textbf{$G_{3,N}$ é o caso natural mínimo} onde as três condições
+		coexistem: âncora inteira ($r^*=2$), complemento par (logo $\mathfrak{S}(C)$
+		bem-definida), e igualdade das três configurações canônicas (logo $S(i)$ único
+		e bem-definido). É por isso que toda a série --- o peso $\Omega_N$
+		de~\cite{bandeira2026}, o Invariante Âncora desta seção e o estimador
+		$\Omega^*_N$ de~\cite{bandeira2026c} --- é desenvolvida exclusivamente em
+		$G_{3,N}$.
+	\end{observacao}
+	
+	%----------------------------------------------------------------------
+	\section{Conexão com as conjecturas de Goldbach}
+	\label{sec:goldbach}
+	%----------------------------------------------------------------------
+	
+	\subsection{Configurações totalmente primas e a Conjectura forte}
+	
+	Dizemos que uma configuração canônica é \textbf{totalmente prima} quando todos os
+	seus três elementos são primos.
+	
+	Se a configuração $D_1$ é totalmente prima, com
+	$f(1,i)=p_a$, $f(2,i+1)=p_b$, $f(3,i+2)=p_c$ primos, então os três pares produzem
+	números pares:
+	\begin{align*}
+		p_a + p_b &= (2i-1)+(2N+2i+1) = 2(N+2i),\\
+		p_a + p_c &= (2i-1)+(4N+2i+3) = 2(2N+2i+1),\\
+		p_b + p_c &= (2N+2i+1)+(4N+2i+3) = 2(3N+2i+2).
+	\end{align*}
+	Cada uma é um número par $>2$ que é soma de dois primos: três instâncias da
+	Conjectura de Goldbach forte. O mesmo raciocínio aplica-se a $D_2$ e $C_v$,
+	cada uma gerando três representações com pares distintos.
+	
+	\begin{observacao}
+		Em particular, o par $p_a+p_c=2(2N+2i+1)=2S(i)/3$ é sempre o dobro da âncora
+		$f(2,i+1)$. Assim, o elemento central da janela não é apenas um invariante da soma:
+		ele é o semi-valor de um dos pares de Goldbach testemunhados pela configuração.
+	\end{observacao}
+	
+	\subsection{Conjectura fraca (ternária)}
+	
+	Pelo Lema~\ref{lema:soma}, se $D_1$ é totalmente prima:
+	\[
+	p_a + p_b + p_c = S(i) = 3(2N+2i+1),
+	\]
+	que é um ímpar $>5$ para $N\ge 3$. Logo, cada trio primo na grade fornece uma
+	\textbf{representação da Conjectura de Goldbach ternária} para o ímpar $S(i)$.
+	
+	\begin{observacao}
+		Embora a Conjectura fraca seja um teorema~\cite{helfgott2013}, a estrutura
+		geométrica aqui apresentada exibe uma família explícita de representações ternárias
+		parametrizada por $N$ e $i$, com a propriedade de que cada trio primo também
+		testemunha três representações binárias. Isso unifica as duas formas da conjectura
+		num único objeto geométrico.
+	\end{observacao}
+	
+	\subsection{O complemento $C(n,i)$ como fundamento oracle-free}
+	
+	A Definição~\ref{def:complemento} e a Proposição~\ref{prop:paridade} fornecem o
+	elemento central para o programa do crivo geométrico. Dado um par $a=2M$ que se
+	deseja representar como soma de dois primos, e dado um primo $p<a/2$ que pertence
+	a $G_{3,N}$ como célula $n=p$ na janela $W_i$, o complemento
+	\[
+	C(p,i) = S(i) - p
+	\]
+	é um número par determinístico, computável a partir de $N$, $i$ e $p$, sem
+	nenhum oráculo de primalidade. Se $C(p,i)$ for primo, então $p+C(p,i)=S(i)$
+	é uma representação ternária; mas mais relevante para Goldbach binária, a
+	estrutura aditiva de $C(p,i)$ — medida pela Série Singular $\mathfrak{S}(C(p,i))$
+	— estima quão ``Goldbach-favorável'' é o ambiente aritmético de $p$ em $W_i$.
+	
+	Em~\cite{bandeira2026c}, esse princípio é formalizado no estimador
+	\[
+	\Omega^*_N(n) := \frac{1}{|W(n)|}\sum_{i\in W(n)} \mathfrak{S}\bigl(C(n,i)\bigr),
+	\]
+	onde $W(n)$ é o conjunto de janelas contendo $n$ e
+	$\mathfrak{S}(C)=\prod_{p\mid C,\,p>2}\frac{p-1}{p-2}$.
+	A verificação computacional em~\cite{bandeira2026c} mostra que $\Omega^*_N$
+	discrimina primos de semiprimos em todo $N$ testado, incluindo os $N$ com obstruções
+	modulares onde $\Omega_N$ falha.
+	
+	\begin{observacao}[Cada $D_1$ primo é uma célula de $\bigcup A_p$]
+		Denotando por $A_p$ o conjunto dos pares $(p,q)$ com $p+q=2M$ e $p,q$ primos,
+		cada configuração totalmente prima $D_1=(p_a,p_b,p_c)$ contribui com três elementos
+		$\{(p_a,p_b),(p_a,p_c),(p_b,p_c)\}$ para $\bigcup_{2M} A_{2M}$.
+		O Lema~\ref{lema:soma} garante que os três pares somam valores \emph{distintos}
+		($2(N+2i)$, $2(2N+2i+1)$, $2(3N+2i+2)$), de modo que uma única configuração prima
+		povoa três instâncias distintas de $A_p$.
+	\end{observacao}
+	
+	%----------------------------------------------------------------------
+	\section{Exemplos numéricos}
+	\label{sec:exemplos}
+	%----------------------------------------------------------------------
+	
+	\subsection{Verificação básica: $N=5$, $i=2$}
+	
+	A grade $G_{3,5}$ é:
 	\[
 	\begin{pmatrix}
-		1 & 3 & 5 & 7 & 9\\
+		1  &  3 &  5 &  7 &  9\\
 		11 & 13 & 15 & 17 & 19\\
 		21 & 23 & 25 & 27 & 29
 	\end{pmatrix}.
 	\]
-	A janela $W_2$ (colunas 2,3,4) é
+	A janela $W_2$ (colunas 2, 3, 4) é:
 	\[
 	\begin{pmatrix}
-		3 & 5 & 7\\
+		3  &  5 &  7\\
 		13 & 15 & 17\\
 		23 & 25 & 27
 	\end{pmatrix}.
 	\]
-	Calculamos as três configurações:
-	\begin{align*}
-		D_1 &= 3+15+27 = 45,\\
-		D_2 &= 23+15+7 = 45,\\
-		C_v &= 5+15+25 = 45.
-	\end{align*}
-	De fato, $3(2N+2i+1)=3(10+4+1)=45$. Nenhuma delas é totalmente prima (15 e 25 não são primos), mas a identidade permanece.
+	Configurações: $D_1=3+15+27=45$, $D_2=23+15+7=45$, $C_v=5+15+25=45$.
+	De fato, $S(2)=3(10+4+1)=45$. A âncora é $f(2,3)=15=45/3$. Nenhuma
+	configuração é totalmente prima (15 e 25 não são primos), mas a identidade algébrica
+	permanece. O complemento de $n=3$ na janela $W_2$: $C(3,2)=45-3=42$ (par).
 	
-	Para um exemplo efetivo com primos, tome $N=20$ e $i=3$. Os elementos da diagonal $D_1$ são:
+	\subsection{Trio primo e representações de Goldbach: $N=20$, $i=3$}
+	
 	\begin{align*}
-		f(1,3) &= 2\cdot 3 - 1 = 5,\\
-		f(2,4) &= 2[20+4]-1 = 47,\\
-		f(3,5) &= 2[40+5]-1 = 89.
+		f(1,3)   &= 2\cdot 3 - 1 = 5,\\
+		f(2,4)   &= 2[20+4]-1 = 47,\\
+		f(3,5)   &= 2[40+5]-1 = 89.
 	\end{align*}
-	Os três são primos, e a soma constante vale
-	\[
-	D_1 = 5 + 47 + 89 = 141 = 3(2\cdot 20 + 2\cdot 3 + 1) = 3\cdot 47.\;\checkmark
-	\]
-	\textbf{Representações binárias (Goldbach forte):}
+	Os três são primos. Âncora: $f(2,4)=47=S(3)/3=141/3$. Verificação:
+	$D_1=5+47+89=141=3\cdot 47$.\checkmark
+	
+	\medskip\noindent\textbf{Representações binárias (Goldbach forte):}
 	\[
 	52 = 5+47,\qquad 94 = 5+89,\qquad 136 = 47+89.
 	\]
 	\textbf{Representação ternária (Goldbach fraca):}
 	\[
-	141 = 5 + 47 + 89,\quad \text{com } 141 \text{ ímpar} > 5.\;\checkmark
+	141 = 5+47+89,\quad 141\text{ ímpar}>5.\;\checkmark
 	\]
-	Um único trio primo na grade testemunha simultaneamente três instâncias da conjectura forte e uma da conjectura fraca.
 	
+	Complementos oracle-free de cada elemento em $W_3$:
+	$C(5,3)=141-5=136$ (par), $C(47,3)=94$ (par), $C(89,3)=52$ (par).
+	
+	\subsection{Trio primo em $D_2$: $N=10$, $i=4$}
+	
+	\begin{align*}
+		f(3,4)   &= 2[20+4]-1 = 47,\\
+		f(2,5)   &= 2[10+5]-1 = 29,\\
+		f(1,6)   &= 2\cdot 6 - 1 = 11.
+	\end{align*}
+	Todos primos. $S(4)=3(20+8+1)=87$. Âncora: $f(2,5)=29=87/3$.\checkmark
+	
+	Representações binárias:
+	\[
+	76=47+29,\qquad 58=47+11,\qquad 40=29+11.
+	\]
+	Representação ternária: $87=47+29+11$.\checkmark
+	
+	\subsection{Exemplo com a coluna central $C_v$: $N=15$, $i=5$}
+	
+	\begin{align*}
+		f(1,6) &= 11,\quad f(2,6)=2[15+6]-1=41,\quad f(3,6)=2[30+6]-1=71.
+	\end{align*}
+	Todos primos. $S(5)=3(30+10+1)=123$. Âncora: $41=123/3$.\checkmark
+	
+	$C_v=11+41+71=123$. Representações binárias: $52=11+41$, $82=11+71$,
+	$112=41+71$. Representação ternária: $123=11+41+71$.\checkmark
+	
+	\subsection{Obstrução modular e o papel de $C(n,i)$}
+	
+	Para $N=1800=2^3\cdot 3^2\cdot 5^2$, a grade tem fortes restrições modulares:
+	cada coluna $c$ tem $f(r,c)\equiv 2c-1\pmod{2N}$, e como $2N=3600$ é divisível
+	por $2$, $3$, $4$, $5$, $6$, $9$, $10$, $12$, $15$, $16$, $18$, $20$, $24$, $25$,
+	$36$, $\dots$, muitos resíduos ficam obstruídos para primalidade simultânea.
+	Isso faz $\Omega_N$ perder poder discriminatório (ver~\cite{bandeira2026c},
+	Tabela~1, $N=1800$: $p$-valor KS $=0{,}118$, não significativo).
+	
+	Entretanto, $C(n,i)=S(i)-n$ tem fatoração determinada pela \emph{posição} de $n$,
+	não pelas obstruções modulares de $N$. Para $N=1800$, o estimador $\Omega^*_N$
+	obtém $p$-valor KS $=3{,}15\times 10^{-47}$, discriminando primos de semiprimos
+	com altíssima significância estatística — confirmando que o complemento $C$ captura
+	um sinal aritmético independente das obstruções.
+	
+	%----------------------------------------------------------------------
 	\section{Conclusão}
+	\label{sec:conclusao}
+	%----------------------------------------------------------------------
 	
-	Apresentamos uma propriedade aritmética elementar da grade $3\times N$: a diagonal principal, a diagonal secundária e a coluna central de qualquer janela $3\times 3$ têm a mesma soma $3(2N+2i+1)$. Essa igualdade transforma cada trio de primos posicionado em uma dessas configurações em uma testemunha simultânea das conjecturas de Goldbach forte (através dos pares) e fraca (através da soma tripla). A observação é independente de modelos probabilísticos e constitui um belo exemplo de como uma construção geométrica simples pode unificar dois problemas clássicos da teoria dos números.
+	Apresentamos uma propriedade aritmética elementar da grade $3\times N$ — a
+	igualdade das somas das configurações canônicas $D_1$, $D_2$ e $C_v$ em toda
+	janela $W_i$ — e desenvolvemos suas consequências em quatro direções.
+	
+	\medskip
+	
+	A primeira é o \textbf{Invariante Âncora}: $f(2,i+1)=S(i)/3$ é um elemento
+	determinístico da grade que particiona $S(i)$ em terços, e cujo conhecimento
+	basta para calcular o complemento $C(n,i)=S(i)-n$ de qualquer célula sem oráculo
+	de primalidade. Essa é a pedra angular do trabalho~\cite{bandeira2026c}, onde
+	$C(n,i)$ fundamenta o estimador $\Omega^*_N$ que resolve o obstáculo computacional
+	central do programa do crivo geométrico.
+	
+	\medskip
+	
+	A segunda é a \textbf{estrutura aritmética interna}: cada configuração canônica é
+	uma progressão aritmética com razão que depende linearmente de $N$ ($2N+2$ para
+	$D_1$, $2N-2$ para $D_2$, $2N$ para $C_v$), e todos os elementos de uma mesma
+	coluna são congruentes módulo $2N$. Essa uniformidade modular explica as obstruções
+	que enfraquecem $\Omega_N$ para $N$ altamente composto, e mostra por que o
+	complemento $C$ escapa dessas obstruções.
+	
+	\medskip
+	
+	A terceira é a \textbf{generalização para $k\times N$}: para $k$ ímpar existe sempre
+	uma linha mediana inteira $r^*=(k+1)/2$ que é âncora da janela, e o complemento
+	$C_k$ é sempre par — propriedades que tornam $\mathfrak{S}(C_k)$ bem-definida.
+	Para $k$ par não há âncora inteira e o complemento é ímpar, o que exige adaptações.
+	
+	\medskip
+	
+	A quarta é a \textbf{conexão com Goldbach}: cada trio primo na grade produz
+	simultaneamente três representações binárias (com pares distintos) e uma
+	representação ternária (para o ímpar $S(i)$). Assim, a identidade algébrica do
+	Lema~\ref{lema:soma} transforma cada trio primo em testemunha múltipla de ambas
+	as formas da conjectura.
+	
+	\medskip
+	
+	Os três artigos da série formam um framework coerente: \cite{bandeira2026}
+	introduz $G_{3,N}$, o peso $\Omega_N$ e o argumento probabilístico
+	de Borel–Cantelli; o presente artigo fornece a base algébrica — a soma constante,
+	a âncora e o complemento $C$; e \cite{bandeira2026c} usa essa base para construir
+	$\Omega^*_N$ e estabelecer a discriminação oracle-free entre primos e semiprimos.
 	
 	\begin{thebibliography}{9}
 		\bibitem{bandeira2026}
-		T. Bandeira, ``Uma Abordagem Unificada para a Conjectura de Goldbach: Estrutura Combinatória, Saturação Geométrica e o Elo entre Trios e Pares Primos'', preprint, 2026.
+		T. Bandeira,
+		``Uma Abordagem Unificada para a Conjectura de Goldbach: Estrutura Combinatória,
+		Saturação Geométrica e o Elo entre Trios e Pares Primos'',
+		Preprint, maio de 2026.
 		
-		\bibitem{bandeira2026b}
-		T. Bandeira, ``Saturação Geométrica e Inevitabilidade Estrutural: Uma Abordagem de Malhas $3\times N$ para a Conjectura de Goldbach'', preprint, 2026.
+		\bibitem{bandeira2026c}
+		T. Bandeira,
+		``O Invariante Âncora da Grade $G_{3,N}$ e um Estimador Geométrico Oracle-Free
+		para a Conjectura de Goldbach'',
+		Preprint, maio de 2026.
 		
 		\bibitem{helfgott2013}
-		H. A. Helfgott, ``Major arcs for Goldbach's theorem'', arXiv:1305.2897, 2013.
+		H. A. Helfgott,
+		``Major arcs for Goldbach's theorem'',
+		\textit{arXiv}:1305.2897, 2013.
+		
+		\bibitem{hardylittlewood1923}
+		G. H. Hardy e J. E. Littlewood,
+		``Some problems of `Partitio Numerorum'; III: On the expression of a number
+		as a sum of primes'',
+		\textit{Acta Mathematica}, vol.~44, pp.~1--70, 1923.
+		
+		\bibitem{selberg1947}
+		A. Selberg,
+		``On an elementary method in the theory of primes'',
+		\textit{Norske Vid. Selsk. Forh.} (Trondheim), vol.~19, no.~18, pp.~64--67, 1947.
 	\end{thebibliography}
 	
 \end{document}
