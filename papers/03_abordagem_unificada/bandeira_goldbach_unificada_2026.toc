@@ -26,11 +26,11 @@
 \contentsline {subsection}{\numberline {11.2}Definição do Peso Geométrico $\Omega _N(n)$}{16}{subsection.11.2}%
 \contentsline {subsection}{\numberline {11.3}O Estimador Geométrico para Goldbach}{16}{subsection.11.3}%
 \contentsline {subsection}{\numberline {11.4}O Nó Computacional e Caminhos de Resolução}{17}{subsection.11.4}%
-\contentsline {section}{\numberline {12}Verificação Computacional do Peso Geométrico $\Omega _N(n)$}{17}{section.12}%
+\contentsline {section}{\numberline {12}Verificação Computacional do Peso Geométrico $\Omega _N(n)$}{18}{section.12}%
 \contentsline {subsection}{\numberline {12.1}Metodologia}{18}{subsection.12.1}%
 \contentsline {subsection}{\numberline {12.2}Resultados}{18}{subsection.12.2}%
 \contentsline {subsection}{\numberline {12.3}Interpretação}{18}{subsection.12.3}%
 \contentsline {paragraph}{Direção do efeito.}{18}{section*.4}%
 \contentsline {paragraph}{Dependência em $N$ e efeitos modulares.}{19}{section*.5}%
 \contentsline {paragraph}{Implicação para o crivo geométrico.}{19}{section*.6}%
-\contentsline {section}{\numberline {13}Conclus\~ao}{19}{section.13}%
+\contentsline {section}{\numberline {13}Conclus\~ao}{20}{section.13}%
