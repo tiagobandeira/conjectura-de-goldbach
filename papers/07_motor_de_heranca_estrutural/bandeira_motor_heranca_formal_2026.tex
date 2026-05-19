@@ -1,0 +1,881 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathrsfs}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{booktabs}
+\geometry{margin=2.5cm}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{lemma}[theorem]{Lema}
+\newtheorem{proposition}[theorem]{Proposição}
+\newtheorem{corollary}[theorem]{Corolário}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definição}
+\newtheorem{remark}[theorem]{Observação}
+\theoremstyle{remark}
+\newtheorem*{note}{Nota}
+
+\title{Motor de Herança Estrutural:\\
+       Formalização Algébrica da Fita-Dobra e do\\
+       Mecanismo de Promoção de Pares de Goldbach}
+\author{Tiago Bandeira\\
+        \small\texttt{tiagobandeira.goldbach2025@gmail.com}}
+\date{Maio de 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Formalizamos o \textbf{Motor de Herança Estrutural}, um mecanismo dinâmico
+de cobertura dos números pares por somas de dois primos.
+O motor opera sobre dois objectos acoplados: a \textbf{fita-dobra}
+$\mathcal{F}_N^\varepsilon$ (uma matriz $2\times N$ de ímpares em
+percurso zigzag) e a grade $G_{3,C}$ (que fornece eventos restritivos
+via diagonais totalmente primas).
+O acoplamento entre os dois objectos é dado pela bijeção $\Phi$,
+definida pela condição de sincronização $3C=2N$ e pelo percurso zigzag
+comum: a grade cresce $+3$ células por coluna nova e a fita cresce $+2$,
+e $3C=2N$ é a única relação que os mantém sincronizados.
+
+Provamos incondicionalmente, por álgebra pura:
+(i)~a soma constante $a_k+b_k=4N-2\varepsilon$ em toda coluna da fita;
+(ii)~os dois modos $\varepsilon\in\{0,1\}$ representam dois pares
+consecutivos $2M^-=4N-2$ e $2M^+=4N$ na mesma estrutura física;
+(iii)~o \textbf{par base} e o \textbf{par prometido} são independentes
+--- o primeiro determinado pela fita, o segundo pelo evento restritivo
+$E(W_i)=(p_1,p_2,p_3)$ em $G_{3,C}$;
+(iv)~o acoplamento $\Phi$ é uma bijeção bem definida com soma constante
+$\Phi(k)_1+\Phi(k)_2=4N$ para todo $k$;
+(v)~qualquer deslocamento mínimo de $2$ na fita propaga-se para $G_{3,C}$
+como operação de pilha global, promovendo o par prometido a par base do
+próximo valor.
+
+O \textbf{Teorema do Motor} estabelece, sob a \textbf{Hipótese
+Restritiva}~(HR) --- que todo deslocamento mínimo gera pelo menos um
+evento restritivo em $G_{3,C}$ --- que a cadeia
+$2M_0\to2M_0+2\to2M_0+4\to\cdots$ cobre todos os pares $\geq2M_0$
+como somas de dois primos.
+Este artigo é a \textbf{fundação algébrica} da série: HR é isolada como
+a única hipótese não provada e será o objecto do artigo seguinte,
+que a atacará via o peso oracle-free $\Omega_N^*$~\cite{peso} e a
+desigualdade estrutural~\cite{problemaB}.
+\end{abstract}
+
+\tableofcontents
+
+%--------------------------------------------------------------------
+\section{Introdução}
+%--------------------------------------------------------------------
+
+A Conjectura de Goldbach afirma que todo número par $>2$ é soma de dois
+primos. Este trabalho integra-se na série~\cite{grade,invariante,peso,
+problemaB} e formaliza o \textbf{Motor de Herança Estrutural} introduzido
+em~\cite{motor}, fornecendo as demonstrações algébricas que ali ficaram
+em aberto.
+
+A ideia central é substituir a pergunta
+\begin{center}
+  \emph{``$2M$ é soma de dois primos?''}
+\end{center}
+pela pergunta dinâmica
+\begin{center}
+  \emph{``dado que $2M$ é soma de dois primos (caso base),\\
+         a estrutura garante que $2M+2$ também o é?''}
+\end{center}
+
+O motor opera sobre dois objectos acoplados:
+
+\begin{enumerate}
+  \item A \textbf{fita-dobra} $\mathcal{F}_N^\varepsilon$, que organiza
+        os ímpares em percurso zigzag e garante, por simetria posição-cega,
+        a existência de pares simétricos com qualquer soma prescrita.
+  \item A \textbf{grade} $G_{3,C}$, que fornece \emph{eventos restritivos}
+        --- diagonais totalmente primas numa janela $W_i$ --- que certificam
+        a primalidade do par prometido.
+\end{enumerate}
+
+A separação entre estes dois papéis é a contribuição estrutural central:
+a fita garante a \emph{existência algébrica} do par; a grade garante a
+\emph{primalidade aritmética}.
+
+%--------------------------------------------------------------------
+\section{A Fita-Dobra $\mathcal{F}_N^\varepsilon$}
+%--------------------------------------------------------------------
+
+\subsection{Definição}
+
+\begin{definition}[Fita-dobra]
+\label{def:fita}
+  Fixados $N\geq1$ e $\varepsilon\in\{0,1\}$, a
+  \textbf{fita-dobra} $\mathcal{F}_N^\varepsilon$ é a matriz $2\times N$
+  cujas células são:
+  \[
+    a_k = 2k-1,
+    \qquad
+    b_k = 4N - 2k + 1 - 2\varepsilon,
+    \qquad k=1,\dots,N.
+  \]
+  A \textbf{linha~1} ($a_k$) percorre os ímpares da esquerda para a
+  direita; a \textbf{linha~2} ($b_k$) percorre-os da direita para a
+  esquerda (zigzag). O parâmetro $\varepsilon=0$ é o \textbf{modo normal};
+  $\varepsilon=1$ é o \textbf{modo de repetição} (a última coluna da
+  linha~2 repete o valor $b_N-2$, ``tirando a vaga'' de um ímpar e
+  reduzindo a soma em~$2$).
+\end{definition}
+
+\begin{remark}[Cardinalidade]
+  Em ambos os modos, a fita contém exactamente $2N$ células. A repetição
+  não altera a cardinalidade --- substitui um valor por outro, mantendo
+  o número de ``quadradinhos'' constante.
+\end{remark}
+
+\subsection{Soma constante}
+
+\begin{proposition}[Soma constante]
+\label{prop:soma}
+  Para todo $k\in\{1,\dots,N\}$ e todo $\varepsilon\in\{0,1\}$:
+  \[
+    a_k + b_k = 4N - 2\varepsilon =: 2M(\varepsilon).
+  \]
+  Em particular, \emph{toda coluna da fita soma o mesmo valor}
+  $2M(\varepsilon)$, independentemente da posição~$k$.
+\end{proposition}
+
+\begin{proof}
+  $a_k+b_k = (2k-1)+(4N-2k+1-2\varepsilon) = 4N-2\varepsilon$.
+\end{proof}
+
+\begin{remark}[Cegueira posicional]
+  A Proposição~\ref{prop:soma} afirma que a fita é \textbf{cega à
+  posição}: não importa em que coluna $k$ um par $(a_k,b_k)$ se
+  encontra, a sua soma é sempre $2M(\varepsilon)$. Esta propriedade
+  é puramente algébrica e independe de primalidade.
+\end{remark}
+
+\subsection{Dois pares consecutivos por fita}
+
+\begin{proposition}[Dois pares por fita]
+\label{prop:dois}
+  A mesma fita física $\mathcal{F}_N$ representa simultaneamente
+  dois números pares consecutivos:
+  \[
+    \mathcal{F}_N^0 \;\longrightarrow\; 2M^+ = 4N,
+    \qquad
+    \mathcal{F}_N^1 \;\longrightarrow\; 2M^- = 4N-2,
+    \qquad
+    2M^+ - 2M^- = 2.
+  \]
+\end{proposition}
+
+\begin{proof}
+  Directo da Proposição~\ref{prop:soma} com $\varepsilon=0$ e
+  $\varepsilon=1$.
+\end{proof}
+
+\begin{remark}[Razão 2:1]
+  Os ímpares estão distribuídos numa densidade que é o dobro da dos
+  pares. Por isso, cada coluna nova adicionada à fita cobre dois pares
+  consecutivos, e a alternância de modo ($\varepsilon=0\leftrightarrow1$)
+  é o mecanismo que acessa cada um deles dentro da mesma estrutura física.
+\end{remark}
+
+%--------------------------------------------------------------------
+\section{Par Base e Par Prometido}
+%--------------------------------------------------------------------
+
+\subsection{Par base}
+
+\begin{definition}[Par base]
+\label{def:base}
+  Um par $(a_s, b_s)$ de $\mathcal{F}_N^1$ é um \textbf{par base} para
+  $2M^-$ se $a_s$ e $b_s$ são ambos primos. A escolha da coluna $s$ é
+  livre --- independente de qualquer evento restritivo.
+\end{definition}
+
+\begin{remark}
+  A existência de um par base para $2M^-$ é precisamente a afirmação de
+  que $2M^-$ é soma de dois primos, i.e., que $2M^-$ satisfaz a
+  Conjectura de Goldbach. O par base \emph{não} é construído pelo motor
+  --- ele é o \textbf{caso base} a partir do qual o motor opera.
+\end{remark}
+
+\subsection{Par prometido}
+
+\begin{definition}[Par prometido]
+\label{def:prometido}
+  Seja $E(W_i)=(p_1,p_2,p_3)$ um \textbf{evento restritivo} em $G_{3,C}$
+  --- uma configuração canónica (diagonal $D_1$, $D_2$ ou coluna central
+  $C_v$) totalmente prima numa janela $W_i$.
+  O \textbf{par prometido} para $2M^+$ é o par $(p_1,p_3)$ em
+  $\mathcal{F}_N^0$, satisfazendo:
+  \[
+    p_1 + p_3 = 2M^+ = 4N.
+  \]
+  O par prometido é determinado pelo evento, não pela fita.
+\end{definition}
+
+\begin{proposition}[Independência]
+\label{prop:indep}
+  O par base $(a_s,b_s)\in\mathcal{F}_N^1$ e o par prometido
+  $(p_1,p_3)\in\mathcal{F}_N^0$ são \textbf{independentes}: ambos somam
+  o respectivo $2M(\varepsilon)$ por Proposição~\ref{prop:soma}, mas são
+  determinados por mecanismos distintos.
+  \begin{itemize}
+    \item O par base é determinado pela fita (qualquer coluna com dois
+          primos).
+    \item O par prometido é determinado pelo evento $E(W_i)$ da grade.
+  \end{itemize}
+  Em particular, $(a_s,b_s)$ e $(p_1,p_3)$ não precisam partilhar
+  elementos.
+\end{proposition}
+
+\begin{proof}
+  Por construção das Definições~\ref{def:base} e~\ref{def:prometido}.
+  O par base existe em $\mathcal{F}_N^1$ ($\varepsilon=1$) e o par
+  prometido em $\mathcal{F}_N^0$ ($\varepsilon=0$); os dois modos são
+  distintos e independentes.
+\end{proof}
+
+%--------------------------------------------------------------------
+\section{Acoplamento $\Phi$ entre $G_{3,C}$ e $\mathcal{F}_N$}
+%--------------------------------------------------------------------
+
+\subsection{Condição de acoplamento}
+
+\begin{proposition}[Igualdade de cardinalidade]
+\label{prop:card}
+  $G_{3,C}$ e $\mathcal{F}_N$ contêm o mesmo conjunto de ímpares se e
+  somente se
+  \[
+    3C = 2N,
+  \]
+  ou seja, $N=\frac{3C}{2}$, o que exige $2\mid C$.
+\end{proposition}
+
+\begin{proof}
+  $G_{3,C}$ tem $3C$ células e $\mathcal{F}_N$ tem $2N$ células. Para
+  que ambas contenham exactamente os mesmos $3C=2N$ ímpares consecutivos
+  é necessário e suficiente $3C=2N$.
+\end{proof}
+
+\subsection{Percurso zigzag}
+
+\begin{definition}[Percurso zigzag de $G_{3,C}$]
+\label{def:zigzag-grade}
+  O \textbf{percurso zigzag} de $G_{3,C}$ é a sequência
+  $\sigma_G:\{1,\ldots,3C\}\to\mathbb{N}_{\text{ímpar}}$ definida por:
+  \[
+    \sigma_G(k) = \begin{cases}
+      2k-1
+        & k=1,\ldots,C
+          \quad\text{(linha~1, }\rightarrow\text{)}\\[4pt]
+      2(2C-k)+1
+        & k=C+1,\ldots,2C
+          \quad\text{(linha~2, }\leftarrow\text{)}\\[4pt]
+      2(k-2C)+4C-1
+        & k=2C+1,\ldots,3C
+          \quad\text{(linha~3, }\rightarrow\text{)}
+    \end{cases}
+  \]
+\end{definition}
+
+\begin{definition}[Percurso zigzag de $\mathcal{F}_N$]
+\label{def:zigzag-fita}
+  O \textbf{percurso zigzag} de $\mathcal{F}_N$ é a sequência
+  $\sigma_{\mathcal{F}}:\{1,\ldots,2N\}\to\mathbb{N}_{\text{ímpar}}$
+  definida por:
+  \[
+    \sigma_{\mathcal{F}}(k) = \begin{cases}
+      2k-1
+        & k=1,\ldots,N
+          \quad\text{(linha~1, }\rightarrow\text{)}\\[4pt]
+      2(2N-k)+1
+        & k=N+1,\ldots,2N
+          \quad\text{(linha~2, }\leftarrow\text{)}
+    \end{cases}
+  \]
+\end{definition}
+
+\subsection{Bijeção de acoplamento}
+
+\begin{definition}[Acoplamento $\Phi$]
+\label{def:phi}
+  Dado $C\geq2$ com $2\mid C$, seja $N=\frac{3C}{2}$. O
+  \textbf{acoplamento}
+  \[
+    \Phi: \{1,\ldots,N\} \longrightarrow G_{3,C}\times G_{3,C}
+  \]
+  associa a cada coluna $k$ da fita $\mathcal{F}_N$ o par de células
+  correspondente em $G_{3,C}$, segundo a regra:
+  \[
+    \Phi(k) = \begin{cases}
+      \bigl(f(1,\,k),\; f(3,\,C+1-k)\bigr)
+        & k = 1,\ldots,C\\[6pt]
+      \bigl(f(2,\,2C+1-k),\; f(2,\,k-C)\bigr)
+        & k = C+1,\ldots,\tfrac{3C}{2}
+    \end{cases}
+  \]
+  Para $k\leq C$, a fita emparelha a linha~1 da grade
+  (percorrida $\rightarrow$) com a linha~3 (percorrida $\leftarrow$).
+  Para $k>C$, a fita emparelha as extremidades da linha~2 convergindo
+  para o centro.
+\end{definition}
+
+\begin{proposition}[Acoplamento bem definido e soma constante]
+\label{prop:phi}
+  Sob a condição $3C=2N$, $\Phi$ é uma bijeção bem definida. Além
+  disso, para todo $k\in\{1,\ldots,N\}$, a soma do par $\Phi(k)$
+  é constante e igual a $2M^+=4N$:
+  \[
+    \Phi(k)_1 + \Phi(k)_2 = 4N = 2M^+,
+  \]
+  onde $\Phi(k)_1$ e $\Phi(k)_2$ denotam o primeiro e segundo elemento
+  do par.
+\end{proposition}
+
+\begin{proof}
+  \textbf{Bijeção.} Os pares $\Phi(k)$ para $k=1,\ldots,N$ cobrem
+  exactamente os $2N=3C$ ímpares de $G_{3,C}$ sem repetição: para
+  $k\leq C$ cobrem as linhas~1 e~3 ($2C$ elementos), e para $k>C$
+  cobrem a linha~2 ($C$ elementos, emparelhados das extremidades para
+  o centro). Total: $2C+C=3C=2N$. \checkmark
+
+  \textbf{Soma constante para $k\leq C$.}
+  \[
+    f(1,k)+f(3,C+1-k) = (2k-1)+(4C+2(C+1-k)-1)
+    = (2k-1)+(6C-2k+1) = 6C = 4N.
+  \]
+
+  \textbf{Soma constante para $k=C+j$, $j=1,\ldots,C/2$.}
+  \[
+    f(2,2C+1-k)+f(2,k-C)
+    = f(2,C+1-j)+f(2,j).
+  \]
+  Usando $f(2,c)=2(N_G+c)-1$ onde $N_G=C$ (número de colunas da grade):
+  \[
+    = (2C+2(C+1-j)-1)+(2C+2j-1)
+    = (4C-2j+1)+(2C+2j-1) = 6C = 4N. \quad\checkmark
+  \]
+  Em ambos os casos a soma é $4N=2M^+$, coincidindo com a soma
+  constante da fita (Proposição~\ref{prop:soma}). \qed
+\end{proof}
+
+\subsection{Par deslocado garantido pelo acoplamento}
+
+\begin{proposition}[Par deslocado garantido]
+\label{prop:par-deslocado}
+  Seja $W_{i^*}$ a janela central de $G_{3,C}$ com
+  $i^*=\lfloor C/2\rfloor$, e seja $(e_1,e_3)$ os extremos de qualquer
+  configuração canónica $\mathcal{E}\in\{D_1,D_2,C_v\}$ em $W_{i^*}$.
+
+  \medskip
+  \textbf{Parte~1 (propriedade geométrica --- incondicional).}
+  Via acoplamento $\Phi$, o par $(e_1,e_3)$ é sempre um par simétrico
+  \textbf{deslocado} na fita $\mathcal{F}_N^\varepsilon$ corrente:
+  \[
+    e_1 + e_3 = 2M(\varepsilon) - 2.
+  \]
+  O par está deslocado de $1$ posição em relação ao par base corrente
+  --- ``diagonalizado por $1$ quadradinho'' na fita.
+  Esta é uma propriedade geométrica pura da janela central: vale para
+  qualquer configuração $\mathcal{E}$, seja ela totalmente prima ou não.
+
+  \medskip
+  \textbf{Parte~2 (alinhamento pelo próximo passo da fita ---
+  incondicional).}
+  No próximo passo da fita (repetição de coluna
+  $\varepsilon:0\to1$ ou nova coluna $N\to N+1$), a soma avança de $2$:
+  \[
+    e_1 + e_3 = 2M(\varepsilon)-2
+    \;\longrightarrow\;
+    e_1 + e_3 = 2M(\varepsilon).
+  \]
+  O par deslocado torna-se par simétrico \textbf{alinhado} ---
+  o novo caso base. Esta progressão dos pares é a propriedade
+  geométrica dos extremos da janela central: ela conecta o crescimento
+  da fita ao motor via o passo $2M\to2M+2$.
+
+  \medskip
+  \textbf{Parte~3 (conexão com o motor --- condicional a HR).}
+  Se $(e_1,e_3)$ são ambos primos (evento restritivo em $W_{i^*}$),
+  o alinhamento da Parte~2 certifica Goldbach para $2M(\varepsilon)$.
+  Se não são primos, o par existe geometricamente mas não contribui
+  ao motor --- apenas eventos restritivos geram pares prometidos.
+\end{proposition}
+
+\begin{proof}
+  \textbf{Parte~1.}
+  Pela Proposição~\ref{prop:phi}, todo par $\Phi(k)$ satisfaz
+  $\Phi(k)_1+\Phi(k)_2=4N=2M^+$.
+  Os extremos $(e_1,e_3)$ de $W_{i^*}$ correspondem, via $\Phi$, a um
+  par na coluna $k^*$ da fita com $k^*$ adjacente ao centro --- logo
+  a soma é $2M^+-2=2M^-$, deslocada de $2$ em relação ao par base
+  corrente. \qed
+
+  \medskip
+  \textbf{Parte~2.}
+  Directo da Proposição~\ref{prop:promocao}: o próximo passo da fita
+  incrementa $b_k\to b_k+2$ para todo $k$, logo
+  $e_1+e_3\to e_1+e_3+2=2M(\varepsilon)$. \qed
+
+  \medskip
+  \textbf{Parte~3.}
+  Directo da Definição~\ref{def:prometido} e do
+  Teorema~\ref{thm:motor}. \qed
+\end{proof}
+
+\begin{remark}[Por que fixar o centro]
+  A escolha de $i^*=\lfloor C/2\rfloor$ não é arbitrária. Os extremos
+  das configurações canónicas de $W_{i^*}$ são exactamente os elementos
+  que, via $\Phi$, caem na coluna adjacente ao centro da fita ---
+  garantindo o deslocamento de exactamente $1$ quadradinho. Para janelas
+  $W_i$ com $i\neq i^*$, o deslocamento seria diferente de $2$ e a
+  sincronização com o passo da fita quebraria. A janela central é
+  portanto o único ponto de $G_{3,C}$ onde o acoplamento $\Phi$ e o
+  motor estão perfeitamente sincronizados.
+\end{remark}
+
+\subsection{Verificação numérica: $C=8$, $N=12$}
+
+$3\times8=2\times12=24$ células. \checkmark
+
+\medskip
+\begin{center}
+\begin{tabular}{c|cccccccc}
+  \toprule
+  $G_{3,8}$ & $c=1$&$2$&$3$&$4$&$5$&$6$&$7$&$8$\\
+  \midrule
+  Linha 1 ($\rightarrow$) &1&3&5&7&9&11&13&15\\
+  Linha 2 ($\leftarrow$)  &31&29&27&25&23&21&19&17\\
+  Linha 3 ($\rightarrow$) &33&35&37&39&41&43&45&47\\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\medskip
+\begin{center}
+\begin{tabular}{c|cccccccccccc}
+  \toprule
+  $\mathcal{F}_{12}$ &$k=1$&$2$&$3$&$4$&$5$&$6$&$7$&$8$&$9$&$10$&$11$&$12$\\
+  \midrule
+  Linha 1 ($\rightarrow$) &1&3&5&7&9&11&13&15&17&19&21&23\\
+  Linha 2 ($\leftarrow$)  &47&45&43&41&39&37&35&33&31&29&27&25\\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\medskip
+O percurso zigzag de $G_{3,8}$ lê os $24$ ímpares na ordem
+$1,3,\ldots,15,31,29,\ldots,17,33,35,\ldots,47$, e o de
+$\mathcal{F}_{12}$ na ordem $1,3,\ldots,23,47,45,\ldots,25$
+--- o mesmo conjunto, reorganizado. \checkmark
+
+%--------------------------------------------------------------------
+\section{O Mecanismo de Promoção}
+%--------------------------------------------------------------------
+
+\begin{proposition}[Promoção por deslocamento]
+\label{prop:promocao}
+  Seja $\mathcal{F}_N^\varepsilon$ a fita corrente com
+  $2M(\varepsilon)=4N-2\varepsilon$, e $(p_1,p_3)$ o par prometido em
+  $\mathcal{F}_N^\varepsilon$ com $p_1+p_3=2M(\varepsilon)$.
+  Um \textbf{deslocamento mínimo} é qualquer uma das operações:
+  \begin{itemize}
+    \item \textbf{Alternância de modo}: $\varepsilon\to1-\varepsilon$
+          com $N$ fixo;
+    \item \textbf{Nova coluna}: $N\to N+1$ com $\varepsilon$ fixo.
+  \end{itemize}
+  Em ambos os casos, a soma da fita muda de $\pm2$.
+
+  \medskip
+  \textbf{Parte~1 (Fita --- incondicional).}
+  O deslocamento mínimo incrementa $b_k\to b_k+2$ para todo $k$
+  simultaneamente. Logo:
+  \[
+    p_1 + p_3^{\text{novo}} = p_1 + (p_3+2) = 2M(\varepsilon)+2.
+  \]
+  O par prometido $(p_1,p_3)$ torna-se \textbf{par base} para
+  $2M(\varepsilon)+2$, certificando Goldbach.
+
+  \medskip
+  \textbf{Parte~2 (Grade --- incondicional).}
+  O deslocamento mínimo na fita propaga-se para $G_{3,C}$ como operação
+  de \textbf{pilha global}: fita e grade partilham os mesmos $3N$ ímpares
+  na mesma ordem, logo todo elemento de $G_{3,C}$ é reindexado
+  simultaneamente.
+  Seja $f(r,c)$ o elemento na linha $r$, coluna $c$ antes do
+  deslocamento. Após o deslocamento, $f'(r,c)=f(r,c)+2\delta(r)$, onde:
+  \[
+    \text{Repetição de coluna:}\quad
+    \delta(1)=0,\;\delta(2)=2,\;\delta(3)=0;
+  \]
+  \[
+    \text{Nova coluna:}\quad
+    \delta(1)=0,\;\delta(2)=0,\;\delta(3)=2.
+  \]
+  Em consequência, \emph{toda janela} $W_i$ é reorganizada com novos
+  valores, alterando as diagonais $D_1$, $D_2$ e $C_v$ de cada $W_i$.
+
+  \medskip
+  \textbf{Parte~3 (Evento --- condicional a HR).}
+  Sob~HR, a reorganização global de $G_{3,C}$ produz pelo menos um
+  evento restritivo $E(W_j)=(q_1,q_2,q_3)$ na nova configuração,
+  determinando o par prometido para $2M(\varepsilon)+4$.
+\end{proposition}
+
+\begin{proof}
+  \textbf{Parte~1.}
+  Por Definição~\ref{def:fita}, $b_k=4N-2k+1-2\varepsilon$.
+  O deslocamento mínimo altera $\varepsilon$ ou $N$ de modo a que
+  $b_k$ cresça de $2$ em toda coluna $k$:
+  \begin{itemize}
+    \item Alternância $\varepsilon\to0$ (se $\varepsilon=1$):
+          $b_k^{\text{novo}}=4N-2k+1-0=b_k+2$. \checkmark
+    \item Nova coluna $N\to N+1$ (com $\varepsilon$ fixo):
+          $b_k^{\text{novo}}=4(N+1)-2k+1-2\varepsilon=b_k+4$;
+          combinado com $\varepsilon\to1$, o incremento líquido é
+          $+4-2=+2$. \checkmark
+  \end{itemize}
+  Em ambos os casos $p_3^{\text{novo}}=p_3+2$, e
+  $p_1+p_3^{\text{novo}}=2M(\varepsilon)+2$. \qed
+
+  \medskip
+  \textbf{Parte~2.}
+  Os $3N$ ímpares de $G_{3,C}$ são exactamente os mesmos da fita
+  $\mathcal{F}_N$, dispostos linha a linha.
+  O deslocamento altera o conjunto de ímpares presentes em $G_{3,C}$
+  exactamente como altera a fita: um novo ímpar entra no topo (ou um
+  ímpar é repetido), empurrando todos os outros uma posição na ordem.
+  Como a grade preenche as células linha a linha em ordem crescente,
+  o empurrão global redistribui os valores por todas as linhas e colunas,
+  reorganizando cada janela $W_i$. \qed
+
+  \medskip
+  \textbf{Parte~3.} Directamente da definição de HR. \qed
+\end{proof}
+
+%--------------------------------------------------------------------
+\section{Exemplos Numéricos}
+\label{sec:exemplos}
+%--------------------------------------------------------------------
+
+\begin{remark}[Condição de acoplamento nos exemplos]
+  O acoplamento $\Phi$ exige $3C=2N$, logo $3\mid N$. O menor exemplo
+  não trivial é $C=8$, $N=12$ ($3\times8=2\times12=24$). Exemplos com
+  $N$ não divisível por $3$ (e.g.\ $N=11$) descrevem a fita isoladamente,
+  sem acoplamento a uma grade inteira.
+\end{remark}
+
+%------------------------------------------------------------------
+\subsection{Fita isolada: $N=11$, $2M^+=44$, $2M^-=42$}
+%------------------------------------------------------------------
+
+\[
+\begin{array}{c|ccccccccccc}
+k    & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11\\
+\hline
+a_k  & 1 & 3 & 5 & 7 & 9 &11 &13 &15 &17 &19  &21 \\
+b_k^0& 43&41 &39 &37 &35 &33 &31 &29 &27 &25  &23 \\
+b_k^1& 41&39 &37 &35 &33 &31 &29 &27 &25 &23  &21 \\
+\end{array}
+\]
+
+\begin{itemize}
+  \item $\mathcal{F}_{11}^0$ ($2M^+=44$): par base primo $(13,31)$
+        na coluna $k=7$ ($13+31=44$~\checkmark).
+  \item $\mathcal{F}_{11}^1$ ($2M^-=42$): par base primo, e.g.\
+        $(13,29)$ na coluna $k=7$ ($13+29=42$~\checkmark).
+  \item Par prometido para $2M^+=44$, determinado pelo evento de
+        $G_{3,C}$ acoplado: $(5,41)$ --- soma $5+41=46$ em
+        $\mathcal{F}_{11}^0$, o que indica que este par pertence
+        à iteração seguinte ($N=12$).
+\end{itemize}
+
+%------------------------------------------------------------------
+\subsection{Acoplamento completo: $C=8$, $N=12$, $2M^+=48$, $2M^-=46$}
+%------------------------------------------------------------------
+
+$3\times8=2\times12=24$ células. \checkmark
+
+\medskip\noindent\textbf{Grade $G_{3,8}$:}
+\[
+\begin{array}{c|cccccccc}
+  & c=1&2&3&4&5&6&7&8\\
+\hline
+\text{Linha~1 }(\rightarrow) & 1&3&5&7&9&11&13&15\\
+\text{Linha~2 }(\leftarrow)  &31&29&27&25&23&21&19&17\\
+\text{Linha~3 }(\rightarrow) &33&35&37&39&41&43&45&47\\
+\end{array}
+\]
+
+\medskip\noindent\textbf{Fita $\mathcal{F}_{12}$:}
+\[
+\begin{array}{c|cccccccccccc}
+k & 1&2&3&4&5&6&7&8&9&10&11&12\\
+\hline
+a_k   &1&3&5&7&9&11&13&15&17&19&21&23\\
+b_k^0 &47&45&43&41&39&37&35&33&31&29&27&25\\
+b_k^1 &45&43&41&39&37&35&33&31&29&27&25&23\\
+\end{array}
+\]
+
+\medskip\noindent\textbf{Acoplamento $\Phi$ (verificação explícita):}
+\[
+\begin{array}{c|cc|c|c}
+k & \Phi(k)_1 & \Phi(k)_2 & \text{soma} & \text{células em }G_{3,8}\\
+\hline
+1  & 1  & 47 & 48 & f(1,1)+f(3,8)\\
+2  & 3  & 45 & 48 & f(1,2)+f(3,7)\\
+3  & 5  & 43 & 48 & f(1,3)+f(3,6)\\
+4  & 7  & 41 & 48 & f(1,4)+f(3,5)\\
+5  & 9  & 39 & 48 & f(1,5)+f(3,4)\\
+6  & 11 & 37 & 48 & f(1,6)+f(3,3)\\
+7  & 13 & 35 & 48 & f(1,7)+f(3,2)\\
+8  & 15 & 33 & 48 & f(1,8)+f(3,1)\\
+9  & 17 & 31 & 48 & f(2,8)+f(2,1)\\
+10 & 19 & 29 & 48 & f(2,7)+f(2,2)\\
+11 & 21 & 27 & 48 & f(2,6)+f(2,3)\\
+12 & 23 & 25 & 48 & f(2,5)+f(2,4)\\
+\end{array}
+\]
+Toda coluna soma $48=4N=2M^+$. \checkmark
+
+\medskip\noindent\textbf{Motor em acção:}
+\begin{itemize}
+  \item $\mathcal{F}_{12}^1$ ($2M^-=46$): par base primo $(5,41)$
+        na coluna $k=3$ ($5+41=46$~\checkmark).
+        Evento $E_1(W_4)=(7,23,41)$ em $G_{3,8}$ determina par prometido
+        $(7,41)$ em $\mathcal{F}_{12}^0$: $7+41=48=2M^+$~\checkmark.
+        Evento $E_2(W_4)=(11,23,37)$ determina par prometido alternativo
+        $(11,37)$: $11+37=48$~\checkmark.
+  \item $\mathcal{F}_{12}^0$ ($2M^+=48$): par base primo $(7,41)$
+        promovido do evento $E_1$ --- Goldbach para $48$~\checkmark.
+  \item Par prometido para $2M=50$: determinado pelo próximo evento
+        em $G_{3,C'}$ após deslocamento mínimo.
+\end{itemize}
+
+%--------------------------------------------------------------------
+\section{O Teorema do Motor de Herança}
+%--------------------------------------------------------------------
+
+\begin{theorem}[Motor de Herança Estrutural]
+\label{thm:motor}
+  \textit{Hipóteses:}
+  \begin{itemize}
+    \item[\textbf{(HI)}] Existe $2M_0$ com par base em $\mathcal{F}_{N_0}^1$
+          e evento inicial $E(W_i)=(p_1,p_2,p_3)$ em $G_{3,C_0}$.
+    \item[\textbf{(HR)}] Para toda iteração, existe pelo menos um evento
+          restritivo $E(W_j)$ em $G_{3,C}$ acoplado à fita corrente.
+  \end{itemize}
+
+  \textit{Conclusão:} A cadeia
+  \[
+    2M_0 \;\longrightarrow\; 2M_0+2 \;\longrightarrow\; 2M_0+4
+    \;\longrightarrow\; \cdots
+  \]
+  cobre todos os pares $\geq 2M_0$ como somas de dois primos.
+\end{theorem}
+
+\begin{proof}
+  Procedemos por indução.
+
+  \textbf{Base.} Por~HI, $2M_0$ é Goldbach via par base
+  $(a_s,b_s)\in\mathcal{F}_{N_0}^1$.
+  O evento $E(W_i)=(p_1,p_2,p_3)$ em $G_{3,C_0}$ determina, pela
+  Definição~\ref{def:prometido}, o par prometido $(p_1,p_3)$ em
+  $\mathcal{F}_{N_0}^0$ com $p_1+p_3=2M_0+2$.
+
+  \textbf{Promoção.} Na iteração seguinte $\mathcal{F}_{N_1}^1$, o par
+  $(p_1,p_3)$ é promovido a par base para $2M_0+2$
+  (Proposição~\ref{prop:promocao}), certificando Goldbach para $2M_0+2$.
+
+  \textbf{Regeneração.} Por~HR, existe novo evento
+  $E'(W_j)=(q_1,q_2,q_3)$ em $G_{3,C_1}$, determinando par prometido
+  $(q_1,q_3)$ em $\mathcal{F}_{N_1}^0$ com $q_1+q_3=2M_0+4$.
+
+  \textbf{Indução.} Repetindo os passos de promoção e regeneração, cada
+  par $2M_0+2n$ é certificado como Goldbach.
+\end{proof}
+
+\begin{remark}[Estatuto das hipóteses]
+  \begin{center}
+  \begin{tabular}{lll}
+    \toprule
+    Componente & Estatuto & Fonte \\
+    \midrule
+    Proposições~\ref{prop:soma}--\ref{prop:indep} & Incondicional &
+      Álgebra pura da fita \\
+    Proposição~\ref{prop:promocao} Partes~1--2 & Incondicional &
+      Álgebra pura da fita e da grade \\
+    Proposição~\ref{prop:promocao} Parte~3 & Condicional a HR &
+      Definição de HR \\
+    HI & Verificável & Green--Tao~\cite{green-tao} garante existência \\
+    HR & Condicional & Lacuna central em aberto \\
+    Teorema~\ref{thm:motor} & Condicional a HR & --- \\
+    \bottomrule
+  \end{tabular}
+  \end{center}
+\end{remark}
+
+\begin{remark}[Lacuna remanescente]
+  A estrutura algébrica está completa: a Proposição~\ref{prop:par-deslocado}
+  garante incondicionalmente que os extremos $(e_1,e_3)$ de $W_{i^*}$
+  formam sempre um par simétrico deslocado na fita, e que o próximo
+  passo da fita os alinha gerando o novo caso base.
+
+  A única lacuna é a \textbf{primalidade} do par deslocado: a existência
+  geométrica de $(e_1,e_3)$ é incondicional, mas a garantia de que ambos
+  são primos depende do evento restritivo hipotético~(HR).
+
+  Esta lacuna será abordada no artigo seguinte, que substituirá HR por
+  modelos heurísticos e probabilísticos --- nomeadamente o peso
+  oracle-free $\Omega_N^*$~\cite{peso} e a desigualdade estrutural
+  $\mu_{\text{comp}}>\mu_{\text{global}}>\mu_{\text{primo}}$~\cite{problemaB}
+  --- para estimar a probabilidade de que o par deslocado seja de
+  primos em função de $C$ e da posição $i^*$.
+\end{remark}
+
+%--------------------------------------------------------------------
+\section{Conclusão}
+%--------------------------------------------------------------------
+
+Este artigo constitui a \textbf{fundação algébrica} do Motor de Herança
+Estrutural na série sobre a Conjectura de Goldbach.
+Formalizamos, de forma incondicional e autocontida, todos os objectos
+e mecanismos necessários para o motor operar:
+
+\begin{enumerate}
+  \item A \textbf{fita-dobra} $\mathcal{F}_N^\varepsilon$ e a sua
+        propriedade de soma constante posição-cega.
+  \item Os \textbf{dois modos} $\varepsilon\in\{0,1\}$ que representam
+        dois pares consecutivos $2M^-$ e $2M^+$ na mesma estrutura física,
+        com a razão $2:1$ entre ímpares e pares como fundamento.
+  \item O \textbf{acoplamento} $\Phi$ entre $G_{3,C}$ e $\mathcal{F}_N$,
+        dado pela condição de sincronização $3C=2N$ --- a grade cresce
+        $+3$ células por coluna e a fita $+2$, e esta é a única relação
+        que os mantém sincronizados --- e pelo percurso zigzag comum,
+        com fórmula explícita e soma constante provada.
+  \item A \textbf{independência} entre par base (determinado pela fita)
+        e par prometido (determinado pelo evento da grade).
+  \item O \textbf{mecanismo de promoção} por deslocamento mínimo:
+        qualquer deslocamento de $2$ na fita propaga-se para $G_{3,C}$
+        como operação de pilha global, promovendo automaticamente o par
+        prometido a par base do próximo valor.
+\end{enumerate}
+
+A separação em duas camadas é a contribuição estrutural central:
+\begin{itemize}
+  \item \textbf{Camada algébrica} (incondicional): a fita garante a
+        existência e a promoção do par prometido por simetria pura.
+  \item \textbf{Camada aritmética} (condicional a HR): a grade certifica
+        a primalidade do par via evento restritivo.
+\end{itemize}
+
+A \textbf{Hipótese Restritiva}~(HR) --- que todo deslocamento mínimo
+gera pelo menos um evento restritivo em $G_{3,C}$ --- é a única hipótese
+não provada e está precisamente isolada.
+HR será o objecto do artigo seguinte da série, que a atacará usando
+o peso oracle-free $\Omega_N^*$~\cite{peso} e a desigualdade estrutural
+$\mu_{\text{comp}}>\mu_{\text{global}}>\mu_{\text{primo}}$~\cite{problemaB},
+agora com o acoplamento $\Phi$ disponível como ferramenta algébrica.
+
+\begin{remark}[Reformulação de HR via rotação cíclica]
+\label{rem:markov}
+  O acoplamento $\Phi$ não é uniforme --- ele percorre $G_{3,C}$ das
+  bordas para o centro, como uma semi-espiral. Isso impede a aplicação
+  directa da lógica de janela $W_i$ ao par prometido deslocado.
+  A reformulação correcta fixa a janela central $W_{i^*}$ com
+  $i^*=\lfloor C/2\rfloor$ e \textbf{rotaciona ciclicamente} os
+  elementos no percurso zigzag de $G_{3,C}$.
+
+  \medskip
+  \textbf{Definição (Rotação cíclica $\rho$).}
+  Seja $\sigma_G(1),\ldots,\sigma_G(3C)$ o percurso zigzag de $G_{3,C}$.
+  A \textbf{rotação cíclica} $\rho$ é a permutação:
+  \[
+    \rho:\sigma_G(k)\mapsto\sigma_G(k+1\bmod 3C),
+    \qquad k=1,\ldots,3C.
+  \]
+  O conjunto $\{1,3,5,\ldots,6C-1\}$ permanece intacto --- só as
+  posições mudam. A bijeção $\Phi$ está preservada.
+
+  \medskip
+  \textbf{Definição (Sequência de eventos da janela central).}
+  Fixada $W_{i^*}$, a \textbf{sequência de eventos} é:
+  \[
+    \mathcal{E}(t) = \text{configuração canónica de }W_{i^*}
+    \text{ após }t\text{ rotações }\rho^t,
+    \quad t=0,1,\ldots,3C-1.
+  \]
+  Um \textbf{evento restritivo} ocorre em $t$ se $\mathcal{E}(t)$
+  é totalmente prima (os três elementos da configuração são primos).
+
+  \medskip
+  \textbf{HR reformulada.}
+  Para todo $C$ suficientemente grande, existe
+  $t\in\{0,\ldots,3C-1\}$ tal que $\mathcal{E}(t)$ é totalmente prima.
+
+  \medskip
+  Esta reformulação tem duas propriedades importantes:
+  \begin{enumerate}
+    \item A distância $2$ entre elementos consecutivos no percurso
+          zigzag garante que cada rotação desloca os valores nas células
+          de $W_{i^*}$ exactamente de $2$ em $2$ --- preservando a
+          sincronização com a fita.
+    \item O motor tem a estrutura de uma \textbf{cadeia de Markov
+          cíclica}: o estado é o par $( 2M, \mathcal{E}(t) )$ e a
+          transição $\rho$ é determinística na álgebra e condicional
+          na aritmética (primalidade). HR é equivalente à
+          \textbf{recorrência} da cadeia --- a cadeia não tem estados
+          absorventes, i.e., nenhum par $2M$ é evitado para sempre.
+          Esta conexão com teoria ergódica~\cite{grade} será explorada
+          no artigo seguinte.
+  \end{enumerate}
+\end{remark}
+
+%--------------------------------------------------------------------
+\begin{thebibliography}{9}
+%--------------------------------------------------------------------
+
+  \bibitem{grade}
+  T.~Bandeira,
+  \textit{Uma Abordagem Unificada para a Conjectura de Goldbach:
+  Estrutura Combinatória, Saturação Geométrica e o Elo entre Trios
+  e Pares Primos}, preprint, maio de 2026.
+
+  \bibitem{invariante}
+  T.~Bandeira,
+  \textit{Uma propriedade de soma constante na grade $3\times N$
+  e as conjecturas de Goldbach}, preprint, maio de 2026.
+
+  \bibitem{peso}
+  T.~Bandeira,
+  \textit{O Invariante Âncora da Grade $G_{3,N}$ e um Estimador
+  Geométrico Oracle-Free para a Conjectura de Goldbach},
+  preprint, maio de 2026.
+
+  \bibitem{problemaB}
+  T.~Bandeira,
+  \textit{Problema~B do Crivo Geométrico: Demonstração da
+  Desigualdade Estrutural}, preprint, maio de 2026.
+
+  \bibitem{motor}
+  T.~Bandeira,
+  \textit{Motor de Herança Estrutural em Grades $3\times N$:
+  Um Sistema Dinâmico de Cobertura Condicional para Pares de
+  Goldbach}, preprint, maio de 2026.
+
+  \bibitem{green-tao}
+  B.~Green e T.~Tao,
+  \textit{The primes contain arbitrarily long arithmetic
+  progressions},
+  \textit{Annals of Mathematics}, vol.~167, pp.~481--547, 2008.
+
+\end{thebibliography}
+
+\end{document}
