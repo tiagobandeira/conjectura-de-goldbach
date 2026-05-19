@@ -3,6 +3,35 @@
 Todas as mudanças significativas neste projeto são documentadas aqui.
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
+### [v2.5.0] — Maio 2026
+#### Adicionado
+- **Paper 5 — Motor de Herança Estrutural** (`bandeira_motor_heranca_formal_2026.tex`):
+  fundação algébrica do mecanismo dinâmico de cobertura dos pares de Goldbach.
+  - Definição formal da **fita-dobra** $\mathcal{F}_N^\varepsilon$ (matriz $2\times N$
+    em percurso zigzag) com dois modos $\varepsilon\in\{0,1\}$ representando dois
+    pares consecutivos $2M^-$ e $2M^+$ na mesma estrutura física.
+  - **Acoplamento** $\Phi: G_{3,C}\to\mathcal{F}_N$ via condição de sincronização
+    $3C=2N$, com fórmula explícita e prova de soma constante
+    $\Phi(k)_1+\Phi(k)_2=4N$.
+  - **Proposição do par deslocado** (incondicional): os extremos de qualquer
+    configuração canónica da janela central $W_{i^*}$ formam sempre um par
+    simétrico deslocado na fita, e o próximo passo da fita os alinha gerando
+    o novo caso base — independente de primalidade.
+  - **Teorema do Motor** (condicional a HR): a cadeia
+    $2M_0\to2M_0+2\to2M_0+4\to\cdots$ cobre todos os pares $\geq2M_0$
+    como somas de dois primos.
+  - **Reformulação de HR** via rotação cíclica $\rho$ na janela central fixa
+    $W_{i^*}$: HR é equivalente à recorrência de uma cadeia de Markov cíclica.
+  - Lacuna precisamente isolada: apenas a primalidade do par deslocado depende
+    de HR — toda a estrutura geométrica é incondicional.
+
+#### Alterado
+- Papers anteriores (1--4): a definição de evento restritivo será revista para
+  incluir deslocamento mínimo como critério, em vez de apenas variação de $N$,
+  para consistência com o acoplamento $\Phi$ do Paper 5.
+
+---
+
 ## [v2.4.1] — 2026-05-17
 
 ### Paper 06 — Problema B: Desigualdade Estrutural (novo manuscrito)
