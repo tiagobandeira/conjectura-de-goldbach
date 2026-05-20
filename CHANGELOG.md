@@ -3,6 +3,46 @@
 Todas as mudanças significativas neste projeto são documentadas aqui.
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
+### [v5.1.0] — Maio 2026
+#### Adicionado — Paper 7 (v3)
+- **Observação 4.5 — Estrutura direccional de $\sigma$ por linha**:
+  formaliza que L1 avança $e_1(t)\!+\!2$, L3 recua $e_3(t)\!-\!2$, e o
+  cancelamento $\Delta e_1 + \Delta e_3 = 0$ é a razão geométrica da soma
+  constante da Prop. 4.3(iii) — não apenas um facto algébrico mas uma
+  simetria direccional explícita.
+- **Nota sobre a natureza dos eventos** (dentro da Obs. 4.5): distingue
+  formalmente os passos $t=1,\ldots,N-1$ de $\sigma$ como *eventos*
+  (espaço de busca de HR$^-$ numa fita fixa) dos *passos do motor*
+  (ditados pelo crescimento $N\to N+1$ da fita).
+- **Proposição 4.6 — Pares diagonais da fita e unicidade do passo mínimo**
+  (três partes, todas incondicionais):
+  - Parte 1: nomeia e prova que os pares diagonais interiores
+    $(a_k, b_{k+1}^{(0)})$ somam $2M^-$, conectando a órbita de $\sigma$
+    à geometria da fita por nome explícito.
+  - Parte 2: a bijecção da Prop. 4.3(ii) é exactamente a cobertura desses
+    pares nomeados — completa o argumento de cobertura com referência
+    concreta à fita.
+  - Parte 3: prova que $\delta > 1$ quebra *simultaneamente* (i) a
+    cobertura bijectiva (órbita fica curta) e (ii) a sincronização com o
+    motor (passo seria $2\delta$ em vez de $2$) — formaliza o argumento
+    de que deslocamentos arbitrários destroem o motor.
+- **Observação de fixação canónica** (após Prop. 4.6): liga a Obs. 3.8
+  (unicidade de $W_{i^*}$) e a Prop. 4.6 Parte 3 (unicidade de $\delta$)
+  como os dois lados do mesmo argumento de rigidez.
+- **Obs. 3.8 actualizada**: adicionada referência cruzada para a Prop. 4.6
+  Parte 3 como argumento dual (alterar a janela vs. alterar o passo).
+- **Conclusão actualizada**: item 5 adicionado à lista de resultados
+  incondicionais, cobrindo a estrutura direccional e a identidade dos pares
+  diagonais.
+
+#### Alterado
+- Numeração de resultados na Secção 4: Obs. 4.2, Prop. 4.3, Cor. 4.4
+  permanecem; inseridos Obs. 4.5, Prop. 4.6, Obs. 4.7 antes da subsecção
+  de verificação numérica (4.3 passa a 4.4).
+
+#### Removido
+ - Definição de deslocamento anterior. Motivo: quebrava a cadeia do motor se os deslocamentos na grade fossem arbitrários ou desordenados e não considerava os extremos da fita excluidos nos pares diagonais. Isso foi corrigido e redefinido na nova versão.
+
 ### [v2.5.0] — Maio 2026
 #### Adicionado
 - **Paper 5 — Motor de Herança Estrutural** (`bandeira_motor_heranca_formal_2026.tex`):
