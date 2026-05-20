@@ -3,7 +3,7 @@
 Todas as mudanças significativas neste projeto são documentadas aqui.
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
-### [v5.1.0] — Maio 2026
+### [v2.6.0] — Maio 2026
 #### Adicionado — Paper 7 (v3)
 - **Observação 4.5 — Estrutura direccional de $\sigma$ por linha**:
   formaliza que L1 avança $e_1(t)\!+\!2$, L3 recua $e_3(t)\!-\!2$, e o
