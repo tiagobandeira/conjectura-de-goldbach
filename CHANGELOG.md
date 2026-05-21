@@ -3,6 +3,87 @@
 Todas as mudanças significativas neste projeto são documentadas aqui.
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
+### [v2.7.0] — Maio 2026
+
+#### Adicionado — Paper 08: Reformulação Espectral do Motor de Herança
+
+- **Sistema dinâmico de medida finita `(X_N, μ_N, T)`**:
+  construção explícita sobre a linha mediana de `G_{3,N}`, com
+  `X_N = {1, …, N-1}`, medida uniforme `μ_N` e translação cíclica
+  `T(t) = t+1 mod (N-1)`. As linhas da grade são parametrizadas como
+  `e1(t) = t`, `e2(t) = N` (fixo), `e3(t) = 2N-1-t`.
+
+- **Operador de Koopman `U_T` — espectro e entropia** (incondicional):
+  prova de que `U_T` tem espectro discreto puro (raízes da unidade) e
+  entropia métrica `h(T) = 0`; ambos decorrem da natureza de rotação
+  racional de `T` e são independentes de qualquer hipótese sobre primos.
+
+- **Função de colisão `F(t) = 1_P(e1(t)) · 1_P(e3(t))`**:
+  indicadora dos instantes em que `e1(t)` e `e3(t)` são simultaneamente
+  primos; a sua componente de frequência zero `F̂(0)` conta, em média,
+  as colisões primo-primo na linha mediana.
+
+- **Teorema 4.4 — Equivalência espectral de HR⁻** (incondicional):
+  `HR⁻ ⟺ F̂(0) > 0`. A positividade da componente de frequência zero
+  da função de colisão é necessária e suficiente para a Hipótese
+  Restritiva Fraca, sem qualquer condição adicional.
+
+- **Proposição 5.2 — Cancelamento espectral das frequências laterais**
+  (incondicional, via Green–Tao–Ziegler 2012):
+  para a função de von Mangoldt ponderada `w(t) = Λ(e1(t)) Λ(e3(t))`,
+  prova-se que `ŵ(j) → 0` para todo `j ≠ 0`. O argumento usa o teorema
+  de nilsequências de Green–Tao–Ziegler para garantir o cancelamento
+  incondicional de todas as oscilações espectrais.
+
+- **Redução de Goldbach à positividade de `ŵ(0)`** (incondicional):
+  combinando o Teorema 4.4 e a Proposição 5.2, o problema de Goldbach
+  para o par `2M⁺` equivale incondicionalmente a provar `ŵ(0) > 0`.
+  Todas as outras componentes espectrais são irrelevantes para o problema.
+
+- **Diagnóstico do colapso dos métodos clássicos**:
+  análise de por que o método do círculo de Hardy–Littlewood, o crivo
+  linear de Rosser–Iwaniec e a abordagem de Buchstab–Chen esbarram no
+  obstáculo da paridade e não alcançam uma prova de Goldbach; explicitação
+  de como a formulação espectral evita esses obstáculos ao reformular
+  o problema em termos de cancelamento de nilsequências, normas de Gowers
+  e o princípio de ortogonalidade de Sarnak.
+
+- **Lacuna remanescente precisamente isolada**:
+  a positividade de `ŵ(0)` não é provada incondicionalmente; sob a
+  Hipótese de Riemann Generalizada (GRH), a cota inferior `ŵ(0) > 0`
+  pode ser estabelecida (trabalho futuro). Sem GRH, o problema tem
+  exactamente a mesma dificuldade que a conjectura original.
+
+#### Alterado
+
+- **README — versão e contagem de artigos**: actualizado de v2.6.0 para
+  v2.7.0; a frase "seis artigos complementares" passa a "oito artigos
+  complementares".
+- **README — diagrama da linha de Goldbach**: Paper 08 inserido no topo
+  como estado actual; Paper 07 (Motor de Herança) recebe posição própria
+  abaixo da camada espectral.
+- **README — secção "Progresso recente"**: substituída pelo resumo do
+  Paper 08; o resumo do Paper 06 (Problema B) mantém-se na secção do
+  próprio artigo.
+- **README — camadas de progresso**: Paper 07 passa a Camada 4;
+  Paper 08 entra como Camada 5 *(novo)*; lacuna remanescente sobe para
+  Camada 6.
+- **README — tabela de resultados incondicionais**: seis novas linhas
+  relativas ao Paper 08 (espectro, entropia, Teorema 4.4, Proposição 5.2,
+  redução, acoplamento com Paper 07).
+- **README — tabela de resultados condicionais**: duas novas linhas —
+  Teorema do Motor condicional a HR⁻ (Paper 07) e cota `ŵ(0) > 0`
+  condicional a GRH (Paper 08).
+- **README — secção "Como compilar os PDFs"**: bloco bash para o
+  Paper 08 adicionado.
+- **README — secção de citações**: entrada BibTeX `bandeira2026ergotica`
+  adicionada.
+- **Paper 07 — secção "Conexão com a série"**: referência a Paper 08
+  actualizada para reflectir que `Φ` e a órbita de `σ` são usados como
+  ferramentas algébricas na reformulação espectral.
+
+--- 
+
 ### [v2.6.0] — Maio 2026
 #### Adicionado — Paper 7 (v3)
 - **Observação 4.5 — Estrutura direccional de $\sigma$ por linha**:
