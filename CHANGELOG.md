@@ -3,6 +3,21 @@
 Todas as mudanças significativas neste projeto são documentadas aqui.
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
+
+## [2.7.1] - 2026-05-21
+
+### Adicionado
+- Primeira versão dos notebooks de testes espectrais:  
+  `notebooks/frentes_espectrais_motor_notebook.ipynb`
+  - Implementa o Motor de Herança Estrutural com busca via órbita de σ.
+  - Calcula a função de peso `w(t) = Λ(e₁)·Λ(e₃)` e sua DFT, verificando a positividade de ŵ(0) (HR⁻) e o decaimento de |ŵ(j≠0)|.
+  - Inclui a Frente 4 (janela polinomial `L = M^δ`) e a Frente 2 (análise espectral).
+  - Contém uma célula de diagnóstico que demonstra que o artefato 2,00× na razão ŵ(0)/max|ŵ(j≠0)| ocorre apenas quando `N-1` é potência de 10, e recomenda usar `N` arbitrários (não potências de 10) para evitar aliasing numérico.
+  - Gera gráficos e estatísticas que corroboram a descorrelação espectral prevista na Proposição 5.2 do artigo.
+- Documentação: seção no README sobre como executar os notebooks e interpretar os resultados.
+
+---
+
 ### [v2.7.0] — Maio 2026
 
 #### Adicionado — Paper 08: Reformulação Espectral do Motor de Herança
