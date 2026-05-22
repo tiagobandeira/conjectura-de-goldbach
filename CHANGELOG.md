@@ -3,6 +3,10 @@
 Todas as mudanças significativas neste projeto são documentadas aqui.
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
+## [2.7.3] - 2026-05-21
+### Restaura v2.7.1
+  - Restaura versões anteriores(artigo 8).
+
 
 ## [2.7.1] - 2026-05-21
 
