@@ -1,0 +1,15 @@
+\babel@toc {english}{}\relax 
+\contentsline {section}{\numberline {1}Introdução}{3}{section.1}%
+\contentsline {subsection}{\numberline {1.1}A série e o contexto}{3}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Estrutura do argumento}{3}{subsection.1.2}%
+\contentsline {section}{\numberline {2}Preliminares --- Resultados Incondicionais}{3}{section.2}%
+\contentsline {subsection}{\numberline {2.1}A fita-dobra e a grade}{4}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}A permutação deslizante e sua órbita}{4}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Hipótese Restritiva Fraca e média orbital}{5}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}O Teorema do Motor}{5}{subsection.2.4}%
+\contentsline {section}{\numberline {3}Prova de $\mathrm {HR}^{-}$ sob $\mathrm {GRH}$}{5}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Redução à fita linear}{5}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Aplicação do método de Hardy--Littlewood}{5}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Positividade da média orbital}{6}{subsection.3.3}%
+\contentsline {section}{\numberline {4}Conclusão --- Conjectura de Goldbach}{7}{section.4}%
+\contentsline {section}{\numberline {5}Síntese dos Resultados}{8}{section.5}%

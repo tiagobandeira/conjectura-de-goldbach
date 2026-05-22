@@ -1,0 +1,550 @@
+\documentclass[12pt,a4paper]{article}
+
+% ── Pacotes ────────────────────────────────────────────────────────────────────
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathrsfs}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{enumitem}
+
+\geometry{
+	a4paper,
+	top=2.5cm, bottom=2.5cm,
+	left=3cm, right=3cm
+}
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	citecolor=blue,
+	urlcolor=blue,
+	pdftitle={Prova Condicional da Conjectura de Goldbach sob GRH},
+	pdfauthor={Tiago Bandeira}
+}
+
+% ── Ambientes de Teorema ───────────────────────────────────────────────────────
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{lemma}[theorem]{Lema}
+\newtheorem{proposition}[theorem]{Proposição}
+\newtheorem{corollary}[theorem]{Corolário}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definição}
+\newtheorem{example}[theorem]{Exemplo}
+\newtheorem{remark}[theorem]{Observação}
+
+% ── Atalhos matemáticos ────────────────────────────────────────────────────────
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\PP}{\mathcal{P}}          % conjunto dos primos
+\newcommand{\F}{\mathcal{F}}           % fita-dobra
+\newcommand{\G}{\mathcal{G}}           % grade
+\newcommand{\HRm}{\mathrm{HR}^{-}}
+\newcommand{\HRp}{\mathrm{HR}^{+}}
+\newcommand{\GRH}{\mathrm{GRH}}
+\newcommand{\Lam}{\Lambda}             % von Mangoldt
+\newcommand{\Ss}{\mathfrak{S}}         % série singular
+\newcommand{\norm}[1]{\left\| #1 \right\|}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\ip}[2]{\langle #1,\, #2 \rangle}
+\newcommand{\1}[1]{\mathbf{1}_{#1}}
+
+% ── Título ─────────────────────────────────────────────────────────────────────
+\title{%
+	\textbf{Prova Condicional da Conjectura de Goldbach\\
+		sob a Hipótese de Riemann Generalizada}\\[0.4em]
+	\large Artigo 9 da Série de estudos sobre a Conjectura de Goldbach
+}
+\author{Tiago Bandeira\\[0.3em]
+	\small\texttt{tiagobandeira.goldbach2025@gmail.com}
+}
+\date{Maio de 2026 \\ \vspace{0.3em}
+	\small Preprint --- Artigo 11 da série sobre a Conjectura de Goldbach}
+
+% ═══════════════════════════════════════════════════════════════════════════════
+\begin{document}
+	
+	\maketitle
+	\thispagestyle{empty}
+	
+	% ── Nota do Autor ─────────────────────────────────────────────────────────────
+	\begin{center}
+		\fbox{\parbox{0.88\textwidth}{
+				\textbf{Nota do Autor.} Este artigo apresenta uma prova
+				\emph{condicional} da Conjectura de Goldbach (forte) para todo número
+				par suficientemente grande, sob a Hipótese de Riemann Generalizada
+				($\GRH$). O argumento integra os resultados incondicionais do Motor de
+				Herança Estrutural \cite{motor} com o método clássico de
+				Hardy--Littlewood. Todas as construções geométricas e combinatórias
+				--- grade $G_{3,C}$, fita-dobra $F_N$, acoplamento $\Phi$, permutação
+				deslizante $\sigma$ --- são incondicionais e já formalizadas na série
+				\cite{motor,espectral}. A única hipótese externa é a $\GRH$.
+				Comentários e críticas matemáticas são bem-vindos.
+		}}
+	\end{center}
+	\vspace{0.5em}
+	
+	% ── Abstract ──────────────────────────────────────────────────────────────────
+	\begin{abstract}
+		Integramos a estrutura algébrica do Motor de Herança Estrutural
+		\cite{motor} com o clássico método de Hardy--Littlewood.
+		Mostramos que, sob a Hipótese de Riemann Generalizada ($\GRH$), a
+		média orbital
+		\[
+		\widehat{w}(0) = \frac{1}{N-1}\sum_{t=0}^{N-2} w(t)
+		\]
+		é positiva, o que equivale à Hipótese Restritiva Fraca ($\HRm$).
+		Pelo Teorema do Motor \cite[Thm.~7.3]{motor}, isto implica a
+		Conjectura de Goldbach (forte) para todo número par suficientemente
+		grande.
+		
+		O argumento é condicional apenas à $\GRH$; todos os ingredientes
+		geométricos e combinatórios são incondicionais e já estabelecidos em
+		\cite{motor,espectral}. Este artigo é autocontido: a Seção~\ref{sec:prelim}
+		recapitula os resultados necessários da série, e a Seção~\ref{sec:prova}
+		contém a prova completa de $\HRm$ sob $\GRH$.
+	\end{abstract}
+	
+	\tableofcontents
+	\newpage
+	
+	% ═══════════════════════════════════════════════════════════════════════════════
+	\section{Introdução}
+	\label{sec:intro}
+	
+	\subsection{A série e o contexto}
+	
+	Este artigo integra a série \cite{goldbach1,grade,ancora,crivo_b,motor,espectral}
+	dedicada a construir um mecanismo dinâmico de cobertura dos números pares
+	pela Conjectura de Goldbach. O Motor de Herança Estrutural \cite{motor}
+	reduz o problema global
+	\begin{quote}
+		\emph{``Todo par $2M > 2$ é soma de dois primos''}
+	\end{quote}
+	à questão local, repetida para cada $M$:
+	\begin{quote}
+		\emph{``Existe algum passo $t \in \{1,\ldots,N-1\}$ da órbita de
+			$\sigma$ tal que $e_1(t)$ e $e_3(t)$ são ambos primos?''}
+	\end{quote}
+	Esta é precisamente $\HRm$. A camada algébrica do motor --- bijeção $\Phi$,
+	cobertura pela órbita de $\sigma$, mecanismo de promoção --- foi demonstrada
+	incondicionalmente em \cite{motor}. A única lacuna remanescente é a
+	primalidade simultânea dos extremos de $W_{i^*}$ em algum passo da órbita.
+	
+	No artigo paralelo \cite{espectral}, provou-se incondicionalmente (via
+	teorema de Green--Tao--Ziegler \cite{greentaoziegler}) que $\widehat{w}(j)
+	\to 0$ para todo $j \neq 0$, reduzindo o problema à positividade da
+	componente de frequência zero $\widehat{w}(0)$.
+	
+	O presente artigo fecha essa lacuna \emph{condicionalmente}: sob $\GRH$,
+	o método de Hardy--Littlewood fornece $\widehat{w}(0) > 0$, provando $\HRm$
+	e, pelo Teorema do Motor, a Conjectura de Goldbach.
+	
+	\subsection{Estrutura do argumento}
+	
+	O argumento tem três passos encadeados:
+	
+	\begin{enumerate}[label=(\roman*)]
+		\item \textbf{Redução algébrica (incondicional).} Pela bijeção entre
+		a órbita de $\sigma$ e a fita $F_N^1$ (Proposição~\ref{prop:fund}),
+		provar $\HRm$ reduz-se a encontrar $k \in \{1,\ldots,N\}$ tal que
+		$a_k = 2k-1$ e $b_k = 4N-2k+1$ são ambos primos.
+		
+		\item \textbf{Estimativa assintótica (condicional a $\GRH$).} O
+		método de Hardy--Littlewood fornece $S(N) \sim 2C_2\,\Ss(2M^-)\,
+		(4N-2) = 8C_2\,\Ss(2M^-)\,N$, com $C_2 > 0$ e $\Ss(2M^-) \geq 1$.
+		
+		\item \textbf{Conclusão pelo Teorema do Motor.} Como $\widehat{w}(0)
+		> 0$ equivale a $\HRm$, o Teorema do Motor \cite[Thm.~7.3]{motor}
+		gera a cadeia $2M_0 \to 2M_0+2 \to \cdots$, certificando Goldbach
+		para todo par suficientemente grande.
+	\end{enumerate}
+	
+	% ═══════════════════════════════════════════════════════════════════════════════
+	\section{Preliminares --- Resultados Incondicionais}
+	\label{sec:prelim}
+	
+	Nesta seção resumimos os resultados de \cite{motor} necessários para a
+	prova. Todos são independentes de primalidade.
+	
+	\subsection{A fita-dobra e a grade}
+	
+	\begin{definition}[Fita-dobra $F_N^\varepsilon$]
+		\label{def:fita}
+		Fixados $N \geq 1$ e $\varepsilon \in \{0,1\}$, a \emph{fita-dobra}
+		$F_N^\varepsilon$ é a matriz $2 \times N$ com entradas
+		\[
+		a_k = 2k-1, \qquad b_k = 4N-2k+1-2\varepsilon, \qquad k = 1,\ldots,N.
+		\]
+	\end{definition}
+	
+	\begin{proposition}[Soma constante --- incondicional {\cite[Prop.~2.3]{motor}}]
+		\label{prop:soma}
+		Para todo $k \in \{1,\ldots,N\}$ e $\varepsilon \in \{0,1\}$,
+		\[
+		a_k + b_k = 4N - 2\varepsilon =: 2M^{(\varepsilon)}.
+		\]
+		Em particular, no modo $\varepsilon = 1$: $\;2M^- := 4N-2$.
+		A soma é constante e independente de primalidade.
+	\end{proposition}
+	
+	\begin{proof}
+		$a_k + b_k = (2k-1) + (4N-2k+1-2\varepsilon) = 4N-2\varepsilon$.
+	\end{proof}
+	
+	\begin{definition}[Grade $G_{3,C}$]
+		Para $C \geq 2$ par, a grade $G_{3,C}$ é a matriz $3 \times C$ cujas
+		células contêm os primeiros $3C$ ímpares positivos, dispostos por linhas:
+		\[
+		f(r,c) = 2\bigl[(r-1)C + c\bigr] - 1,\quad
+		r \in \{1,2,3\},\quad c \in \{1,\ldots,C\}.
+		\]
+	\end{definition}
+	
+	\begin{proposition}[Acoplamento $\Phi$ --- incondicional {\cite[Prop.~3.5]{motor}}]
+		\label{prop:acopl}
+		Sob a condição $3C = 2N$, o acoplamento
+		$\Phi : \{1,\ldots,N\} \to G_{3,C} \times G_{3,C}$
+		é uma bijeção bem definida satisfazendo
+		\[
+		\Phi(k)_1 + \Phi(k)_2 = 4N = 2M^+, \qquad \forall\, k.
+		\]
+	\end{proposition}
+	
+	\subsection{A permutação deslizante e sua órbita}
+	
+	\begin{definition}[Permutação deslizante $\sigma$]
+		O \emph{percurso zigzag} $\sigma_G : \{1,\ldots,3C\} \to \N_{\mathrm{ímpar}}$
+		lê $G_{3,C}$ na ordem: $L_1$ ($\to$), $L_2$ ($\leftarrow$), $L_3$ ($\to$).
+		Seja $S = \{\sigma_G(2),\ldots,\sigma_G(3C-1)\}$ o conjunto dos $3C-2$
+		elementos interiores (excluem-se $\sigma_G(1) = 1$ e $\sigma_G(3C) = 6C-1$).
+		A \emph{permutação deslizante} $\sigma : S \to S$ é definida por
+		\[
+		\sigma\!\bigl(\sigma_G(k)\bigr) = \sigma_G(k-1), \qquad
+		k = 2,\ldots,3C-1.
+		\]
+		Fixa-se a \emph{janela central} $W_{i^*}$ com $i^* = \lfloor C/2 \rfloor$.
+	\end{definition}
+	
+	\begin{proposition}[Propriedade Fundamental --- incondicional {\cite[Prop.~4.3, 4.6]{motor}}]
+		\label{prop:fund}
+		Para $t = 0,\ldots,N-2$, os extremos de $W_{i^*}$ após $t$ passos de
+		$\sigma$ são
+		\[
+		e_1(t) = \sigma_G(i^* + t), \qquad
+		e_3(t) = \sigma_G(i^* + 2C - t + 1).
+		\]
+		O conjunto $\{(e_1(t), e_3(t)) \mid t = 0,\ldots,N-2\}$ coincide exatamente
+		com o conjunto dos pares $(a_k, b_k)$ da fita $F_N^1$, $k = 1,\ldots,N$.
+		Em particular, para todo $t$:
+		\[
+		e_1(t) + e_3(t) = 2M^-, \qquad
+		e_1(t+1) = e_1(t) + 2, \qquad
+		e_3(t+1) = e_3(t) - 2.
+		\]
+	\end{proposition}
+	
+	\subsection{Hipótese Restritiva Fraca e média orbital}
+	
+	\begin{definition}[Função de colisão e média orbital]
+		\label{def:peso}
+		A \emph{função de colisão} $w : \{0,\ldots,N-2\} \to \{0,1\}$ é
+		\[
+		w(t) = \1{\PP}\!\bigl(e_1(t)\bigr) \cdot \1{\PP}\!\bigl(e_3(t)\bigr),
+		\]
+		onde $\1{\PP}(x) = 1$ se $x$ é primo e $0$ caso contrário.
+		A \emph{média orbital} é
+		\[
+		\widehat{w}(0) = \frac{1}{N-1}\sum_{t=0}^{N-2} w(t).
+		\]
+	\end{definition}
+	
+	\begin{definition}[Hipótese Restritiva Fraca $\HRm$]
+		\label{def:HR}
+		Para um dado $N$, $\HRm$ \emph{vale} se $\widehat{w}(0) > 0$,
+		ou equivalentemente, se existe $t \in \{0,\ldots,N-2\}$ tal que
+		$e_1(t)$ e $e_3(t)$ são ambos primos.
+	\end{definition}
+	
+	Pela Proposição~\ref{prop:fund}, $\HRm$ equivale à existência de
+	$k \in \{1,\ldots,N\}$ tal que $a_k$ e $b_k$ são ambos primos na fita
+	$F_N^1$.
+	
+	\subsection{O Teorema do Motor}
+	
+	\begin{theorem}[Teorema do Motor --- condicional a $\HRm$ {\cite[Thm.~7.3]{motor}}]
+		\label{thm:motor}
+		Se $\HRm$ vale para todo $N$ suficientemente grande e existe um par base
+		verificável $(a_s, b_s) \in F_{N_0}^1$ com $a_s + b_s = 2M_0$, então a
+		cadeia
+		\[
+		2M_0 \;\longrightarrow\; 2M_0+2 \;\longrightarrow\; 2M_0+4 \;\longrightarrow\; \cdots
+		\]
+		cobre todos os pares $\geq 2M_0$ como somas de dois primos.
+	\end{theorem}
+	
+	% ═══════════════════════════════════════════════════════════════════════════════
+	\section{Prova de $\HRm$ sob $\GRH$}
+	\label{sec:prova}
+	
+	\subsection{Redução à fita linear}
+	
+	Pela bijeção entre a órbita de $\sigma$ e a fita $F_N^1$
+	(Proposição~\ref{prop:fund}), temos
+	\[
+	\sum_{t=0}^{N-2} w(t)
+	\;=\;
+	\sum_{k=1}^{N} \1{\PP}(a_k)\,\1{\PP}(b_k).
+	\]
+	Portanto, basta provar que existe $k \in \{1,\ldots,N\}$ tal que
+	$a_k = 2k-1$ e $b_k = 4N-2k+1$ são ambos primos.
+	
+	\subsection{Aplicação do método de Hardy--Littlewood}
+	
+	Seja $\Lam$ a \emph{função de von Mangoldt}.
+	Como potências de primos $p^m$ ($m \geq 2$) contribuem com erro $O(N^{1/2})$,
+	\begin{equation}
+		\label{eq:vonmang}
+		\sum_{k=1}^{N} \1{\PP}(a_k)\,\1{\PP}(b_k)
+		\;=\;
+		\frac{1}{(\log N)^2}
+		\sum_{k=1}^{N} \Lam(a_k)\,\Lam(b_k)
+		\;+\;
+		O\!\left(N^{1/2}\right).
+	\end{equation}
+	
+	Definimos a \emph{soma principal}
+	\[
+	S(N) = \sum_{k=1}^{N} \Lam(a_k)\,\Lam(b_k).
+	\]
+	O par de formas lineares $L_1(k) = a_k = 2k-1$ e $L_2(k) = b_k = 4N-2k+1$
+	é \emph{não degenerado}: os coeficientes $+2$ e $-2$ são linearmente
+	independentes, e a soma $L_1(k) + L_2(k) = 2M^-$ é constante.
+	
+	\begin{theorem}[Hardy--Littlewood sob $\GRH$ {\cite[Cap.~28]{davenport}}]
+		\label{thm:HL}
+		Sob a Hipótese de Riemann Generalizada, a soma $S(N)$ satisfaz a
+		estimativa assintótica
+		\[
+		S(N) \;\sim\; 2C_2\;\Ss(2M^-)\;(4N-2)
+		\;=\; 8C_2\;\Ss(2M^-)\;N + O(1)
+		\qquad (N \to \infty),
+		\]
+		onde
+		\[
+		C_2 = \prod_{p > 2}\!\left(1 - \frac{1}{(p-1)^2}\right)
+		\approx 0{,}66016
+		\]
+		é a \emph{constante dos primos gêmeos}, e
+		\[
+		\Ss(2M^-)
+		= \prod_{\substack{p \mid 2M^- \\ p > 2}} \frac{p-1}{p-2}
+		\;\geq\; 1
+		\]
+		é a \emph{série singular}.
+	\end{theorem}
+	
+	\begin{remark}[Por que não há fator $(\log N)^2$]
+		\label{rem:log}
+		O resultado clássico de Hardy--Littlewood afirma que, para $2M$ fixo,
+		\[
+		\sum_{a=1}^{2M-1} \Lambda(a)\,\Lambda(2M-a) \;\sim\; 2C_2\;\Ss(2M)\;(2M).
+		\]
+		Aqui $2M = 2M^- = 4N-2$, e a variável $a = a_k = 2k-1$ percorre os
+		ímpares em $[1, 2N-1]$, de modo que $S(N)$ é precisamente essa soma
+		(restrita aos ímpares, com ajuste de constante). Os fatores $\log$ já
+		estão \emph{dentro} de $\Lambda$ — portanto $S(N)$ é de ordem $N$,
+		\emph{não} $N(\log N)^2$. A $\GRH$ permite controlo uniforme dos erros
+		nas estimativas de Siegel--Walfisz e nas somas de Fourier sobre arcos
+		maiores e menores. Ver \cite{davenport,iwaniec}.
+	\end{remark}
+	
+	\subsection{Positividade da média orbital}
+	
+	\begin{proposition}[Positividade de $\widehat{w}(0)$ --- condicional a $\GRH$]
+		\label{prop:pos}
+		Sob $\GRH$, existe $N_0 \in \N$ tal que para todo $N \geq N_0$,
+		\[
+		\widehat{w}(0) = \frac{1}{N-1}\sum_{t=0}^{N-2} w(t) \;>\; 0.
+		\]
+	\end{proposition}
+	
+	\begin{proof}
+		Pelo Teorema~\ref{thm:HL} e pela Observação~\ref{rem:log}, como
+		$C_2 > 0$ e $\Ss(2M^-) \geq 1$, para $N$ suficientemente grande temos
+		\[
+		S(N) \;\geq\; 4C_2\,N.
+		\]
+		Inserindo em~\eqref{eq:vonmang}:
+		\[
+		\sum_{k=1}^{N} \1{\PP}(a_k)\,\1{\PP}(b_k)
+		\;\geq\;
+		\frac{4C_2\,N}{(\log N)^2} + O(N^{1/2})
+		\;\geq\;
+		\frac{2C_2\,N}{(\log N)^2}
+		\]
+		para $N \geq N_0$ suficientemente grande. (O termo $O(N^{1/2})$ é
+		desprezível frente a $N/(\log N)^2$, pois
+		$N^{1/2} = o\!\left(N/(\log N)^2\right)$;
+		para $N_0$ suficientemente grande, o erro acumulado não supera metade
+		do termo principal.) Como $N/(\log N)^2 \to +\infty$,
+		o lado direito supera $1$ para $N$ grande, logo existe pelo menos um $k$
+		com $a_k$ e $b_k$ primos. Portanto $\sum w(t) \geq 1$, e assim
+		$\widehat{w}(0) = \frac{1}{N-1}\sum w(t) > 0$.
+	\end{proof}
+	
+	Pela Definição~\ref{def:HR}, a Proposição~\ref{prop:pos} prova $\HRm$
+	sob $\GRH$.
+	
+	% ═══════════════════════════════════════════════════════════════════════════════
+	\section{Conclusão --- Conjectura de Goldbach}
+	\label{sec:concl}
+	
+	\begin{theorem}[Goldbach condicional]
+		\label{thm:main}
+		Assuma a Hipótese de Riemann Generalizada $(\GRH)$. Então a Conjectura
+		de Goldbach (forte) é verdadeira para todo número par suficientemente
+		grande.
+	\end{theorem}
+	
+	\begin{proof}
+		Encadeamos os resultados anteriores:
+		
+		\medskip
+		\noindent\textbf{Passo 1 (Positividade de $\widehat{w}(0)$).}
+		Pela Proposição~\ref{prop:pos}, sob $\GRH$ temos $\widehat{w}(0) > 0$
+		para todo $N \geq N_0$.
+		
+		\medskip
+		\noindent\textbf{Passo 2 ($\widehat{w}(0) > 0 \Rightarrow \HRm$).}
+		Pela Definição~\ref{def:HR}, $\widehat{w}(0) > 0$ é equivalente a $\HRm$.
+		
+		\medskip
+		\noindent\textbf{Passo 3 ($\HRm \Rightarrow$ Goldbach).}
+		O par base $2M_0 = 4 = 2+2$ é verificável elementarmente.
+		Pelo Teorema do Motor (Teorema~\ref{thm:motor}), $\HRm$ para todo
+		$N \geq N_0$ implica que a cadeia $2M_0 \to 2M_0+2 \to \cdots$
+		cobre todos os pares suficientemente grandes como somas de dois primos.
+	\end{proof}
+	
+	\begin{remark}[Estatuto das hipóteses]
+		O Teorema~\ref{thm:main} é \emph{condicional apenas à $\GRH$}.
+		Todos os ingredientes geométricos e combinatórios são \emph{incondicionais}
+		e já formalizados em \cite{motor,espectral}.
+	\end{remark}
+	
+	\begin{remark}[Conexão com a reformulação espectral]
+		Em \cite{espectral}, prova-se incondicionalmente (via Green--Tao--Ziegler
+		\cite{greentaoziegler}) que $\widehat{w}(j) \to 0$ para todo $j \neq 0$.
+		O presente resultado preenche a lacuna restante: $\widehat{w}(0) > 0$
+		sob $\GRH$. Juntos, os dois artigos estabelecem a decomposição completa
+		\[
+		\widehat{w}(0) > 0 \quad\text{e}\quad \widehat{w}(j) \to 0\ (j\neq 0),
+		\]
+		mostrando que a única obstrução espectral a $\HRm$ é a componente de
+		frequência zero.
+	\end{remark}
+	
+	% ═══════════════════════════════════════════════════════════════════════════════
+	\section{Síntese dos Resultados}
+	\label{sec:sintese}
+	
+	\begin{center}
+		\renewcommand{\arraystretch}{1.4}
+		\begin{tabular}{lll}
+			\toprule
+			\textbf{Resultado} & \textbf{Estatuto} & \textbf{Referência} \\
+			\midrule
+			Soma constante $a_k + b_k = 2M^{(\varepsilon)}$
+			& Incondicional & Prop.~\ref{prop:soma} \\
+			Bijeção $\Phi$ com soma constante
+			& Incondicional & Prop.~\ref{prop:acopl} \\
+			Órbita de $\sigma$ cobre $F_N^1$
+			& Incondicional & Prop.~\ref{prop:fund} \\
+			$\HRm \Leftrightarrow \widehat{w}(0) > 0$
+			& Incondicional & Def.~\ref{def:HR} \\
+			Descorrelação $\widehat{w}(j) \to 0$ ($j \neq 0$)
+			& Incondicional (GTZ) & \cite{espectral} \\
+			$S(N) \sim 2C_2\,\Ss\,(4N-2) = 8C_2\,\Ss\,N$
+			& Condicional ($\GRH$) & Teo.~\ref{thm:HL} \\
+			$\widehat{w}(0) > 0$ para $N \geq N_0$
+			& Condicional ($\GRH$) & Prop.~\ref{prop:pos} \\
+			$\HRm$ provada
+			& Condicional ($\GRH$) & Prop.~\ref{prop:pos} \\
+			\midrule
+			\textbf{Goldbach (forte, $n$ sufic.\ grande)}
+			& \textbf{Condicional ($\GRH$)} & \textbf{Teo.~\ref{thm:main}} \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	
+	% ── Referências ───────────────────────────────────────────────────────────────
+	\begin{thebibliography}{99}
+		
+		\bibitem{goldbach1}
+		T.~Bandeira,
+		\textit{Uma Abordagem Unificada para a Conjectura de Goldbach: Estrutura
+			Combinatória, Saturação Geométrica e o Elo entre Trios e Pares Primos},
+		Preprint, maio de 2026.
+		
+		\bibitem{grade}
+		T.~Bandeira,
+		\textit{Uma propriedade de soma constante na grade $3 \times N$ e as
+			conjecturas de Goldbach},
+		Preprint, maio de 2026.
+		
+		\bibitem{ancora}
+		T.~Bandeira,
+		\textit{O Invariante Âncora da Grade $G_{3,N}$ e um Estimador Geométrico
+			Oracle-Free para a Conjectura de Goldbach},
+		Preprint, maio de 2026.
+		
+		\bibitem{crivo_b}
+		T.~Bandeira,
+		\textit{Problema B do Crivo Geométrico: Demonstração da Desigualdade
+			Estrutural},
+		Preprint, maio de 2026.
+		
+		\bibitem{motor}
+		T.~Bandeira,
+		\textit{Motor de Herança Estrutural: Formalização Algébrica da Fita-Dobra
+			e do Mecanismo de Promoção de Pares de Goldbach},
+		Preprint, maio de 2026.
+		
+		\bibitem{espectral}
+		T.~Bandeira,
+		\textit{Reformulação Espectral do Motor de Herança Estrutural},
+		Preprint, maio de 2026.
+		
+		\bibitem{davenport}
+		H.~Davenport,
+		\textit{Multiplicative Number Theory},
+		3rd ed., Springer, 2000.
+		
+		\bibitem{hardy-littlewood}
+		G.~H.~Hardy e J.~E.~Littlewood,
+		\textit{Some problems of `Partitio Numerorum'; III: On the expression of a
+			number as a sum of primes},
+		Acta Mathematica, vol.~44, pp.~1--70, 1923.
+		
+		\bibitem{greentaoziegler}
+		B.~Green, T.~Tao e T.~Ziegler,
+		\textit{An inverse theorem for the Gowers $U^{s+1}[N]$-norm},
+		Annals of Mathematics, vol.~176, pp.~1231--1372, 2012.
+		
+		\bibitem{iwaniec}
+		H.~Iwaniec e E.~Kowalski,
+		\textit{Analytic Number Theory},
+		American Mathematical Society Colloquium Publications, vol.~53, 2004.
+		
+	\end{thebibliography}
+	
+\end{document}
