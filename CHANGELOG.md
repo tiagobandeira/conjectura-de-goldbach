@@ -4,6 +4,25 @@ Todas as mudanças significativas neste projeto são documentadas aqui.
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
 
+## [v2.7.2] – 2026-05-22
+
+### Adicionado
+- **Artigo 9 – Prova Condicional da Conjectura de Goldbach sob GRH**
+  - `bandeira_prova_condicional_goldbach_grh_2026.tex`
+  - Integra o Motor de Herança Estrutural (Artigo 5) com o método clássico de Hardy‑Littlewood.
+  - Demonstra, sob a Hipótese de Riemann Generalizada (GRH), que a média orbital `ŵ(0)` é positiva.
+  - Isto estabelece a Hipótese Restritiva Fraca (HR⁻) e, pelo Teorema do Motor, a Conjectura de Goldbach (forte) para todo número par suficientemente grande.
+  - A prova é condicional apenas à GRH; toda a estrutura algébrica (grade, fita, permutação σ, acoplamento Φ) é incondicional e já formalizada nos artigos anteriores.
+
+### Corrigido
+- Artigo 5 (Motor de Herança): pequeno ajuste na contagem dos índices da órbita de σ, garantindo bijeção exacta entre os pares da fita e os extremos da janela central (ref. Issue #23).
+
+### Notas
+- Esta versão fecha a lacuna espectral deixada no Artigo 8, onde se provou incondicionalmente que `ŵ(j) → 0` para `j ≠ 0`. Agora, sob GRH, `ŵ(0) > 0` completa o quadro.
+- A partir da v2.7.2, a série passa a ter **9 artigos principais**.
+
+--- 
+
 ## [2.7.1] - 2026-05-21
 
 ### Adicionado
