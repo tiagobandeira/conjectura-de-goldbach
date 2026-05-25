@@ -3,6 +3,29 @@
 Todas as mudanças significativas neste projeto são documentadas aqui.
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
+## [2.7.4] - 2026-05-25
+
+### Adicionado
+- nota: crivo canônico Wi* — fórmula fechada (e1=C−1, e3=5C+1),
+  independência de crivo para q>3, filtro mod 30, certificado de Lucas
+  geométrico. Status: rascunho (Artigo 7).
+
+- nota: cadeias de autossimilaridade via T(C)=5C+2 — anomalia
+  C≡6 (mod 30) provada incondicionalmente, ciclo {2,12} mod 30,
+  fórmula fechada e1_n = 5^n·p + (3/2)·(5^n−1), coprimaridade,
+  cadeia de comprimento 6 verificada (C₀=80). Status: nota complementar.
+
+- código: canonical_wi_star.py — verificação da posição canônica
+  por fórmula fechada, sem construção da grade.
+
+- código: lucas_geometrico_wi_star.py — certificado de Lucas
+  aplicado ao par canônico.
+
+### Observações
+- A geometria da grade (pivôs, janelas 3×3, diagonais da fita)
+  está em reformulação. Definição do motor será revisada em versão
+  futura antes de integrar estas notas à série principal.
+
 ## [2.7.3] - 2026-05-21
 ### Restaura v2.7.1
   - Restaura versões anteriores(artigo 8).
