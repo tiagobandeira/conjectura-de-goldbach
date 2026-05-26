@@ -1,0 +1,629 @@
+\documentclass[12pt,a4paper]{article}
+
+% ── Pacotes ────────────────────────────────────────────────────────────────────
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathrsfs}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{mdframed}
+
+\geometry{
+	a4paper,
+	top=2.5cm, bottom=2.5cm,
+	left=3cm, right=3cm
+}
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	citecolor=blue,
+	urlcolor=blue,
+	pdftitle={Motor de Herança Estrutural — Documento de Formalização (Versão Definitiva)},
+	pdfauthor={Tiago Bandeira}
+}
+
+% ── Ambientes de Teorema ───────────────────────────────────────────────────────
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{lemma}[theorem]{Lema}
+\newtheorem{proposition}[theorem]{Proposição}
+\newtheorem{corollary}[theorem]{Corolário}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definição}
+\newtheorem{example}[theorem]{Exemplo}
+\newtheorem{remark}[theorem]{Observação}
+
+% ── Atalhos matemáticos ────────────────────────────────────────────────────────
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\PP}{\mathcal{P}}          % conjunto dos primos
+\newcommand{\F}{\mathcal{F}}           % fita-dobra
+\newcommand{\G}{\mathcal{G}}           % grade
+\newcommand{\HRm}{\mathrm{HR}^{-}}
+\newcommand{\HRp}{\mathrm{HR}^{+}}
+\newcommand{\norm}[1]{\left\| #1 \right\|}
+\newcommand{\abs}[1]{\left| #1 \right|}
+
+% ── Título ─────────────────────────────────────────────────────────────────────
+\title{%
+	\textbf{Motor de Herança Estrutural}\\[0.4em]
+	\large Documento de Formalização — Versão Definitiva (rev.\ 2)
+}
+\author{Tiago Bandeira\\[0.3em]
+	\small\texttt{tiagobandeira.goldbach2025@gmail.com}
+}
+\date{Maio de 2026}
+
+% ═══════════════════════════════════════════════════════════════════════════════
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+
+% ── Nota do Autor ──────────────────────────────────────────────────────────────
+\begin{center}
+	\fbox{\parbox{0.88\textwidth}{%
+		\textbf{Nota do Autor.} Este documento substitui e corrige as
+		definições do Motor presentes nos Artigos~5 e~6 da série. A distinção
+		central corrigida nesta revisão é: o par base~$2M$ é a soma das colunas
+		da fita — o sistema já sabe que é Goldbach. O par alvo~$2M{+}2$ é a
+		soma das diagonais da fita — quem certifica que é Goldbach é
+		$\HRm$. Esta distinção propaga-se por todas as definições do motor.
+	}}
+\end{center}
+\vspace{0.5em}
+
+\tableofcontents
+\newpage
+
+% ═══════════════════════════════════════════════════════════════════════════════
+\section*{0.\quad Glossário — Distinção Fundamental}
+\addcontentsline{toc}{section}{0.\enspace Glossário — Distinção Fundamental}
+\label{sec:glossario}
+
+Antes de qualquer definição, é necessário fixar com precisão os dois
+conceitos que organizam todo o motor:
+
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+\begin{tabular}{>{\bfseries}p{2.8cm} p{5.8cm} p{4.6cm}}
+	\toprule
+	\textbf{Conceito} & \textbf{Definição} & \textbf{Quem garante} \\
+	\midrule
+	Par base $2M$ &
+		Soma das colunas da fita: $a_k + b_k = 2M$ &
+		O sistema escolhe colunas com primos — Goldbach já é conhecido para
+		$2M$. \\[0.4em]
+	Par alvo $2M{+}2$ &
+		Soma das diagonais da fita:
+		$a_{(k+1)} + b_k = 2M{+}2$,\newline $k \in \{1, \ldots, N{-}1\}$ &
+		$\HRm$ certifica que $2M{+}2$ é Goldbach ao encontrar primos nos
+		extremos de $W_i$. \\
+	\bottomrule
+\end{tabular}
+\end{center}
+
+% ═══════════════════════════════════════════════════════════════════════════════
+\section{Motivação e Mudança de Paradigma}
+\label{sec:motivacao}
+
+A Conjectura de Goldbach afirma que todo número par maior que~2 é soma de
+dois primos. A abordagem clássica trata essa questão de forma estática —
+para cada par~$2M$, pergunta-se se existe uma decomposição $2M = p + q$.
+O Motor de Herança Estrutural substitui essa pergunta estática pela
+pergunta dinâmica:
+
+\begin{center}
+	\fbox{\parbox{0.85\textwidth}{%
+		\itshape Dado que $2M$ é Goldbach (par base), \textbf{a estrutura
+		geométrica garante que $2M{+}2$ (par alvo) também o é?}
+	}}
+\end{center}
+
+\noindent O motor organiza os ímpares em dois objetos acoplados — a
+Fita-Dobra e a Grade — de forma que a certificação de Goldbach para o par
+alvo deixe de ser uma questão aritmética pontual e passe a ser uma
+propriedade emergente de ocupação espacial. A varredura geométrica
+substitui o teste aritmético.
+
+% ═══════════════════════════════════════════════════════════════════════════════
+\section{A Fita-Dobra \texorpdfstring{$\mathcal{F}(2{\times}N)$}{F(2xN)}}
+\label{sec:fita}
+
+\subsection{Definição}
+\label{subsec:fita-def}
+
+A Fita-Dobra é uma matriz $2{\times}N$ construída a partir do par base~$2M$.
+A Linha~1 percorre os ímpares crescentes da esquerda para a direita. A
+Linha~2 percorre os complementares da direita para a esquerda, de modo que
+cada coluna~$k$ satisfaz $a_k + b_k = 2M$ para todo~$k$:
+
+\renewcommand{\arraystretch}{1.4}
+\begin{center}
+\begin{tabular}{>{\bfseries}l ccccc}
+	\toprule
+	\textbf{Linha 1} $\rightarrow$ & $a_1 = 1$ & $a_2 = 3$ & $a_3 = 5$ & $\cdots$ & $a_N = 2N{-}1$ \\
+	\midrule
+	Linha 2 $\leftarrow$ & $b_1 = 2M{-}1$ & $b_2 = 2M{-}3$ & $b_3 = 2M{-}5$ & $\cdots$ & $b_N = 2M{-}(2N{-}1)$ \\
+	\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Propriedade Fundamental — Soma Constante (Par Base)}
+\label{subsec:fita-soma}
+
+\begin{proposition}[Par Base]
+	Para toda coluna $k \in \{1, \ldots, N\}$:
+	\[
+		a_k + b_k = 2M.
+	\]
+	Esta soma é constante, independente da posição~$k$ e independente de
+	primalidade. A fita é cega à posição e cega à primalidade. O par
+	base~$2M$ é certificado por Goldbach ao se encontrar uma coluna~$k$ com
+	$a_k$ e $b_k$ ambos primos — o motor parte desse fato como dado.
+\end{proposition}
+
+\subsection{As Diagonais da Fita — Par Alvo}
+\label{subsec:fita-diagonais}
+
+Além dos pares colunares, a fita contém pares diagonais: pares
+$(a_{(k+1)}, b_k)$ que cruzam entre colunas adjacentes. Por construção:
+
+\begin{center}
+	\fbox{\parbox{0.85\textwidth}{%
+		\begin{align*}
+		a_{(k+1)} + b_k
+		&= \bigl(2(k{+}1){-}1\bigr) + (2M{-}2k{+}1) \\
+		&= (2k{+}1) + (2M{-}2k{+}1) \;=\; 2M{+}2 \;=\; \text{par alvo}
+		\end{align*}
+	}}
+\end{center}
+
+\noindent Cada par diagonal soma exatamente $2M{+}2$, independente de
+primalidade. Esses pares diagonais são o objeto que o scanner captura e
+armazena em~$W_i$. A certificação de que $2M{+}2$ é Goldbach depende de
+encontrar uma diagonal com ambos os extremos primos — isso é precisamente
+$\HRm$.
+
+\subsection{A Fita Representa Dois Pares Consecutivos}
+\label{subsec:fita-dois-pares}
+
+A Fita-Dobra representa simultaneamente dois números pares consecutivos: o
+par base~$2M$ (soma das colunas) e o par alvo~$2M{+}2$ (soma das
+diagonais). Isso é necessário para que o motor cubra todos os pares sem
+exceção.
+
+\begin{remark}
+	Quando $M$ é ímpar, $M + M = 2M$ faz com que o centro da fita
+	(coluna~$N$) tenha um elemento repetido. Quando $M$ é par, o centro tem
+	$M$ e $M{+}1$ adjacentes sem repetição. Esta adaptação garante a
+	proporção $2{:}1$ entre naturais e ímpares e que a fita cubra dois pares
+	consecutivos distintos.
+\end{remark}
+
+% ═══════════════════════════════════════════════════════════════════════════════
+\section{A Grade \texorpdfstring{$\mathcal{G}(3{\times}C)$}{G(3xC)} e o Acoplamento}
+\label{sec:grade}
+
+\subsection{Condição de Acoplamento}
+\label{subsec:grade-acoplamento}
+
+A Grade $\mathcal{G}(3{\times}C)$ é uma matriz de três linhas e $C$ colunas
+que contém os mesmos ímpares da Fita-Dobra, organizados em percurso zigzag.
+Para que grade e fita representem exatamente o mesmo conjunto de ímpares, a
+condição de acoplamento deve ser satisfeita:
+
+\begin{center}
+	\fbox{\parbox{0.65\textwidth}{%
+		\centering
+		$3C = 2N$\\[0.3em]
+		\small O número de células da grade ($3C$) deve igualar o número de
+		células da fita ($2N$).
+	}}
+\end{center}
+
+\noindent Quando o número total de ímpares não é divisível por~3,
+duplicações centrais são introduzidas para satisfazer a condição sem alterar
+a cardinalidade efetiva do sistema.
+
+\subsection{Percurso Zigzag da Grade}
+\label{subsec:grade-zigzag}
+
+Os ímpares são dispostos na grade em percurso zigzag de três linhas:
+Linha~1~($\rightarrow$), Linha~2~($\leftarrow$), Linha~3~($\rightarrow$).
+Este percurso garante que as diagonais geométricas da grade correspondam às
+diagonais da fita.
+
+\renewcommand{\arraystretch}{1.4}
+\begin{center}
+\begin{tabular}{>{\bfseries}l cccccccc}
+	\toprule
+	Linha 1 $\rightarrow$ & 1 & 3 & 5 & 7 & 9 & 11 & 13 & 15 \\
+	\midrule
+	Linha 2 $\leftarrow$  & 31 & 29 & 27 & 25 & 23 & 21 & 19 & 17 \\
+	\midrule
+	Linha 3 $\rightarrow$ & 33 & 35 & 37 & 39 & 41 & 43 & 45 & 47 \\
+	\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent\textit{Exemplo: Grade $\mathcal{G}(3{\times}8)$. Par base
+$2M = 48$, par alvo $2M{+}2 = 50$. Acoplamento: $3{\times}8 = 2{\times}12
+= 24$ células.~$\checkmark$}
+
+% ═══════════════════════════════════════════════════════════════════════════════
+\section{A Janela \texorpdfstring{$W_i$}{Wi} — Definição Correta}
+\label{sec:janela}
+
+A Janela~$W_i$ é o objeto central do motor. Ela é uma matriz $3{\times}3$
+fixa que armazena, nos seus quatro eixos de simetria, até quatro diagonais
+da fita que somam o par alvo~$2M{+}2$. $W_i$ não é deslizante: ela é
+preenchida pelo scanner e permanece como referência estrutural.
+
+\subsection{Os Quatro Eixos de Simetria de \texorpdfstring{$W_i$}{Wi}}
+\label{subsec:janela-eixos}
+
+Uma matriz $3{\times}3$ possui exatamente quatro linhas de simetria que
+passam pelo centro. Cada eixo conecta dois extremos opostos e define um
+slot para um par diagonal da fita (que soma o par alvo~$2M{+}2$):
+
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+\begin{tabular}{>{\bfseries}p{3.8cm} p{8cm}}
+	\toprule
+	D1 — Diagonal Principal & Canto superior esquerdo $[0,0]$ $\leftrightarrow$ Canto inferior direito $[2,2]$ \\
+	\midrule
+	D2 — Diagonal Secundária & Canto superior direito $[0,2]$ $\leftrightarrow$ Canto inferior esquerdo $[2,0]$ \\
+	\midrule
+	Cv — Coluna Central & Topo central $[0,1]$ $\leftrightarrow$ Base central $[2,1]$ \\
+	\midrule
+	Lc — Linha Central & Esquerda central $[1,0]$ $\leftrightarrow$ Direita central $[1,2]$ \\
+	\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent Em cada eixo: o elemento menor da diagonal é posicionado na
+entrada, o maior na posição oposta. O centro $[1,1]$ armazena o pivô — o
+elemento central da varredura do scanner.
+
+\subsection{Estrutura Visual de \texorpdfstring{$W_i$}{Wi}}
+\label{subsec:janela-visual}
+
+\renewcommand{\arraystretch}{1.6}
+\begin{center}
+\begin{tabular}{|c|c|c|}
+	\hline
+	$[0,0]$\; $E_1(\mathrm{D1})$ & $[0,1]$\; $E_1(\mathrm{Cv})$ & $[0,2]$\; $E_1(\mathrm{D2})$ \\
+	\hline
+	$[1,0]$\; $E_1(\mathrm{Lc})$ & $[1,1]$\; \textbf{PIVÔ} & $[1,2]$\; $E_2(\mathrm{Lc})$ \\
+	\hline
+	$[2,0]$\; $E_2(\mathrm{D2})$ & $[2,1]$\; $E_2(\mathrm{Cv})$ & $[2,2]$\; $E_2(\mathrm{D1})$ \\
+	\hline
+\end{tabular}
+\end{center}
+
+\noindent\textit{Em cada eixo: $E_1 + E_2 = 2M{+}2$ (par alvo) —
+garantido incondicionalmente pela construção da fita.}
+
+\subsection{Exemplo Numérico de \texorpdfstring{$W_i$}{Wi} (par base = 48, par alvo = 50)}
+\label{subsec:janela-exemplo}
+
+O scanner percorre a grade canônica do par base~48 e preenche $W_i$ com
+quatro diagonais que somam o par alvo~50. O elemento~1 é ignorado pois não
+forma diagonal secundária válida.
+
+\renewcommand{\arraystretch}{1.6}
+\begin{center}
+\begin{tabular}{|c|c|c|}
+	\hline
+	7 & 9 & 11 \\
+	\hline
+	37 & 25 & 13 \\
+	\hline
+	39 & 41 & 43 \\
+	\hline
+\end{tabular}
+\end{center}
+
+\noindent
+$\mathrm{D1}$: $7 + 43 = 50\ \checkmark$\quad
+$\mathrm{Cv}$: $9 + 41 = 50\ \checkmark$\quad
+$\mathrm{D2}$: $11 + 39 = 50\ \checkmark$\quad
+$\mathrm{Lc}$: $13 + 37 = 50\ \checkmark$
+
+\medskip\noindent
+\textit{$\HRm$: verificar se algum par $(E_1, E_2)$ num eixo de $W_i$ tem
+ambos os elementos primos. Ex.: $\mathrm{D1} \to (7, 43)$: $7$ primo
+$\checkmark$, $43$ primo $\checkmark$ $\Rightarrow$ $\HRm$ ativada,
+certificando $50 = 7 + 43$.}
+
+\subsection{Número de Janelas \texorpdfstring{$W_i$}{Wi} por Varredura}
+\label{subsec:janela-numero}
+
+Como cada $W_i$ comporta até 4 diagonais e existem $N{-}1$ diagonais
+internas na fita (excluindo a posição do elemento~1), o número de janelas
+necessárias para cobrir todas as diagonais é aproximadamente
+$\lceil(N{-}1)/4\rceil$. Quando $N{-}1$ não é divisível por~4, a varredura
+final cobre o restante parcialmente, garantindo que nenhuma diagonal fique
+sem registro.
+
+% ═══════════════════════════════════════════════════════════════════════════════
+\section{O Scanner — Preenchimento de \texorpdfstring{$W_i$}{Wi}}
+\label{sec:scanner}
+
+\subsection{O Mecanismo dos Pivôs}
+\label{subsec:scanner-pivos}
+
+O scanner percorre a grade e preenche os eixos de $W_i$ com as diagonais
+da fita. Dois pivôs marcham das extremidades da lista de ímpares em direção
+ao centro. O pivô esquerdo pula a primeira posição (elemento~1), pois o~1
+não forma diagonal secundária válida — não existe elemento na grade tal que
+$1 + a = \text{par alvo}\ 2M{+}2$.
+
+\begin{center}
+	\fbox{\parbox{0.85\textwidth}{%
+		\textbf{Algoritmo do Scanner:}
+		\begin{enumerate}[label=\arabic*., leftmargin=1.5em, itemsep=0pt]
+			\item Posicionar pivô esquerdo na segunda posição da lista (pula o
+			elemento~1).
+			\item Posicionar pivô direito na extremidade final da lista.
+			\item Registrar o par $(E_{\mathrm{esq}}, E_{\mathrm{dir}})$ num
+			eixo de $W_i$. O elemento central da lista é o pivô do sensor.
+			\item Avançar pivô esquerdo ($+1$) e recuar pivô direito ($-1$).
+			\item Repetir até os pivôs se encontrarem. Cada iteração preenche
+			um eixo de $W_i$.
+			\item Quando $W_i$ tiver os 4 eixos preenchidos, registrá-la e
+			iniciar nova $W_i$ para o bloco seguinte.
+		\end{enumerate}
+	}}
+\end{center}
+
+\subsection{Propriedade de Soma Constante nos Eixos}
+\label{subsec:scanner-soma}
+
+\begin{proposition}[Soma Constante nos Eixos de $W_i$]
+	Por construção da Fita-Dobra (Seção~\ref{subsec:fita-diagonais}), cada
+	par $(E_1, E_2)$ capturado pelo scanner e armazenado num eixo de $W_i$
+	satisfaz automaticamente
+	\[
+		E_1 + E_2 = 2M{+}2 \quad (\text{par alvo}),
+	\]
+	independente de os elementos serem ou não primos. Esta é a garantia
+	algébrica incondicional do motor.
+\end{proposition}
+
+% ═══════════════════════════════════════════════════════════════════════════════
+\section{As Hipóteses Restritivas \texorpdfstring{$\HRm$}{HR-} e \texorpdfstring{$\HRp$}{HR+}}
+\label{sec:HR}
+
+O motor opera em duas camadas. A camada algébrica — construção da fita,
+acoplamento com a grade, preenchimento de $W_i$ pelo scanner — é
+inteiramente incondicional. A camada aritmética introduz as únicas
+hipóteses não provadas:
+
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+\begin{tabular}{>{\bfseries}p{2.8cm} p{10cm}}
+	\toprule
+	$\HRm$ (Fraca) &
+		Existe pelo menos um eixo de $W_i$ tal que ambos os extremos $E_1$ e
+		$E_2$ são primos. O par $(E_1, E_2)$ é então um certificado de Goldbach
+		para o par alvo $2M{+}2$. \\
+	\midrule
+	$\HRp$ (Forte) &
+		Existe pelo menos um eixo de $W_i$ tal que a tripla completa
+		$(E_1, \mathrm{Piv\hat{o}}, E_2)$ é inteiramente formada por primos.
+		$\HRp$ implica $\HRm$. Esta condição mais forte conecta ao formalismo
+		espectral do Artigo~6. \\
+	\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip\noindent A separação entre camada algébrica e camada aritmética é
+a essência da arquitetura do motor: a existência geométrica dos pares e sua
+cobertura pelos eixos de $W_i$ são incondicionais; a primalidade simultânea
+dos extremos é o único ingrediente aritmético. $\HRm$ é a lacuna central —
+objeto do próximo artigo da série.
+
+% ═══════════════════════════════════════════════════════════════════════════════
+\section{O Gabarito — \texorpdfstring{$W_i$}{Wi} Canônica como Referência}
+\label{sec:gabarito}
+
+\subsection{O Que é o Gabarito}
+\label{subsec:gabarito-def}
+
+O Gabarito é uma instância canônica de~$W_i$: uma janela construída com os
+pares obtidos pelo scanner na configuração canônica (ordenada) da grade,
+contendo pelo menos um par primo nos seus eixos. Ele funciona como uma
+fotografia da estrutura diagonal da fita registrada pelo caminho zigzag. É
+um objeto fixo — referência geométrica — e não um estado dinâmico.
+
+\begin{remark}[Analogia]
+	Se o motor fosse um acelerador de partículas, o gabarito seria a placa
+	de detecção com os padrões de colisão esperados pré-impressos. Quando os
+	dados dinâmicos se alinham com o gabarito, o sensor dispara $\HRm$ ou
+	$\HRp$.
+\end{remark}
+
+\subsection{Por Que o Gabarito Resolve o Problema de Estudo}
+\label{subsec:gabarito-papel}
+
+Quando $W_i$ é estudada diretamente na grade com dados aleatórios, os
+eventos variam conforme a ordenação avança, tornando difícil isolar o
+fenômeno de interesse. O gabarito resolve isso: mantém a estrutura das
+diagonais fixa como referência, e durante a simulação compara-se o arranjo
+dinâmico contra essa referência.
+
+\begin{center}
+	\fbox{\parbox{0.85\textwidth}{%
+		\textbf{Estratégia experimental:}
+		\begin{enumerate}[label=(\arabic*), leftmargin=1.5em, itemsep=0pt]
+			\item Construir o Gabarito — $W_i$ canônica com pares obtidos pelo
+			scanner na grade ordenada, com pelo menos um par primo.
+			\item Iniciar o sistema em entropia máxima (caos puro).
+			\item Aplicar ordenação gradual.
+			\item A cada passo, sobrepor a configuração dinâmica ao Gabarito:
+			quando as posições dos eixos coincidem com primos, o sensor dispara
+			$\HRm$ ou $\HRp$.
+		\end{enumerate}
+	}}
+\end{center}
+
+% ═══════════════════════════════════════════════════════════════════════════════
+\section{Protocolo de Simulação — Transição Caos $\to$ Ordem}
+\label{sec:simulacao}
+
+\subsection{Motivação}
+\label{subsec:sim-motivacao}
+
+O experimento de transição de fase serve a dois propósitos: (1) demonstrar
+computacionalmente que $\HRm$ e $\HRp$ são ativadas durante a ordenação;
+(2) medir o Tempo de Primeira Passagem — quantos passos (swaps) até que a
+primeira janela ative o sensor.
+
+\subsection{Protocolo}
+\label{subsec:sim-protocolo}
+
+\begin{center}
+	\fbox{\parbox{0.85\textwidth}{%
+		\begin{enumerate}[label=\arabic*., leftmargin=1.5em, itemsep=2pt]
+			\item Escolher um par base $2M$ e construir a Fita-Dobra $2{\times}N$.
+			\item Executar o scanner na grade canônica e construir o Gabarito
+			$W_i$ (referência fixa).
+			\item Embaralhar a lista de ímpares: entropia máxima (Caos Puro).
+			\item Verificar no estado inicial: o caos puro já ativa o sensor por
+			acaso?
+			\item Aplicar ordenação total gradual (Bubble Sort — granularidade
+			máxima).
+			\item A cada swap: executar o scanner e comparar com o Gabarito.
+			Registrar ativação de $\HRm$ e $\HRp$.
+			\item Registrar: Tempo de Primeira Passagem e percentual do percurso
+			total até a ativação.
+		\end{enumerate}
+	}}
+\end{center}
+
+\subsection{Métricas e Observações do Notebook}
+\label{subsec:sim-metricas}
+
+O notebook de verificação (\texttt{motor\_heranca.ipynb}) executa este
+protocolo e coleta as seguintes métricas para cada par base testado:
+
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+\begin{tabular}{>{\bfseries}p{4cm} p{9.2cm}}
+	\toprule
+	\textbf{Métrica} & \textbf{Descrição} \\
+	\midrule
+	Total de swaps & Número de trocas até a ordenação canônica completa. \\
+	Passo $\HRm$ (swap) & Swap em que $\HRm$ é ativada pela 1ª vez — Tempo de Primeira Passagem. \\
+	\% do percurso & Razão passo $\HRm$ / total de swaps: quão cedo no processo o evento ocorre. \\
+	$\HRp$ ativada & Se existe $W_i$ com tripla prima completa $(E_1, \mathrm{Piv\hat{o}}, E_2)$ antes do fim. \\
+	Nº de janelas $W_i$ & Janelas geradas pelo scanner $\approx \lceil(N{-}1)/4\rceil$. \\
+	\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip\noindent Observações empíricas dos testes iniciais ($N$ pequeno):
+
+\begin{center}
+	\fbox{\parbox{0.85\textwidth}{%
+		\begin{itemize}[itemsep=2pt]
+			\item $\HRm$ é frequentemente ativada já no swap~0 — no estado de
+			caos puro, antes de qualquer ordenação. A estrutura geométrica de
+			$W_i$ captura pares primos mesmo com dados completamente embaralhados.
+			\item Quando $\HRm$ não está ativa no caos, ela é ativada muito cedo
+			no percurso (geralmente abaixo de 10\% do total de swaps),
+			consistente com a Lei de Saturação Geométrica.
+			\item $\HRp$ (tripla prima completa) é ativada em alguns casos, mas
+			não em todos — esperado, pois é uma condição estritamente mais
+			restritiva que $\HRm$.
+			\item Os testes atuais cobrem $N$ pequeno. A verificação para $N$
+			grande — com múltiplas janelas $W_i$ e análise do crescimento do
+			Tempo de Primeira Passagem em função de $N$ — está planejada como
+			próxima etapa computacional.
+		\end{itemize}
+	}}
+\end{center}
+
+% ═══════════════════════════════════════════════════════════════════════════════
+\section{O Teorema do Motor (condicional a \texorpdfstring{$\HRm$}{HR-})}
+\label{sec:teorema}
+
+\begin{theorem}[Motor de Herança Estrutural]
+	\textbf{Hipóteses:}
+	\begin{itemize}[itemsep=2pt]
+		\item[\textup{(HI)}] Existe $2M_0$ com par de primos $(p,q)$ tal que
+		$p + q = 2M_0$ — par base certificado.
+		\item[\textup{($\HRm$)}] Para toda iteração do motor, $W_i$ contém
+		pelo menos um eixo com $E_1$ e $E_2$ ambos primos e
+		$E_1 + E_2 = 2M_0{+}2$ — par alvo certificado por $\HRm$.
+	\end{itemize}
+
+	\textbf{Conclusão:} A cadeia
+	\[
+		2M_0 \;\to\; 2M_0{+}2 \;\to\; 2M_0{+}4 \;\to\; \cdots
+	\]
+	cobre todos os pares $\geq 2M_0$ como somas de dois primos. O par alvo
+	de uma iteração torna-se o par base da iteração seguinte.
+\end{theorem}
+
+% ═══════════════════════════════════════════════════════════════════════════════
+\section{Mapa de Resultados}
+\label{sec:mapa}
+
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+\begin{tabular}{p{5.8cm} >{\bfseries}p{2.8cm} p{4.8cm}}
+	\toprule
+	\textbf{Componente} & \textbf{Estatuto} & \textbf{Observação} \\
+	\midrule
+	Soma das colunas $= 2M$ (par base) &
+		Incondicional &
+		Álgebra pura; escolha de coluna prima certifica par base. \\
+	Soma das diagonais $= 2M{+}2$ (par alvo) &
+		Incondicional &
+		$a_{(k+1)} + b_k = 2M{+}2$, $k \in \{1,\ldots,N{-}1\}$. \\
+	Acoplamento $3C = 2N$ &
+		Incondicional &
+		Condição necessária e suficiente. \\
+	$W_i$ fixa com 4 eixos de simetria &
+		Incondicional &
+		Estrutura geométrica pura. \\
+	Scanner (pivôs borda$\to$centro, pula 1) &
+		Incondicional &
+		Preenche $W_i$ com diagonais do par alvo. \\
+	Soma constante nos eixos de $W_i$ &
+		Incondicional &
+		$E_1 + E_2 = 2M{+}2$, herdado da fita. \\
+	Gabarito como referência canônica &
+		Incondicional &
+		Foto da estrutura diagonal ordenada. \\
+	$\HRm$ (par primo num eixo de $W_i$) &
+		Condicional &
+		Lacuna central — certifica o par alvo; objeto do próximo artigo. \\
+	$\HRp$ (tripla prima completa em $W_i$) &
+		Condicional &
+		Versão forte; implica $\HRm$; conecta ao espectral. \\
+	Teorema do Motor &
+		Cond.\ a $\HRm$ &
+		Cobre todos os pares $\geq 2M_0$ por indução. \\
+	\bottomrule
+\end{tabular}
+\end{center}
+
+\bigskip
+\noindent\textit{Este documento é a base para a revisão dos Artigos~5 e~6
+da série sobre a Conjectura de Goldbach. O código de simulação unificado
+(\texttt{motor\_heranca.py}) implementa todos os módulos aqui descritos.}
+
+\end{document}
