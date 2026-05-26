@@ -3,6 +3,27 @@
 Todas as mudanças significativas neste projeto são documentadas aqui.
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
+
+## [2.7.5] - 2026-05-26
+
+### Adicionado
+
+- `motor_heranca_definitivo.tex` / `.pdf` — Documento de Formalização do Motor de Herança Estrutural (Versão Definitiva, rev. 2). Define com precisão os dois objetos centrais da série: par base 2M (soma das colunas da fita) e par alvo 2M+2 (soma das diagonais), a Janela Wi com seus quatro eixos de simetria, o algoritmo do scanner com pivôs, o Gabarito como referência canônica, e o protocolo de simulação Caos → Ordem.
+- `motor_heranca.ipynb` — Notebook de verificação computacional. Implementa o protocolo de transição de fase (Bubble Sort sobre a lista de ímpares), coleta métricas de ativação de HR− e HR+ por par base, e registra o Tempo de Primeira Passagem.
+- `motor_heranca.py` — Código-fonte unificado de todos os módulos do motor: construção da Fita-Dobra, acoplamento grade 3×C, scanner de pivôs, preenchimento da Janela Wi, verificação de HR− e HR+, e rotina de simulação.
+- `README.md` — Descrição em prosa do Motor de Herança Estrutural para leitores que não necessitem do PDF completo. Cobre todos os conceitos centrais sem notação formal pesada.
+
+### Alterado
+
+- **Redefinição do Motor (breaking):** as definições de par base e par alvo presentes nos Artigos 5 e 6 da série foram corrigidas e substituídas pelas deste documento.
+  - **Antes:** a distinção entre par base e par alvo não estava formalizada; o papel das colunas vs. diagonais da fita era implícito.
+  - **Agora:** par base 2M = soma das colunas (Goldbach já certificado); par alvo 2M+2 = soma das diagonais (certificado por HR−). Esta distinção propaga-se por todas as definições do motor.
+
+### Corrigido
+
+- Corrigida a descrição da Janela Wi nos Artigos 5 e 6: Wi não é deslizante — ela é preenchida pelo scanner e permanece como referência estrutural fixa.
+- Corrigido o papel do elemento 1 no scanner: o pivô esquerdo pula o elemento 1 pois não existe par diagonal válido com soma igual ao par alvo que o inclua.
+
 ## [2.7.4] - 2026-05-25
 
 ### Adicionado
