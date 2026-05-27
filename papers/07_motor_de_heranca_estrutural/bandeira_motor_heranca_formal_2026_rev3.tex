@@ -32,6 +32,34 @@
 	\maketitle
 	
 	%--------------------------------------------------------------------
+	\begin{note}[Nota do Autor~---~Distinção Central (rev.~2)]
+		Esta revisão incorpora as definições consolidadas da
+		\emph{Versão Definitiva} do Motor de Herança Estrutural e corrige
+		as definições do motor presentes nas versões anteriores.
+		A distinção central, que se propaga por \emph{todas} as definições,
+		é:
+		\medskip
+		\begin{center}
+			\begin{tabular}{lp{5.8cm}p{5cm}}
+				\toprule
+				Conceito & Definição & Quem garante Goldbach\\
+				\midrule
+				Par base $2M$ &
+				Soma das \textbf{colunas} da fita:
+				$a_k+b_k=2M$ &
+				O sistema escolhe colunas com primos~---~Goldbach
+				já é conhecido para $2M$.\\[4pt]
+				Par alvo $2M{+}2$ &
+				Soma das \textbf{diagonais} da fita:
+				$a_{k+1}+b_k=2M{+}2$ &
+				HR$^-$ certifica que $2M{+}2$ é Goldbach ao
+				encontrar primos nos eixos de $W_i$.\\
+				\bottomrule
+			\end{tabular}
+		\end{center}
+	\end{note}
+	
+	%--------------------------------------------------------------------
 	\begin{abstract}
 		%--------------------------------------------------------------------
 		Formalizamos o \textbf{Motor de Herança Estrutural}, um mecanismo
@@ -47,13 +75,13 @@
 			\item \textbf{Camada algébrica} (incondicional): a bijeção de
 			acoplamento $\Phi$, definida pela condição $3C=2N$, garante
 			por álgebra pura a existência de pares simétricos deslocados
-			em $W_{i^*}$ e a sua cobertura completa pela permutação
+			em $W_i$ e a sua cobertura completa pela permutação
 			deslizante $\sigma$.  Estes resultados independem
 			inteiramente de primalidade.
 			\item \textbf{Camada aritmética} (condicional): sob a
 			\textbf{Hipótese Restritiva}~---~na forma fraca~(HR$^-$),
 			que postula a existência de algum passo $t$ em que ambos os
-			extremos de $W_{i^*}$ são primos, ou na forma
+			extremos de $W_i$ são primos, ou na forma
 			forte~(HR$^+$), que exige uma tripla totalmente prima~---~o
 			motor produz uma cadeia certificada de pares de Goldbach.
 		\end{itemize}
@@ -197,6 +225,55 @@
 		um deles dentro da mesma estrutura física.
 	\end{remark}
 	
+	\subsection{As diagonais da fita~---~Par alvo}
+	\label{subsec:diagonais}
+	
+	Além dos pares colunares, a fita contém \textbf{pares diagonais}: cada
+	par $(a_{k+1},\,b_k)$ cruza entre colunas adjacentes.
+	
+	\begin{proposition}[Diagonais da fita~---~par alvo]
+		\label{prop:diagonal-alvo}
+		Para todo $k\in\{1,\ldots,N-1\}$, na fita do par base
+		($\varepsilon=1$, i.e.\ $2M^-=4N-2$):
+		\[
+		a_{k+1}+b_k^{(1)}
+		=(2k+1)+(4N-2k-1)
+		=4N=2M^+.
+		\]
+		Cada par diagonal $(a_{k+1},\,b_k^{(1)})$ soma exactamente
+		$2M^+=2M^-+2$, independentemente de primalidade.
+		O valor $2M^+$ é o \textbf{par alvo}~---~o número par
+		imediatamente acima do par base $2M^-$.
+		
+		\medskip
+		A fita representa assim dois papéis simultâneos:
+		\begin{center}
+			\begin{tabular}{lll}
+				\toprule
+				Objecto & Soma & Conceito\\
+				\midrule
+				Colunas: $a_k+b_k^{(1)}$ &
+				$2M^-=4N-2$ & Par base (dado; Goldbach já conhecido)\\
+				Diagonais: $a_{k+1}+b_k^{(1)}$ &
+				$2M^+=4N$   & Par alvo (HR$^-$ certifica Goldbach)\\
+				\bottomrule
+			\end{tabular}
+		\end{center}
+	\end{proposition}
+	
+	\begin{proof}
+		$a_{k+1}+b_k^{(1)}=(2(k+1)-1)+(4N-2k+1-2)=(2k+1)+(4N-2k-1)=4N$.
+	\end{proof}
+	
+	\begin{remark}[Cobertura dos pares diagonais]
+		Existem $N-1$ pares diagonais interiores na fita (o elemento $a_1=1$
+		não forma par diagonal secundário válido, pois não existe $b_0$).
+		Cada par diagonal é capturado pelo scanner e armazenado num eixo de
+		$W_i$ (Secção~\ref{subsec:Wi-estrutura}).  A certificação de que
+		$2M^+$ é Goldbach depende de encontrar uma diagonal com ambos os
+		extremos primos~---~isto é precisamente HR$^-$.
+	\end{remark}
+	
 	%====================================================================
 	\section{Acoplamento $\Phi$ entre $G_{3,C}$ e $\mathcal{F}_N$}
 	\label{sec:phi}
@@ -320,66 +397,126 @@
 	
 	\begin{proposition}[Par deslocado garantido]
 		\label{prop:par-deslocado}
-		Seja $W_{i^*}$ a janela central de $G_{3,C}$ com
-		$i^*=\lfloor C/2\rfloor$, e seja $(e_1,e_3)$ os extremos de
-		qualquer configuração canónica
-		$\mathcal{E}\in\{D_1,D_2,C_v\}$ em $W_{i^*}$.
+		Seja $W_i$ qualquer janela preenchida pelo scanner na varredura
+		de $G_{3,C}$, e seja $(e_1,e_3)$ os extremos de qualquer eixo
+		$\mathcal{E}\in\{D_1,D_2,C_v,L_c\}$ de $W_i$.
 		
 		\medskip
-		\textbf{Parte~1 --- Deslocamento (incondicional).}
-		Via acoplamento $\Phi$, o par $(e_1,e_3)$ satisfaz sempre~---~
+		\textbf{Parte~1 --- Soma nos eixos (incondicional).}
+		Via acoplamento $\Phi$ (Proposição~\ref{prop:phi}), cada par
+		$(e_1,e_3)$ armazenado num eixo de $W_i$ satisfaz sempre~---~
 		independentemente de primalidade~---:
 		\[
-		e_1 + e_3 = 2M(\varepsilon) - 2.
+		e_1 + e_3 = 4N = 2M^+.
 		\]
-		O par está deslocado de $1$ posição em relação ao par simétrico
-		corrente da fita~---~``diagonalizado por $1$ quadradinho''.
 		
 		\medskip
-		\textbf{Parte~2 --- Alinhamento (incondicional).}
-		No próximo passo da fita ($\varepsilon:0\to1$ ou $N\to N+1$),
+		\textbf{Parte~2 --- Alinhamento após deslocamento (incondicional).}
+		No próximo passo da fita ($\varepsilon:1\to0$ ou $N\to N+1$),
 		a soma avança de $2$, independentemente de primalidade:
-		\[
-		e_1 + e_3 = 2M(\varepsilon)-2
-		\;\longrightarrow\;
-		e_1 + e_3 = 2M(\varepsilon).
-		\]
-		O par deslocado torna-se par simétrico \textbf{alinhado} com a
-		fita corrente.  Esta é a propriedade geométrica que conecta o
-		crescimento da fita ao motor via o passo $2M\to2M+2$.
+		o par prometido da iteração corrente torna-se par base para
+		$2M^++2$, iniciando a próxima iteração do motor.
 	\end{proposition}
 	
 	\begin{proof}
-		\textbf{Parte~1.}  Pela Proposição~\ref{prop:phi}, todo par
-		$\Phi(k)$ satisfaz $\Phi(k)_1+\Phi(k)_2=4N=2M^+$.  Os extremos
-		$(e_1,e_3)$ de $W_{i^*}$ correspondem, via $\Phi$, a um par na
-		coluna $k^*$ adjacente ao centro da fita, donde a soma é
-		$2M^+-2=2M^-$. \qed
+		\textbf{Parte~1.}  Pela Proposição~\ref{prop:phi}, para todo $k$,
+		$\Phi(k)_1+\Phi(k)_2=4N=2M^+$.  O scanner preenche os eixos de
+		$W_i$ exactamente com esses pares $\Phi(k)$, logo
+		$e_1+e_3=2M^+$ em todo eixo. \qed
 		
 		\textbf{Parte~2.}  Por Definição~\ref{def:fita},
 		$b_k=4N-2k+1-2\varepsilon$.  O deslocamento mínimo
 		($\varepsilon\to0$ ou $N\to N+1$) incrementa $b_k\to b_k+2$ para
-		todo~$k$ simultaneamente, logo $e_1+e_3\to e_1+e_3+2$. \qed
+		todo~$k$ simultaneamente, logo $e_1+e_3\to e_1+e_3+2=2M^++2$. \qed
 	\end{proof}
 	
-	\begin{remark}[A Parte~3 pertence ao motor, não à álgebra]
+	\begin{remark}[A primalidade pertence à camada aritmética]
 		A Proposição~\ref{prop:par-deslocado} garante a existência e o
-		alinhamento do par $(e_1,e_3)$ para \emph{qualquer} configuração
-		$\mathcal{E}$, prima ou não.  A questão de \emph{quando} esse par
-		é de primos~---~e de como isso certifica Goldbach~---~é tratada
-		separadamente na Secção~\ref{sec:motor}, sob hipótese aritmética
-		explícita.
+		alinhamento do par $(e_1,e_3)$ para \emph{qualquer} eixo de
+		\emph{qualquer} janela $W_i$, primo ou não.  A questão de
+		\emph{quando} esse par é de primos~---~e de como isso certifica
+		Goldbach~---~é tratada na Secção~\ref{sec:motor}, sob hipótese
+		aritmética explícita.
 	\end{remark}
 	
-	\begin{remark}[Por que fixar o centro]
-		A escolha de $i^*=\lfloor C/2\rfloor$ não é arbitrária.  Os
-		extremos de $W_{i^*}$ são exactamente os elementos que, via
-		$\Phi$, caem na coluna adjacente ao centro da fita~---~garantindo
-		o deslocamento de exactamente $2$.  Para janelas $W_i$ com
-		$i\neq i^*$, o deslocamento seria diferente e a sincronização com
-		o passo da fita quebraria.  O argumento dual~---~por que o
-		\emph{passo} de $\sigma$ também deve ser $\delta=1$~---~é
-		desenvolvido na Proposição~\ref{prop:pares-diagonais} Parte~3.
+	\subsection{A Janela $W_i$~---~Estrutura e Quatro Eixos de Simetria}
+	\label{subsec:Wi-estrutura}
+	
+	\begin{definition}[Janela $W_i$~---~eixos de simetria]
+		\label{def:Wi}
+		A \textbf{janela} $W_i$ é uma submatriz $3\times3$ da grade
+		$G_{3,C}$, centrada na coluna $i$, formada pelas três linhas e
+		pelas colunas $i-1$, $i$, $i+1$.  Uma matriz $3\times3$ possui
+		exactamente quatro eixos de simetria que passam pelo centro.
+		Cada eixo conecta dois extremos opostos e define um
+		\emph{slot} para um par diagonal da fita com soma $2M^+$ (par
+		alvo):
+		\[
+		\begin{array}{|c|c|c|}
+			\hline
+			[0,0]\;D_1 & [0,1]\;C_v & [0,2]\;D_2\\
+			\hline
+			[1,0]\;L_c & [1,1]\;\text{PIVÔ} & [1,2]\;L_c\\
+			\hline
+			[2,0]\;D_2 & [2,1]\;C_v & [2,2]\;D_1\\
+			\hline
+		\end{array}
+		\]
+		\begin{center}
+			\begin{tabular}{llc}
+				\toprule
+				Eixo & Posições & Soma nos extremos (par alvo)\\
+				\midrule
+				$D_1$ (diagonal principal)  &
+				$[0,0]\leftrightarrow[2,2]$ & $E_1+E_2=2M^+$\\
+				$D_2$ (diagonal secundária) &
+				$[0,2]\leftrightarrow[2,0]$ & $E_1+E_2=2M^+$\\
+				$C_v$ (coluna central)      &
+				$[0,1]\leftrightarrow[2,1]$ & $E_1+E_2=2M^+$\\
+				$L_c$ (linha central)       &
+				$[1,0]\leftrightarrow[1,2]$ & $E_1+E_2=2M^+$\\
+				\bottomrule
+			\end{tabular}
+		\end{center}
+		Em cada eixo, o elemento menor ocupa a posição de entrada e o
+		maior a posição oposta.  A célula central $[1,1]$ armazena o
+		\textbf{pivô}~---~o elemento central da varredura do scanner.
+		A soma $E_1+E_2=2M^+$ é garantida incondicionalmente pela
+		Proposição~\ref{prop:diagonal-alvo}: é herança algébrica da
+		construção da fita.
+	\end{definition}
+	
+	\begin{corollary}[Soma constante nos eixos de $W_i$ --- corolário do acoplamento]
+		\label{prop:soma-Wi}
+		Sob a condição de acoplamento $3C=2N$, cada par $(E_1,E_2)$
+		capturado pelo scanner e armazenado num eixo de $W_i$ satisfaz
+		automaticamente
+		\[
+		E_1+E_2=4N=2M^+\quad\text{(par alvo),}
+		\]
+		independentemente de os elementos serem ou não primos.
+		
+		\medskip\noindent\textit{Demonstração.}
+		O scanner preenche os eixos de $W_i$ com pares $\Phi(k)$ da
+		bijeção de acoplamento.  Pela Proposição~\ref{prop:phi},
+		$\Phi(k)_1+\Phi(k)_2=4N=2M^+$ para todo $k$, logo a soma
+		é $2M^+$ em todo eixo. \qed
+		
+		\medskip\noindent
+		Esta é a garantia algébrica incondicional do motor, e decorre
+		directamente de $3C=2N$: é o acoplamento que impõe a soma
+		constante, não uma propriedade independente da janela.
+		A primalidade simultânea dos extremos é o único ingrediente
+		aritmético adicional, capturado por HR$^-$.
+	\end{corollary}
+	
+	\begin{remark}[Número de janelas por varredura]
+		Como cada $W_i$ comporta até quatro diagonais (um por eixo) e
+		existem $N-1$ pares diagonais interiores na fita, o número de
+		janelas necessárias para cobrir todas as diagonais é
+		$\lceil(N-1)/4\rceil$.  Quando $N-1$ não é divisível por~$4$,
+		a janela final cobre o restante parcialmente, garantindo que
+		nenhum par diagonal fique sem registo.
 	\end{remark}
 	
 	%====================================================================
@@ -397,34 +534,70 @@
 		Seja
 		\[
 		S = \bigl\{\sigma_G(2),\,\sigma_G(3),\,\ldots,\,
-		\sigma_G(3C-1)\bigr\}
+		\sigma_G(3C)\bigr\}
 		\]
-		o conjunto dos $3C-2$ elementos \emph{interiores} do percurso
-		zigzag de $G_{3,C}$.  (Excluem-se os dois extremos
-		$\sigma_G(1)=1$ e $\sigma_G(3C)=6C-1$.)
+		o conjunto dos $3C-1$ elementos do percurso zigzag de $G_{3,C}$
+		com excepção de $\sigma_G(1)=1$.  O elemento~$1$ é excluído
+		porque não existe $p$ nos elementos da fita tal que $1+p=2M^+$:
+		$1$ não forma nenhum par diagonal que soma o par alvo e,
+		portanto, não pertence a nenhum eixo de $W_i$.
 		
 		A \textbf{permutação deslizante} $\sigma:S\to S$ é:
 		\[
 		\sigma\bigl(\sigma_G(k)\bigr) = \sigma_G(k-1),
-		\qquad k = 2,\,3,\,\ldots,\,3C-1.
+		\qquad k = 2,\,3,\,\ldots,\,3C.
 		\]
 		Cada elemento avança uma posição no percurso zigzag, como uma
 		peça de jogo que escorrega para o espaço vazio à esquerda.
 	\end{definition}
 	
-	\begin{remark}[Por que excluir os extremos]
-		\label{rem:extremos}
-		Os extremos $1=\sigma_G(1)$ e $6C-1=\sigma_G(3C)$ são os limites
-		do intervalo de ímpares sincronizado com a fita corrente.
-		Incluí-los na permutação forçaria $W_{i^*}$ a conter valores fora
-		desse intervalo, quebrando a propriedade de deslocamento
-		(Proposição~\ref{prop:par-deslocado}).  A exclusão dos extremos
-		fecha o ciclo correctamente: após $N-1$ passos de $\sigma$, a
-		configuração inicial de $W_{i^*}$ é restituída.
+	\begin{remark}[A permutação $\sigma$ como algoritmo de scanner com pivôs]
+		\label{rem:scanner-pivos}
+		A permutação deslizante $\sigma$ admite uma descrição algorítmica
+		concreta~---~o \textbf{scanner com pivôs}~---~que é equivalente à
+		Definição~\ref{def:sigma} e facilita a implementação computacional.
 		
-		Note-se que esta é a correcção em relação à rotação cíclica $\rho$
-		anteriormente proposta: $\rho$ incluía os extremos, quebrando o
-		motor; $\sigma$ é restrita a $S$ e é consistente com a fita.
+		\medskip
+		\noindent\textbf{Algoritmo do Scanner:}
+		\begin{enumerate}
+			\item Posicionar o \textbf{pivô esquerdo} na segunda posição
+			da lista de ímpares (pula $a_1=1$, pois~$1$ não forma par
+			diagonal válido).
+			\item Posicionar o \textbf{pivô direito} na extremidade final
+			da lista.
+			\item Registar o par $(E_{\text{esq}},E_{\text{dir}})$ num
+			eixo de $W_i$.  O elemento central da lista é o pivô/sensor.
+			\item Avançar o pivô esquerdo em $+1$ posição e recuar o
+			pivô direito em $-1$ posição.
+			\item Repetir até os pivôs se encontrarem.  Cada iteração
+			preenche um eixo de $W_i$.
+			\item Quando $W_i$ tiver os quatro eixos preenchidos,
+			registá-la e iniciar nova $W_i$ para o bloco seguinte.
+		\end{enumerate}
+		
+		\noindent\textbf{Equivalência com $\sigma$.}  Cada par de
+		posições $(k_{\text{esq}},k_{\text{dir}})$ dos pivôs corresponde
+		exactamente a um passo $t$ da órbita de $\sigma$ sobre
+		$W_i$, com $(E_{\text{esq}},E_{\text{dir}})=(e_1(t),e_3(t))$
+		e soma constante $e_1(t)+e_3(t)=2M^+$ (par alvo,
+		Proposição~\ref{prop:soma-Wi}).  O pivô esquerdo pula~$1$
+		porque~$1$ está excluído de~$S$ (Definição~\ref{def:sigma}).
+	\end{remark}
+	
+	\begin{remark}[Por que excluir apenas o elemento~$1$]
+		\label{rem:extremos}
+		O único elemento excluído de~$S$ é $\sigma_G(1)=1$.  A razão
+		é estritamente aritmética: $1$ não é primo e não existe $p$
+		nos elementos da fita tal que $1+p=2M^+$, pelo que $1$ não
+		pertence a nenhum par diagonal com soma $2M^+$ e não ocupa
+		nenhum eixo de $W_i$.  O maior ímpar da grade~---~o último
+		elemento de $S$~---~é o valor $\sigma_G(3C)$, que coincide
+		com o maior ímpar da fita; quando $M$ é ímpar, a coluna
+		central da fita repete o valor $a_N=b_N=M$ e o maior ímpar
+		da grade é $2M^+-1-2=2M^--1$, não necessariamente $6C-1$.
+		Em qualquer caso, esse elemento está incluído em~$S$ e o
+		scanner posiciona o pivô direito sobre ele no primeiro passo
+		(Passo~2 do Algoritmo do Scanner).
 	\end{remark}
 	
 	\subsection{Cobertura completa dos pares diagonais
@@ -432,15 +605,15 @@
 	
 	\begin{proposition}[Órbita completa de $\sigma$]
 		\label{prop:orbita}
-		Seja $i^*=\lfloor C/2\rfloor$ e $k^*$ a coluna correspondente
-		na fita.  Para $t=1,\ldots,N-1$, independentemente de primalidade:
+		Seja $W_i$ a janela corrente do scanner na varredura de $G_{3,C}$.
+		Para $t=1,\ldots,N-1$, independentemente de primalidade:
 		\begin{enumerate}[(i)]
 			\item \textbf{Ordenação.}  $\sigma^t$ preserva a ordem relativa
 			dos elementos dentro de cada linha da grade.
 			\item \textbf{Cobertura.}  A aplicação
 			\[
 			t \;\mapsto\;
-			\text{par }(e_1(t),e_3(t))\text{ de }W_{i^*}
+			\text{par }(e_1(t),e_3(t))\text{ de }W_i
 			\text{ sob }\sigma^t
 			\]
 			é uma bijecção de $\{1,\ldots,N-1\}$ sobre o conjunto
@@ -448,7 +621,7 @@
 			$\mathcal{F}_N$.
 			\item \textbf{Soma constante.}  Para todo $t$:
 			\[
-			e_1(t) + e_3(t) = 2M^- = 4N-2.
+			e_1(t) + e_3(t) = 2M^+ = 4N.
 			\]
 		\end{enumerate}
 	\end{proposition}
@@ -460,16 +633,19 @@
 		(linha~2) segundo~$k$; uma translação cíclica preserva essa ordem
 		relativa.
 		
-		\textbf{(ii)}  Antes de qualquer passo, $W_{i^*}$ contém os
-		elementos nas posições $i^*,\,i^*+C,\,i^*+2C$ do percurso zigzag.
-		Após $t$ passos, esses são substituídos pelos das posições
-		$i^*+t,\,i^*+C+t,\,i^*+2C+t$.  À medida que $t$ percorre
-		$\{1,\ldots,N-1\}$, essas triplas percorrem exactamente os $N-1$
-		pares diagonais interiores de $\mathcal{F}_N$, sem repetição.
+		\textbf{(ii)}  O scanner inicia com o pivô esquerdo na posição~$2$
+		e o pivô direito na posição~$3C$ do percurso zigzag
+		(Passos~1--2 do Algoritmo do Scanner).  Após $t$ passos,
+		os pivôs estão nas posições $t+1$ e $3C+1-t$.  À medida que
+		$t$ percorre $\{1,\ldots,N-1\}$, os pares
+		$(E_{\text{esq}},E_{\text{dir}})$ percorrem exactamente os
+		$N-1$ pares diagonais interiores de $\mathcal{F}_N$,
+		sem repetição.
 		
-		\textbf{(iii)}  O par $(e_1(t),e_3(t))$ corresponde, via $\Phi$,
-		à coluna $k^*+t$ da fita.  Pela Proposição~\ref{prop:soma} com
-		$\varepsilon=1$: $e_1(t)+e_3(t)=4N-2=2M^-$.
+		\textbf{(iii)}  Cada par $(e_1(t),e_3(t))$ é um par $\Phi(k)$
+		da bijeção de acoplamento.  Pela Proposição~\ref{prop:phi}:
+		$\Phi(k)_1+\Phi(k)_2=4N=2M^+$ para todo $k$.
+		Logo $e_1(t)+e_3(t)=4N=2M^+$.
 	\end{proof}
 	
 	\begin{corollary}[Um passo de $\sigma$ é um deslocamento mínimo]
@@ -480,55 +656,45 @@
 		percurso é completamente determinista e independe de primalidade.
 	\end{corollary}
 	
-	\begin{remark}[Estrutura direccional de $\sigma$ por linha e natureza dos eventos]
+	\begin{remark}[Movimento dos pivôs e constância da soma]
 		\label{rem:sigma-direcoes}
-		A permutação $\sigma$ não é apenas uma bijecção abstracta: ela
-		impõe uma \emph{estrutura direccional distinta em cada linha}
-		da grade, visível na evolução dos extremos de $W_{i^*}$.
-		
-		Fixada $W_{i^*}$, os três elementos $(e_1(t),\,p_2(t),\,e_3(t))$
-		evoluem passo a passo segundo os sentidos do percurso zigzag:
-		\begin{itemize}
-			\item \textbf{L1} ($\rightarrow$):
-			$e_1(t{+}1)=e_1(t)+2$
-			--- a janela vê elementos progressivamente maiores de~L1;
-			\item \textbf{L2} ($\leftarrow$):
-			$p_2(t{+}1)=p_2(t)\pm2$
-			--- o sinal depende de $i^*$ estar à esquerda ou à direita
-			do centro de~L2 (L2 percorre-se da direita para a esquerda,
-			pelo que o elemento de $W_{i^*}$ em L2 \emph{acompanha}~L3
-			no sentido geral);
-			\item \textbf{L3} ($\rightarrow$, mas \emph{em sentido contrário}
-			ao efeito sobre $W_{i^*}$):
-			$e_3(t{+}1)=e_3(t)-2$
-			--- porque $\Phi$ emparelha~L1 com~L3 em sentidos opostos,
-			o elemento de $W_{i^*}$ em~L3 decresce enquanto o de~L1
-			cresce.
-		\end{itemize}
-		A consequência imediata é:
+		A permutação $\sigma$ admite uma interpretação concreta em termos
+		do scanner com pivôs: a cada passo~$t$, o pivô esquerdo avança
+		uma posição na lista de ímpares e o pivô direito recua uma
+		posição.  Como os ímpares estão espaçados de~$2$ em~$2$, isso
+		traduz-se em:
+		\[
+		e_1(t{+}1)=e_1(t)+2,
+		\qquad
+		e_3(t{+}1)=e_3(t)-2.
+		\]
+		Os incrementos cancelam-se exactamente, garantindo a constância
+		da soma a cada passo:
 		\[
 		e_1(t{+}1)+e_3(t{+}1)
 		=\bigl(e_1(t)+2\bigr)+\bigl(e_3(t)-2\bigr)
-		=e_1(t)+e_3(t),
+		=e_1(t)+e_3(t)=2M^+.
 		\]
-		confirmando directamente a constância da soma da
-		Proposição~\ref{prop:orbita}(iii) e revelando a sua
-		\emph{razão geométrica}: os dois extremos movem-se em sentidos
-		opostos e simétricos, de modo que os incrementos se cancelam.
+		Esta é a razão pela qual cada par $(e_1(t),e_3(t))$ registado
+		num eixo de $W_i$ soma sempre o par alvo $2M^+$,
+		independentemente do passo~$t$: é uma consequência directa do
+		movimento simétrico dos dois pivôs.
 		
-		A simetria $e_1\!\uparrow\,/\,e_3\!\downarrow$ é exactamente o
-		mecanismo pelo qual $W_{i^*}$ percorre as \textbf{diagonais
-			secundárias} da fita~---~aquelas que cortam de canto
-		superior-direito para canto superior-esquerdo (Figura~1).  Um
-		deslocamento arbitrário que não respeitasse as direcções de~L1
-		e~L3 quebraria esta simetria: os extremos ficariam separados por
-		distância $>2$ na fita, e a soma seria $>2M^-$,
-		dessincronizando o motor no passo seguinte.
+		\medskip
+		\noindent\textbf{Configuração canónica e simulações.}
+		Os elementos da grade não se movem durante a varredura do
+		scanner: a grade está fixa na sua configuração canónica (ordenada)
+		e é o par de pivôs que avança sobre ela, seleccionando a cada
+		passo um novo par diagonal $(e_1(t),e_3(t))$ para um eixo de
+		$W_i$.  O movimento dos elementos ocorre apenas nas simulações
+		de configurações não canónicas~---~onde a lista de ímpares é
+		embaralhada e reordenada gradualmente~---~que servem para
+		estudar em que condições HR$^-$ ou HR$^+$ são activadas.
 		
 		\medskip
 		\noindent\textbf{Nota sobre a natureza dos eventos.}
 		Os passos $t=1,\ldots,N-1$ da órbita de $\sigma$ são
-		\emph{eventos}~---~todas as configurações possíveis de $W_{i^*}$
+		\emph{eventos}~---~todas as configurações possíveis de $W_i$
 		dentro de uma fita fixa $\mathcal{F}_N$.  Eles não são passos
 		do motor: o motor avança com o crescimento da fita
 		($N\to N{+}1$), e a grade é actualizada por propagação a cada
@@ -541,22 +707,22 @@
 		\label{prop:pares-diagonais}
 		Seja $\mathcal{F}_N$ a fita com $a_k=2k-1$ e
 		$b_k^{(\varepsilon)}=4N-2k+1-2\varepsilon$.  Definem-se os
-		\textbf{pares diagonais interiores} de $\mathcal{F}_N$ como os
-		pares
+		\textbf{pares diagonais do scanner} de $\mathcal{F}_N^1$ como os
+		pares capturados pelo scanner (Observação~\ref{rem:scanner-pivos}):
 		\[
-		(a_k,\;b_{k+1}^{(0)}),\qquad k=1,\ldots,N-1.
+		(a_{k+1},\;b_k^{(1)}),\qquad k=1,\ldots,N-1.
 		\]
 		
 		\medskip
 		\noindent\textbf{Parte~1 --- Soma constante dos pares diagonais
 			(incondicional).}
 		\[
-		a_k+b_{k+1}^{(0)}
-		=(2k-1)+(4N-2(k+1)+1)
-		=4N-2
-		=2M^-.
+		a_{k+1}+b_k^{(1)}
+		=(2k+1)+(4N-2k-1)
+		=4N
+		=2M^+.
 		\]
-		Cada par diagonal soma $2M^-$, independentemente de primalidade.
+		Cada par diagonal soma $2M^+$, independentemente de primalidade.
 		
 		\medskip
 		\noindent\textbf{Parte~2 --- Cobertura bijectiva (incondicional).}
@@ -564,7 +730,7 @@
 		Proposição~\ref{prop:orbita}(ii) é uma bijecção entre
 		$\{1,\ldots,N-1\}$ e o conjunto dos $N-1$ pares diagonais
 		interiores de $\mathcal{F}_N$.  Em particular, cada par diagonal
-		da fita é \emph{apontado} por $W_{i^*}$ em exactamente um passo
+		da fita é \emph{apontado} por $W_i$ em exactamente um passo
 		$t$ da órbita de $\sigma$.
 		
 		\medskip
@@ -580,8 +746,8 @@
 			\item \emph{Dessincronização com o motor}: cada passo
 			corresponderia a um salto de $\delta$ colunas na fita em vez
 			de~$1$, pelo que o par prometido teria soma
-			$2M^-+2\delta>2M^-+2=2M^+$, quebrando a cadeia
-			$2M\to2M{+}2$ do Teorema~\ref{thm:motor}.
+			$2M^++2(\delta-1)>2M^+$ para $\delta>1$, quebrando a cadeia
+			$2M^-\to2M^+$ do Teorema~\ref{thm:motor}.
 		\end{enumerate}
 		O passo $\delta=1$ é assim a \emph{única} escolha que mantém
 		simultaneamente a cobertura bijectiva da Parte~2 e a
@@ -590,7 +756,7 @@
 	
 	\begin{proof}
 		\textbf{Parte~1.}  Cálculo directo:
-		$(2k-1)+(4N-2k-1)=4N-2$.\checkmark
+		$(2(k+1)-1)+(4N-2k+1-2)=(2k+1)+(4N-2k-1)=4N$.\checkmark
 		
 		\textbf{Parte~2.}  Os $N-1$ pares diagonais correspondem
 		bijectivamente às colunas $k=1,\ldots,N-1$ da fita (a
@@ -600,61 +766,58 @@
 		é uma bijecção.\checkmark
 		
 		\textbf{Parte~3(i).}  $\sigma^\delta$ tem órbita de comprimento
-		$\lceil(N-1)/\delta\rceil$ sobre $W_{i^*}$, estritamente menor
+		$\lceil(N-1)/\delta\rceil$ sobre $W_i$, estritamente menor
 		que $N-1$ para $\delta>1$.
 		
 		\textbf{Parte~3(ii).}  Por
 		Observação~\ref{rem:sigma-direcoes}, cada passo de $\sigma$
 		avança $e_1$ de~$2$ e recua $e_3$ de~$2$.  Após $\delta$ passos,
-		$e_1$ avança $2\delta$ e $e_3$ recua $2\delta$, logo
-		$(e_1(t{+}\delta),e_3(t{+}\delta))$ corresponde à
-		coluna $k^*+\delta$ da fita.  O par prometido teria soma
-		$4N-2+2\delta$ em vez de $4N-2+2=4N$, implicando um passo
-		do motor de $2\delta$ em vez de~$2$.\qed
+		$e_1$ avança $2\delta$ e $e_3$ recua $2\delta$.  O par prometido
+		teria soma $4N+2(\delta-1)=2M^++2(\delta-1)>2M^+$ para $\delta>1$,
+		implicando um passo do motor de $2\delta$ em vez de~$2$.\qed
 	\end{proof}
 	
-	\begin{remark}[Fixação canónica da janela e do passo]
+	\begin{remark}[Unicidade do passo unitário]
 		\label{rem:canonico}
-		A Observação~\ref{rem:extremos} (por que fixar $i^*$) e a
-		Proposição~\ref{prop:pares-diagonais} Parte~3 são complementares:
-		a primeira mostra que \emph{alterar a janela} para $i\neq i^*$
-		quebra o deslocamento exacto; a segunda mostra que \emph{alterar
-			o passo} para $\delta>1$ quebra simultaneamente a cobertura e a
-		sincronização.  Juntas, fixam canonicamente tanto a janela
-		$W_{i^*}$ como o passo unitário de $\sigma$: são as únicas
-		escolhas consistentes com a estrutura do motor.
+		A Proposição~\ref{prop:pares-diagonais} Parte~3 mostra que
+		o passo $\delta=1$ de $\sigma$ é a \emph{única} escolha que
+		mantém simultaneamente a cobertura bijectiva completa dos $N-1$
+		pares diagonais e a sincronização $2M^-\to2M^+$ do motor.
+		Qualquer $\delta>1$ quebra as duas condições ao mesmo tempo.
 	\end{remark}
 	
-	\subsection{Verificação numérica: $G_{3,10}$, $i^*=5$, $N=15$}
+	\subsection{Verificação numérica: $G_{3,10}$, $N=15$, $2M^-=58$}
 	\label{subsec:verif-sigma}
 	
-	Para $C=10$, $N=15$, $2M^-=58$.
-	A janela central é $W_5$ ($i^*=5$); os elementos iniciais em
-	$W_{i^*}$ estão nas posições $5,\,15,\,25$ do percurso zigzag:
-	$\sigma_G(5)=9$, $\sigma_G(15)=31$, $\sigma_G(25)=49$.
-	
-	A tabela abaixo mostra os primeiros passos da órbita de $\sigma$
-	sobre os pares $(e_1(t),\,e_3(t))$ de $W_{i^*}$.
-	A coluna ``par primo?'' é \emph{informação aritmética}~---~não
+	Para $C=10$, $N=15$, $2M^-=58$, $2M^+=60$.
+	O scanner percorre os $N-1=14$ pares diagonais de $\mathcal{F}_{15}^1$.
+	A tabela abaixo mostra os primeiros passos~---~cada linha é um passo
+	$t$ do scanner, com o par $(e_1(t),\,e_3(t))$ registado num eixo de
+	$W_i$.  A coluna ``par primo?'' é \emph{informação aritmética}~---~não
 	interfere na álgebra das colunas anteriores.
 	
 	\[
 	\begin{array}{c|cc|c|c}
 		t & e_1(t) & e_3(t) & e_1+e_3 & \text{par primo?}\\
 		\hline
-		1 & 11 & 47 & 58 & \text{sim}\;\checkmark\\
-		2 & 13 & 45 & 58 & \text{não}\\
-		3 & 15 & 43 & 58 & \text{não (15 composto)}\\
-		4 & 17 & 41 & 58 & \text{sim}\;\checkmark\\
-		5 & 19 & 39 & 58 & \text{não}\\
+		1 & 3  & 57 & 60 & \text{não (57 composto)}\\
+		2 & 5  & 55 & 60 & \text{não (55 composto)}\\
+		3 & 7  & 53 & 60 & \text{sim}\;\checkmark\\
+		4 & 9  & 51 & 60 & \text{não}\\
+		5 & 11 & 49 & 60 & \text{não (49 composto)}\\
 		\vdots & \vdots & \vdots & \vdots & \vdots
 	\end{array}
 	\]
 	
-	Os extremos $1$ e $6C-1=59$ estão excluídos de $S$ e não entram em
-	$W_{i^*}$ ao longo da órbita~---~confirmando que o ciclo fecha
-	correctamente após $N-1=14$ passos.  A soma $e_1(t)+e_3(t)=58$ é
-	constante para todo~$t$ (Proposição~\ref{prop:orbita}(iii)).
+	A soma $e_1(t)+e_3(t)=60=2M^+$ é constante para todo~$t$
+	(Corolário~\ref{prop:soma-Wi}).
+	O par $(7,53)$ em $t=3$ activa HR$^-$: $7$ primo, $53$ primo,
+	$7+53=60$~\checkmark.  O elemento~$1$ está excluído de~$S$ e não
+	entra no scanner (pois não forma par diagonal com soma $2M^+$).
+	O pivô direito inicia no maior ímpar da grade~---~neste exemplo,
+	$\sigma_G(3C)=57$, que é o último elemento de LC~---~e está
+	incluído em~$S$: a cobertura completa dos $N-1=14$ pares diagonais
+	fecha correctamente após os pivôs se encontrarem.
 	
 	%====================================================================
 	\section{O Mecanismo de Promoção}
@@ -762,9 +925,9 @@
 		\begin{enumerate}[(i)]
 			\item $p_1+p_3=2M^+=4N$
 			(garantido pela álgebra do acoplamento $\Phi$~---~incondicional);
-			\item $(p_1,p_3)$ são os extremos de $W_{i^*}$ para algum
+			\item $(p_1,p_3)$ são os extremos de $W_i$ para algum
 			passo $t$ da permutação deslizante $\sigma$
-			(a associação com $W_{i^*}$ é incondicional~---~
+			(a associação com $W_i$ é incondicional~---~
 			Proposição~\ref{prop:orbita});
 			\item $p_1$ e $p_3$ são ambos primos
 			(esta é a condição aritmética, postulada pela Hipótese
@@ -777,9 +940,9 @@
 	
 	\begin{remark}[Separação das condições]
 		As condições~(i) e~(ii) da Definição~\ref{def:prometido} são
-		incondicionais: qualquer par de extremos de $W_{i^*}$ sob
+		incondicionais: qualquer par de extremos de $W_i$ sob
 		$\sigma^t$ satisfaz automaticamente $p_1+p_3=2M^+$ e está
-		associado a $W_{i^*}$ via a órbita de $\sigma$.  Só a
+		associado a $W_i$ via a órbita de $\sigma$.  Só a
 		condição~(iii)~---~a primalidade simultânea de $p_1$ e $p_3$~---~é
 		hipotética.  Esta separação é a essência da arquitectura do motor.
 	\end{remark}
@@ -791,7 +954,7 @@
 		um soma o respectivo $2M(\varepsilon)$ por
 		Proposição~\ref{prop:soma}, mas são determinados por mecanismos
 		distintos~---~o par base por qualquer coluna prima da fita, o par
-		prometido pelo evento restritivo de $W_{i^*}$.  Em particular,
+		prometido pelo evento restritivo de $W_i$.  Em particular,
 		não precisam partilhar elementos.
 	\end{proposition}
 	
@@ -816,8 +979,9 @@
 	
 	\begin{definition}[Hipóteses Restritivas]
 		\label{def:HR}
-		Fixados $C$ e $i^*=\lfloor C/2\rfloor$, sejam
-		$(e_1(t),\,e_3(t))$ os extremos de $W_{i^*}$ sob $\sigma^t$.
+		Fixado $C$, seja $(e_1(t),\,e_3(t))$ o $t$-ésimo par diagonal
+		capturado pelo scanner na varredura de $G_{3,C}$, armazenado
+		num eixo de alguma janela $W_i$.
 		
 		\medskip
 		\textbf{Hipótese Restritiva Fraca~(HR$^-$).}
@@ -827,11 +991,11 @@
 		\;\;\text{e}\;\;
 		e_3(t)\in\mathbb{P}.
 		\]
-		Em alguma iteração, \emph{ambos} os extremos de $W_{i^*}$ são
-		primos.  Esta é a condição mínima para o motor: o par
-		$(e_1(t),e_3(t))$ é então um par prometido (Definição~\ref{def:prometido})
-		que, após o deslocamento mínimo, torna-se par base para
-		$2M^-+2=2M^+$.
+		Em algum passo da varredura, \emph{ambos} os extremos de um
+		eixo de $W_i$ são primos.  Esta é a condição mínima para o motor:
+		o par $(e_1(t),e_3(t))$ é então um par prometido
+		(Definição~\ref{def:prometido}) que, após o deslocamento mínimo,
+		torna-se par base para $2M^-+2=2M^+$.
 		
 		\medskip
 		\textbf{Hipótese Restritiva Forte~(HR$^+$).}
@@ -840,11 +1004,11 @@
 		\quad \bigl(e_1(t),\,p_2(t),\,e_3(t)\bigr)
 		\text{ é totalmente prima.}
 		\]
-		Existe uma iteração em que a \emph{tripla completa} de $W_{i^*}$
-		(diagonal $D_1$, $D_2$ ou coluna central $C_v$) é inteiramente
-		formada por primos.  HR$^+$ implica HR$^-$.  Esta condição mais
-		forte conecta ao peso oracle-free $\Omega_N^*$~\cite{peso} e à
-		desigualdade estrutural
+		Existe um passo em que a \emph{tripla completa} de um eixo de
+		$W_i$ (diagonal $D_1$, $D_2$ ou coluna central $C_v$) é
+		inteiramente formada por primos.  HR$^+$ implica HR$^-$.
+		Esta condição mais forte conecta ao peso oracle-free
+		$\Omega_N^*$~\cite{peso} e à desigualdade estrutural
 		$\mu_{\text{comp}}>\mu_{\text{global}}>\mu_{\text{primo}}$~\cite{problemaB}.
 	\end{definition}
 	
@@ -868,7 +1032,7 @@
 			e evento restritivo inicial em $G_{3,C_0}$.
 			\item[\textbf{(HR$^-$)}] Para toda iteração do motor, existe
 			pelo menos um passo $t\in\{1,\ldots,N-1\}$ tal que
-			$(e_1(t),e_3(t))$ de $W_{i^*}$ são ambos primos.
+			$(e_1(t),e_3(t))$ de $W_i$ são ambos primos.
 		\end{itemize}
 		
 		\textit{Conclusão.}  A cadeia
@@ -907,27 +1071,48 @@
 	\begin{remark}[Estatuto de cada componente]
 		\label{rem:estatuto}
 		\begin{center}
-			\begin{tabular}{lll}
+			\begin{tabular}{p{5.5cm}ll}
 				\toprule
 				Componente & Estatuto & Referência \\
 				\midrule
-				Soma constante da fita & Incondicional &
+				Soma constante da fita (colunas) &
+				Incondicional &
 				Prop.~\ref{prop:soma} \\
-				Bijeção $\Phi$ e soma constante & Incondicional &
+				Soma das diagonais da fita (par alvo) &
+				Incondicional &
+				Prop.~\ref{prop:diagonal-alvo} \\
+				Bijeção $\Phi$ e soma constante &
+				Incondicional &
 				Prop.~\ref{prop:phi} \\
-				Par deslocado garantido (Partes~1--2) & Incondicional &
+				$W_i$ fixa com 4 eixos de simetria &
+				Incondicional &
+				Def.~\ref{def:Wi} \\
+				Soma constante nos eixos de $W_i$ &
+				Incondicional &
+				Prop.~\ref{prop:soma-Wi} \\
+				Par deslocado garantido (Partes~1--2) &
+				Incondicional &
 				Prop.~\ref{prop:par-deslocado} \\
-				Órbita de $\sigma$ (cobertura, soma) & Incondicional &
-				Prop.~\ref{prop:orbita} \\
-				Promoção por deslocamento (Partes~1--2) & Incondicional &
+				Órbita de $\sigma$ / scanner com pivôs &
+				Incondicional &
+				Prop.~\ref{prop:orbita}; Obs.~\ref{rem:scanner-pivos} \\
+				Promoção por deslocamento (Partes~1--2) &
+				Incondicional &
 				Prop.~\ref{prop:promocao} \\
-				HI (caso base) & Verificável &
+				Gabarito como referência canônica &
+				Incondicional &
+				Def.~\ref{def:gabarito} \\
+				HI (caso base) &
+				Verificável &
 				Green--Tao~\cite{green-tao} garante existência \\
-				HR$^-$ (par de primos em $W_{i^*}$) & Condicional &
+				HR$^-$ (par de primos num eixo de $W_i$) &
+				Condicional &
 				Lacuna central (mínima para o motor) \\
-				HR$^+$ (tripla totalmente prima) & Condicional &
+				HR$^+$ (tripla totalmente prima) &
+				Condicional &
 				Versão forte; implica HR$^-$ \\
-				Teorema~\ref{thm:motor} & Condicional a HR$^-$ & --- \\
+				Teorema~\ref{thm:motor} &
+				Condicional a HR$^-$ & --- \\
 				\bottomrule
 			\end{tabular}
 		\end{center}
@@ -942,6 +1127,144 @@
 		par $2M$ é evitado para sempre.  Esta conexão com teoria
 		ergódica~\cite{grade} será explorada no artigo seguinte.
 	\end{remark}
+	
+	%====================================================================
+	\section{O Gabarito~---~$W_i$ Canônica como Referência}
+	\label{sec:gabarito}
+	%====================================================================
+	
+	\subsection{O que é o Gabarito}
+	
+	\begin{definition}[Gabarito]
+		\label{def:gabarito}
+		O \textbf{gabarito} é uma instância canônica de $W_i$:
+		a primeira janela construída pelo scanner na configuração ordenada
+		(canônica) da grade~---~isto é, com os ímpares dispostos segundo
+		o percurso zigzag $\sigma_G$ (Definição~\ref{def:zigzag-grade})~---~
+		que contém pelo menos um par primo nos seus eixos.
+		
+		Formalmente, seja $W_i^{\text{can}}$ a janela produzida pelo
+		scanner na grade canônica que satisfaz: existe um eixo
+		$(E_1,E_2)\in\{D_1,D_2,C_v,L_c\}$ com $E_1,E_2\in\mathbb{P}$.
+		O gabarito é um objecto fixo~---~referência geométrica~---~e não
+		um estado dinâmico.
+	\end{definition}
+	
+	\begin{remark}[Analogia com acelerador de partículas]
+		Se o motor fosse um acelerador de partículas, o gabarito seria a
+		placa de detecção com os padrões de colisão esperados
+		pré-impressos.  Quando os dados dinâmicos se alinham com o
+		gabarito, o sensor dispara HR$^-$ ou HR$^+$.
+	\end{remark}
+	
+	\subsection{Por que o Gabarito resolve o problema de estudo}
+	
+	\begin{remark}[Isolamento do fenômeno]
+		Quando $W_i$ é estudada directamente na grade com dados
+		aleatórios, os eventos variam conforme a ordenação avança,
+		tornando difícil isolar o fenômeno de interesse.  O gabarito
+		resolve isto: mantém a estrutura das diagonais fixa como
+		referência.
+		
+		\medskip\noindent\textbf{Estratégia experimental:}
+		\begin{enumerate}
+			\item Construir o gabarito~---~$W_i^{\text{can}}$ com
+			pares obtidos pelo scanner na grade ordenada, com pelo menos
+			um par primo.
+			\item Iniciar o sistema em entropia máxima (caos puro).
+			\item Aplicar ordenação gradual.
+			\item A cada passo, sobrepor a configuração dinâmica ao
+			gabarito: quando as posições dos eixos coincidem com primos,
+			o sensor dispara HR$^-$ ou HR$^+$.
+		\end{enumerate}
+	\end{remark}
+	
+	\begin{remark}[Gabarito como referência incondicional]
+		A construção do gabarito é inteiramente incondicional:
+		a existência dos quatro eixos de $W_i^{\text{can}}$ e a soma
+		$E_1+E_2=2M^+$ em cada eixo são garantidas pela
+		Proposição~\ref{prop:soma-Wi}.  A primalidade dos extremos~---~
+		exigida para que o gabarito exista como referência com pelo menos
+		um par primo~---~é a única condição aritmética, verificável
+		computacionalmente para qualquer par alvo $2M^+$ específico.
+	\end{remark}
+	
+	%====================================================================
+	\section{Protocolo de Simulação~---~Transição Caos $\to$ Ordem}
+	\label{sec:simulacao}
+	%====================================================================
+	
+	\subsection{Motivação}
+	
+	O experimento de transição de fase serve a dois propósitos:
+	(1)~demonstrar computacionalmente que HR$^-$ e HR$^+$ são activadas
+	durante a ordenação; (2)~medir o \textbf{Tempo de Primeira Passagem}
+	(\emph{first-passage time})~---~o número de \emph{swaps} até que a
+	primeira janela active o sensor.  Este protocolo é implementado no
+	notebook \texttt{motor\_heranca.ipynb}.
+	
+	\subsection{Protocolo}
+	
+	\begin{enumerate}
+		\item Escolher um par base $2M^-$ e construir a fita-dobra
+		$\mathcal{F}_N^1$.
+		\item Executar o scanner na grade canônica e construir o gabarito
+		$W_i^{\text{can}}$ (referência fixa;
+		Definição~\ref{def:gabarito}).
+		\item Embaralhar a lista de ímpares: entropia máxima (caos puro).
+		\item Verificar no estado inicial: o caos puro já activa o sensor
+		por acaso?
+		\item Aplicar ordenação total gradual (\emph{Bubble Sort}~---~
+		granularidade máxima).
+		\item A cada \emph{swap}: executar o scanner e comparar com o
+		gabarito.  Registar activação de HR$^-$ e HR$^+$.
+		\item Registar: Tempo de Primeira Passagem e percentual do
+		percurso total até à activação.
+	\end{enumerate}
+	
+	\subsection{Métricas e Observações Empíricas}
+	
+	\begin{center}
+		\begin{tabular}{p{4.5cm}p{9cm}}
+			\toprule
+			Métrica & Descrição\\
+			\midrule
+			Total de \emph{swaps} &
+			Número de trocas até à ordenação canônica completa.\\[4pt]
+			Passo HR$^-$ (\emph{swap}) &
+			\emph{Swap} em que HR$^-$ é activada pela 1.ª vez~---~
+			Tempo de Primeira Passagem.\\[4pt]
+			\% do percurso &
+			Razão passo HR$^-$ / total de \emph{swaps}: quão cedo
+			no processo o evento ocorre.\\[4pt]
+			HR$^+$ activada &
+			Se existe $W_i$ com tripla prima completa
+			$(E_1,\,\text{Pivô},\,E_2)$ antes do fim.\\[4pt]
+			N.º de janelas $W_i$ &
+			Janelas geradas pelo scanner
+			$\approx\lceil(N-1)/4\rceil$.\\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	
+	\medskip\noindent\textbf{Observações empíricas (testes iniciais,
+		$N$ pequeno):}
+	\begin{itemize}
+		\item HR$^-$ é frequentemente activada já no \emph{swap}~$0$~---~
+		no estado de caos puro, antes de qualquer ordenação.  A estrutura
+		geométrica de $W_i$ captura pares primos mesmo com dados
+		completamente embaralhados.
+		\item Quando HR$^-$ não está activa no caos, é activada muito
+		cedo no percurso (geralmente abaixo de $10\%$ do total de
+		\emph{swaps}), consistente com a Lei de Saturação Geométrica.
+		\item HR$^+$ (tripla prima completa) é activada em alguns casos,
+		mas não em todos~---~esperado, pois é condição estritamente mais
+		restritiva que HR$^-$.
+		\item Os testes actuais cobrem $N$ pequeno.  A verificação para
+		$N$ grande~---~com múltiplas janelas $W_i$ e análise do
+		crescimento do Tempo de Primeira Passagem em função de $N$~---~
+		está planeada como próxima etapa computacional.
+	\end{itemize}
 	
 	%====================================================================
 	\section{Exemplos Numéricos}
@@ -1033,17 +1356,15 @@
 	\begin{itemize}
 		\item $\mathcal{F}_{12}^1$ ($2M^-=46$): par base primo $(5,41)$
 		na coluna $k=3$ ($5+41=46$~\checkmark).
-		Janela central $W_4$ ($i^*=4$, $C=8$):
-		configuração $\mathcal{E}(t)$ para $t=1$ dá
-		$(e_1,e_3)=(7,41)$, ambos primos
-		($7+41=48=2M^+$~\checkmark)~---~evento restritivo HR$^-$.
-		Configuração $t=2$ dá $(11,37)$: $11+37=48$~\checkmark,
-		também evento restritivo.
+		O scanner regista o par $(7,41)$ em $t=1$ num eixo de $W_i$
+		($C=8$): ambos primos e $7+41=48=2M^+$~\checkmark~---~evento
+		restritivo HR$^-$.  O par $t=2$ dá $(11,37)$:
+		$11+37=48$~\checkmark, também evento restritivo.
 		\item \textbf{Promoção (incondicional):} o par $(7,41)$ é
 		promovido a par base para $2M^+=48$ pelo mecanismo de
 		Proposição~\ref{prop:promocao}~---~Goldbach para
 		$48$~\checkmark.
-		\item Par prometido para $2M=50$: determinado pelo próximo
+		\item Par prometido para $2M^+=50$: determinado pelo próximo
 		evento restritivo em $G_{3,C'}$ após deslocamento mínimo
 		(requer HR$^-$ na nova configuração).
 	\end{itemize}
@@ -1060,26 +1381,38 @@
 	\noindent\textbf{Camada algébrica~---~resultados incondicionais.}
 	Demonstrámos por álgebra pura, sem qualquer hipótese de primalidade:
 	\begin{enumerate}
-		\item A \textbf{soma constante} $a_k+b_k=2M(\varepsilon)$ em
-		toda coluna da fita~---~propriedade posição-cega e
-		primalidade-cega (Proposição~\ref{prop:soma}).
+		\item A \textbf{soma constante das colunas}
+		$a_k+b_k=2M(\varepsilon)$ em toda coluna da fita~---~propriedade
+		posição-cega e primalidade-cega (Proposição~\ref{prop:soma}).
+		\item A \textbf{soma constante das diagonais}
+		$a_{k+1}+b_k^{(1)}=2M^+$ (par alvo): as diagonais da fita do
+		par base somam exactamente o par alvo, incondicionalmente
+		(Proposição~\ref{prop:diagonal-alvo}).  Esta distinção~---~
+		colunas $=$ par base, diagonais $=$ par alvo~---~é a distinção
+		central do motor.
 		\item A \textbf{bijeção} $\Phi$ entre $G_{3,C}$ e
 		$\mathcal{F}_N$, com soma constante $\Phi(k)_1+\Phi(k)_2
 		=4N$ para todo~$k$ (Proposição~\ref{prop:phi}).
-		\item O \textbf{par deslocado garantido}: os extremos de
-		$W_{i^*}$ somam sempre $2M(\varepsilon)-2$, e o próximo
-		deslocamento mínimo os alinha com $2M(\varepsilon)$~---~
-		quer sejam ou não primos
+		\item A \textbf{estrutura de $W_i$} como matriz $3\times3$ com
+		quatro eixos de simetria ($D_1$, $D_2$, $C_v$, $L_c$), cada um
+		armazenando um par diagonal com soma $2M^+$~---~garantida
+		incondicionalmente pela construção da fita
+		(Definição~\ref{def:Wi}; Proposição~\ref{prop:soma-Wi}).
+		\item O \textbf{par deslocado garantido}: os extremos de qualquer
+		eixo de $W_i$ somam $2M^+$ incondicionalmente (via acoplamento
+		$\Phi$), e o próximo deslocamento mínimo propaga essa soma para
+		$2M^++2$~---~quer os extremos sejam ou não primos
 		(Proposição~\ref{prop:par-deslocado}).
-		\item A \textbf{órbita completa} de $\sigma$: os $N-1$ pares
-		diagonais são cobertos em bijecção, com soma constante
-		$2M^-$ em todo passo (Proposição~\ref{prop:orbita}).
+		\item A \textbf{órbita completa} de $\sigma$ (equivalente ao
+		scanner com pivôs): os $N-1$ pares diagonais são cobertos em
+		bijecção, com soma constante $2M^+$ em todo passo
+		(Proposição~\ref{prop:orbita}; Observação~\ref{rem:scanner-pivos}).
 		\item A \textbf{estrutura direccional} de $\sigma$ e a
-		\textbf{identidade dos pares diagonais}: L1 e L3
+		\textbf{identidade dos pares diagonais do scanner}: L1 e L3
 		movem-se em sentidos opostos ($e_1\!\uparrow$,
-		$e_3\!\downarrow$), os extremos de $W_{i^*}$ apontam
-		exactamente os pares $(a_k,b_{k+1}^{(0)})$ com soma
-		$2M^-$, e o passo unitário $\delta=1$ é a única escolha
+		$e_3\!\downarrow$), os extremos de $W_i$ apontam
+		exactamente os pares diagonais $(a_{k+1},b_k^{(1)})$ com soma
+		$2M^+$, e o passo unitário $\delta=1$ é a única escolha
 		que mantém simultaneamente a cobertura bijectiva e a
 		sincronização $N\to N{+}1$
 		(Observação~\ref{rem:sigma-direcoes};
@@ -1089,13 +1422,17 @@
 		pilha global, promovendo qualquer par simétrico~---~primo
 		ou não~---~ao alinhamento com a fita seguinte
 		(Proposição~\ref{prop:promocao}).
+		\item O \textbf{gabarito} $W_i^{\text{can}}$ como referência
+		canônica fixa: a janela obtida na configuração ordenada da grade,
+		contra a qual os estados dinâmicos são comparados durante a
+		simulação (Definição~\ref{def:gabarito}).
 	\end{enumerate}
 	
 	\medskip
 	\noindent\textbf{Camada aritmética~---~resultados condicionais.}
 	Sob as Hipóteses Restritivas HR$^-$/HR$^+$, que postulam a
 	existência de pelo menos um passo $t$ da órbita de $\sigma$ em que
-	os extremos de $W_{i^*}$ são ambos primos (HR$^-$) ou a tripla
+	os extremos de $W_i$ são ambos primos (HR$^-$) ou a tripla
 	completa é totalmente prima (HR$^+$):
 	\begin{enumerate}
 		\item O \textbf{par prometido} existe
