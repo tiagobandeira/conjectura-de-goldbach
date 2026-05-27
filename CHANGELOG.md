@@ -3,6 +3,148 @@
 Todas as mudanças significativas neste projeto são documentadas aqui.
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
+---
+
+## [2.7.6] — Maio de 2026
+
+### Corrigido
+
+#### Distinção central par base / par alvo — propagação sistemática
+
+A distinção fundamental do motor — **colunas da fita = par base $2M^-$**,
+**diagonais da fita (capturadas pelo scanner) = par alvo $2M^+$** — foi
+aplicada sistematicamente a todos os objetos da seção algébrica que a
+violavam. As correções abaixo seguem a Versão Definitiva do Motor como
+referência canônica.
+
+- **Proposição Órbita (iii) — enunciado:** a soma dos extremos da órbita
+  de $\sigma$ estava declarada como $e_1(t)+e_3(t)=2M^-=4N-2$; corrigido
+  para $e_1(t)+e_3(t)=2M^+=4N$, consistente com o fato de que o scanner
+  captura diagonais que somam o par alvo.
+
+- **Proposição Órbita (iii) — prova:** a prova invocava a Proposição soma
+  com $\varepsilon=1$ (fita do par base); corrigido para invocar a
+  Proposição $\Phi$ (acoplamento, $\varepsilon=0$), que é o objeto correto
+  para pares diagonais.
+
+- **Proposição pares-diagonais — Parte 1 — enunciado:** definia os pares
+  do scanner como $(a_k, b_{k+1}^{(0)})$ com soma $2M^-$; corrigido para
+  $(a_{k+1}, b_k^{(1)})$ com soma $2M^+$, alinhando com a Proposição
+  diagonal-alvo e com o mecanismo de pivôs.
+
+- **Proposição pares-diagonais — Parte 1 — prova:** cálculo incorreto
+  $(2k-1)+(4N-2k-1)=4N-2$; corrigido para
+  $(2k+1)+(4N-2k-1)=4N=2M^+$.
+
+- **Proposição pares-diagonais — Parte 3(ii) — enunciado e prova:** a
+  aritmética do dessincronismo estava baseada em $2M^-+2\delta$; corrigido
+  para $2M^++2(\delta-1)>2M^+$.
+
+- **Proposição par-deslocado — ambiguidade de $\varepsilon$:** as Partes 1
+  e 2 não deixavam explícito qual modo da fita estava em uso; corrigido com
+  explicitação: Parte 1 usa $\varepsilon=0$ com soma $2M^+-2=2M^-$, Parte 2
+  avança para $2M^+$ após o deslocamento mínimo.
+
+- **Exemplo numérico:** "par prometido para $2M=50$" corrigido para "par
+  prometido para $2M^+=50$".
+
+- **Gabarito — Observação:** "para qualquer $2M^-$ específico" corrigido
+  para "para qualquer par alvo $2M^+$ específico".
+
+- **Conclusão — item 6:** "soma constante $2M^-$ em todo passo" corrigido
+  para "soma constante $2M^+$ em todo passo".
+
+- **Conclusão — item 7:** pares $(a_k, b_{k+1}^{(0)})$ com soma $2M^-$
+  corrigido para pares diagonais do scanner $(a_{k+1}, b_k^{(1)})$ com
+  soma $2M^+$.
+
+---
+
+#### Seção `A Permutação Deslizante σ e a sua Órbita` — revisão completa
+
+A seção foi revisada para eliminar resíduos da versão anterior do motor
+(anterior à introdução do scanner com pivôs) e alinhar com a Versão
+Definitiva.
+
+- **Definição de $S$ — conjunto redefinido:** o conjunto $S$ excluía os
+  *dois* extremos do percurso zigzag ($\sigma_G(1)$ e $\sigma_G(3C)$),
+  resultando em $3C-2$ elementos; corrigido para excluir apenas
+  $\sigma_G(1)=1$, resultando em $3C-1$ elementos. O range da permutação
+  foi atualizado de $k=2,\ldots,3C-1$ para $k=2,\ldots,3C$.
+
+- **Observação `rem:extremos` — reescrita:** a observação anterior
+  justificava a exclusão de ambos os extremos com o argumento de "valores
+  fora do intervalo da fita" e continha referência à rotação cíclica $\rho$
+  da versão antiga do motor; substituída por explicação precisa: apenas o
+  elemento $1$ é excluído por razão estritamente aritmética (não forma par
+  diagonal com soma $2M^+$), e o último elemento da lista está incluído em
+  $S$ e é usado como pivô direito no primeiro passo do scanner. Adicionada
+  nota sobre o caso $M$ ímpar, em que ocorre repetição central na fita e o
+  maior ímpar efetivo da grade é menor que $6C-1$.
+
+- **Observação `rem:scanner-pivos` — referência corrigida:** a referência
+  ao final da equivalência apontava para `rem:extremos`; atualizada para
+  `def:sigma`, que é onde a exclusão do $1$ está definida. Texto ajustado
+  de "o pivô pula 1" para "o pivô esquerdo pula 1", tornando explícito qual
+  pivô é afetado.
+
+- **Prova da Proposição Órbita — ponto (ii):** dizia que os pivôs iniciam
+  nas posições $2$ e $3C-1$; corrigido para posição $2$ (pivô esquerdo) e
+  posição $3C$ (pivô direito), com as posições após $t$ passos atualizadas
+  de $3C-t$ para $3C+1-t$.
+
+- **Observação `rem:sigma-direcoes` — reescrita completa:** a observação
+  anterior descrevia os elementos das linhas L1, L2 e L3 da grade como se
+  se movessem autonomamente ("L3 decresce enquanto L1 cresce"), linguagem
+  da versão do motor anterior aos pivôs; continha também referência a
+  "Figura 1" inexistente no documento. Reescrita com três partes:
+  (1) o cancelamento $e_1\uparrow / e_3\downarrow$ derivado do movimento
+  simétrico dos pivôs; (2) parágrafo explicitando que a grade permanece
+  fixa na configuração canónica durante a varredura e que o movimento de
+  elementos ocorre apenas nas simulações de configurações não canónicas para
+  estudo de HR$^-$/HR$^+$; (3) nota sobre a natureza dos eventos (mantida).
+
+- **Verificação numérica — texto corrigido:** substituído "$2N-1=29$ está
+  excluído de $S$" (incorreto: $29$ não é o último elemento da grade neste
+  exemplo e não está excluído) por descrição correta: o pivô direito inicia
+  em $\sigma_G(3C)=57$, último elemento de LC, que está incluído em $S$.
+
+---
+
+### Observação técnica
+
+As correções desta versão não alteram nenhum resultado matemático do
+documento — a estrutura de proposições, lemas e teoremas permanece
+idêntica. As mudanças são de consistência notacional e conceitual: eliminam
+resíduos de versões anteriores do motor que contradiziam a Versão
+Definitiva e poderiam induzir erro de interpretação em revisão externa.
+
+## [2.7.6] - 2026-05-26
+
+### Corrigido
+
+- Seção 6 inteira: objeto de estudo corrigido de $2M^-$ para $2M^+$ em todas as ocorrências (configuração e notação, método do círculo, crivo de Rosser-Iwaniec e tabela de colapso) — $HR^-$ certifica o par alvo, não o par base
+- Observação `rem:HL` (Seção 5): série singular corrigida para $\mathfrak{S}(2M^+)$
+- Seção 7.3, item 2 (prova condicional sob GRH): expoente corrigido de $(\log M^-)$ para $(\log M^+)$
+- Fita-Dobra: fórmula redefinida como $a_k = 2k-1$, $b_k = 2M^- - (2k-1)$, eliminando o parâmetro $\varepsilon \in \{0,1\}$ da versão anterior
+- Grade: percurso corrigido para zigzag de 3 linhas (L1→, L2←, L3→), substituindo a ordenação linha-por-linha $f(r,c) = 2[(r-1)C+c]-1$
+- Janela $W_i$: redefinida como matriz $3\times3$ com 4 eixos de simetria explícitos ($D_1$, $D_2$, $C_v$, $L_c$) e pivô central, em substituição à estrutura de par simples $(e_1, e_3)$
+
+### Adicionado
+
+- Seção 2: tabela de distinção fundamental (par base / par alvo / quem certifica) como abertura da seção, antes de qualquer definição
+- Seção 2: definição formal do Scanner com mecanismo dos pivôs (borda→centro, descarte do elemento 1), com algoritmo numerado e fórmula do número de janelas $\lceil(N-1)/4\rceil$
+- Seção 2: exemplo numérico completo de $W_i$ (par base 48, par alvo 50) com verificação dos 4 eixos e ativação de $HR^-$
+
+### Removido
+
+- Conceito de "permutação deslizante $\sigma$": removido integralmente e substituído pelo mecanismo dos pivôs do Scanner
+- Observações de Correção (Rem. 2.2 e 2.3 da versão anterior): removidas por se tornarem desnecessárias com as definições já corretas desde o início
+
+### Alterado
+
+- `\cite{motor}` atualizado para apontar para o documento de formalização definitiva do Motor (rev. 2, maio 2026), fonte canônica das definições corrigidas nesta versão
+
 
 ## [2.7.5] - 2026-05-26
 
