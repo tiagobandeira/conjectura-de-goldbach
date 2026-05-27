@@ -1,0 +1,1146 @@
+\documentclass[12pt,a4paper]{article}
+
+% ── Pacotes ────────────────────────────────────────────────────────────────────
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathrsfs}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{enumitem}
+
+\geometry{
+	a4paper,
+	top=2.5cm, bottom=2.5cm,
+	left=3cm, right=3cm
+}
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	citecolor=blue,
+	urlcolor=blue,
+	pdftitle={Reformulacao Espectral do Motor de Heranca Estrutural},
+	pdfauthor={Tiago Bandeira}
+}
+
+% ── Ambientes de Teorema ───────────────────────────────────────────────────────
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{lemma}[theorem]{Lema}
+\newtheorem{proposition}[theorem]{Proposição}
+\newtheorem{corollary}[theorem]{Corolário}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definição}
+\newtheorem{example}[theorem]{Exemplo}
+\newtheorem{remark}[theorem]{Observação}
+
+% ── Atalhos matemáticos ────────────────────────────────────────────────────────
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\T}{\mathbb{T}}
+\newcommand{\PP}{\mathcal{P}}          % conjunto dos primos
+\newcommand{\F}{\mathcal{F}}           % fita-dobra
+\newcommand{\G}{\mathcal{G}}           % grade
+\newcommand{\LL}{\mathcal{L}}
+\newcommand{\HRm}{\mathrm{HR}^{-}}
+\newcommand{\HRp}{\mathrm{HR}^{+}}
+\newcommand{\Lam}{\Lambda}             % von Mangoldt
+\newcommand{\e}[1]{e^{2\pi i (#1)}}
+\newcommand{\norm}[1]{\left\| #1 \right\|}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\ip}[2]{\langle #1,\, #2 \rangle}
+\DeclareMathOperator{\Spec}{Spec}
+
+% ── Título ─────────────────────────────────────────────────────────────────────
+\title{%
+	\textbf{Reformulação Espectral do Motor de Herança Estrutural}\\[0.4em]
+	\large Uma Abordagem por Sistemas Dinâmicos à Conjectura de Goldbach
+}
+\author{Tiago Bandeira\\[0.3em]
+	\small\texttt{tiagobandeira.goldbach2025@gmail.com}
+}
+\date{Maio de 2026 \\ \vspace{0.3em}
+	\small Preprint — Artigo 6 da série sobre a Conjectura de Goldbach}
+
+% ═══════════════════════════════════════════════════════════════════════════════
+\begin{document}
+	
+	\maketitle
+	\thispagestyle{empty}
+	
+	% ── Nota do Autor ─────────────────────────────────────────────────────────────
+	\begin{center}
+		\fbox{\parbox{0.88\textwidth}{
+				\textbf{Nota do Autor.} Este artigo não reivindica uma demonstração da
+				Conjectura de Goldbach. Seu objetivo é reformular a questão central —
+				a Hipótese Restritiva Fraca $\HRm$ — na linguagem de sistemas dinâmicos
+				e análise espectral, e provar incondicionalmente que toda a interferência
+				espectral das frequências não nulas se cancela (via teorema de
+				Green-Tao-Ziegler \cite{greentaoziegler}), reduzindo o problema a uma
+				única componente de frequência zero. Os resultados incondicionais são
+				explicitamente identificados; os condicionais são declarados como tais.
+				Comentários e críticas matemáticas são bem-vindos.
+		}}
+	\end{center}
+	\vspace{0.5em}
+	
+	% ── Abstract ──────────────────────────────────────────────────────────────────
+	\begin{abstract}
+		Reformulamos o problema central do Motor de Herança Estrutural
+		\cite{motor} na linguagem de sistemas dinâmicos e análise espectral.
+		A Hipótese Restritiva Fraca ($\HRm$) — existência de um eixo com par
+		de primos em alguma janela $W_i$ da varredura do scanner — é
+		traduzida, de forma incondicional, para a condição
+		$\widehat{F}(0) > 0$: positividade da componente de frequência zero
+		da função indicadora de colisão
+		$F(t) = \mathbf{1}_{\PP}(E_1(t))\cdot\mathbf{1}_{\PP}(E_2(t))$
+		no sistema dinâmico de medida finito $(X_N, \mu_N, T)$, onde $t$
+		indexa as diagonais da fita (pares que somam o par alvo $2M^+$).
+		
+		Demonstramos incondicionalmente que o operador de Koopman $U_T$
+		possui espectro discreto puro (raízes $K$-ésimas da unidade,
+		$K = N-1$), que $T$ é ergódico com entropia de Kolmogorov-Sinai
+		nula, e que $\HRm \Leftrightarrow \widehat{F}(0) > 0$.
+		Adicionalmente, provamos de forma incondicional — via o teorema de
+		Green-Tao-Ziegler \cite{greentaoziegler} sobre ortogonalidade da
+		função de von Mangoldt a nilsequências — que
+		$\widehat{w}(j) \to 0$ para todo $j \neq 0$.
+		O problema se reduz assim, incondicionalmente, a uma única
+		componente espectral: a positividade de $\widehat{w}(0)$, que é
+		equivalente a $\HRm$ e permanece em aberto.
+		
+		Discutimos as razões precisas pelas quais os métodos clássicos —
+		método do círculo de Hardy-Littlewood-Vinogradov e crivo linear de
+		Rosser-Iwaniec — colapsam nesta configuração, e delineamos como a
+		formulação espectral reposiciona a barreira analítica remanescente em
+		termos acessíveis às técnicas modernas.
+	\end{abstract}
+	
+	\tableofcontents
+	\newpage
+	
+	% ═══════════════════════════════════════════════════════════════════════════════
+	\section{Introdução}
+	\label{sec:intro}
+	
+	\subsection{A série e o contexto}
+	
+	Este artigo integra a série \cite{goldbach1,grade,ancora,crivo_b,motor}
+	dedicada a construir um mecanismo dinâmico de cobertura dos números pares
+	pela Conjectura de Goldbach. O Motor de Herança Estrutural \cite{motor}
+	reduz o problema global
+	\begin{quote}
+		\emph{``Todo par $2M > 2$ é soma de dois primos''}
+	\end{quote}
+	à questão local, repetida para cada iteração do motor:
+	\begin{quote}
+		\emph{``Existe algum eixo da janela $W_i$, para algum $i$ na
+			varredura do scanner, tal que ambos os extremos $E_1$ e $E_2$
+			desse eixo são primos?''}
+	\end{quote}
+	Esta é precisamente $\HRm$. A camada algébrica do motor —
+	construção da Fita-Dobra, acoplamento com a Grade, preenchimento
+	de $W_i$ pelo scanner — foi demonstrada incondicionalmente em
+	\cite{motor}. A única lacuna remanescente é a primalidade
+	simultânea dos extremos de algum eixo de $W_i$.
+	
+	O presente artigo não resolve essa lacuna. Seu propósito é
+	reescrevê-la na linguagem de sistemas dinâmicos e análise
+	harmônica, tornando explícita a natureza da obstrução e alinhando
+	o problema com a escola moderna de teoria analítica dos números.
+	
+	\subsection{Por que os métodos clássicos falham}
+	
+	As três principais tentativas de provar $\HRm$ diretamente pela
+	teoria analítica dos números clássica colapsam por razões
+	estruturais precisas, detalhadas na Seção~\ref{sec:crivo}:
+	
+	\begin{enumerate}[label=(\roman*)]
+		\item \textbf{Método do círculo (Hardy-Littlewood-Vinogradov).} A
+		separação de escalas — comprimento de progressão
+		$L \sim (\log M^-)^2$ versus alvo $2M^- \gg L$ — destrói o
+		termo principal da integral de Fourier quando $M \to \infty$.
+		
+		\item \textbf{Crivo linear de Rosser-Iwaniec.} O erro acumulado
+		$\mathcal{R}$ cresce como $(\log M^-)^{3-\varepsilon}$, dominando
+		o termo principal de ordem $(\log M^-)^2 / (\log\log M^-)^2$.
+		
+		\item \textbf{Indução algébrica pura.} A primalidade é
+		multiplicativa; a fita-dobra opera sob leis aditivas. Transportar
+		primalidade passo a passo cai em circularidade indutiva.
+	\end{enumerate}
+	
+	O diagnóstico comum é claro: \emph{ferramentas estáticas de ponto
+		fixo não resolvem um sistema dinâmico em evolução}. A reformulação
+	proposta analisa o fluxo orbital global em vez de instâncias
+	isoladas.
+	
+	\subsection{Mudança de perspectiva: da contagem ao fluxo}
+	
+	A filosofia central é a seguinte transição de linguagem:
+	
+	\begin{center}
+		\renewcommand{\arraystretch}{1.4}
+		\begin{tabular}{lll}
+			\toprule
+			\textbf{Dimensão} & \textbf{Abordagem Clássica} & \textbf{Abordagem Espectral} \\
+			\midrule
+			Análise & Pontual (um $2M$ de cada vez) & Global (fluxo sobre $X_N$) \\
+			Matemática & Aritmética de contagem & Geometria de medida \\
+			O motor & Organizador geométrico & Operador espectral (Koopman) \\
+			A barreira & Paridade e acúmulo de $\mathcal{R}$ & Freq.\ zero de $\widehat{w}$ (GTZ isola) \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	
+	Esta transição sintoniza o Motor de Herança com a escola moderna de
+	Teoria Analítica dos Números (Green-Tao-Gowers \cite{greentao},
+	Green-Tao-Ziegler \cite{greentaoziegler}, Sarnak \cite{sarnak}),
+	na qual a pseudo-aleatoriedade dos primos é explorada como
+	ferramenta, não como obstáculo.
+	
+	\begin{remark}[O que a reformulação oferece e o que não oferece]
+		\label{rem:honestidade}
+		A equivalência $\HRm \Leftrightarrow \widehat{F}(0) > 0$
+		(Teorema~\ref{thm:reformulacao}) é uma tautologia precisa, não
+		uma prova. Ela não reduz a dificuldade de Goldbach; ela a
+		\emph{localiza} numa obstrução espectral única e bem definida.
+		O valor está em que essa obstrução é exatamente o tipo de objeto
+		para o qual existem ferramentas modernas — nilsequências, normas
+		de Gowers, princípio de Sarnak — que ainda não estavam disponíveis
+		nas formulações clássicas.
+	\end{remark}
+	
+	\subsection{Organização do artigo}
+	
+	A Seção~\ref{sec:fundamentos} recapitula os fundamentos algébricos
+	do motor: Fita-Dobra, Grade com percurso zigzag, Janela $W_i$ com
+	seus quatro eixos de simetria, e o Scanner com mecanismo de pivôs.
+	A Seção~\ref{sec:dinamica} constrói o sistema dinâmico
+	$(X_N, \mu_N, T)$ e prova o Teorema Espectral (incondicional).
+	A Seção~\ref{sec:colisao} define a função de colisão $F$ e
+	estabelece $\HRm \Leftrightarrow \widehat{F}(0) > 0$
+	(incondicional). A Seção~\ref{sec:obstrucao} descreve a obstrução
+	espectral e sua conexão com Sarnak e Gowers. A
+	Seção~\ref{sec:crivo} detalha o colapso dos métodos clássicos. A
+	Seção~\ref{sec:conclusao} sintetiza o alcance e aponta direções
+	futuras.
+	
+	% ═══════════════════════════════════════════════════════════════════════════════
+	\section{Fundamentos Algébricos do Motor}
+	\label{sec:fundamentos}
+	
+	Nesta seção apresentamos os objetos e resultados incondicionais de
+	\cite{motor} necessários para a formulação espectral. A distinção
+	central que organiza toda a estrutura é:
+	
+	\begin{center}
+		\renewcommand{\arraystretch}{1.4}
+		\begin{tabular}{lll}
+			\toprule
+			\textbf{Conceito} & \textbf{Definição} & \textbf{Quem certifica} \\
+			\midrule
+			Par base $2M^-$ & Soma das \emph{colunas} da fita: $a_k + b_k = 2M^-$
+			& Goldbach conhecido \\
+			Par alvo $2M^+$ & Soma das \emph{diagonais} da fita:
+			$a_{k+1} + b_k = 2M^+$
+			& $\HRm$ certifica via $W_i$ \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	
+	Todos os resultados desta seção são independentes de primalidade.
+	
+	\subsection{A Fita-Dobra}
+	
+	\begin{definition}[Fita-Dobra $\F(2 \times N)$]
+		\label{def:fita}
+		Fixado o par base $2M^-$ com $M^- \geq 2$, a Fita-Dobra
+		$\F(2 \times N)$ é a matriz $2 \times N$ com $N = M^-$ entradas por
+		linha, definida por
+		\[
+		a_k = 2k - 1,\qquad b_k = 2M^- - (2k-1),\qquad k = 1,\ldots,N.
+		\]
+		A Linha~1 percorre os ímpares crescentes $1, 3, 5, \ldots, 2N-1$
+		da esquerda para a direita. A Linha~2 percorre os complementares
+		$2M^{-}-1, 2M^{-}-3, \ldots, 1$ da direita para a esquerda.
+	\end{definition}
+	
+	\begin{proposition}[Soma constante nas colunas — par base]
+		\label{prop:coluna}
+		Para toda coluna $k \in \{1, \ldots, N\}$:
+		\[
+		a_k + b_k = 2M^-.
+		\]
+		Esta soma é constante, independente de $k$ e independente de
+		primalidade. O par base $2M^-$ é certificado ao se encontrar uma
+		coluna $k$ com $a_k$ e $b_k$ ambos primos — o motor parte desse
+		fato como dado.
+	\end{proposition}
+	
+	\begin{proposition}[Soma constante nas diagonais — par alvo]
+		\label{prop:diagonal}
+		Para todo $k \in \{1, \ldots, N-1\}$, o par diagonal
+		$(a_{k+1},\, b_k)$ satisfaz
+		\[
+		a_{k+1} + b_k
+		= (2k+1) + \bigl(2M^- - (2k-1)\bigr)
+		= 2M^- + 2
+		=: 2M^+.
+		\]
+		Cada par diagonal soma exatamente $2M^+ = 2M^- + 2$,
+		independente de primalidade. Esses $N-1$ pares diagonais são o
+		objeto capturado pelo Scanner e armazenado nos eixos de $W_i$.
+	\end{proposition}
+	
+	\begin{remark}[A fita representa dois pares consecutivos]
+		A Fita-Dobra representa simultaneamente o par base $2M^-$
+		(soma das colunas) e o par alvo $2M^+$ (soma das diagonais).
+		O par alvo de uma iteração torna-se o par base da iteração
+		seguinte, formando a cadeia de herança estrutural.
+	\end{remark}
+	
+	\subsection{A Grade com Percurso Zigzag}
+	
+	\begin{definition}[Grade $\G(3 \times C)$ com percurso zigzag]
+		\label{def:grade}
+		A Grade $\G(3 \times C)$ é uma matriz de $3$ linhas e $C$ colunas
+		que contém os mesmos $3C$ ímpares da Fita-Dobra, organizados em
+		percurso zigzag de três linhas:
+		\begin{itemize}
+			\item Linha~1: percorre os ímpares crescentes da
+			\emph{esquerda para a direita} ($\rightarrow$).
+			\item Linha~2: percorre os ímpares seguintes da
+			\emph{direita para a esquerda} ($\leftarrow$).
+			\item Linha~3: percorre os ímpares seguintes da
+			\emph{esquerda para a direita} ($\rightarrow$).
+		\end{itemize}
+		O percurso zigzag garante que as diagonais geométricas da grade
+		correspondam às diagonais da fita.
+	\end{definition}
+	
+	\begin{definition}[Condição de acoplamento]
+		\label{def:acoplamento}
+		Para que Grade e Fita representem exatamente o mesmo conjunto de
+		ímpares, a condição de acoplamento deve ser satisfeita:
+		\[
+		3C = 2N.
+		\]
+		Quando o total de ímpares não é divisível por~$3$, duplicações
+		centrais são introduzidas para satisfazer a condição sem alterar
+		a cardinalidade efetiva do sistema.
+	\end{definition}
+	
+	\begin{example}[Grade $\G(3 \times 8)$, par base $2M^- = 48$,
+		par alvo $2M^+ = 50$]
+		Acoplamento: $3 \times 8 = 2 \times 12 = 24$ células. $\checkmark$
+		\[
+		\begin{array}{cccccccc}
+			1  & 3  & 5  & 7  & 9  & 11 & 13 & 15 \\
+			31 & 29 & 27 & 25 & 23 & 21 & 19 & 17 \\
+			33 & 35 & 37 & 39 & 41 & 43 & 45 & 47
+		\end{array}
+		\]
+	\end{example}
+	
+	\subsection{A Janela \texorpdfstring{$W_i$}{Wi} — Quatro Eixos de Simetria}
+	
+	\begin{definition}[Janela $W_i$]
+		\label{def:wi}
+		A Janela $W_i$ é uma matriz $3 \times 3$ fixa que armazena, nos
+		seus quatro eixos de simetria, até quatro pares diagonais da
+		fita, cada um somando o par alvo $2M^+$. $W_i$ não é deslizante:
+		ela é preenchida pelo Scanner e permanece como referência
+		estrutural.
+		
+		Uma matriz $3 \times 3$ possui exatamente quatro linhas de simetria
+		que passam pelo centro, cada uma conectando dois extremos opostos:
+		\begin{center}
+			\renewcommand{\arraystretch}{1.3}
+			\begin{tabular}{lll}
+				\toprule
+				\textbf{Eixo} & \textbf{Entrada $E_1$} & \textbf{Entrada $E_2$ (oposto)} \\
+				\midrule
+				$D_1$ (diagonal principal) & canto $[0,0]$ & canto $[2,2]$ \\
+				$D_2$ (diagonal secundária) & canto $[0,2]$ & canto $[2,0]$ \\
+				$C_v$ (coluna central) & topo $[0,1]$ & base $[2,1]$ \\
+				$L_c$ (linha central) & esquerda $[1,0]$ & direita $[1,2]$ \\
+				\bottomrule
+			\end{tabular}
+		\end{center}
+		Em cada eixo: o elemento menor do par é posicionado na entrada
+		$E_1$, o maior em $E_2$. A posição central $[1,1]$ armazena o
+		\textbf{pivô} — o elemento central da varredura do Scanner.
+		A estrutura visual de $W_i$ é:
+		\[
+		\begin{pmatrix}
+			E_1(D_1) & E_1(C_v) & E_1(D_2) \\
+			E_1(L_c) & \text{PIV\^O} & E_2(L_c) \\
+			E_2(D_2) & E_2(C_v) & E_2(D_1)
+		\end{pmatrix}
+		\]
+	\end{definition}
+	
+	\begin{proposition}[Soma constante nos eixos de $W_i$]
+		\label{prop:eixos}
+		Por construção da Fita-Dobra (Proposição~\ref{prop:diagonal}),
+		cada par $(E_1, E_2)$ capturado pelo Scanner e armazenado num
+		eixo de $W_i$ satisfaz automaticamente
+		\[
+		E_1 + E_2 = 2M^+,
+		\]
+		independente de os elementos serem ou não primos. Esta é a
+		garantia algébrica incondicional do motor.
+	\end{proposition}
+	
+	\begin{example}[$W_i$ com par base $2M^- = 48$, par alvo $2M^+ = 50$]
+		\[
+		\begin{pmatrix}
+			7  &  9 & 11 \\
+			37 & 25 & 13 \\
+			39 & 41 & 43
+		\end{pmatrix}
+		\]
+		$D_1$: $7 + 43 = 50$ $\checkmark$\quad
+		$C_v$: $9 + 41 = 50$ $\checkmark$\quad
+		$D_2$: $11 + 39 = 50$ $\checkmark$\quad
+		$L_c$: $13 + 37 = 50$ $\checkmark$
+		
+		$\HRm$ ativada em $D_1$: $7$ primo $\checkmark$,
+		$43$ primo $\checkmark$ $\Rightarrow$ $50 = 7 + 43$.
+	\end{example}
+	
+	\subsection{O Scanner — Mecanismo dos Pivôs}
+	
+	\begin{definition}[Scanner com pivôs]
+		\label{def:scanner}
+		O Scanner percorre a Grade e preenche os eixos de $W_i$ com as
+		diagonais da Fita. Dois pivôs marcham das extremidades da lista
+		de ímpares em direção ao centro:
+		\begin{enumerate}
+			\item Posicionar o pivô esquerdo na \emph{segunda} posição da
+			lista (o elemento~$1$ é descartado, pois não forma
+			diagonal secundária válida: não existe $a$ na grade com
+			$1 + a = 2M^+$).
+			\item Posicionar o pivô direito na extremidade final da lista.
+			\item Registrar o par $(E_{\mathrm{esq}}, E_{\mathrm{dir}})$
+			num eixo de $W_i$. O elemento central da lista é o
+			pivô do sensor (posição $[1,1]$).
+			\item Avançar o pivô esquerdo ($+1$) e recuar o pivô direito
+			($-1$).
+			\item Repetir até os pivôs se encontrarem. Cada iteração
+			preenche um eixo de $W_i$.
+			\item Quando $W_i$ tiver os quatro eixos preenchidos,
+			registrá-la e iniciar nova $W_i$ para o bloco seguinte.
+		\end{enumerate}
+		O número de janelas necessárias para cobrir todas as $N-1$
+		diagonais da fita é $\lceil (N-1)/4 \rceil$.
+	\end{definition}
+	
+	\subsection{As Hipóteses Restritivas}
+	
+	\begin{definition}[Hipóteses Restritivas]
+		\label{def:HR}
+		Fixados $N$ e a varredura do Scanner sobre a Grade, sejam
+		$(E_1, E_2)$ os extremos de um eixo de $W_i$, com
+		$E_1 + E_2 = 2M^+$ por construção geométrica
+		(Proposição~\ref{prop:eixos}).
+		
+		\begin{itemize}
+			\item \textbf{$\HRm$ (Fraca):} Existe pelo menos um eixo de
+			$W_i$, para alguma janela $i$ na varredura, tal que
+			$E_1 \in \PP$ e $E_2 \in \PP$. O par $(E_1, E_2)$ é então
+			um certificado de Goldbach para o par alvo $2M^+$.
+			\item \textbf{$\HRp$ (Forte):} Existe pelo menos um eixo de
+			$W_i$ tal que a tripla completa
+			$(E_1, \mathrm{Piv\hat{o}}, E_2)$ é inteiramente formada
+			por primos. $\HRp$ implica $\HRm$.
+		\end{itemize}
+	\end{definition}
+	
+	Sob $\HRm$, o Teorema do Motor \cite[Thm.~9.1]{motor} garante que
+	a cadeia
+	\[
+	2M_0^- \;\to\; 2M_0^+ \;\to\; 2M_0^+ + 2 \;\to\; \cdots
+	\]
+	cobre todos os pares $\geq 2M_0^-$ como somas de dois primos.
+	A lacuna central — a única hipótese não provada — é precisamente
+	$\HRm$.
+	
+	\begin{remark}[Separação entre camadas algébrica e aritmética]
+		A arquitetura do motor separa claramente duas camadas. A
+		\emph{camada algébrica} — construção da fita, acoplamento com
+		a grade, estrutura de $W_i$, preenchimento pelo Scanner — é
+		inteiramente incondicional: a existência geométrica dos pares e
+		sua cobertura pelos eixos de $W_i$ independem de qualquer
+		hipótese sobre primos. A \emph{camada aritmética} — a
+		primalidade simultânea dos extremos de algum eixo — é o único
+		ingrediente não provado, capturado por $\HRm$.
+	\end{remark}
+	
+	% ═══════════════════════════════════════════════════════════════════════════════
+	\section{O Sistema Dinâmico de Medida Finito}
+	\label{sec:dinamica}
+	
+	\subsection{Construção do sistema}
+	
+	A varredura do Scanner sobre a Grade produz exatamente $N-1$ pares
+	diagonais $(E_1(t), E_2(t))$, indexados por $t \in \{1,\ldots,N-1\}$,
+	cada um satisfazendo $E_1(t)+E_2(t)=2M^+$ incondicionalmente. O
+	sistema dinâmico é construído sobre esse conjunto de estados.
+	
+	\begin{definition}[Espaço de estados $X_N$]
+		\label{def:estados}
+		O espaço de estados do motor é o conjunto finito de índices
+		diagonais
+		\[
+		X_N := \{t \in \Z : 1 \leq t \leq N-1\}.
+		\]
+		Cada estado $t \in X_N$ corresponde biunivocamente ao par
+		diagonal $(E_1(t), E_2(t))$ capturado pelo Scanner, com soma
+		$E_1(t)+E_2(t)=2M^+$ garantida geometricamente pela
+		Proposição~\ref{prop:diagonal}.
+	\end{definition}
+	
+	\begin{definition}[Medida de probabilidade uniforme $\mu_N$]
+		Definimos a medida de probabilidade sobre a $\sigma$-álgebra
+		discreta de $X_N$ por
+		\[
+		\mu_N(\{t\}) = \frac{1}{N-1},\qquad \forall\, t \in X_N.
+		\]
+	\end{definition}
+	
+	\begin{definition}[Transformação dinâmica $T$]
+		A transformação $T: X_N \to X_N$ é a translação cíclica unitária
+		\[
+		T(t) = t + 1 \pmod{N-1}.
+		\]
+		$T$ percorre ciclicamente todos os índices diagonais,
+		equivalendo a observar o par seguinte na enumeração do Scanner.
+	\end{definition}
+	
+	\begin{lemma}[Preservação de medida e ergodicidade]
+		\label{lem:ergodico}
+		A transformação $T$ é um automorfismo de medida sobre
+		$(X_N, \mu_N)$. Além disso, $(X_N, \mu_N, T)$ é ergódico e
+		possui entropia métrica de Kolmogorov-Sinai nula:
+		\[
+		\mu_N(T^{-1}(B)) = \mu_N(B)\;\;\forall B \subset X_N,
+		\qquad h(T) = 0.
+		\]
+	\end{lemma}
+	
+	\begin{proof}
+		Como $T$ é uma bijeção de $X_N$ sobre si mesmo e $\mu_N$ é a
+		medida de contagem normalizada, a preservação de medida é
+		imediata. A ergodicidade decorre do fato de que $T$ forma um
+		único ciclo de comprimento máximo $K = N-1$ sobre $X_N$: o
+		único subconjunto $B$ com $T^{-1}(B) = B$ é $B = \emptyset$ ou
+		$B = X_N$. A entropia nula é consequência do caráter periódico
+		e determinístico de $T$.
+	\end{proof}
+	
+	\subsection{O operador de Koopman e sua estrutura espectral}
+	
+	\begin{definition}[Espaço de Hilbert e produto interno]
+		Seja $L^2(X_N, \mu_N)$ o espaço de funções de valor complexo
+		sobre $X_N$, com produto interno
+		\[
+		\ip{\psi}{\phi} = \frac{1}{N-1}\sum_{t=1}^{N-1}
+		\psi(t)\,\overline{\phi(t)}.
+		\]
+	\end{definition}
+	
+	\begin{definition}[Operador de Koopman $U_T$]
+		\label{def:koopman}
+		O operador de Koopman $U_T: L^2(X_N) \to L^2(X_N)$ é definido
+		por
+		\[
+		(U_T\psi)(t) = \psi(T(t)).
+		\]
+		Como $T$ preserva $\mu_N$, $U_T$ é unitário: $U_T^* = U_T^{-1}$.
+		Geometricamente, $U_T$ desloca o índice de observação ao longo
+		da sequência de pares diagonais do Scanner.
+	\end{definition}
+	
+	\begin{proposition}[Representação matricial circulante]
+		\label{prop:circulante}
+		Na base canônica de $L^2(X_N)$, o operador $U_T$ é representado
+		pela matriz de permutação circulante
+		$M \in \R^{K\times K}$ (com $K = N-1$):
+		\[
+		M = \begin{pmatrix}
+			0 & 1 & 0 & \cdots & 0 \\
+			0 & 0 & 1 & \cdots & 0 \\
+			\vdots & \vdots & \vdots & \ddots & \vdots \\
+			0 & 0 & 0 & \cdots & 1 \\
+			1 & 0 & 0 & \cdots & 0
+		\end{pmatrix}.
+		\]
+	\end{proposition}
+	
+	\begin{theorem}[Espectro discreto do motor — incondicional]
+		\label{thm:espectro}
+		O espectro de $U_T$ é discreto puro. Os autovalores e as
+		autofunções associadas são:
+		\[
+		\lambda_j = \exp\!\left(\frac{2\pi i\, j}{K}\right),\qquad
+		\phi_j(t) = \exp\!\left(\frac{2\pi i\, j\, t}{K}\right),\qquad
+		j,t \in \{0,\ldots,K-1\}.
+		\]
+		Em particular, $\phi_0 \equiv 1$ é a autofunção constante
+		associada ao autovalor trivial $\lambda_0 = 1$.
+	\end{theorem}
+	
+	\begin{proof}
+		Como $M$ é uma matriz circulante de permutação, satisfaz
+		$M^K = I$, donde seu polinômio mínimo divide $x^K - 1$. As
+		raízes de $x^K - 1$ são exatamente $\lambda_j = e^{2\pi ij/K}$,
+		$j = 0,\ldots,K-1$. As autofunções $\phi_j$ são os harmônicos
+		de Fourier discretos sobre $\Z_K$; sua ortogonalidade decorre
+		da relação de ortogonalidade de caracteres:
+		\[
+		\ip{\phi_j}{\phi_\ell} = \frac{1}{K}\sum_{t=0}^{K-1}
+		e^{2\pi i(j-\ell)t/K} = \delta_{j\ell}.\qedhere
+		\]
+	\end{proof}
+	
+	\begin{remark}[Significado do Teorema~\ref{thm:espectro}]
+		O resultado demonstra, sem qualquer hipótese sobre primos, que
+		a dinâmica do motor é geometricamente equivalente a um
+		\emph{oscilador harmônico discreto} de entropia nula. Esta
+		propriedade é o ponto de entrada para a Conjectura de Sarnak:
+		sistemas de entropia zero têm comportamento ``simples'' o
+		suficiente para que a pseudo-aleatoriedade dos primos se
+		manifeste como descorrelação espectral.
+	\end{remark}
+	
+	% ═══════════════════════════════════════════════════════════════════════════════
+	\section{Função de Colisão e Reformulação Espectral de
+		\texorpdfstring{$\HRm$}{HR-}}
+	\label{sec:colisao}
+	
+	\subsection{A função indicadora de colisão}
+	
+	\begin{definition}[Função de colisão $F$]
+		\label{def:colisao}
+		A observável aritmética $F \in L^2(X_N)$ que registra colisões
+		primas nos pares diagonais do motor é definida por
+		\[
+		F(t) := \mathbf{1}_{\PP}(E_1(t))\cdot\mathbf{1}_{\PP}(E_2(t)),
+		\]
+		onde $\mathbf{1}_{\PP}(x) = 1$ se $x$ é primo e $0$ caso
+		contrário, e $(E_1(t), E_2(t))$ é o $t$-ésimo par diagonal
+		capturado pelo Scanner com $E_1(t)+E_2(t)=2M^+$.
+	\end{definition}
+	
+	\begin{definition}[Função de peso de von Mangoldt]
+		\label{def:mangoldt}
+		A versão suavizada de $F$ via a função de von Mangoldt é
+		\[
+		w(t) := \Lambda(E_1(t))\cdot\Lambda(E_2(t)),
+		\]
+		onde $\Lambda(n) = \log p$ se $n = p^k$ e $0$ caso contrário.
+		A passagem de $w$ para $F$ introduz erro $O(\sqrt{K}\log K)$
+		proveniente das potências de primos com $k \geq 2$.
+	\end{definition}
+	
+	\subsection{Equações de indexação dos pares diagonais}
+	
+	\begin{remark}[Variação linear dos extremos diagonais]
+		\label{rem:movimento}
+		Por construção da Fita-Dobra (Definição~\ref{def:fita}), os
+		extremos do $t$-ésimo par diagonal variam linearmente:
+		\[
+		E_1(t) = E_1(1) + 2(t-1),\qquad
+		E_2(t) = E_2(1) - 2(t-1),
+		\]
+		de modo que $E_1(t) + E_2(t) = E_1(1) + E_2(1) = 2M^+$ é
+		constante para todo $t \in \{1,\ldots,N-1\}$.
+	\end{remark}
+	
+	\subsection{Decomposição espectral e reformulação de
+		\texorpdfstring{$\HRm$}{HR-}}
+	
+	\begin{definition}[Transformada de Fourier de $F$]
+		A projeção espectral de $F$ sobre os autovalores do motor é
+		\[
+		\widehat{F}(j) := \ip{F}{\phi_j} = \frac{1}{K}\sum_{t=1}^{K}
+		F(t)\,e^{-2\pi i j t/K}.
+		\]
+	\end{definition}
+	
+	\begin{theorem}[Reformulação espectral de $\HRm$ — incondicional]
+		\label{thm:reformulacao}
+		A Hipótese Restritiva Fraca $\HRm$ para o par alvo $2M^+$ é
+		equivalente a qualquer das seguintes condições:
+		\begin{enumerate}[label=(\alph*)]
+			\item $F(t_0) \neq 0$ para algum $t_0 \in X_N$.
+			\item $\displaystyle\sum_{t=1}^{K} F(t) \geq 1$.
+			\item $\widehat{F}(0) = \ip{F}{\mathbf{1}} > 0$.
+		\end{enumerate}
+	\end{theorem}
+	
+	\begin{proof}
+		A equivalência (a)$\Leftrightarrow$(b) é imediata pois
+		$F(t) \in \{0,1\}$. Para (b)$\Leftrightarrow$(c): como
+		$\phi_0 \equiv 1$ e $\mu_N$ é uniforme,
+		\[
+		\widehat{F}(0) = \frac{1}{K}\sum_{t=1}^K F(t) \geq 0,
+		\]
+		com igualdade se e somente se $F \equiv 0$. Portanto
+		$\widehat{F}(0) > 0 \Leftrightarrow \sum F(t) \geq 1$.
+	\end{proof}
+	
+	\begin{remark}[Natureza da reformulação]
+		\label{rem:tautologia}
+		O Teorema~\ref{thm:reformulacao} é uma equivalência, não uma
+		prova. A condição $\widehat{F}(0) > 0$ é precisamente uma
+		reescrita de $\HRm$ na linguagem de análise harmônica. O ganho
+		não é lógico, mas \emph{linguístico}: a obstrução é agora um
+		objeto espectral para o qual existem técnicas modernas —
+		descorrelação de Sarnak, normas de Gowers, nilsequências — que
+		não têm análogo direto na formulação original.
+	\end{remark}
+	
+	% ═══════════════════════════════════════════════════════════════════════════════
+	\section{A Obstrução Espectral e Conexões com Ferramentas Modernas}
+	\label{sec:obstrucao}
+	
+	\subsection{Pseudo-aleatoriedade e uniformidade de Gowers}
+	
+	\begin{definition}[Uniformidade de Gowers $U^2$]
+		Uma sequência $a: \{1,\ldots,K\} \to \C$ é
+		\emph{$U^2$-uniforme} se
+		\[
+		\norm{a}_{U^2(K)}^4 := \frac{1}{K^3}\sum_{n,h_1,h_2}
+		a(n)\overline{a(n+h_1)}\overline{a(n+h_2)}a(n+h_1+h_2) = o(1)
+		\quad (K \to \infty).
+		\]
+	\end{definition}
+	
+	Um resultado central na combinatória aditiva moderna é que a
+	função de von Mangoldt normalizada é $U^2$-uniforme ao longo de
+	progressões aritméticas (Green-Tao \cite{greentao}, Gowers
+	\cite{gowers}). Intuitivamente, isso significa que os primos não
+	exibem correlações a dois pontos em qualquer progressão aritmética
+	fixa — propriedade que, na linguagem do motor, se traduz como
+	descorrelação entre $w(t)$ e as frequências $j \neq 0$ do sistema.
+	
+	\subsection{Descorrelação Espectral via Nilsequências}
+	
+	A versão anterior deste resultado invocava a Conjectura de Sarnak
+	\cite{sarnak} — sobre a ortogonalidade de $\mu(n)$ a sistemas de
+	entropia zero — para obter descorrelação de $\Lambda$. Essa
+	passagem de $\mu$ para $\Lambda$ é não trivial e torna o resultado
+	condicional. O teorema de Green-Tao-Ziegler \cite{greentaoziegler}
+	oferece uma rota incondicional mais direta.
+	
+	\begin{proposition}[Descorrelação espectral — incondicional]
+		\label{prop:sarnak}
+		Seja $(X_N, \mu_N, T)$ o sistema dinâmico do motor. Para todo
+		$j \neq 0$, a autofunção
+		\[
+		\phi_j(t) = \exp\!\left(\frac{2\pi i\,j\,t}{K}\right)
+		\]
+		é uma nilsequência de grau $1$ (caractere linear sobre $\Z_K$).
+		Pelo teorema de Green-Tao-Ziegler \cite{greentaoziegler} sobre
+		sistemas lineares em primos — especificamente, sobre a
+		ortogonalidade do produto $\Lambda(L_1(t))\Lambda(L_2(t))$ a
+		nilsequências para pares de formas lineares não degenerados —
+		a função de peso $w(t) = \Lambda(E_1(t))\,\Lambda(E_2(t))$
+		satisfaz
+		\[
+		\lim_{K\to\infty}\widehat{w}(j) = 0,\qquad \forall\, j \neq 0.
+		\]
+	\end{proposition}
+	
+	\begin{proof}
+		Consideramos o par de formas lineares
+		\[
+		L_1(t) = E_1(1) + 2(t-1),\qquad
+		L_2(t) = E_2(1) - 2(t-1),
+		\]
+		com coeficientes $+2$ e $-2$ (Observação~\ref{rem:movimento}).
+		Este par é \emph{não degenerado} — os coeficientes são
+		linearmente independentes e a progressão é localmente solúvel
+		— e satisfaz $L_1(t) + L_2(t) = 2M^+$ constante.
+		
+		Pelo teorema principal de Green-Tao-Ziegler
+		\cite{greentaoziegler}, para qualquer nilsequência $\psi$ de
+		grau finito,
+		\[
+		\frac{1}{K}\sum_{t=1}^{K} \Lambda(L_1(t))\,\Lambda(L_2(t))\,
+		\psi(t) \to 0 \quad (K \to \infty).
+		\]
+		Para cada $j \neq 0$, a autofunção $\phi_j(t) = e^{2\pi i j t/K}$
+		é uma nilsequência de grau $1$. Tomando
+		$\psi(t) = \overline{\phi_j(t)}$, obtemos
+		\[
+		\widehat{w}(j) = \frac{1}{K}\sum_{t=1}^{K}
+		\Lambda(E_1(t))\,\Lambda(E_2(t))\,\overline{\phi_j(t)}
+		\to 0. \qedhere
+		\]
+	\end{proof}
+	
+	\begin{remark}[Relação com a Conjectura de Sarnak]
+		\label{rem:sarnak}
+		A Conjectura de Sarnak \cite{sarnak} — sobre $\mu(n)$ ortogonal
+		a sistemas de entropia zero — é mais geral mas ainda não provada.
+		O resultado acima não a utiliza: ele decorre diretamente do
+		teorema de nilsequências de Green-Tao-Ziegler, que é
+		incondicional. A Conjectura de Sarnak permanece como motivação
+		conceitual para a abordagem, mas não como hipótese necessária.
+	\end{remark}
+	
+	\begin{remark}[Nota sobre possível novidade na literatura]
+		\label{rem:novidade}
+		A aplicação do teorema de Green-Tao-Ziegler diretamente ao
+		sistema de Koopman do Motor de Herança — concluindo descorrelação
+		incondicional das componentes $j \neq 0$ — pode constituir uma
+		observação nova. Não identificamos na literatura uma aplicação
+		análoga de nilsequências a sistemas de cobertura de pares de
+		Goldbach com soma fixa desta forma. Entretanto, a literatura em
+		teoria ergódica e teoria analítica dos números é vasta, e uma
+		verificação cuidadosa por especialistas é necessária antes de
+		qualquer reivindicação de novidade.
+	\end{remark}
+	
+	\subsection{A obstrução espectral e o que ela implica}
+	
+	A Proposição~\ref{prop:sarnak} estabelece que as componentes
+	$\widehat{w}(j)$ para $j \neq 0$ tendem a zero. A componente
+	$\widehat{w}(0)$, por sua vez, é a média orbital de $w$, e é
+	precisamente o objeto cuja positividade equivale a $\HRm$.
+	
+	\begin{remark}[A barreira remanescente — formulação precisa]
+		\label{rem:barreira}
+		A lacuna analítica central pode ser formulada com precisão como:
+		\[
+		\text{provar incondicionalmente que}\quad
+		\frac{1}{K}\sum_{t=1}^K \Lambda(E_1(t))\,\Lambda(E_2(t)) \gg
+		\frac{1}{(\log K)^2},
+		\]
+		onde $E_1(t)+E_2(t) = 2M^+$ para todo $t$, por construção
+		geométrica da Fita-Dobra. Esta estimativa é equivalente à
+		própria Conjectura de Goldbach na linguagem da análise harmônica.
+		A reformulação não simplifica essa dificuldade; ela a expressa
+		num objeto — a componente de frequência zero de $w$ no sistema
+		de Koopman — para o qual as técnicas de nilsequências e médias
+		de Weyl têm tração natural.
+	\end{remark}
+	
+	\begin{remark}[Conexão com a heurística de Hardy-Littlewood]
+		\label{rem:HL}
+		A Conjectura de Hardy-Littlewood \cite{hardy-littlewood} prediz
+		que
+		\[
+		\widehat{w}(0) \sim \mathfrak{S}(2M^+)\cdot
+		\frac{(\log M^+)^2}{(\log K)^2} > 0,
+		\]
+		onde $\mathfrak{S}(2M^+)$ é a série singular associada ao par
+		alvo, sempre positiva.
+		Esta predição é consistente com a Observação~\ref{rem:barreira}:
+		assumir $\widehat{w}(0) > 0$ incondicionalmente é equivalente a
+		provar Goldbach para $2M^+$. Sob GRH, os erros de Siegel-Walfisz são
+		suficientemente controlados para que a cota inferior
+		$\widehat{w}(0) > 0$ valha condicionalmente. Esses fatos
+		mostram que a reformulação espectral está calibrada corretamente:
+		ela captura a mesma dificuldade que a heurística clássica, numa
+		linguagem que a expõe mais nitidamente.
+	\end{remark}
+	
+	% ═══════════════════════════════════════════════════════════════════════════════
+	\section{Por que os Métodos Clássicos Colapsam}
+	\label{sec:crivo}
+	
+	Esta seção formaliza o diagnóstico mencionado na Introdução,
+	descrevendo com precisão as camadas onde a abordagem clássica
+	falha. O objetivo não é apenas registrar o colapso, mas mostrar
+	por que a formulação espectral evita esses obstáculos específicos
+	— ainda que não os resolva.
+	
+	\subsection{Configuração e notação}
+	
+	O objeto de estudo nesta seção é o \emph{par alvo} $2M^+$:
+	é para ele que $\HRm$ deve ser verificada, pois o par base
+	$2M^-$ já é Goldbach por hipótese (dado do motor).
+	
+	Fixamos $2M^+ = 2M^- + 2$ suficientemente grande e
+	$L = \lfloor 2(\log M^+)^2 \rfloor$. Definimos
+	\[
+	\mathcal{N}(L,\, 2M^+) = \#\{p \leq L : p \in \PP,\;
+	2M^+ - p \in \PP\}.
+	\]
+	A condição $\mathcal{N}(L, 2M^+) \geq 1$ é exatamente $\HRm$
+	com a progressão $\{3, 5, \ldots, L\}$,
+	$T \sim (\log M^+)^2$.
+	
+	\subsection{Colapso do método do círculo}
+	
+	As somas de von Mangoldt
+	$f(\alpha) = \sum_{j=1}^T \Lambda(2j+1)\,e(\alpha(2j+1))$
+	e $g(\alpha)$ admitem a identidade de Fourier
+	\[
+	\sum_{j=1}^T \Lambda(2j+1)\,\Lambda(2M^+ - (2j+1))
+	= \int_0^1 f(\alpha)\,\overline{g(\alpha)}\,d\alpha.
+	\]
+	Nos arcos maiores $\mathfrak{M}(a,q)$ com
+	$q \leq Q = (\log M^+)^B$, o produto $f\cdot\overline{g}$
+	contém o fator $e(2M^+\beta)$ com $|\beta| \leq Q/(qT)$.
+	A integral
+	\[
+	\int_{-Q/T}^{Q/T}|F(\beta,T)|^2\,e(2M^+\beta)\,d\beta
+	= O\!\left(\frac{T^2\log T}{M^{+}Q}\right) \to 0
+	\]
+	quando $M^+ \to \infty$ com $T = O((\log M^+)^2)$ fixo. O
+	termo principal é destruído pelas oscilações rápidas de
+	$e(2M^+\alpha)$ à escala $M^+ \gg T$.
+	
+	\subsection{Colapso do crivo de Rosser-Iwaniec}
+	
+	Crivando $\mathcal{A} = \{2M^+ - p : p \leq L\}$ até nível
+	$D = (\log M^+)^{1-\varepsilon}$, o erro acumulado do crivo é
+	\[
+	\mathcal{R} \leq \sum_{\substack{d \leq D \\ d \mid P(w)}} |r_d|
+	\ll D \cdot \frac{L}{(\log L)^A}
+	\sim \frac{(\log M^+)^{3-\varepsilon}}{(\log\log M^+)^A},
+	\]
+	enquanto o termo principal do crivo linear é apenas
+	$O((\log M^+)^2/(\log\log M^+)^2)$. Como $3 - \varepsilon > 2$
+	para $\varepsilon < 1$, o resto $\mathcal{R}$ domina o sinal e
+	a cota inferior colapsa.
+	
+	\begin{center}
+		\renewcommand{\arraystretch}{1.4}
+		\begin{tabular}{llll}
+			\toprule
+			\textbf{Camada} & \textbf{Ferramenta} & \textbf{Resultado}
+			& \textbf{Status} \\
+			\midrule
+			1 & Método do círculo & Integral $\to 0$ para $M^+ \gg T$
+			& Colapsa \\
+			2 & Bombieri-Vinogradov & Inaplicável: $L \ll M^+$
+			& Inaplicável \\
+			3 & Crivo linear (Iwaniec) & $S(\mathcal{A},z)$ positivo;
+			sozinho não fecha & Parcial \\
+			4 & Buchstab + Chen & $\mathcal{R} \gg S(\mathcal{A},z)$
+			& Colapsa \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	
+	\subsection{O que a abordagem espectral reposiciona}
+	
+	A formulação espectral não elimina a dificuldade de provar
+	$\widehat{F}(0) > 0$ incondicionalmente. O que ela oferece é:
+	\begin{enumerate}[label=(\alph*)]
+		\item Um \emph{diagnóstico preciso} da obstrução: a dificuldade
+		não está espalhada pelo problema, mas concentrada na componente
+		de frequência zero de um único objeto espectral.
+		\item Uma \emph{linguagem alinhada} com as técnicas que
+		resolveram problemas análogos: Green-Tao usou exatamente a
+		transição ``contagem $\to$ fluxo'' para progressões aritméticas
+		em primos; Helfgott \cite{helfgott} usou análise de Fourier
+		refinada para Goldbach ternário.
+		\item Uma \emph{separação clara} entre o que está provado (a
+		estrutura dinâmica do motor, incluindo os quatro eixos de $W_i$
+		e o mecanismo dos pivôs do Scanner) e o que permanece aberto
+		(a positividade de $\widehat{F}(0)$).
+	\end{enumerate}
+	
+	% ═══════════════════════════════════════════════════════════════════════════════
+	\section{Síntese, Alcance e Trabalhos Futuros}
+	\label{sec:conclusao}
+	
+	\subsection{O que este artigo prova}
+	
+	\begin{center}
+		\renewcommand{\arraystretch}{1.4}
+		\begin{tabular}{lll}
+			\toprule
+			\textbf{Resultado} & \textbf{Status} & \textbf{Referência} \\
+			\midrule
+			Fita-Dobra: colunas $= 2M^-$, diagonais $= 2M^+$
+			& Incondicional & Def.~\ref{def:fita},
+			Props.~\ref{prop:coluna}--\ref{prop:diagonal} \\
+			Grade zigzag e acoplamento $3C = 2N$
+			& Incondicional & Def.~\ref{def:grade}--\ref{def:acoplamento} \\
+			$W_i$: 4 eixos, soma constante $= 2M^+$
+			& Incondicional & Def.~\ref{def:wi}, Prop.~\ref{prop:eixos} \\
+			Scanner com pivôs, cobertura de $N-1$ diagonais
+			& Incondicional & Def.~\ref{def:scanner} \\
+			Sistema $(X_N,\mu_N,T)$ bem definido
+			& Incondicional & Def.~\ref{def:estados}--\ref{def:koopman} \\
+			$T$ ergódico, $h(T) = 0$
+			& Incondicional & Lema~\ref{lem:ergodico} \\
+			Espectro discreto de $U_T$ (raízes da unidade)
+			& Incondicional & Teo.~\ref{thm:espectro} \\
+			$\HRm \Leftrightarrow \widehat{F}(0) > 0$
+			& Incondicional & Teo.~\ref{thm:reformulacao} \\
+			Descorrelação $\widehat{w}(j) \to 0$ para $j \neq 0$
+			& Incondicional (GTZ) & Prop.~\ref{prop:sarnak} \\
+			$\widehat{w}(0) > 0$
+			& Cond.\ (H-L ou GRH) & Obs.~\ref{rem:HL} \\
+			\midrule
+			\textbf{$\HRm$ provada} & \textbf{Não provada}
+			& Obs.~\ref{rem:barreira} \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	
+	A última linha da tabela é o ponto central: o artigo reformula
+	$\HRm$, não a demonstra. A equivalência
+	$\HRm \Leftrightarrow \widehat{F}(0) > 0$ é uma tautologia
+	precisa cuja utilidade está em tornar a barreira analítica
+	explícita e acessível às ferramentas modernas.
+	
+	\subsection{O que a reformulação oferece à comunidade}
+	
+	\begin{enumerate}
+		\item \textbf{Localização da obstrução.} A Conjectura de
+		Goldbach para $2M^+$ equivale à positividade de uma única
+		componente de Fourier $\widehat{F}(0)$. Isso não simplifica
+		o problema, mas o \emph{concentra}: em vez de uma afirmação
+		difusa sobre todos os pares, temos uma afirmação espectral
+		localizada.
+		
+		\item \textbf{Alinhamento com a escola moderna.} O Motor de
+		Herança, formulado como sistema de Koopman de entropia zero,
+		encaixa-se naturalmente na estrutura onde o teorema de
+		nilsequências de Green-Tao-Ziegler e a Conjectura de Sarnak são
+		aplicáveis. A descorrelação das componentes $j \neq 0$ já é
+		incondicional (Proposição~\ref{prop:sarnak}); a única barreira
+		remanescente é a componente de frequência zero.
+		
+		\item \textbf{Separação limpa entre camadas.} A camada algébrica
+		(incondicional) — que inclui agora a estrutura completa de
+		$W_i$ com quatro eixos e o mecanismo dos pivôs do Scanner —
+		e a camada aritmética (condicional) estão separadas com
+		precisão. Qualquer progresso futuro em $\widehat{F}(0)$ se
+		beneficia de toda a estrutura dinâmica já estabelecida.
+	\end{enumerate}
+	
+	\subsection{Direções futuras}
+	
+	\begin{enumerate}
+		\item \textbf{Nilsequências e normas de Gowers de ordem
+			superior.} A decomposição de $F$ em contribuições de
+		nilsequências (no espírito de Green-Tao-Ziegler \cite{greentao})
+		pode fornecer controle sobre $\widehat{F}(0)$, se a progressão
+		$\{E_1(t)\}_{t=1}^K$ exibir estrutura de nilsequência.
+		
+		\item \textbf{Prova condicional sob GRH.} Sob a Hipótese de
+		Riemann Generalizada, os erros de Siegel-Walfisz satisfazem
+		$|r_d| \ll d^{1/2}(\log M^+)^2$, e
+		$\mathcal{R} \ll D^{3/2}(\log M^+)^2$. Para
+		$D = (\log M^+)^{1-\varepsilon}$ com $\varepsilon$ próximo de
+		$1$, isso tornaria $\mathcal{R} \ll S(\mathcal{A},w)$ e fecharia
+		a cota inferior $\mathcal{N} \geq 1$ condicionalmente.
+		
+		\item \textbf{Recorrência de Furstenberg.} A ergodicidade de $T$
+		e a densidade positiva de $A_N$ (sob hipótese de
+		Hardy-Littlewood) sugerem uma prova de recorrência múltipla: a
+		órbita de qualquer ponto em $X_N$ deveria visitar $A_N$ no
+		horizonte $K = N-1$. Formalizar isso via teoremas de recorrência
+		de Furstenberg-Katznelson é uma direção concreta.
+		
+		\item \textbf{Análise do Tempo de Primeira Passagem.} O
+		experimento computacional de transição Caos $\to$ Ordem
+		(\cite{motor}, Seção~8) mede quantos passos do Scanner até que
+		$\HRm$ seja ativada. A análise assintótica desse tempo em função
+		de $N$ — e sua conexão com a Lei de Saturação Geométrica —
+		é uma direção concreta para verificação computacional de
+		$\widehat{F}(0) > 0$ em escala.
+	\end{enumerate}
+	
+	% ── Referências ───────────────────────────────────────────────────────────────
+	\begin{thebibliography}{99}
+		
+		\bibitem{goldbach1}
+		T.~Bandeira,
+		\textit{Uma Abordagem Unificada para a Conjectura de Goldbach:
+			Estrutura Combinatória, Saturação Geométrica e o Elo entre
+			Trios e Pares Primos},
+		Preprint, maio de 2026.
+		
+		\bibitem{grade}
+		T.~Bandeira,
+		\textit{Uma propriedade de soma constante na grade $3 \times N$
+			e as conjecturas de Goldbach},
+		Preprint, maio de 2026.
+		
+		\bibitem{ancora}
+		T.~Bandeira,
+		\textit{O Invariante Âncora da Grade $G_{3,N}$ e um Estimador
+			Geométrico Oracle-Free para a Conjectura de Goldbach},
+		Preprint, maio de 2026.
+		
+		\bibitem{crivo_b}
+		T.~Bandeira,
+		\textit{Problema B do Crivo Geométrico: Demonstração da
+			Desigualdade Estrutural},
+		Preprint, maio de 2026.
+		
+		\bibitem{motor}
+		T.~Bandeira,
+		\textit{Motor de Herança Estrutural: Formalização Definitiva
+			da Fita-Dobra, da Grade Zigzag, da Janela $W_i$ com Quatro
+			Eixos e do Mecanismo de Pivôs},
+		Preprint, maio de 2026.
+		
+		\bibitem{greentao}
+		B.~Green e T.~Tao,
+		\textit{The primes contain arbitrarily long arithmetic
+			progressions},
+		Annals of Mathematics, vol.~167, pp.~481--547, 2008.
+		
+		\bibitem{greentaoziegler}
+		B.~Green, T.~Tao e T.~Ziegler,
+		\textit{An inverse theorem for the Gowers $U^{s+1}[N]$-norm},
+		Annals of Mathematics, vol.~176, pp.~1231--1372, 2012.
+		
+		\bibitem{gowers}
+		W.~T.~Gowers,
+		\textit{A new proof of Szemerédi's theorem},
+		Geometric and Functional Analysis, vol.~11, pp.~465--588, 2001.
+		
+		\bibitem{sarnak}
+		P.~Sarnak,
+		\textit{Three lectures on the Möbius function, randomness and
+			dynamics},
+		Publications mathématiques de l'IHÉS, 2011.
+		
+		\bibitem{helfgott}
+		H.~A.~Helfgott,
+		\textit{Major arcs for Goldbach's theorem},
+		arXiv:1305.2897, 2013.
+		
+		\bibitem{hardy-littlewood}
+		G.~H.~Hardy e J.~E.~Littlewood,
+		\textit{Some problems of `Partitio Numerorum'; III: On the
+			expression of a number as a sum of primes},
+		Acta Mathematica, vol.~44, pp.~1--70, 1923.
+		
+		\bibitem{iwaniec}
+		H.~Iwaniec e E.~Kowalski,
+		\textit{Analytic Number Theory},
+		American Mathematical Society Colloquium Publications,
+		vol.~53, 2004.
+		
+		\bibitem{chen}
+		J.~R.~Chen,
+		\textit{On the representation of a large even integer as the
+			sum of a prime and the product of at most two primes},
+		Scientia Sinica, vol.~16, pp.~157--176, 1973.
+		
+	\end{thebibliography}
+	
+\end{document}

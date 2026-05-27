@@ -1,0 +1,32 @@
+\babel@toc {english}{}\relax 
+\contentsline {section}{\numberline {1}Introdução}{3}{section.1}%
+\contentsline {subsection}{\numberline {1.1}A série e o contexto}{3}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Por que os métodos clássicos falham}{3}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Mudança de perspectiva: da contagem ao fluxo}{3}{subsection.1.3}%
+\contentsline {subsection}{\numberline {1.4}Organização do artigo}{4}{subsection.1.4}%
+\contentsline {section}{\numberline {2}Fundamentos Algébricos do Motor}{4}{section.2}%
+\contentsline {subsection}{\numberline {2.1}A Fita-Dobra}{4}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}A Grade com Percurso Zigzag}{5}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}A Janela $W_i$ — Quatro Eixos de Simetria}{6}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}O Scanner — Mecanismo dos Pivôs}{6}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}As Hipóteses Restritivas}{7}{subsection.2.5}%
+\contentsline {section}{\numberline {3}O Sistema Dinâmico de Medida Finito}{7}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Construção do sistema}{7}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}O operador de Koopman e sua estrutura espectral}{8}{subsection.3.2}%
+\contentsline {section}{\numberline {4}Função de Colisão e Reformulação Espectral de $\mathrm {HR}^{-}$}{9}{section.4}%
+\contentsline {subsection}{\numberline {4.1}A função indicadora de colisão}{9}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Equações de indexação dos pares diagonais}{10}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Decomposição espectral e reformulação de $\mathrm {HR}^{-}$}{10}{subsection.4.3}%
+\contentsline {section}{\numberline {5}A Obstrução Espectral e Conexões com Ferramentas Modernas}{10}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Pseudo-aleatoriedade e uniformidade de Gowers}{10}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Descorrelação Espectral via Nilsequências}{11}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}A obstrução espectral e o que ela implica}{12}{subsection.5.3}%
+\contentsline {section}{\numberline {6}Por que os Métodos Clássicos Colapsam}{12}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Configuração e notação}{13}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Colapso do método do círculo}{13}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Colapso do crivo de Rosser-Iwaniec}{13}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.4}O que a abordagem espectral reposiciona}{14}{subsection.6.4}%
+\contentsline {section}{\numberline {7}Síntese, Alcance e Trabalhos Futuros}{14}{section.7}%
+\contentsline {subsection}{\numberline {7.1}O que este artigo prova}{14}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}O que a reformulação oferece à comunidade}{14}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}Direções futuras}{15}{subsection.7.3}%
