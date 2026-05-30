@@ -5,6 +5,37 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
 ---
 
+## [2.7.7] - 2026-05-29
+
+### Adicionado
+- **Artigo 10** – "Leis de Escala e a Conjectura da Âncora Absoluta" (primeira versão).
+  - Evidências numéricas até N = 10⁸.
+  - Leis empíricas: k* ≈ 5,5 log N, p_max ≈ 10,3 log N log log N.
+  - Conexão com a reformulação espectral (Artigo 6).
+- **Artigo 11** – "Saturação Geométrica e Decaimento Exponencial do Gap".
+  - Decaimento exponencial do gap máximo (β ≈ 0,20).
+  - Correlação entre C vizinhos ≈ 0 (buracos isolados).
+  - Esboço de argumento condicional reduzindo Goldbach a cota inferior para a série singular.
+
+### Alterado
+- **Notas**:
+  - `nota_deducao_analitica_ganho.md` corrigida (ênfase heurística).
+  - `operador_de_transferencia_orbital.md` corrigido (eliminação de afirmações incorretas sobre GTZ e densidade zero).
+- **Scripts**:
+  - `bandeira_ancora_absoluta_extendida.py` – adicionados pontos N = 2×10⁶, 5×10⁶, 20×10⁶, 50×10⁶.
+  - `correlacao_janelas_escalas.py` – novo script para cálculo de correlação entre âncoras absolutas.
+  - `variancia_cobertura_por_C.py` – novo script para comparar variâncias.
+  - `analise_correlacao_excluindo_ancoras.py` – novo script para excluir primeiras âncoras.
+  - `correlacao_C_vizinhos.py` – novo script para calcular correlação entre C consecutivos.
+
+### Corrigido
+- Corrigida a fórmula da série singular no Artigo 11 (Proposição 1) – agora independente da âncora.
+- Removida a duplicação da conjectura no Artigo 10.
+- Ajustes de notação e typos nos dois artigos.
+
+
+---
+
 ## [2.7.6] — Maio de 2026
 
 ### Corrigido

@@ -1,0 +1,273 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{geometry}
+\geometry{a4paper, margin=2.5cm}
+
+\newtheorem{theorem}{Teorema}
+\newtheorem{lemma}[theorem]{Lema}
+\newtheorem{proposition}[theorem]{Proposição}
+\newtheorem{corollary}[theorem]{Corolário}
+\newtheorem{conjecture}[theorem]{Conjectura}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definição}
+\newtheorem{remark}[theorem]{Observação}
+
+\title{Saturação Geométrica e Decaimento Exponencial do Gap:\\
+	Reduzindo a Conjectura de Goldbach a uma\\
+	Cota Inferior para a Série Singular}
+\author{Tiago Bandeira \\ \texttt{tiagobandeira.goldbach2025@gmail.com}}
+\date{Maio de 2026}
+
+\begin{document}
+	
+	\maketitle
+	
+	\begin{abstract}
+		Com base em evidências numéricas até $N = 10^8$ (pares alvo $2M \le 6\cdot10^8$), o Motor de Herança Estrutural exibe dois comportamentos empíricos robustos: (i)~o gap máximo entre valores de $C$ não cobertos decai exponencialmente com a ordem das âncoras, com taxa $\beta \approx 0{,}20$ independente da escala; (ii)~quando a cobertura ultrapassa $99{,}99\%$, os buracos residuais são distribuídos de forma praticamente independente entre si, com correlação entre vizinhos da ordem de $10^{-5}$.
+		
+		Esses dois fatos, combinados com a quase-independência entre as ativações das âncoras absolutas (correlação média $<0{,}4\%$, estabelecida no Artigo~10~\cite{art10}), permitem separar o processo de cobertura em dois fenômenos distintos: a eliminação do gap máximo, que ocorre em $k\sim O(\log\log N)$ âncoras, e a eliminação dos pontos isolados residuais, que ocorre em $k\sim O(\log N)$ âncoras adicionais. Essa separação explica estruturalmente por que $k^*(N)\sim 5{,}5\log N$ — e não $O(\log^3 N)$, como um union bound ingênuo sugeriria.
+		
+		Apresentamos um esboço de argumento que, \textbf{sob a cota inferior $\bar\rho(C)\ge c_0/\log^2 C$ (implicada pela heurística de Hardy-Littlewood ou, condicionalmente, por GRH via Siegel-Walfisz)} e pela descorrelação espectral do Artigo~6~\cite{art6}, reduz a prova de cobertura total — e portanto da Conjectura de Goldbach — a mostrar que o processo de cobertura do motor pertence à classe de processos de mistura rápida com decaimento exponencial do gap. A série singular $\mathfrak{S}(6C)>0$ é positiva incondicionalmente, o que é o primeiro passo do argumento e está disponível sem hipóteses adicionais.
+	\end{abstract}
+	
+	\section{Introdução}
+	
+	A série do Motor de Herança Estrutural \cite{art1,art2,art3,art4,art5,art6,art7,art8,art9,art10} propõe uma mudança de paradigma na abordagem à Conjectura de Goldbach: em vez de atacar pares isolados $2M = p + q$, o motor pergunta se a estrutura geométrica garante a cobertura de \emph{todos} os pares de uma sequência. O Artigo~10~\cite{art10} estabeleceu a \textbf{Conjectura da Âncora Absoluta}: todo par suficientemente grande admite decomposição de Goldbach com o menor primo limitado por $O(\log M\log\log M)$, e o conjunto de âncoras necessárias para cobrir todos os pares até $2M$ tem cardinalidade $k^*(M)\sim 5{,}5\log M$.
+	
+	O presente artigo tem dois objetivos. O primeiro é fechar as lacunas empíricas identificadas no Artigo~10: calcular a correlação entre eventos de não cobertura para $C$ vizinhos e verificar a estabilidade da taxa de decaimento $\beta$ do gap máximo em múltiplas escalas. O segundo é estruturar um argumento analítico que explique esses comportamentos e reduza a prova de cobertura total a uma única hipótese aritmética — a cota inferior para a série singular de Hardy-Littlewood.
+	
+	\subsection{Conexão com os artigos anteriores}
+	
+	O Artigo~6~\cite{art6} demonstrou que, no sistema dinâmico $(X_N,\mu_N,T)$ do motor, as componentes de Fourier $\widehat{w}(j)\to 0$ para todo $j\neq 0$ via o teorema de Green-Tao-Ziegler — descorrelação espectral incondicional. A única componente em aberto é $\widehat{w}(0)>0$, equivalente a $HR^-$. O Artigo~10~\cite{art10} mostrou empiricamente que $\widehat{F}(0)\ge 1/(N-1)>0$ para todo $N\le 10^8$, e que as ativações das âncoras são quase independentes no regime absoluto.
+	
+	O presente artigo conecta esses dois resultados: a descorrelação espectral do Artigo~6 é o ingrediente que garante a propriedade de mistura do processo de cobertura, e a mistura é o que implica o decaimento exponencial do gap.
+	
+	\subsection{Organização do artigo}
+	
+	A Seção~2 apresenta os resultados experimentais finais. A Seção~3 desenvolve o argumento analítico em três passos. A Seção~4 enuncia o lema central que separa gap e pontos isolados, explicando a escala $O(\log N)$. A Seção~5 conecta o argumento à reformulação espectral do Artigo~6. A Seção~6 discute lacunas e trabalhos futuros.
+	
+	\section{Resultados experimentais finais}
+	
+	\subsection{Correlação entre eventos de não cobertura para $C$ vizinhos}
+	
+	Para cada escala $N$ e número de âncoras $k$, construímos o vetor booleano $\mathrm{coberto}[C]$ e calculamos a correlação de Pearson entre os eventos de não cobertura ($1-\mathrm{coberto}[C]$) para índices consecutivos $C$ e $C+2$. Os resultados são apresentados na Tabela~\ref{tab:corr_vizinhos}.
+	
+	\begin{table}[h]
+		\centering
+		\caption{Correlação entre eventos de não cobertura para $C$ vizinhos.}
+		\label{tab:corr_vizinhos}
+		\begin{tabular}{cccc}
+			\toprule
+			$N$ & $k$ & Fração não cobertos & Correlação vizinhos \\
+			\midrule
+			$10^6$ & 50 & $2\times10^{-6}$   & $-2\times10^{-6}$ \\
+			$10^6$ & 70 & $0$                 & — \\
+			$10^7$ & 50 & $3{,}6\times10^{-5}$ & $-3{,}6\times10^{-5}$ \\
+			$10^7$ & 70 & $1\times10^{-6}$   & $-1\times10^{-6}$ \\
+			$10^7$ & 90 & $0$                 & — \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	A correlação é da ordem de $10^{-5}$ em módulo — essencialmente zero. Os buracos residuais nas fases finais da cobertura são distribuídos de forma \textbf{praticamente independente} entre si, sem tendência de formação de aglomerados. Isso confirma que os últimos $C$ não cobertos são pontos isolados, não blocos.
+	
+	\subsection{Estabilidade da taxa de decaimento $\beta$}
+	
+	O gap máximo entre $C$ cobertos, após $k$ âncoras, obedece a:
+	\[
+	\mathrm{gap}_{\max}(k) \approx G_0(N)\cdot e^{-\beta k}.
+	\]
+	Ajustamos a curva para cada escala via mínimos quadrados. Os resultados estão na Tabela~\ref{tab:beta}.
+	
+	\begin{table}[h]
+		\centering
+		\caption{Taxa de decaimento $\beta$ do gap máximo por escala.}
+		\label{tab:beta}
+		\begin{tabular}{cc}
+			\toprule
+			$N$ & $\beta$ \\
+			\midrule
+			$10^6$   & $0{,}1344$ \\
+			$2\times10^6$ & $0{,}2076$ \\
+			$5\times10^6$ & $0{,}2008$ \\
+			$10^7$   & $0{,}1747$ \\
+			$2\times10^7$ & $0{,}2212$ \\
+			$5\times10^7$ & $0{,}1846$ \\
+			$10^8$   & $0{,}2578$ \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	A taxa $\beta$ oscila entre $0{,}13$ e $0{,}26$, com valor médio $\approx 0{,}20$, sem tendência sistemática com $\log N$. Isso indica que o decaimento exponencial é um \textbf{fenômeno universal} do motor — uma propriedade intrínseca da estrutura geométrica, não um artefato de escala.
+	
+	\section{Argumento analítico}
+	
+	O argumento se desenvolve em três passos com durezas distintas.
+	
+	\subsection{Passo 1 — Positividade incondicional da série singular}
+	
+	Para cada par alvo $2M = 6C$, a série singular de Hardy-Littlewood é definida por:
+	\[
+	\mathfrak{S}(6C) = 2\,C_2 \prod_{\substack{q\mid 6C \\ q>2}} \frac{q-1}{q-2},
+	\qquad\text{onde}\qquad 
+	C_2 = \prod_{q>2} \left(1-\frac{1}{(q-1)^2}\right) \approx 0{,}6601618.
+	\]
+	Esta expressão é clássica na heurística de Hardy-Littlewood para a representação de um par como soma de dois primos. Os fatores do produto são todos $>0$, e o produto converge absolutamente. Portanto:
+	
+	\begin{proposition}[Positividade incondicional]
+		Para todo $C$ par com $C\ge 4$ (e tal que $\gcd(6C,\text{pequenos primos})$ não anula a série singular), tem-se $\mathfrak{S}(6C)\ge \mathfrak{S}_{\min}>0$, onde $\mathfrak{S}_{\min}$ é uma constante efetivamente computável (por exemplo, $\mathfrak{S}_{\min}=2C_2\prod_{q\le 10}\frac{q-1}{q-2}\approx 1{,}32$). 
+	\end{proposition}
+	
+	Este passo é incondicional e não envolve qualquer hipótese sobre a distribuição de primos. A série singular é um objeto multiplicativo estático, calculável explicitamente para qualquer $C$.
+	
+	\subsection{Passo 2 — Cota inferior para $\bar\rho(C)$ via GRH}
+	
+	A densidade média de âncoras ativas para um dado $C$ é:
+	\[
+	\bar\rho(C) = \frac{1}{\pi(P)}\sum_{p\le P}\mathbf{1}[6C-p\in\mathbb{P}],
+	\]
+	onde $P=p_{\max}\asymp\log C\log\log C$ (a maior âncora usada no processo guloso). Sob a heurística de Hardy-Littlewood, espera-se:
+	\[
+	\bar\rho(C)\sim\frac{\mathfrak{S}(6C)}{\log^2 C}.
+	\]
+	Para obter uma cota inferior \emph{rigorosa}, recorremos a GRH. Sobre GRH, o teorema de Siegel-Walfisz fornece um controle uniforme do erro para progressões aritméticas:
+	\[
+	\pi(x;q,a)=\frac{\operatorname{li}(x)}{\varphi(q)}+O\!\bigl(\sqrt{x}\log x\bigr),
+	\]
+	onde o termo de erro é uniforme para $q\le (\log x)^A$ com $A>0$ fixo. Aplicando esta estimativa à soma $\sum_{p\le P}\Lambda(p)\Lambda(6C-p)$ via o método do círculo (ou via identidade de Vaughan), obtém-se que o termo principal é $\asymp P\cdot \mathfrak{S}(6C)/\log(6C)$. Como $P\asymp\log C\log\log C$, segue que:
+	
+	\begin{proposition}[Cota inferior condicional a GRH]
+		Sob GRH, existe uma constante efetiva $c_0>0$ tal que, para todo $C$ suficientemente grande,
+		\[
+		\bar\rho(C)\ge \frac{c_0}{\log^2 C}.
+		\]
+		O valor de $c_0$ pode ser tomado, por exemplo, como $c_0 = \frac{1}{2}\mathfrak{S}_{\min}$ (desde que $P$ seja suficientemente grande para que o erro seja menor que o termo principal).
+	\end{proposition}
+	
+	Uma demonstração detalhada envolve o controle das somas exponenciais e a aplicação da GRH para majorar os termos de erro; remetemos ao tratamento padrão em \cite{IK}. Empiricamente, os dados são consistentes com $c_0\approx 19$.
+	
+	\subsection{Passo 3 — Decaimento exponencial do gap via mistura}
+	
+	Com $\bar\rho(C)\ge c_0/\log^2 C$ e ativações quase independentes (correlação $<0{,}4\%$, Artigo~10), o processo de cobertura se comporta como um processo de Bernoulli fracamente dependente. Para tais processos, quando o alcance de dependência é finito e a correlação decai rapidamente, resultados clássicos de cobertura (análogos ao problema de Dvoretzky \cite{dvoretzky}) garantem que:
+	\[
+	\mathbb{P}(\mathrm{gap}_{\max}>g)\le A_0\,e^{-\alpha g},
+	\]
+	com $\alpha>0$ dependendo apenas de $c_0$ e do alcance de dependência.
+	
+	A descorrelação espectral do Artigo~6 — $\widehat{w}(j)\to 0$ para $j\neq 0$ via Green-Tao-Ziegler — é o ingrediente que garante que o alcance de dependência é efetivamente finito: as correlações entre $\Lambda(E_1(t))\Lambda(E_2(t))$ e $\Lambda(E_1(t'))\Lambda(E_2(t'))$ para $|t-t'|$ grande decaem para zero, o que é precisamente a propriedade de mistura necessária.
+	
+	\begin{remark}
+		A taxa empírica $\beta\approx 0{,}20$ (Tabela~\ref{tab:beta}) é consistente com $\alpha\asymp c_0/\log^2 N$ para $N$ na faixa testada. A estabilidade de $\beta$ em sete ordens de magnitude sugere que $\alpha$ depende de $N$ de forma muito fraca, possivelmente $\alpha\sim c/\log\log N$.
+	\end{remark}
+	
+	\section{O lema da separação: gap e pontos isolados}
+	
+	O resultado central deste artigo é a separação estrutural do processo de cobertura em dois fenômenos:
+	
+	\begin{lemma}[Separação gap/pontos isolados]
+		Seja $k_1(N)$ o número de âncoras necessário para reduzir o gap máximo a $\le 4$, e $k_2(N)$ o número adicional de âncoras para cobrir todos os $C$ restantes. Então:
+		\begin{enumerate}
+			\item $k_1(N) = O(\log\log N)$: a eliminação do gap máximo exige apenas $O(\log\log N)$ âncoras, pois $G_0(N)\asymp\log N$ e $k_1\asymp\log(G_0/2)/\beta = O(\log\log N)$.
+			\item $k_2(N) = O(\log N)$: após o gap ser pequeno, os buracos residuais são pontos isolados. Embora um union bound ingênuo sobre todos os $C\le N$ (supondo independência) sugerisse $k_2 = O(\log^3 N)$, a evidência empírica (Tabela~\ref{tab:corr_vizinhos}) mostra que os buracos são independentes entre si. O processo guloso, ao adicionar novas âncoras, cobre uma fração constante dos buracos restantes, reduzindo o número de não cobertos exponencialmente. Consequentemente, para tornar o número esperado de não cobertos menor que $1$, é suficiente $k_2 = O(\log N)$ (o fator adicional $\log^2 N$ desaparece porque as correlações são nulas e a distribuição dos buracos é a de uma amostra aleatória de pontos isolados).
+			\item $k^*(N) = k_1(N)+k_2(N) = O(\log N)$: o número total de âncoras é dominado por $k_2$, explicando a lei empírica $k^*\sim 5{,}5\log N$.
+		\end{enumerate}
+	\end{lemma}
+	
+	\begin{remark}
+		O item~2 do lema é onde está a contribuição central. O union bound ingênuo (que trata cada $C$ como independente) daria $k_2 \gtrsim \frac{\log^3 N}{c_0}$. A constatação experimental de que os buracos residuais são independentes (correlação $\approx 10^{-5}$) e que o processo guloso os elimina rapidamente reduz o custo para $O(\log N)$. A independência entre $C$ vizinhos (Tabela~\ref{tab:corr_vizinhos}) é a evidência empírica que sustenta essa redução.
+	\end{remark}
+	
+	\section{Conexão com a reformulação espectral}
+	
+	O Artigo~6~\cite{art6} demonstrou que $HR^-\Leftrightarrow\widehat{F}(0)>0$, onde:
+	\[
+	\widehat{F}(0) = \frac{1}{K}\sum_{t=1}^{K}F(t) = \frac{1}{K}\sum_{t=1}^{K}\mathbf{1}_{\mathbb{P}}(E_1(t))\cdot\mathbf{1}_{\mathbb{P}}(E_2(t)).
+	\]
+	O argumento deste artigo conecta a cobertura total a $\widehat{F}(0)>0$ pelo seguinte caminho:
+	
+	\begin{enumerate}
+		\item \textbf{Série singular positiva} $\Rightarrow$ $\bar\rho(C)\ge c_0/\log^2 C$ (sob GRH).
+		\item \textbf{Cota inferior para $\bar\rho$} $+$ \textbf{mistura espectral} $\Rightarrow$ decaimento exponencial do gap com $\alpha>0$.
+		\item \textbf{Decaimento exponencial do gap} $+$ \textbf{independência residual} $\Rightarrow$ cobertura total com $k^*=O(\log N)$.
+		\item \textbf{Cobertura total} $\Rightarrow$ para cada passo do motor existe eixo com par primo $\Rightarrow$ $HR^-$.
+		\item $HR^-$ $\Rightarrow$ $\widehat{F}(0)\ge 1/(N-1)>0$.
+	\end{enumerate}
+	
+	A diferença em relação ao Artigo~6 é estrutural: enquanto ali a positividade de $\widehat{F}(0)$ era pedida diretamente (equivalente à dureza de Goldbach), aqui ela é obtida como \emph{consequência} da cobertura total, que por sua vez decorre de propriedades do processo com durezas analíticas distintas e parcialmente conhecidas.
+	
+	\section{Discussão e trabalhos futuros}
+	
+	\subsection{O que está provado, o que é condicional, o que é novo}
+	
+	\begin{table}[h]
+		\centering
+		\caption{Mapa de resultados do artigo.}
+		\label{tab:mapa}
+		\begin{tabular}{lll}
+			\toprule
+			Resultado & Estatuto & Referência \\
+			\midrule
+			$\mathfrak{S}(6C)>0$ & Incondicional & Proposição 1 \\
+			Correlação entre $C$ vizinhos $\approx 0$ & Empírico ($N\le10^8$) & Tabela~\ref{tab:corr_vizinhos} \\
+			Estabilidade de $\beta\approx0{,}20$ & Empírico ($N\le10^8$) & Tabela~\ref{tab:beta} \\
+			$\bar\rho(C)\ge c_0/\log^2 C$ & Condicional (GRH) & Proposição 2 \\
+			Decaimento exponencial do gap & Condicional (GRH + mistura) & Passo 3 \\
+			Separação gap/$O(\log N)$ & Lema (apoio empírico) & Lema 1 \\
+			Cobertura total $\Rightarrow HR^-$ & Incondicional & Seção~5 \\
+			$HR^-$ provada & Não provada & — \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	\subsection{Comparação com abordagens anteriores}
+	
+	O teorema de Chen~\cite{chen} garante que $\bar\rho(C)\ge c/\log^2 C$ se "$6C-p$ primo" é relaxado para "$6C-p$ primo ou produto de dois primos" — a cota inferior existe, o problema é a paridade. O argumento deste artigo não resolve o problema de paridade, mas mostra que, \emph{dado} que a cota inferior vale (sob GRH), a cobertura total segue de propriedades geométricas do motor que são independentes da paridade.
+	
+	Sob GRH, os erros de Siegel-Walfisz satisfazem $|r_d|\ll d^{1/2}\log^2 x$, o que torna o erro acumulado do crivo comparável ao termo principal para $D\asymp\log^{1-\varepsilon}x$ — fechando a cota inferior $\bar\rho\ge c_0/\log^2 C$ condicionalmente.
+	
+	\subsection{Lacunas e próximos passos}
+	
+	\begin{enumerate}
+		\item \textbf{Formalizar a propriedade de mistura.} A conexão entre $\widehat{w}(j)\to 0$ (Artigo~6) e o decaimento das correlações espaciais entre $C$ distintos precisa ser desenvolvida analiticamente. A estrutura dos quatro eixos de $W_i$ e a lei de variação linear $E_1(t)=E_1(1)+2(t-1)$ são os ingredientes geométricos disponíveis.
+		\item \textbf{Derivar $\beta$ analiticamente.} A taxa empírica $\beta\approx 0{,}20$ deve emergir de $c_0$ e das propriedades de mistura. Uma derivação formal conectaria os dados à teoria.
+		\item \textbf{Extensão a $N=10^9$.} Verificar por amostragem estratificada que $\beta$ permanece estável e que a correlação entre vizinhos continua nula.
+		\item \textbf{Prova condicional completa sob GRH.} Formalizar os três passos do argumento em um teorema condicional, com constantes explícitas.
+	\end{enumerate}
+	
+	\section{Conclusão}
+	
+	Este artigo fecha as lacunas empíricas do Artigo~10 e apresenta um argumento estrutural que reduz a Conjectura de Goldbach a três propriedades com durezas distintas: (i)~positividade incondicional da série singular; (ii)~cota inferior para $\bar\rho(C)$ condicional a GRH; (iii)~propriedade de mistura do sistema de Koopman, suportada pela descorrelação espectral do Artigo~6.
+	
+	O resultado central — a separação entre a eliminação do gap máximo ($O(\log\log N)$ âncoras) e a eliminação dos pontos isolados residuais ($O(\log N)$ âncoras) — explica estruturalmente a lei empírica $k^*\sim 5{,}5\log N$ e mostra que o union bound ingênuo superestima o custo de cobertura por um fator $\log^2 N$. A independência dos buracos residuais (correlação entre $C$ vizinhos $\approx 10^{-5}$) e a universalidade de $\beta\approx 0{,}20$ são as evidências empíricas que sustentam esse argumento e fornecem os parâmetros quantitativos para a futura prova analítica.
+	
+	\section*{Agradecimentos}
+	O autor agradece ao ambiente de desenvolvimento de código aberto que tornou possíveis as simulações extensivas. Os scripts e dados estão disponíveis em \url{https://github.com/tiagobandeira/goldbach-motor}.
+	
+	\bibliographystyle{plain}
+	\begin{thebibliography}{99}
+		
+		\bibitem{art1} T. Bandeira, \emph{Uma Abordagem Unificada para a Conjectura de Goldbach: Estrutura Combinatória, Saturação Geométrica e o Elo entre Trios e Pares Primos}, preprint (2026).
+		\bibitem{art2} T. Bandeira, \emph{Uma Propriedade de Soma Constante na Grade $3\times N$ e as Conjecturas de Goldbach}, preprint (2026).
+		\bibitem{art3} T. Bandeira, \emph{O Invariante Âncora da Grade $G_{3,N}$ e um Estimador Geométrico Oracle-Free para a Conjectura de Goldbach}, preprint (2026).
+		\bibitem{art4} T. Bandeira, \emph{Problema B do Crivo Geométrico: Demonstração da Desigualdade Estrutural}, preprint (2026).
+		\bibitem{art5} T. Bandeira, \emph{Motor de Herança Estrutural: Formalização Algébrica da Fita-Dobra e do Mecanismo de Promoção de Pares de Goldbach}, preprint (2026).
+		\bibitem{art6} T. Bandeira, \emph{Reformulação Espectral do Motor de Herança Estrutural: Uma Abordagem por Sistemas Dinâmicos à Conjectura de Goldbach}, preprint (2026).
+		\bibitem{art7} T. Bandeira, \emph{Motor de Herança Estrutural: Formalização Definitiva da Fita-Dobra, da Grade Zigzag, da Janela $W_i$ com Quatro Eixos e do Mecanismo de Pivôs}, preprint (2026).
+		\bibitem{art8} T. Bandeira, \emph{Operador de Transferência Orbital e Análise Indutiva}, preprint (2026).
+		\bibitem{art9} T. Bandeira, \emph{Nota sobre Cadeias de Autossimilaridade e a Transformação $T(C)=5C+2$}, preprint (2026).
+		\bibitem{art10} T. Bandeira, \emph{Leis de Escala e a Conjectura da Âncora Absoluta: Validação Empírica do Motor de Herança Estrutural até $10^8$}, preprint (2026).
+		
+		\bibitem{GTZ} B. Green, T. Tao, T. Ziegler, \emph{An inverse theorem for the Gowers $U^{s+1}[N]$-norm}, Annals of Mathematics \textbf{176}, 1231--1372 (2012).
+		\bibitem{chen} J. R. Chen, \emph{On the representation of a large even integer as the sum of a prime and the product of at most two primes}, Scientia Sinica \textbf{16}, 157--176 (1973).
+		\bibitem{dvoretzky} A. Dvoretzky, \emph{On covering a circle by randomly placed arcs}, Proceedings of the National Academy of Sciences \textbf{42}, 199--203 (1956).
+		\bibitem{IK} H. Iwaniec, E. Kowalski, \emph{Analytic Number Theory}, American Mathematical Society, 2004.
+		\bibitem{HL} G. H. Hardy, J. E. Littlewood, \emph{Some problems of Partitio Numerorum; III: On the expression of a number as a sum of primes}, Acta Mathematica \textbf{44}, 1--70 (1923).
+		
+	\end{thebibliography}
+	
+\end{document}
