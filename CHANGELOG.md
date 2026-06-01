@@ -5,6 +5,43 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
 ---
 
+## [2.7.8] - 2026-06-01
+
+### Adicionado
+- **Artigo 12** – "Saturação Geométrica e Cobertura Total no Motor de Herança Estrutural: uma Prova Condicional da Conjectura de Goldbach" (esboço final).
+  - Demonstração condicional (sob GRH) de que a cobertura total ⇒ HR⁻ ⇒ Goldbach.
+  - Derivadas analiticamente as constantes: número efetivo de eixos independentes \(n_{\text{ef}} = 36/\pi^2\), constante de janelas ativas \(c \approx 21\) e leis de escala \(k^* \sim 6{,}3\log N\), \(p_{\max} \sim 11{,}8\log N\log\log N\).
+  - Inclui dados experimentais até \(N = 10^9\) e o Teorema 1 (condicional à GRH).
+- **Conjectura da Âncora Absoluta v3.0** (`conjectura_ancora_absoluta_v3.md`).
+  - Consolida as evidências empíricas até \(10^9\) e as constantes analíticas.
+  - Enunciado mais preciso, incluindo a equivalência geométrica com as janelas \(W_j\).
+- **Notas atualizadas**:
+  - `nota_sintese_cobertura_condicional_v3.md` – unifica o argumento de cobertura e o Teorema 1.
+  - `nota_derivacao_beta_kstar_v2.md` – derivação final de \(\beta\) e \(k^*\) com \(n_{\text{ef}} = 36/\pi^2\).
+  - `nota_fracao_wi_ativas_v2.md` – fração de janelas ativas com \(c \approx 21\).
+- **Scripts principais** (pasta `scripts/`):
+  - `bandeira_ancora_absoluta_extendida_v2.py` – simulações até \(10^9\).
+  - `verificar_constante_c.py` – cálculo da média da série singular e da constante \(c\).
+  - `verifica_fator_4.py` – verificação da relação densidade de eixos vs. fração de janelas.
+  - `correlacao_janelas_escalas.py`, `ajuste_beta_gap.py`, `correlacao_C_vizinhos.py`.
+
+### Modificado
+- **Artigo 10 e 11** – ajustes menores nas referências e nas leis de escala para refletir os dados até \(10^9\) (não incluídos nos PDFs originais, mas mencionados nas notas).
+- **README.md** – ligeira atualização nos links para os novos documentos (a refatoração completa do README ficará para a próxima versão).
+
+### Corrigido
+- **Script `bandeira_ancora_absoluta_extendida_v2.py`** – função `gap_max_cobertura` corrigida para medir o gap entre **cobertos** (decaimento correto).
+- **Extração de logs** – ajuste nos scripts auxiliares para reconhecer corretamente o formato de saída.
+
+### Removido
+- Notas antigas (`nota_fracao_wi_ativas.md` original, `nota_sintese_cobertura_condicional_v2.md`) – mantidas apenas no histórico do repositório, mas substituídas pelas versões atualizadas.
+
+### Observações
+- Os dados brutos (CSVs) não são versionados, mas podem ser gerados pelos scripts.
+- Esta versão prepara o terreno para a finalização da série, com o Artigo 12 servindo como peça de fechamento.
+
+---
+
 ## [2.7.7] - 2026-05-29
 
 ### Adicionado
