@@ -9,8 +9,7 @@
 
 As observações registradas aqui foram descobertas através da exploração interativa da grade G(3×C) usando o **Motor de Herança Estrutural Explorer**, uma página web interativa que acompanha esta série. O Explorer permite visualizar a grade, o acoplamento Φ, os pares acoplados (HR⁻), os padrões de simetria e o processo guloso de âncoras diretamente no navegador, sem instalação.
 
-> **Acesse:** [https://github.com/tiagobandeira/goldbach-motor](https://github.com/tiagobandeira/goldbach-motor)  
-> O Explorer é um arquivo HTML único, sem dependências de servidor. Basta abrir no navegador ou hospedar no GitHub Pages.
+> 🌐 **Demonstração Interativa:** Para acompanhar visualmente os conceitos geométricos apresentados nesta série (como a Fita-Dobra, a Grade $G_{3,C}$ e o Scanner de pivôs), acesse o simulador oficial em: [**Motor de Herança Estrutural**](https://tiagobandeira.github.io/goldbach-motor/)
 
 As três observações desta nota emergem da intuição geométrica proporcionada pela visualização — elas complementam os resultados formais dos Artigos 01–12 com perspectivas que só se tornam visíveis quando se pode explorar a grade interativamente.
 
