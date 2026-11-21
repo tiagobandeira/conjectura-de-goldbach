@@ -1,0 +1,6 @@
+name = "goldbach"
+version = "0.1.0"
+defaultTargets = ["Goldbach"]
+
+[[lean_lib]]
+name = "Goldbach"

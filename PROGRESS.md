@@ -18,6 +18,10 @@ Este arquivo documenta o **estado atual** da investigação, separando resultado
   - `k*(N) ≈ 6,3 log N` (convergente a partir de `N≥10⁷`)  
   - `p_max(N) ≈ 11,8 log N log log N` (coeficiente `A_abs` estabiliza em ~11,8)  
   (Papers 10 e 11, estendido na versão 2.7.8)
+  - ⚠️ **Escopo:** as duas leis referem-se aos alvos `n ≡ 0 (mod 12)` — um sexto
+    dos pares —, não a todos os pares. Para todo par a ordem exigida é
+    `log²n · log log n`: medição exaustiva até `10⁸` dá `max g(n) = 1093`
+    (Paper 10, Subsecção 3.5; `lean/TrustLedger.md`, E‑5).
 - **Quase‑independência das ativações** no regime absoluto: correlação média < 0,4%, decrescente com `N` (Paper 10).
 - **Decaimento exponencial do gap máximo**: `gap_max(k) ≈ G_0 e^{-βk}`, com `β≈0,20` estável (verificado até `10⁸`) – Paper 11.
 - **Derivação analítica das constantes geométricas**:  
@@ -73,5 +77,27 @@ Este arquivo documenta o **estado atual** da investigação, separando resultado
 - Finalizar o Paper 12 (transformar o esboço em artigo formal, com a prova condicional sob GRH bem estruturada).
 - Divulgar os resultados (preprints, repositório, contato com a comunidade).
 - Explorar a possibilidade de uma prova incondicional usando apenas a heurística de Hardy‑Littlewood (sem GRH) ou técnicas de crivo mais avançadas.
+
+---
+
+## 🔬 Camada de verificação formal (Lean 4)
+
+O repositório inclui agora `lean/`: formalização em Lean 4 do **núcleo
+combinatório/algebraico** da série — sem Mathlib, sem `sorry`, sem axiomas
+próprios (`propext`, `Quot.sound` apenas).
+
+- **87 teoremas verificados** por máquina, em 11 módulos.
+- Cobre: Lema da Soma Constante, Invariante Âncora, paridade do complemento,
+  estrutura das progressões aritméticas e generalização `k×N` (Paper 04);
+  fita‑dobra, diagonais e acoplamento `Φ` (Paper 07 §2–3); Teorema do Motor
+  (Paper 07 §8); equivalência espectral `HR⁻ ⟺ F̂(0) > 0` (Paper 08 §6);
+  e a camada de herança — enumeração completa da fita, passo `+2`, cadeia
+  certificada, eixos de `W_i` e limite `mod 4`.
+- [`lean/TrustLedger.md`](lean/TrustLedger.md) mapeia **cada afirmação** dos 12
+  papers ao seu estatuto (provado / condicional / empírico) e registra
+  4 erratas (**E‑1…E‑4**) e 2 observações sobre economia lógica (**R‑1**, **R‑2**),
+  incluindo a anatomia do colapso de `HR⁻` (ver R‑1, continuação).
+
+Compilar: `powershell -ExecutionPolicy Bypass -File lean\build.ps1`.
 
 Para detalhes históricos de versões, veja o [`CHANGELOG.md`](CHANGELOG.md).

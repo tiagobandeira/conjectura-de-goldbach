@@ -18,7 +18,7 @@
 	\maketitle
 	
 	\begin{abstract}
-		Este artigo consolida os resultados experimentais obtidos com o Motor de Herança Estrutural operando no regime absoluto (multieixo). Apresentamos evidências numéricas até $N = 10^9$ (i.e., $2M \le 6\cdot10^9$) que levam à formulação da \textbf{Conjectura da Âncora Absoluta}: todo número par suficientemente grande pode ser escrito como soma de dois primos onde o menor primo é limitado por $O(\log M \log\log M)$. São derivadas leis de escala empíricas para o número de âncoras necessárias ($k^* \sim 6,3\log N$) e para o maior primo utilizado ($p_{\max} \approx 11,8 \log N \log\log N$). Conectamos esses achados à reformulação espectral do Motor (Artigo 6), mostrando que a evidência empírica é compatível com a positividade da componente de frequência zero do operador de Koopman, enquanto as componentes não nulas são descorrelacionadas. O artigo fornece uma base quantitativa para a Hipótese Restritiva Fraca $HR^-$ e delineia um roteiro para futuras investigações analíticas.
+		Este artigo consolida os resultados experimentais obtidos com o Motor de Herança Estrutural operando no regime absoluto (multieixo). Apresentamos evidências numéricas até $N = 10^9$ (i.e., $2M \le 6\cdot10^9$) que levam à formulação da \textbf{Conjectura da Âncora Absoluta}: todo número par suficientemente grande pode ser escrito como soma de dois primos onde o menor primo é limitado por $O(\log M \log\log M)$. São derivadas leis de escala empíricas para o número de âncoras necessárias ($k^* \sim 6,3\log N$) e para o maior primo utilizado ($p_{\max} \approx 11,8 \log N \log\log N$). Conectamos esses achados à reformulação espectral do Motor (Artigo 6), mostrando que a evidência empírica é compatível com a positividade da componente de frequência zero do operador de Koopman, enquanto as componentes não nulas são descorrelacionadas. O artigo fornece uma base quantitativa para a Hipótese Restritiva Fraca $HR^-$ e delineia um roteiro para futuras investigações analíticas. Uma \emph{nota de escopo} (Subsecção~3.5) precisa o domínio de validade das leis: os alvos efectivamente cobertos são os inteiros $n\equiv0\pmod{12}$ — um sexto dos pares — e a conjectura para todo par requer a ordem $\log^2 n\,\log\log n$, não $\log n\,\log\log n$.
 	\end{abstract}
 	
 	\section{Introdução}
@@ -185,6 +185,90 @@
 	\end{table}
 	
 	Dois resultados se destacam: (i)~$k^*$ permanece confinado na faixa $80$–$85$ independentemente do regime, evidenciando que a \emph{complexidade dimensional} da cobertura é estável; (ii)~a ativação dos quatro eixos reduz o teto de busca física de $2083$ para $449$ — um ganho de eficiência geométrica de $364\%$ — sem custo adicional em número de janelas.
+	
+	\subsection{Nota de escopo: domínio de validade e verificação independente}
+	\label{sec:escopo}
+	
+	O algoritmo de cobertura marca um valor de $C$ quando existe um primo $q$ com
+	$p+q\equiv 0\pmod 6$ e $C=(p+q)/6$ par. Os alvos efetivamente cobertos são,
+	portanto, os inteiros
+	\[
+		n \;=\; 6C \;\equiv\; 0 \pmod{12}, \qquad 24 \le n \le 6N,
+	\]
+	isto é, \emph{um sexto} dos números pares. As leis de escala das
+	subsecções~3.1--3.2 valem nesse domínio; a Conjectura~C, tal como enunciada
+	para \emph{todo} par, é uma extrapolação além dos dados.
+	
+	\textbf{Reprodução independente.} Uma medição directa de
+	$g(n)=\min\{p \text{ primo}: n-p \text{ primo}\}$, restrita a $n\equiv0\pmod{12}$
+	e $n\le 6N$, recupera os valores da Tabela~\ref{tab:evidencia}:
+	
+	\begin{center}
+		\begin{tabular}{cccc}
+			\toprule
+			$N$ & $p_{\max}$ (este artigo) & $\max g(n)$ com $n\equiv0\ (12)$ & $A$ efetivo \\
+			\midrule
+			$10^6$ & 269 & 263 & 7,25 \\
+			$10^7$ & 449 & 439 & 9,80 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	
+	A pequena diferença (um passo de âncora) explica-se por o critério de paragem
+	exigir que o maior intervalo entre $C$ não cobertos seja $\le2$, o que força
+	um primo adicional. Isto confirma que a lei descreve correctamente a
+	quantidade que mede.
+	
+	\textbf{Reprodutibilidade da Tabela~\ref{tab:evidencia}.} Reexecutando o
+	próprio script do repositório (\texttt{bandeira\_ancora\_absoluta\_extendida.py}),
+	obtêm-se valores idênticos para $N=10^6$, $2\times10^6$ e $10^7$, mas
+	distintos em duas linhas:
+	
+	\begin{center}
+		\begin{tabular}{ccccc}
+			\toprule
+			$N$ & $k^*$ (Tab.~\ref{tab:evidencia}) & $k^*$ (reexecução) & $p_{\max}$ (Tab.~\ref{tab:evidencia}) & $p_{\max}$ (reexecução) \\
+			\midrule
+			$5\times10^6$ & 70 & 75 & 359 & 389 \\
+			$2\times10^7$ & 85 & 90 & 449 & 479 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	
+	As linhas acima de $2\times10^7$ não foram reexecutadas (exigiriam crivo até
+	$6\times10^9$); os seus valores devem ser considerados provisórios até nova
+	verificação. A reexecução confirma, ainda assim, as duas conclusões
+	qualitativas: $k^*$ cresce devagar (55, 55, 75, 85, 90) e $A$ deriva
+	(7,42; 6,93; 9,22; 10,02; 10,10).
+	
+	\textbf{Fora do domínio, a lei falha.} Para $n = 60\,119\,912 \equiv 8 \pmod{12}$
+	tem-se
+	\[
+		g(n) = 1093,
+		\qquad\text{enquanto}\qquad
+		11{,}8\,\log M\,\log\log M \approx 578, \quad M = n/2,
+	\]
+	um factor $1{,}89$ acima da previsão. Como este $n$ está fora da classe
+	$0\pmod{12}$, não contradiz a Tabela~\ref{tab:evidencia} — mas mostra que a
+	constante $A=11{,}8$ \emph{não} se transporta para todos os pares.
+	
+	\textbf{Conjectura revista.} Restringindo ao domínio medido:
+	
+	\begin{quote}
+		\textbf{Conjectura C$'$ (Âncora Absoluta, escopo $0\bmod 12$).} Existe $A>0$
+		tal que, para todo $n\equiv0\pmod{12}$ suficientemente grande, existe primo
+		$p\le A\,\log n\,\log\log n$ com $n-p$ primo.
+	\end{quote}
+	
+	A versão para todo par exige um limite da forma $\log^2 n\,\log\log n$
+	(coerente com a heurística de Hardy--Littlewood por union bound sobre os $n$
+	valores, e com a cota condicional a GRH $\log^{2+\varepsilon}$): medições
+	exaustivas de $g(n)$ sobre \emph{todos} os pares até $10^8$ dão
+	$\max g(n) = 1093$, consistente com essa ordem e não com
+	$A\log n\log\log n$ para $A$ fixo. Registamos ainda que
+	$\log^2n\,\log\log n$ é a ordem sugerida pelos dados em toda a faixa
+	$10^3$--$10^8$, enquanto a razão
+	$\max g(n)/(\log n\log\log n)$ cresce monotonamente de $5{,}5$ para $20{,}4$.
 	
 	\section{Justificativa Estrutural e Probabilística}
 	

@@ -7,3 +7,13 @@
 *.blg
 experimento2_resultados/
 resultados_correlacao_abs_compacta/
+
+# Lean 4
+lean/.toolchain/
+*.olean
+*.ilean
+*.ir
+lean/.lake/
+.setup/lean-windows.zip
+
+__pycache__/

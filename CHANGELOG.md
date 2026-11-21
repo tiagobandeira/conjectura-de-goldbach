@@ -5,6 +5,44 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
 ---
 
+## [2.8.0] - 2026-11-21
+
+### Adicionado
+- **`lean/`** – formalização em Lean 4 do núcleo combinatório/algebraico da série
+  (87 teoremas verificados por máquina, 11 módulos, sem `sorry`, sem Mathlib).
+  Cobre: Lema da Soma Constante, Invariante Âncora, paridade do complemento,
+  progressões aritméticas, generalização \(k\times N\), fita-dobra e acoplamento
+  \(\Phi\), teorema do trio, equivalência espectral \(HR^-\iff\widehat F(0)>0\),
+  alcance das janelas, limite da cadeia de transporte e \(\Phi\) como reflexão.
+  Inclui `TrustLedger.md` (mapa de estatuto de cada afirmação dos 12 artigos) e
+  `Verificacao.lean` (auditoria de axiomas).
+- **`scripts/lei_ancora_verificacao.py`** – verificação independente da lei da
+  âncora: mede \(g(n)=\min\{p:n-p\text{ primo}\}\), reproduz a tabela do Artigo 10
+  no domínio \(n\equiv0\pmod{12}\) e documenta o contraexemplo fora dele.
+- **Artigo 10, Subsecção 3.5** – "Nota de escopo: domínio de validade e
+  verificação independente", com a **Conjectura C′** (escopo \(0\bmod12\)).
+
+### Corrigido
+- **Escopo das leis de escala (Artigos 10, 11 e 12).** As leis
+  \(k^*\sim6{,}3\log N\) e \(p_{\max}\sim11{,}8\log N\log\log N\) referem-se aos
+  alvos \(n\equiv0\pmod{12}\) (um sexto dos pares), e não a todos os pares, como
+  o texto dava a entender. Declarado nas três publicações.
+- **Interno, Artigo 04:** o enunciado da Proposição 5.4 (complemento de \(k=4\)
+  "sempre par") contradiz a sua própria demonstração e a tabela resumo; o
+  complemento é ímpar (`lean/TrustLedger.md`, E‑1).
+- **Tabela 2 do Artigo 10:** duas linhas não reproduzem com o script actual do
+  repositório (\(N=5\times10^6\): 359→389; \(N=2\times10^7\): 449→479).
+  Registado em nota, com a pedido de reexecução das linhas acima de
+  \(2\times10^7\), não verificadas.
+
+### Observações
+- Diagnóstico completo em `lean/TrustLedger.md`: três *no-go* formalizados
+  (a fita enumera todos os pares; a equivalência espectral é tautológica; a
+  cadeia de transporte não itera, por \(3\mid p(p+2)(p+4)\)) e o veredicto de
+  que a geometria prescreve pares, mas não substitui o trabalho aritmético.
+
+---
+
 ## [2.7.8] - 2026-06-01
 
 ### Adicionado
